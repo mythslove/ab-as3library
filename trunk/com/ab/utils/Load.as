@@ -11,8 +11,6 @@
     import flash.events.*;
     import flash.net.URLRequest;
 	//import com.ab.utils.DebugTF
-	import com.ab.utils.Make
-	import com.ab.utils.Make2
 	import caurina.transitions.Tweener
 	import flash.display.MovieClip;
 	

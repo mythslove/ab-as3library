@@ -21,14 +21,14 @@
 	import org.casalib.util.StageReference
 	import flash.display.Stage
 	
-	public class MCYScroller extends EdigmaSprite
+	public class MCYScroller2 extends EdigmaSprite
 	{
 		private var _PERCENT:Number;
 		private var _TARGET_CLIP:Object;
 		private var rectangle:Rectangle;
 		private var fx:Number;
 		
-		private var _TARGET_FINAL_Y:Number;
+		private var _TARGET_FINAL_X:Number;
 		private var _TOTAL_SCROLL_V_DISTANCE:Number;
 		private var _TARGET_HEIGHT:Number;
 		private var _VISIBLE_HEIGHT:Number;
@@ -38,18 +38,10 @@
 		private var _TARGET_MAX_Y:Number;
 		private var indent:Number;
 		private var _stage:StageReference;
-		private var _HIT_ROOT:Object;
 		
-		public function MCYScroller(target_clip:Object, scroll_distance:Number, visible_height:Number, hit_root:Object=null)
+		public function MCYScroller2(target_clip:Object, scroll_distance:Number, visible_height:Number)
 		{
 			super();
-			
-			//_stage = new StageReference()
-			
-			if (hit_root != null) 
-			{
-				_HIT_ROOT = hit_root
-			}
 			
 			_TARGET_CLIP = target_clip
 			_VISIBLE_HEIGHT = visible_height// - 20
@@ -62,7 +54,6 @@
 			_MAX_SCROLLER_Y = scroll_distance - this.height // maximo y da scroll handle
 			
 			_TOTAL_SCROLL_V_DISTANCE = scroll_distance - this.height // altura total de movimento da scroll handle
-			
 		}
 		
 		public function init():void
@@ -74,35 +65,26 @@
 			this.buttonMode = true;
 			
 			this.addEventListener(MouseEvent.MOUSE_DOWN, clickHandle); 
+			
 			StageReference.getStage().addEventListener(MouseEvent.MOUSE_UP, releaseHandle);
+			
 			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
+			
 			StageReference.getStage().addEventListener(MouseEvent.MOUSE_WHEEL,mouseWheelHandler);
 		}
 		
 		public function mouseWheelHandler(event:MouseEvent):void 
 		{
-			var go:Boolean = false
+			trace("_MAX_SCROLLER_Y = " + _MAX_SCROLLER_Y)
+			trace("this.y = " + this.y)
 			
-			if (_HIT_ROOT != null) 
-			{
-				if (_HIT_ROOT.hitTestPoint(StageReference.getStage().mouseX, StageReference.getStage().mouseY, true)) 
-				{
-					performMouseWheel(event.delta)
-				}
-			}
-			else
-			{
-				performMouseWheel(event.delta)
-			}
-		}
-		
-		private function performMouseWheel(_DELTA:Number):void
-		{
-			if (_DELTA < 0) 
+			trace("event.delta = " + event.delta)
+			
+			if (event.delta < 0) 
 			{
 				if (this.y < _TOTAL_SCROLL_V_DISTANCE)
 				{
-					this.y -= (_DELTA * 2);
+					this.y -= (event.delta * 2);
 					
 					if (this.y > _TOTAL_SCROLL_V_DISTANCE)
 					{
@@ -114,7 +96,7 @@
 			{
 				if (this.y > _MIN_SCROLLER_Y) 
 				{
-					this.y -= (_DELTA * 2);
+					this.y -= (event.delta * 2);
 					
 					if (this.y < _MIN_SCROLLER_Y) 
 					{
@@ -170,13 +152,13 @@
 			
 			downY = _TARGET_CLIP.height - (_VISIBLE_HEIGHT / 2)
 			
-			_TARGET_FINAL_Y = _TARGET_MIN_Y - (((downY - (_VISIBLE_HEIGHT / 2)) / 100) * _PERCENT); 
+			_TARGET_FINAL_X = _TARGET_MIN_Y - (((downY - (_VISIBLE_HEIGHT / 2)) / 100) * _PERCENT); 
 			
 			var final_value:Number = _TARGET_CLIP.y;
 			
-			if (_TARGET_CLIP.y != _TARGET_FINAL_Y) 
+			if (_TARGET_CLIP.y != _TARGET_FINAL_X) 
 			{
-				var diff:Number = _TARGET_FINAL_Y - _TARGET_CLIP.y;
+				var diff:Number = _TARGET_FINAL_X - _TARGET_CLIP.y;
 				
 				final_value += diff / 4;
 			}

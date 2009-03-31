@@ -5,6 +5,7 @@
 	import flash.events.Event
 	import flash.events.MouseEvent;
 	import org.casalib.util.StageReference
+	import flash.geom.Point
 	
 	/**
 	* @author ABº
@@ -39,14 +40,21 @@
 		private var __FRAME_COLOUR:uint;
 		public var _ON_COMPLETE_FUNCTION:Function
 		public var _ON_PROGRESS_FUNCTION:Function
-		import flash.geom.Point
+		public var __PATTERN:*;
 		
-		public function LightBox(url:String, onComplete:Function=null, onProgress:Function=null, _bg_colour:uint = 0x000000, _frame_colour:uint = 0xFFFFFF, close_linkage_id:String = null)
+		public function LightBox(url:String, onComplete:Function=null, onProgress:Function=null, _bg_colour:uint = 0x000000, _frame_colour:uint = 0xFFFFFF, pattern_linkage_id:* = null, close_linkage_id:* = null)
 		{
 			this.x = 0
 			this.y = 0
 			
 			__FRAME_COLOUR = _frame_colour
+			
+			if (pattern_linkage_id != null) 
+			{
+				__PATTERN = pattern_linkage_id
+			}
+			
+			trace("__PATTERN = " + __PATTERN)
 			
 			if (onComplete != null) { _ON_COMPLETE_FUNCTION = onComplete }
 			if (onProgress != null) { _ON_PROGRESS_FUNCTION = onProgress }
@@ -69,7 +77,8 @@
 			frame_mc.setAlign("center", true)
 			
 			bg_mc.graphics.beginFill(_bg_colour)
-			bg_mc.graphics.drawRoundRect(0, 0, StageReference.getStage().stageWidth, StageReference.getStage().stageHeight, 0, 0);
+			//bg_mc.graphics.drawRoundRect(0, 0, StageReference.getStage().stageWidth, StageReference.getStage().stageHeight, 0, 0);
+			bg_mc.graphics.drawRect(0, 0, StageReference.getStage().stageWidth, StageReference.getStage().stageHeight);
 			bg_mc.graphics.endFill();
 			
 			this_image = new Image(url, imgLoadCompleteHandler, imgLoadProgressHandler)
@@ -101,10 +110,22 @@
 			
 			frame_mc.GoVisible()
 			
-			frame_mc.graphics.clear()
-			frame_mc.graphics.beginFill(__FRAME_COLOUR)
-			frame_mc.graphics.drawRoundRect(0, 0, new_width, new_height, 0, 0);
-			frame_mc.graphics.endFill();
+			if (__PATTERN != null) 
+			{
+				frame_mc.graphics.clear()
+				frame_mc.graphics.beginBitmapFill(new __PATTERN(0, 0));
+				frame_mc.graphics.drawRect(0, 0, new_width, new_height);
+				frame_mc.graphics.endFill();
+				//addChild(backGroundSprite);
+			}
+			else
+			{
+				frame_mc.graphics.clear()
+				frame_mc.graphics.beginFill(__FRAME_COLOUR)
+				//frame_mc.graphics.drawRoundRect(0, 0, new_width, new_height, 0, 0);
+				frame_mc.graphics.drawRect(0, 0, new_width, new_height);
+				frame_mc.graphics.endFill();
+			}
 			
 			if (_ON_COMPLETE_FUNCTION != null) 
 			{
@@ -134,13 +155,12 @@
 			destroy()
 		}
 		
-		public static function create(url:String, target:Object, onComplete:Function=null, onProgress:Function=null, _bg_colour:Number = 0x000000, _frame_colour:Number = 0xFFFFFF, close_linkage_id:String = null):LightBox
+		public static function create(url:String, target:Object, onComplete:Function=null, onProgress:Function=null, _bg_colour:Number = 0x000000, _frame_colour:Number = 0xFFFFFF, pattern_linkage_id:* = null, close_linkage_id:String = null):LightBox
 		{
-			var lb:* = new LightBox(url, onComplete, onProgress, _bg_colour, _frame_colour, close_linkage_id);
+			var lb:* = new LightBox(url, onComplete, onProgress, _bg_colour, _frame_colour, pattern_linkage_id, close_linkage_id);
 			target.addChild(lb);
 			lb.load();
 			return lb;
 		}
 	}
-	
 }

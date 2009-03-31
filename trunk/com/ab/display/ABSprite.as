@@ -1,9 +1,8 @@
 ﻿package com.ab.display
 {
 	/**
-	* @authors
+	* @author
 	* ABº
-	* ...
 	*/
 	
 	import flash.display.MovieClip;
@@ -41,6 +40,8 @@
 		private var v_padding:int = 0;
 		private var _EASING_SPEED:int=8;
 		private var _ALIGN_TYPE:String;
+		private var _CUSTOM_HEIGHT:Number;
+		private var _CUSTOM_WIDTH:Number;
 		
 		public function ABSprite() 
 		{
@@ -81,6 +82,7 @@
 			Tweener.addTween(this, { alpha:0, time:isNaN(duration) ? 0.5 : duration, transition:_transition, onComplete:function(){this.visible = false}} )
 		}
 		
+		/// go to alpha zero and set invisible = true - with optional onComplete Function
 		public function GoInvisibleWithOnComplete(duration:Number=NaN, oncompletefunc:Function=null):void
 		{
 			Tweener.addTween(this, { alpha:0, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:function() { this.visible = false;  oncompletefunc() }} )
@@ -171,22 +173,21 @@
 		//// //// //// //// //// COLOUR METHODS
 		//// //// //// //// //// COLOUR METHODS
 		
-		public function GoToColour(colour:*, _time:Number, _transition:String = "EaseOutSine" ):void
+		public function Colorize(colour:*, _time:Number, _transition:String = "EaseOutSine" ):void
 		{
-			Tweener.addTween(this, { color:colour, time:_time, transition:_transition } );
+			Tweener.addTween(this, { _color:colour, time:_time, transition:_transition } );
 		}
 		
 		//// //// //// //// //// ALIGN METHODS
 		//// //// //// //// //// ALIGN METHODS
 		//// //// //// //// //// ALIGN METHODS
 		
-		public function setAlign(_type:String, _smooth:Boolean=true):void
+		public function setAlign(_type:String, _smooth:Boolean=true, custom_height:Number=0, custom_width:Number=0):void
 		{
 			_SMOOTH_ALIGN = _smooth
-			
 			_ALIGN_TYPE = _type
-			
-			trace( "EdigmaSprite ::: setAlign() ::: stage : " + StageReference.getStage() );
+			_CUSTOM_HEIGHT = custom_height;
+			_CUSTOM_WIDTH = custom_width;
 			
 			switch (_type) 
 			{
@@ -255,8 +256,29 @@
 			var zero_point:Point = new Point(0, 0);
 			var zero_x:Number = parent.localToGlobal(zero_point).x
 			var zero_y:Number = parent.localToGlobal(zero_point).y
-			var final_x = (StageReference.getStage().stageWidth / 2) - (this.width / 2) - zero_x;
-			var final_y = (StageReference.getStage().stageHeight / 2) - (this.height / 2) - zero_y;
+			
+			var final_x:Number = 0;
+			var final_y:Number = 0;
+			
+			if (_CUSTOM_WIDTH != 0) 
+			{
+				final_x = (StageReference.getStage().stageWidth / 2) - (_CUSTOM_WIDTH / 2) - zero_x;
+			}
+			else
+			{
+				final_x = (StageReference.getStage().stageWidth / 2) - (this.width / 2) - zero_x;
+			}
+			
+			if (_CUSTOM_HEIGHT != 0) 
+			{
+				final_y = (StageReference.getStage().stageHeight / 2) - (_CUSTOM_HEIGHT / 2) - zero_y;
+			}
+			else
+			{
+				final_y = (StageReference.getStage().stageHeight / 2) - (this.height / 2) - zero_y;
+			}
+			
+			
 			
 			if (_SMOOTH_ALIGN == true)
 			{
@@ -333,6 +355,20 @@
 		public function set vertical_padding(value:int):void
 		{
 			v_padding = value;
+		}
+		
+		//// //// //// //// //// RESOURCE MANAGEMENT
+		//// //// //// //// //// RESOURCE MANAGEMENT
+		//// //// //// //// //// RESOURCE MANAGEMENT
+		
+		public function goodbye(duration:Number=NaN):void
+		{
+			Tweener.addTween(this, { alpha:0, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:cleanMe } )
+		}
+		
+		public function cleanMe():void
+		{
+			destroy()
 		}
 	}
 }

@@ -21,7 +21,7 @@
 	import org.casalib.util.StageReference
 	import flash.display.Stage
 	
-	public class MCYScroller extends EdigmaSprite
+	public class MCYScroller3 extends EdigmaSprite
 	{
 		private var _PERCENT:Number;
 		private var _TARGET_CLIP:Object;
@@ -40,7 +40,7 @@
 		private var _stage:StageReference;
 		private var _HIT_ROOT:Object;
 		
-		public function MCYScroller(target_clip:Object, scroll_distance:Number, visible_height:Number, hit_root:Object=null)
+		public function MCYScroller3(target_clip:Object, scroll_distance:Number, visible_height:Number, hit_root:Object=null)
 		{
 			super();
 			
@@ -165,6 +165,8 @@
 		{
 			var downY:Number;
 			var curY:Number;
+			
+			trace("this.alpha = " + this.alpha)
 			
 			_PERCENT = (100 / indent) * (this.y - _MIN_SCROLLER_Y);
 			

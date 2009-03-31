@@ -55,32 +55,25 @@
 		
 		////////////////////////// TO POSITION X
 		
-		public static function ToPositionX(mc:Object, xpos:Number, time:Number, alphavalue=NaN, _delay:Number=0):void
+		public static function ToPositionX(mc:Object, xpos:Number, _time:Number=0.5, alphavalue=NaN, _delay:Number=0, _transition:String="EaseOutSine"):void
 		{
-			if (isNaN(alphavalue)) 
-			{
-				TweenLite.to(mc, time, { x:xpos, ease:Sine.easeInOut, delay:_delay} );
-			}
-			else
-			{
-				TweenLite.to(mc, time, { x:xpos, alpha:alphavalue, ease:Sine.easeInOut, delay:_delay} );
-			}	
+			Tweener.addTween(mc, {x:xpos, time:_time, alpha:isNaN(alphavalue) ? 1 : alphavalue, delay:_delay , transition:_transition})
 		}
 		
 		////////////////////////// TO POSITION Y
 		
-		public static function ToPositionY(mc:Object, ypos:Number, _time:Number, alphavalue:Number=NaN, _transition:String="EaseOutSine"):void
+		public static function ToPositionY(mc:Object, ypos:Number, _time:Number=0.5, alphavalue:Number=NaN, _delay:Number=0, _transition:String="EaseOutSine"):void
 		{
+			Tweener.addTween(mc, { y:ypos, time:_time, alpha:isNaN(alphavalue) ? 1 : alphavalue, delay:_delay , transition:_transition } )
+			/*
 			if (isNaN(alphavalue)) 
 			{
-				//TweenLite.to(mc, time, { y:ypos, ease:Linear.easeOut } );
 				Tweener.addTween(mc, {y:ypos, time:_time, transition:_transition})
 			}
 			else
 			{
-				//TweenLite.to(mc, time, { y:ypos, alpha:alphavalue, ease:Linear.easeOut } );
 				Tweener.addTween(mc, {y:ypos, alpha:alphavalue, time:_time, transition:_transition})
-			}
+			}*/
 		}
 		
 		////////////////////////// TO POSITION Y Custom Ease

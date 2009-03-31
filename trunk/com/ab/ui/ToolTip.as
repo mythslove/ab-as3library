@@ -1,6 +1,6 @@
 ﻿package com.ab.ui 
 {
-	import com.ab.display.ABMovieClip;
+	import com.edigma.display.EdigmaSprite;
 	import flash.display.MovieClip;
 	import flash.text.TextField;
 	import flash.events.Event;
@@ -12,7 +12,7 @@
 	* @author ABº
 	*/
 	
-	public class ToolTip extends ABMovieClip
+	public class ToolTip extends EdigmaSprite
 	{
 		public var tooltipbox_mc:MovieClip
 		
