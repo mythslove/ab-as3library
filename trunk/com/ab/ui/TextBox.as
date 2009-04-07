@@ -33,6 +33,8 @@
 		public var _TEXT_MC_INITHEIGHT:Number;
 		public var scrollback:Object;
 		public var _USING_SCROLL:Boolean=false;
+		public var init_x:Number;
+		public var open_x:Number;
 		
 		public function TextBox(title:String, text:String)
 		{
@@ -55,6 +57,9 @@
 			fuckitallyeah.size = 35
 			title_tf.setTextFormat(fuckitallyeah)
 			title_tf.autoSize = TextFieldAutoSize.LEFT;
+			
+			init_x = this.x
+			open_x = this.x - 18
 			
 			if (_TITULO != null) 
 			{
