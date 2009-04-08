@@ -51,6 +51,8 @@
 			_TARGET_MAX_X = _TARGET_CLIP.x
 			_TARGET_MIN_X = _TARGET_MAX_X - target_clip.width + _VISIBLE_WIDTH
 			
+			trace ("MCXScroller ::: _TARGET_MIN_X = " + _TARGET_MIN_X ); 
+			
 			_TARGET_WIDTH = _TARGET_CLIP.width
 			
 			_MAX_SCROLLER_X = this.x + scroll_distance - this.width // maximo x da scroll handle
@@ -134,7 +136,16 @@
 				final_value += diff / 4;
 			}
 			
-			_TARGET_CLIP.x = Math.floor(final_value)
+			var yes:Number = Math.floor(final_value)
+			
+			if (yes > _TARGET_MIN_X)
+			{
+				_TARGET_CLIP.x = yes;
+			}
+			else
+			{
+				_TARGET_CLIP.x = _TARGET_MIN_X;
+			}
 		}	
 	}
 }
