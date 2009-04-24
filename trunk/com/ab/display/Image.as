@@ -1,36 +1,43 @@
 ﻿package com.ab.display
 {
 	/**
+	* 
 	* @author ABº
+	* use it screw it and sell it, no problem
+	* 
+	* @about
+	* Use this class to create an image somewhere in your code - fast
+	* it extends Sprite so you can mess with the usual parameters
+	* 
+	* @requirements
+	* nothing
+	* 
+	* @example
+	* import com.ab.display.Image;
+	* 
+	* var nicevarname:Image = new Image(image_url, oncomplete_function, onprogress_function);
+	* addChild(nicevarname);
+	* 
+	* // the on_complete and on_progress functions are optional
+	* 
 	*/
 	
-	
-	import com.edigma.display.EdigmaSprite;
     import flash.display.Loader;
     import flash.display.Sprite;
     import flash.events.*;
     import flash.net.URLRequest;
-	import com.ab.utils.Make;
-	import caurina.transitions.Tweener
-	import flash.display.MovieClip;
-	import org.casalib.util.RatioUtil
 	
-	public class Image extends EdigmaSprite
+	public class Image extends Sprite
 	{
         private var url:String;
         private var request:URLRequest;
 		private var loader:Loader;
-		private var _ITEM:Object;
 		
-		private var _ARRAY_LENGTH:Number;
 		private var _ON_COMPLETE_FUNCTION:Function;
 		private var _ON_PROGRESS_FUNCTION:Function;
-		static private var _TARGET_MC:Object;
 		
 		public function Image(given_url:String, onImageLoadComplete:Function=null, onImageLoadProgress:Function=null):void
         {
-			super()
-			
 			_ON_COMPLETE_FUNCTION = onImageLoadComplete;
 			_ON_PROGRESS_FUNCTION = onImageLoadProgress;
 			
@@ -47,7 +54,7 @@
             this.addChild(loader);
 		}
 		
-		////////////////////////////////////////////////////// LISTENERS
+		/// ////////////////////////////////////////////////// LISTENERS
 		
         private function configureListeners(dispatcher:IEventDispatcher):void 
 		{
@@ -58,11 +65,11 @@
 			dispatcher.addEventListener(ProgressEvent.PROGRESS, progressHandler);
         }
 		
-		////////////////////////////////////////////////////// RESULTS
+		/// ////////////////////////////////////////////////// RESULTS
 		
         private function completeHandler(event:Event):void
 		{
-            trace("completeHandler: " + event);
+            //trace("completeHandler: " + event);
         }
 		
         private function httpStatusHandler(event:HTTPStatusEvent):void
@@ -74,8 +81,7 @@
 		{
 			if (_ON_COMPLETE_FUNCTION != null) 
 			{
-				_ON_COMPLETE_FUNCTION(_TARGET_MC)
-				//_ON_COMPLETE_FUNCTION(this)
+				_ON_COMPLETE_FUNCTION(this)
 			}
         }
 		
@@ -94,15 +100,6 @@
 			}
         }
 		
-		public static function load(url:String, target:Object, onComplete:Function = null, onProgress:Function = null):Image
-		{
-			_TARGET_MC = target
-			var img:* = new Image(url, onComplete, onProgress);
-			target.addChild(img);
-			img.load();
-			return img;
-		}
-		
-		////////////////////////////////////////////////////// END OF CLASS
+		/// ////////////////////////////////////////////////// END OF CLASS
 	}
 }
