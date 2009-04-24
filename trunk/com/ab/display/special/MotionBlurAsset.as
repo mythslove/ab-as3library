@@ -10,10 +10,12 @@
 	* add it to the stage, and if it moves it will have a blur trail
 	* 
 	* @requirements
-	* FIRST YO NEED TO INITIALIZE A STAGE REFERENCE
+	* FIRST YOU NEED TO INITIALIZE A STAGE REFERENCE
 	* THIS CLASS USES CASALIB's STAGEREFERENCE CLASS
 	* WHICH IS INITIALIZED IN THE ROOT WITH "StageReference.setStage(stage)"
-	* IF YOU HAVE A RESIZEABLE STAGE YOU NEDD TO TWEAK THIS CLASS (line 61)
+	* IF YOU HAVE A RESIZEABLE STAGE YOU NEED TO TWEAK THIS CLASS (line 61)
+	* 
+	* StageReference is required (www.casalib.org)
 	* 
 	* @example
 	* import com.ab.display.special.MotionBlurAsset;

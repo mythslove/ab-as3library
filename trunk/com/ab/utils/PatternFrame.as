@@ -2,6 +2,9 @@
 {
 	/**
 	* @author ABº
+	* 
+	* this class allows you to create a graphic frame on any in the stage
+	* nice for photos and stuff
 	*/
 	
 	public class PatternFrame

@@ -4,8 +4,7 @@
 	* @author ABº
 	*/
 	
-	import com.edigma.display.EdigmaSprite;
-	import com.edigma.display.Image;
+	import com.ab.display.ABSprite;
 	
 	import org.casalib.util.StageReference;
 	
@@ -13,12 +12,11 @@
 	import flash.events.MouseEvent;
 	import caurina.transitions.Tweener;
 	import flash.events.Event;
-	import com.gaiaframework.api.Gaia
 	
-	public class GlobalPreloader extends EdigmaSprite
+	public class GlobalPreloader extends ABSprite
 	{
-		private var bg_mc:EdigmaSprite
-		private var assetholder_mc:EdigmaSprite
+		private var bg_mc:ABSprite
+		private var assetholder_mc:ABSprite
 		private var _instance:*
 		
 		public function GlobalPreloader(preloader_asset:*, bg_colour:uint=0x000000)
@@ -27,8 +25,8 @@
 			this.y = 0
 			this.alpha = 0
 			
-			bg_mc = new EdigmaSprite()
-			assetholder_mc =  new EdigmaSprite()
+			bg_mc = new ABSprite()
+			assetholder_mc =  new ABSprite()
 			
 			this.addChildAt(bg_mc, 0)
 			

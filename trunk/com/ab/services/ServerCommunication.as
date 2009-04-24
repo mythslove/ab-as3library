@@ -2,13 +2,12 @@
 package com.ab.services
 {
 	/**
-	* @authors
-	* 
+	* @author
 	* ABº
-	* ...
+	* 
+	* IF YOU USE AMFPHP YOU KNOW HOW TO USE THIS CLASS
 	*/
 	
-	//import com.ab.as3websystem.core.Core
 	import flash.display.MovieClip;
 	
 	import com.edigma.services.ServiceProxy

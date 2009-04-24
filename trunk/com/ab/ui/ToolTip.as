@@ -1,8 +1,7 @@
 ﻿package com.ab.ui 
 {
-	import com.edigma.display.EdigmaSprite;
+	import com.ab.display.ABSprite
 	import flash.display.MovieClip;
-	import flash.text.TextField;
 	import flash.events.Event;
 	import flash.display.Stage
 	import flash.ui.Mouse
@@ -10,9 +9,11 @@
 	
 	/**
 	* @author ABº
+	* 
+	* /// THIS CLASS IS NOT READY FOR USE - USE IT ONLY IF YOU ARE WILLING TO FINISH IT
 	*/
 	
-	public class ToolTip extends EdigmaSprite
+	public class ToolTip extends ABSprite
 	{
 		public var tooltipbox_mc:MovieClip
 		

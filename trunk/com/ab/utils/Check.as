@@ -2,7 +2,16 @@
 {
 	
 	/**
+	* 
 	* @author ABº
+	* 
+	* @example
+	* import com.ab.utils.Check
+	* 
+	* var test:Boolean = Check.Email(email_string)
+	* 
+	* if (test == true) { be happy };
+	* 
 	*/
 	
 	public class Check 

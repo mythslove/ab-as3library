@@ -2,6 +2,8 @@
 /**
 * @author ABº
 * @version 1.0
+* 
+* IF YOU USE AMFPHP YOU KNOW HOW TO USE THIS CLASS
 */
 
 package com.ab.services
@@ -9,7 +11,6 @@ package com.ab.services
 	import com.niarbtfel.remoting.*
 	import com.niarbtfel.remoting.cache.RemotingCache;
 	import com.niarbtfel.remoting.events.*
-	import com.edigma.web.EdigmaCore;
 	import com.edigma.ui.AlertWindow;
 	
     public class ServiceProxy

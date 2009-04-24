@@ -4,6 +4,8 @@
 	* 
 	* @author ABº
 	* 
+	* THIS CLASS IS NOT READY FOR USE
+	* 
 	*/
 	
     import flash.display.Loader;
