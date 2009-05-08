@@ -4,6 +4,7 @@
 	/**
 	* 
 	* @author ABº
+	* http://blog.antoniobrandao.com/
 	* 
 	* @example
 	* import com.ab.utils.Check

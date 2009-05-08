@@ -4,6 +4,7 @@
 	/**
 	* ...
 	* @author ABº
+	* http://blog.antoniobrandao.com/
 	* 
 	* A clip in the library is required - associated with this class
 	* 

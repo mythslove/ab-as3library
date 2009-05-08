@@ -1,9 +1,8 @@
 ﻿package com.ab.utils 
 {
 	/**
-	* 
 	* @author ABº
-	* 
+	* http://blog.antoniobrandao.com/
 	*/
 	
 	import flash.net.URLRequest

@@ -2,9 +2,14 @@
 {
 	/**
 	* @author ABº
+	* http://blog.antoniobrandao.com/
 	* 
 	* this class allows you to create a graphic frame on any in the stage
+	* USING A BITMAP FROM THE LIBRARY - for the pattern
 	* nice for photos and stuff
+	* 
+	* the pattern is mandatory
+	* later will be made optional and a solid color will be used in case the pattern parameter isn't given
 	*/
 	
 	public class PatternFrame
@@ -13,7 +18,6 @@
 		private var _FRAME_OBJECT:Object;
 		private var _FRAME_SIZE:Number;
 		private var _PATTERN:*;
-		
 		
 		public function PatternFrame(target_object:Object, frame_object:Object, pattern:*, frame_size:Number=10)
 		{

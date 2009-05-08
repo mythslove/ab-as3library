@@ -1,11 +1,25 @@
-﻿package com.ab.utils 
+﻿/**
+* 
+* @author ABº
+* http://blog.antoniobrandao.com/
+* 
+* Handy class to move objects on stage with the minimum of hassle
+* extra optional parameters can be passed such as ALPHA, TRANSITION STYLE etc
+* 
+* USAGE : 
+* 
+* 	  import com.ab.utils.Place
+* 
+* 	  Place.ItemsInGrid(items_array, 3, 3, 10, 10)
+* 
+* DEPENDENCIES :
+* 
+* 	  none
+*/
+
+package com.ab.utils 
 {
-	/**
-	* @author ABº
-	*/
-	
 	import flash.display.MovieClip
-	import caurina.transitions.Tweener
 	
 	public class Place
 	{

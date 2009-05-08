@@ -1,11 +1,24 @@
-﻿package com.ab.utils 
+﻿/**
+* 
+* @author ABº
+* http://blog.antoniobrandao.com/
+* 
+* Handy class to move objects on stage with the minimum of hassle
+* extra optional parameters can be passed such as ALPHA, TRANSITION STYLE etc
+* 
+* USAGE : 
+* 
+* 	  import com.ab.utils.Move
+* 
+* 	  Move.ToPositionX(object_instance_name, 130, 2)
+* 
+* DEPENDENCIES :
+* 
+* 	  Tweener
+*/
+
+package com.ab.utils 
 {
-	/**
-	*
-	* @author ABº
-	* 
-	*/
-	
 	import flash.display.MovieClip
 	
 	import gs.TweenLite
@@ -51,39 +64,30 @@
 			_ASM_ARRAY = new Array()
 		}
 		
-		///////////// MCS ///////////////////////
+		/// ///////// MCS ///////////////////////
 		
-		////////////////////////// TO POSITION X
+		/// ////////////////////// TO POSITION X
 		
 		public static function ToPositionX(mc:Object, xpos:Number, _time:Number=0.5, alphavalue=NaN, _delay:Number=0, _transition:String="EaseOutSine"):void
 		{
 			Tweener.addTween(mc, {x:xpos, time:_time, alpha:isNaN(alphavalue) ? 1 : alphavalue, delay:_delay , transition:_transition})
 		}
 		
-		////////////////////////// TO POSITION Y
+		/// ////////////////////// TO POSITION Y
 		
 		public static function ToPositionY(mc:Object, ypos:Number, _time:Number=0.5, alphavalue:Number=NaN, _delay:Number=0, _transition:String="EaseOutSine"):void
 		{
 			Tweener.addTween(mc, { y:ypos, time:_time, alpha:isNaN(alphavalue) ? 1 : alphavalue, delay:_delay , transition:_transition } )
-			/*
-			if (isNaN(alphavalue)) 
-			{
-				Tweener.addTween(mc, {y:ypos, time:_time, transition:_transition})
-			}
-			else
-			{
-				Tweener.addTween(mc, {y:ypos, alpha:alphavalue, time:_time, transition:_transition})
-			}*/
 		}
 		
-		////////////////////////// TO POSITION Y Custom Ease
+		/// ////////////////////// TO POSITION Y Custom Ease
 		
 		public static function ToPositionYCustomEase(mc:Object, ypos:Number, time:Number):void
 		{
 			TweenLite.to(mc, time, { y:ypos, ease:Bounce.easeInOut} );
 		}
 		
-		////////////////////////// TO POSITION X Y
+		/// ////////////////////// TO POSITION X Y
 		
 		public static function ToPositionXY(mc:Object, xpos:Number, ypos:Number, time:Number, alphavalue:Number=NaN, transitionstyle:Function=null):void
 		{
@@ -111,19 +115,19 @@
 			}
 		}
 		
-		////////////////////////// TO POSITION X WITH RESIZE
+		/// ////////////////////// TO POSITION X WITH RESIZE
 		
 		public static function ToPositionXresizeWidth(mc:Object, xpos:Number, _width:Number, time:Number ):void
 		{
 			TweenLite.to(mc, time, { x:xpos, width:_width, alpha:1, ease:Elastic.easeOut} );
 		}
 		
-		///////////// ARRAYS ///////////////////////
+		/// ///////// ARRAYS ///////////////////////
 		
-		////////////////////////// ARRAY TO POSITION X
-		////////////////////////// ARRAY TO POSITION X
-		////////////////////////// ARRAY TO POSITION X
-		////////////////////////// ARRAY TO POSITION X
+		/// ////////////////////// ARRAY TO POSITION X
+		/// ////////////////////// ARRAY TO POSITION X
+		/// ////////////////////// ARRAY TO POSITION X
+		/// ////////////////////// ARRAY TO POSITION X
 		
 		public static function arrayToPositionX(array:Array, time:Number, position:Number, alphavalue:Number=NaN, exception:Object=null):void
 		{
@@ -157,10 +161,10 @@
 			}
 		}
 		
-		////////////////////////// ARRAY TO POSITION Y
-		////////////////////////// ARRAY TO POSITION Y
-		////////////////////////// ARRAY TO POSITION Y
-		////////////////////////// ARRAY TO POSITION Y
+		/// ////////////////////// ARRAY TO POSITION Y
+		/// ////////////////////// ARRAY TO POSITION Y
+		/// ////////////////////// ARRAY TO POSITION Y
+		/// ////////////////////// ARRAY TO POSITION Y
 		
 		public static function arrayToPositionY(array:Array, time:Number, position:Number, alphavalue:Number=NaN, exception:Object=null):void
 		{
@@ -194,10 +198,10 @@
 			}
 		}
 		
-		////////////////////////// ARRAY TO PROPERTY POSITION X
-		////////////////////////// ARRAY TO PROPERTY POSITION X
-		////////////////////////// ARRAY TO PROPERTY POSITION X
-		////////////////////////// ARRAY TO PROPERTY POSITION X
+		/// ////////////////////// ARRAY TO PROPERTY POSITION X
+		/// ////////////////////// ARRAY TO PROPERTY POSITION X
+		/// ////////////////////// ARRAY TO PROPERTY POSITION X
+		/// ////////////////////// ARRAY TO PROPERTY POSITION X
 		
 		public static function arrayToPropertyPositionX(array:Array, time:Number, property:String, alphavalue:Number=NaN, exception:Object=null):void
 		{
@@ -231,10 +235,10 @@
 			}
 		}
 		
-		////////////////////////// ARRAY TO PROPERTY POSITION Y
-		////////////////////////// ARRAY TO PROPERTY POSITION Y
-		////////////////////////// ARRAY TO PROPERTY POSITION Y
-		////////////////////////// ARRAY TO PROPERTY POSITION Y
+		/// ////////////////////// ARRAY TO PROPERTY POSITION Y
+		/// ////////////////////// ARRAY TO PROPERTY POSITION Y
+		/// ////////////////////// ARRAY TO PROPERTY POSITION Y
+		/// ////////////////////// ARRAY TO PROPERTY POSITION Y
 		
 		public static function arrayToPropertyPositionY(array:Array, time:Number, property:String, alphavalue:Number=NaN, exception:Object=null):void
 		{
@@ -268,10 +272,10 @@
 			}
 		}
 		
-		////////////////////////// ARRAY SEQUENTIALLY TO POSITION X
-		////////////////////////// ARRAY SEQUENTIALLY TO POSITION X
-		////////////////////////// ARRAY SEQUENTIALLY TO POSITION X
-		////////////////////////// ARRAY SEQUENTIALLY TO POSITION X
+		/// ////////////////////// ARRAY SEQUENTIALLY TO POSITION X
+		/// ////////////////////// ARRAY SEQUENTIALLY TO POSITION X
+		/// ////////////////////// ARRAY SEQUENTIALLY TO POSITION X
+		/// ////////////////////// ARRAY SEQUENTIALLY TO POSITION X
 		
 		public static function arraySequentiallyToPositionX(array:Array, position_x:Number, time:Number, alphavalue:Number=NaN, exception:Object=null, on_complete_function:Function=null):void
 		{
@@ -298,6 +302,7 @@
 			performASMX()
 		}
 		
+		/// system
 		static private function performASMX():void
 		{
 			if (_ASMX_ARRAY[_ASMX_COUNTER] != null )
@@ -339,10 +344,10 @@
 			}
 		}
 		
-		////////////////////////// ARRAY SEQUENTIALLY TO POSITION Y
-		////////////////////////// ARRAY SEQUENTIALLY TO POSITION Y
-		////////////////////////// ARRAY SEQUENTIALLY TO POSITION Y
-		////////////////////////// ARRAY SEQUENTIALLY TO POSITION Y
+		/// ////////////////////// ARRAY SEQUENTIALLY TO POSITION Y
+		/// ////////////////////// ARRAY SEQUENTIALLY TO POSITION Y
+		/// ////////////////////// ARRAY SEQUENTIALLY TO POSITION Y
+		/// ////////////////////// ARRAY SEQUENTIALLY TO POSITION Y
 		
 		public static function arraySequentiallyToPositionY(array:Array, position_y:Number, time:Number, alphavalue:Number=NaN, exception:Object=null, on_complete_function:Function=null):void
 		{
@@ -369,6 +374,7 @@
 			performASMY()
 		}
 		
+		/// system
 		static private function performASMY():void
 		{
 			if (_ASMY_ARRAY[_ASMY_COUNTER] != null)
@@ -410,10 +416,10 @@
 			}
 		}
 		
-		////////////////////////// ARRAY SEQUENTIALLY TO PROPERTY POSITION X
-		////////////////////////// ARRAY SEQUENTIALLY TO PROPERTY POSITION X
-		////////////////////////// ARRAY SEQUENTIALLY TO PROPERTY POSITION X
-		////////////////////////// ARRAY SEQUENTIALLY TO PROPERTY POSITION X
+		/// ////////////////////// ARRAY SEQUENTIALLY TO PROPERTY POSITION X
+		/// ////////////////////// ARRAY SEQUENTIALLY TO PROPERTY POSITION X
+		/// ////////////////////// ARRAY SEQUENTIALLY TO PROPERTY POSITION X
+		/// ////////////////////// ARRAY SEQUENTIALLY TO PROPERTY POSITION X
 		
 		public static function arraySequentiallyToPropertyPositionX(array:Array, property_x:String, time:Number, alphavalue:Number=NaN, exception:Object=null):void
 		{
@@ -435,6 +441,7 @@
 			performASMXProp()
 		}
 		
+		/// system
 		static private function performASMXProp():void
 		{
 			if (_ASMX_ARRAY[_ASMX_COUNTER] != null ) 
@@ -469,10 +476,10 @@
 			}
 		}
 		
-		////////////////////////// ARRAY SEQUENTIALLY TO PROPERTY POSITION Y
-		////////////////////////// ARRAY SEQUENTIALLY TO PROPERTY POSITION Y
-		////////////////////////// ARRAY SEQUENTIALLY TO PROPERTY POSITION Y
-		////////////////////////// ARRAY SEQUENTIALLY TO PROPERTY POSITION Y
+		/// ////////////////////// ARRAY SEQUENTIALLY TO PROPERTY POSITION Y
+		/// ////////////////////// ARRAY SEQUENTIALLY TO PROPERTY POSITION Y
+		/// ////////////////////// ARRAY SEQUENTIALLY TO PROPERTY POSITION Y
+		/// ////////////////////// ARRAY SEQUENTIALLY TO PROPERTY POSITION Y
 		
 		public static function arraySequentiallyToPropertyPositionY(array:Array, property_y:String, time:Number, alphavalue:Number=NaN, exception:Object=null):void
 		{
@@ -494,6 +501,7 @@
 			performASMYProp()
 		}
 		
+		/// system
 		static private function performASMYProp():void
 		{
 			if (_ASMY_ARRAY[_ASMY_COUNTER] != null ) 
@@ -528,14 +536,14 @@
 			}
 		}
 		
-		////////////////////////////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// ////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// ////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// ////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// ////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		
 		
-		// TODO ::: FINISH THIS ONE  // TODO ::: FINISH THIS ONE  // TODO ::: FINISH THIS ONE  // TODO ::: FINISH THIS ONE  
+		/// TODO ::: FINISH THIS ONE  // TODO ::: FINISH THIS ONE  // TODO ::: FINISH THIS ONE  // TODO ::: FINISH THIS ONE  
 		public static function arrayToRelativePositionYexceptClip(array:Array, time:Number, relativeposition:Number, exception:Object):void
 		{
 			for (var i:int = 0; i < array.length; i++) 
@@ -546,7 +554,7 @@
 				}
 			}
 		}
-		// TODO ::: FINISH THIS ONE  // TODO ::: FINISH THIS ONE  // TODO ::: FINISH THIS ONE  // TODO ::: FINISH THIS ONE  
+		/// TODO ::: FINISH THIS ONE  // TODO ::: FINISH THIS ONE  // TODO ::: FINISH THIS ONE  // TODO ::: FINISH THIS ONE  
 		public static function arrayToRelativePositionXexceptClip(array:Array, time:Number, relativeposition:Number, exception:Object):void
 		{
 			for (var i:int = 0; i < array.length; i++) 

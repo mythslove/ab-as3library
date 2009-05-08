@@ -3,7 +3,9 @@
 	
 	/**
 	* @author ABº
-	* * Co-author Promag
+	* http://blog.antoniobrandao.com/
+	* Co-author Promag (http://blog.namespacepromag.com/
+	* 
 	*/
 	import org.casalib.util.StringUtil
 	

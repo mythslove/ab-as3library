@@ -2,6 +2,14 @@
 {
 	/**
 	* @author ABº
+	* http://blog.antoniobrandao.com/
+	* 
+	* Object killing utility
+	* 
+	* Dependencies: Tweenlite
+	* 
+	* Still in development
+	* 
 	*/
 	
 	import flash.display.MovieClip
@@ -15,7 +23,7 @@
 		
 		public function Kill()
 		{
-			// e quê tá tudo ?
+			/// this class needs work
 		}
 		
 		///////////// SIMPLE ///////////////////////////////////////////////////////////////////////////////////////
@@ -74,17 +82,13 @@
 		}
 		
 		
-		/////////////////////////////////////////////////////// SYSTEM
-		/////////////////////////////////////////////////////// SYSTEM
-		/////////////////////////////////////////////////////// SYSTEM
+		/// /////////////////////////////////////////////////// SYSTEM
+		/// /////////////////////////////////////////////////// SYSTEM
+		/// /////////////////////////////////////////////////// SYSTEM
 		
 		static private function destroyObject(mc_in_array:Array):void
 		{
-			//params[0].parent.removeChild(params[0]);
-			
 			mc_in_array[0].parent.removeChild(mc_in_array[0]);
-			
-			//DebugTF.getSingleton().echo("typeof mc_in_array[0] = " + typeof mc_in_array[0])
 			
 			System.gc()
 		}

@@ -3,7 +3,7 @@
 	/**
 	* ...
 	* @author ABº
-	* 
+	* http://blog.antoniobrandao.com/
 	*/
 	
 	import flash.display.MovieClip

@@ -2,6 +2,7 @@
 {
 	/**
 	* @author ABº
+	* http://blog.antoniobrandao.com/
 	*/
 	
 	import com.gaiaframework.assets.DisplayObjectAsset;

@@ -9,7 +9,7 @@
 	
 	/**
 	* @author ABº
-	* 
+	* http://blog.antoniobrandao.com/
 	*/
 	
 	/**

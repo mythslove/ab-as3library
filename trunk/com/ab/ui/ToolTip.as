@@ -9,6 +9,7 @@
 	
 	/**
 	* @author ABº
+	* http://blog.antoniobrandao.com/
 	* 
 	* /// THIS CLASS IS NOT READY FOR USE - USE IT ONLY IF YOU ARE WILLING TO FINISH IT
 	*/

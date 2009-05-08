@@ -3,6 +3,7 @@
 	/**
 	* 
 	* @author ABº
+	* http://blog.antoniobrandao.com/
 	* 
 	* THIS CLASS IS NOT READY FOR USE
 	* 

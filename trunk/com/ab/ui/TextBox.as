@@ -3,6 +3,7 @@
 	/**
 	* @author ABº
 	* A clip in the library is required - associated with this class
+	* http://blog.antoniobrandao.com/
 	*/
 	
 	import com.edigma.display.EdigmaSprite;

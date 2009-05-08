@@ -1,16 +1,30 @@
-﻿package com.ab.utils
+﻿
+/**
+* @author ABº
+* http://blog.antoniobrandao.com/
+* 
+* Handy class to detect the famous HitTest
+* supports detection for individual objects or a collection of objects stored in an Array
+* make sure you pass a valid stage reference - if needed use CasaLib's stagereference class http://casalib.org
+* 
+* 
+* USAGE : 
+* 
+* 	  import com.ab.utils.HitTest
+* 
+* 	  if( MouseHitObject(object_instance_name, stage) == true)
+* 	  {
+* 	      createPanic();
+*     }
+* 
+* DEPENDENCIES :
+* 
+* 	  none, just assure you pass a valid stage reference
+*/
+
+package com.ab.utils
 {
-	import flash.display.BitmapData;
-	import flash.display.BlendMode;
-	import flash.display.DisplayObject;
-	import flash.display.Sprite;
 	import flash.display.Stage;
-   
-	import flash.geom.ColorTransform;
-	import flash.geom.Matrix;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	import org.casalib.util.StageReference;
    
 	public class HitTest
 	{

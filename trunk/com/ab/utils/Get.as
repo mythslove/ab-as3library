@@ -3,6 +3,7 @@
 	
 	/**
 	* @author ABº
+	* http://blog.antoniobrandao.com/
 	*/
 	
 	public class Get 
