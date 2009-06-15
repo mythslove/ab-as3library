@@ -23,7 +23,7 @@
 	* 
 	* 	  EventCentral.getInstance().addEventListener(ExampleEvent.EVENT_TYPE, eventListenerFunction)
 	* 
-	* 	  public function mesaInteractiveEventListener(e:MesaInteractivaEvent):void 
+	* 	  public function mesaInteractiveEventListener(e:ExampleEvent):void 
 	*	  { 
 	*	  	  trace ("AppManager ::: SENSOR DATA RECEIVED = " + e.data ); 
 	*	  }
