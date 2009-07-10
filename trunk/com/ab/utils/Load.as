@@ -3,10 +3,10 @@
 	/**
 	* 
 	* @author ABº
+	* http://www.antoniobrandao.com/
 	* http://blog.antoniobrandao.com/
 	* 
-	* THIS CLASS IS NOT READY FOR USE
-	* 
+	* THIS CLASS IS UNDER CONSTRUCTION: NOT READY FOR USE
 	*/
 	
     import flash.display.Loader;

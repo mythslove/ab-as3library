@@ -5,23 +5,24 @@
 	
 	/**
 	* @author ABº
+	* http://www.antoniobrandao.com/
 	* http://blog.antoniobrandao.com/
 	*
 	* @USAGE : 
 	* 
 	*     - to dispatch events:
 	* 
-	* 	  import com.ab.events.EventCentral
+	* 	  import com.ab.events.CentralEventSystem
 	* 
-	* 	  EventCentral.getInstance().dispatchEvent(new ExampleEvent(ExampleEvent.EVENT_TYPE, some_data));
+	* 	  CentralEventSystem.getInstance().dispatchEvent(new ExampleEvent(ExampleEvent.EVENT_TYPE, some_data));
 	* 
 	*     -------------------------------------
 	* 
 	* 	  - to receive events: import class, add event listener, create listener function
 	* 
-	* 	  import com.ab.events.EventCentral
+	* 	  import com.ab.events.CentralEventSystem
 	* 
-	* 	  EventCentral.getInstance().addEventListener(ExampleEvent.EVENT_TYPE, eventListenerFunction)
+	* 	  CentralEventSystem.getInstance().addEventListener(ExampleEvent.EVENT_TYPE, eventListenerFunction)  ( LISTENERS ARE ADDED TO THE SIGLETON ITSELF)
 	* 
 	* 	  public function mesaInteractiveEventListener(e:ExampleEvent):void 
 	*	  { 
@@ -34,22 +35,23 @@
 	*/
 	
 	
-	public class EventCentral extends EventDispatcher
+	public class CentralEventSystem extends EventDispatcher
 	{
-		private static var instance:EventCentral = new EventCentral();
+		private static var instance:CentralEventSystem = new CentralEventSystem();
 		
-		public function EventCentral():void
+		public function CentralEventSystem():void
 		{
 			super();
+			
 			if (instance)
 			{
-				throw new Error("Error: EventCentral can only be accessed through EventCentral.getInstance()");
+				throw new Error("Error: CentralEventSystem can only be accessed through CentralEventSystem.getInstance()");
 			}
 			
-			trace("::: EventCentral :::")
+			trace("::: CentralEventSystem Cnostructor :::")
 		}
 		
-		public static function getInstance():EventCentral
+		public static function getSingleton():CentralEventSystem
 		{
 			return instance;
 		}	
