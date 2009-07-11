@@ -10,12 +10,12 @@ package com.ab.services
 	
 	import flash.display.MovieClip;
 	
-	import com.edigma.services.ServiceProxy
+	import com.ab.services.ServiceProxy
 	
 	import com.niarbtfel.remoting.events.ResultEvent
 	import com.niarbtfel.remoting.events.FaultEvent
 	
-	import com.edigma.web.EdigmaCore
+	import com.ab.web.ABCore
 	
 	public class ServerCommunication 
 	{
@@ -72,31 +72,32 @@ package com.ab.services
 		
 		public function listarRequest(resultFunction:Function, id_categoria:*, lang:Number=NaN):void
 		{
-			_LISTAR_BUSY = true
+			//_LISTAR_BUSY = true
 			
-			var a:Array = new Array();
+			//var a:Array = new Array();
 			
 			
-			a['id_cliente'] = EdigmaCore.getSingleton()._ID_CLIENTE;
+			//a['id_cliente'] = EdigmaCore.getSingleton()._ID_CLIENTE;
 			//a['id_cliente'] = _ID_CLIENTE;
-			a['id_categoria'] = id_categoria
+			//a['id_categoria'] = id_categoria
 			
-			if (!isNaN(lang))
-			{
-				a['id_lingua'] = lang
-			}
+			//if (!isNaN(lang))
+			//{
+				//a['id_lingua'] = lang
+			//}
 			
-			ServiceProxy.getInstance().callRemoteMethod("listar", [a], resultFunction, listarFaultHandler);
+			//ServiceProxy.getInstance().callRemoteMethod("listar", [a], resultFunction, listarFaultHandler);
 		}
 		
 		public function hierarquiaRequest(resultFunction:Function, referencia_hierarquia:String, lang:Number=NaN):void
 		{
+			/*
 			_HIERARQUIA_BUSY = true
 			
 			var a:Array = new Array();
 			
 			//a['id_cliente'] = _ID_CLIENTE;
-			a['id_cliente'] = EdigmaCore.getSingleton()._ID_CLIENTE;
+			//a['id_cliente'] = EdigmaCore.getSingleton()._ID_CLIENTE;
 			a['referencia'] = referencia_hierarquia
 			
 			if (!isNaN(lang))
@@ -105,10 +106,13 @@ package com.ab.services
 			}
 			
 			ServiceProxy.getInstance().callRemoteMethod("hierarquiasArvore", [a], resultFunction, hierarquiaFaultHandler);
+			
+			*/
 		}
 		
 		public function inserir_item(resultFunction:Function, referencia_hierarquia:String, campos:Array, np_grupo:String, np_utilizador:String, categorias:Array, activo:Boolean, lang:Number=NaN):void
 		{
+			/*
 			_INSERIR_BUSY = true
 			
 			var a:Array = new Array();
@@ -128,6 +132,7 @@ package com.ab.services
 			if (activo == true) { a['activo'] = "S" } else { a['activo'] = "N" }
 			
 			ServiceProxy.getInstance().callRemoteMethod("inserir_item", [a], resultFunction, inserirFaultHandler);
+			*/
 		}
 		
 		//////////////////////////////////////////////////////////////////////////////// SERVER RESULTS

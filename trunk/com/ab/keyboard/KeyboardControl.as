@@ -41,15 +41,24 @@
 		
 		private function keyDownHandler(e:KeyboardEvent):void 
 		{
-			trace ("KeyboardControl ::: keyDownHandler = " + e.keyCode); 
+			//trace ("KeyboardControl ::: keyDownHandler = " + e.keyCode); 
+			parseKey(e.keyCode)
+		}
+		
+		public function parseKey(code:int):void
+		{
+			/// avoid unnecessary code  - override this function
+			/// in a project specific class which extends it
 			
-			switch (e.keyCode) 
+			switch (code) 
 			{
 				case 49: /// key 0
 					/// operation here
+					trace("0")
 				break;
 				case 50: /// key 1
 					/// operation here
+					trace("1")
 				break;
 				case 51: /// key 2
 					/// operation here
