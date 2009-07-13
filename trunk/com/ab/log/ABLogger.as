@@ -132,17 +132,17 @@
 			//newitem.addEventListener(Event.ADDED_TO_STAGE, itemAddedHandler, false, 0, true)
 		}
 		
-		private function show():void
+		public function show():void
 		{
 			Make.MCVisible(this)
 		}
 		
-		private function hide():void
+		public function hide():void
 		{
 			Make.MCInvisible(this)
 		}
 		
-		private function toggleVisible():void
+		public function toggleVisible():void
 		{
 			if (this._visible == true) 
 			{

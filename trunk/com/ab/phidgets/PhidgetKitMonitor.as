@@ -227,19 +227,29 @@
 			this["_tf_monitor_" + _index].setTextFormat(_style);
 		}
 		
-		private function toggleVisible():void
+		public function show():void
+		{
+			Make.MCVisible(this)
+		}
+		
+		public function hide():void
+		{
+			Make.MCInvisible(this)
+		}
+		
+		public function toggleVisible():void
 		{
 			if (this._visible == true) 
 			{
 				this._visible = false;
 				
-				Make.MCInvisible(this)
+				hide()
 			}
 			else
 			{
 				this._visible = true;
 				
-				Make.MCVisible(this)
+				show()
 			}
 			
 		}
