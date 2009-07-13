@@ -25,7 +25,7 @@
 	 * GoToPositionXY
 	 * GoToColour
 	 * 
-	 * setAlign (alguns tipos falta miplementar a smoothness)
+	 * setAlign (alguns tipos falta implementar a smoothness)
 	 * 
 	 * SizeToXY
 	 * ScaleToXY
@@ -36,12 +36,13 @@
 	public dynamic class ABSprite extends CasaSprite
 	{
 		private var _SMOOTH_ALIGN = false;
-		private var h_padding:int = 0;
-		private var v_padding:int = 0;
-		private var _EASING_SPEED:int=8;
 		private var _ALIGN_TYPE:String;
-		private var _CUSTOM_HEIGHT:Number;
-		private var _CUSTOM_WIDTH:Number;
+		private var _h_padding:int = 0;
+		private var _v_padding:int = 0;
+		
+		public var _EASING_SPEED:int=8;
+		private var _custom_height:Number;
+		private var _custom_width:Number;
 		
 		public function ABSprite() 
 		{
@@ -58,9 +59,24 @@
 			}
 		}
 		
-		//// //// //// //// //// ALPHA METHODS //// //// //// //// ////
-		//// //// //// //// //// ALPHA METHODS //// //// //// //// ////
-		//// //// //// //// //// ALPHA METHODS //// //// //// //// ////
+		/// //// //// //// //// GETTERS / SETTERS //// //// //// //// ////
+		/// //// //// //// //// GETTERS / SETTERS //// //// //// //// ////
+		
+		public function get v_padding():int 					{ return _v_padding;      }
+		public function set v_padding(value:int):void 			{ _v_padding = value; 	  }
+		
+		public function get h_padding():int 					{ return _h_padding;      }
+		public function set h_padding(value:int):void 			{ _h_padding = value;     }
+		
+		public function get custom_height():Number 				{ return _custom_height;  }
+		public function set custom_height(value:Number):void  	{ _custom_height = value; }
+		
+		public function get custom_width():Number 				{ return _custom_width;   }
+		public function set custom_width(value:Number):void  	{ _custom_width = value;  }
+		
+		/// //// //// //// //// ALPHA METHODS //// //// //// //// ////
+		/// //// //// //// //// ALPHA METHODS //// //// //// //// ////
+		/// //// //// //// //// ALPHA METHODS //// //// //// //// ////
 		
 		public function GoVisible(duration:Number=NaN, onCompleteFunc:Function=null, _transition:String="EaseOutSine"):void
 		{
@@ -100,11 +116,11 @@
 			}
 		}
 		
-		//// //// //// //// //// MOVE METHODS //// //// //// //// //// 
-		//// //// //// //// //// MOVE METHODS //// //// //// //// //// 
-		//// //// //// //// //// MOVE METHODS //// //// //// //// //// 
+		/// //// //// //// //// MOVE METHODS //// //// //// //// //// 
+		/// //// //// //// //// MOVE METHODS //// //// //// //// //// 
+		/// //// //// //// //// MOVE METHODS //// //// //// //// //// 
 		
-		////////////////////////// TO POSITION X
+		/// ////////////////////// TO POSITION X
 		public function GoToPositionX(xpos:Number, duration:Number, alphavalue=NaN, _transition:String="EaseOutSine"):void
 		{
 			if (isNaN(alphavalue)) 
@@ -117,7 +133,7 @@
 			}	
 		}
 		
-		////////////////////////// TO POSITION Y
+		/// /////////////////////// TO POSITION Y
 		public function GoToPositionY(ypos:Number, duration:Number, alphavalue:Number=NaN, _transition:String="EaseOutSine"):void
 		{
 			if (isNaN(alphavalue)) 
@@ -130,7 +146,7 @@
 			}
 		}
 		
-		////////////////////////// TO POSITION X Y
+		/// /////////////////////// TO POSITION X Y
 		public function GoToPositionXY(xpos:Number, ypos:Number, duration:Number, alphavalue:Number=NaN, transitionstyle:String="EaseOutsine"):void
 		{
 			if (isNaN(alphavalue)) 
@@ -143,9 +159,9 @@
 			}
 		}
 		
-		//// //// //// //// //// SIZE METHODS
-		//// //// //// //// //// SIZE METHODS
-		//// //// //// //// //// SIZE METHODS
+		/// //// //// //// //// SIZE METHODS
+		/// //// //// //// //// SIZE METHODS
+		/// //// //// //// //// SIZE METHODS
 		
 		public function SizeToXY(_width:Number=NaN, _height:Number=NaN, _duration:Number=0.5, _alpha:Number=NaN, _transitionstyle:String="EaseOutsine"):void
 		{
@@ -156,9 +172,9 @@
 										transition: _transitionstyle } );
 		}
 		
-		//// //// //// //// //// SCALE METHODS
-		//// //// //// //// //// SCALE METHODS
-		//// //// //// //// //// SCALE METHODS
+		/// //// //// //// //// SCALE METHODS
+		/// //// //// //// //// SCALE METHODS
+		/// //// //// //// //// SCALE METHODS
 		
 		public function ScaleToXY(_xscale:Number=NaN, _yscale:Number=NaN, _duration:Number=0.5, _alpha:Number=NaN, _transitionstyle:String="EaseOutsine"):void
 		{
@@ -169,25 +185,30 @@
 										transition: _transitionstyle } );
 		}
 		
-		//// //// //// //// //// COLOUR METHODS
-		//// //// //// //// //// COLOUR METHODS
-		//// //// //// //// //// COLOUR METHODS
+		/// //// //// //// //// COLOUR METHODS
+		/// //// //// //// //// COLOUR METHODS
+		/// //// //// //// //// COLOUR METHODS
 		
 		public function Colorize(colour:*, _time:Number, _transition:String = "EaseOutSine" ):void
 		{
 			Tweener.addTween(this, { _color:colour, time:_time, transition:_transition } );
 		}
 		
-		//// //// //// //// //// ALIGN METHODS
-		//// //// //// //// //// ALIGN METHODS
-		//// //// //// //// //// ALIGN METHODS
+		/// //// //// //// //// ALIGN METHODS
+		/// //// //// //// //// ALIGN METHODS
+		/// //// //// //// //// ALIGN METHODS
 		
 		public function setAlign(_type:String, _smooth:Boolean=true, custom_height:Number=0, custom_width:Number=0):void
 		{
-			_SMOOTH_ALIGN = _smooth
-			_ALIGN_TYPE = _type
-			_CUSTOM_HEIGHT = custom_height;
-			_CUSTOM_WIDTH = custom_width;
+			_SMOOTH_ALIGN  = _smooth
+			_ALIGN_TYPE    = _type
+			_custom_height = custom_height;
+			_custom_width  = custom_width;
+			
+			if (this.hasEventListener(Event.ENTER_FRAME) || this.hasEventListener(Event.RESIZE)) 
+			{
+				removeAlign()
+			}
 			
 			switch (_type) 
 			{
@@ -247,9 +268,9 @@
 			}
 		}
 		
-		//// //// //// //// //// RESIZE HANDLERS
-		//// //// //// //// //// RESIZE HANDLERS
-		//// //// //// //// //// RESIZE HANDLERS
+		/// //// //// //// //// RESIZE HANDLERS
+		/// //// //// //// //// RESIZE HANDLERS
+		/// //// //// //// //// RESIZE HANDLERS
 		
 		private function centerResizeEnterFrame(e:Event):void // FALTA APLICAR SMOOTHNESS
 		{
@@ -260,25 +281,23 @@
 			var final_x:Number = 0;
 			var final_y:Number = 0;
 			
-			if (_CUSTOM_WIDTH != 0) 
+			if (_custom_width != 0) 
 			{
-				final_x = (StageReference.getStage().stageWidth / 2) - (_CUSTOM_WIDTH / 2) - zero_x;
+				final_x = (StageReference.getStage().stageWidth / 2) - (_custom_width / 2) - zero_x;
 			}
 			else
 			{
 				final_x = (StageReference.getStage().stageWidth / 2) - (this.width / 2) - zero_x;
 			}
 			
-			if (_CUSTOM_HEIGHT != 0) 
+			if (_custom_height != 0) 
 			{
-				final_y = (StageReference.getStage().stageHeight / 2) - (_CUSTOM_HEIGHT / 2) - zero_y;
+				final_y = (StageReference.getStage().stageHeight / 2) - (_custom_height / 2) - zero_y;
 			}
 			else
 			{
 				final_y = (StageReference.getStage().stageHeight / 2) - (this.height / 2) - zero_y;
 			}
-			
-			
 			
 			if (_SMOOTH_ALIGN == true)
 			{
@@ -310,8 +329,8 @@
 			var zero_x:Number = parent.localToGlobal(zero_point).x
 			var zero_y:Number = parent.localToGlobal(zero_point).y
 			
-			this.x = -zero_x + h_padding
-			this.y = -zero_y + v_padding
+			this.x = -zero_x + _h_padding
+			this.y = -zero_y + _v_padding
 		}
 		
 		private function toprightResizeEnterFrame(e:Event):void     // INACABADO (falta opçao smooth)
@@ -320,8 +339,8 @@
 			var zero_x:Number = parent.localToGlobal(zero_point).x
 			var zero_y:Number = parent.localToGlobal(zero_point).y
 			
-			this.x = StageReference.getStage().stageWidth - h_padding - zero_x
-			this.y = -zero_y + v_padding
+			this.x = StageReference.getStage().stageWidth - _h_padding - zero_x
+			this.y = -zero_y + _v_padding
 		}
 		
 		private function bottomleftResizeEnterFrame(e:Event):void     // INACABADO (falta opçao smooth)
@@ -330,36 +349,23 @@
 			var zero_x:Number = parent.localToGlobal(zero_point).x
 			var zero_y:Number = parent.localToGlobal(zero_point).y
 			
-			this.x = -zero_x + h_padding
-			this.y = StageReference.getStage().stageHeight - this.height - v_padding - zero_y
+			this.x = -zero_x + _h_padding
+			this.y = StageReference.getStage().stageHeight - this.height - _v_padding - zero_y
 		}
 		
 		private function bottomrightResizeEnterFrame(e:Event):void  // INACABADO (falta opçao smooth)
 		{
 			var zero_point:Point = new Point(0, 0);
-			var zero_x:Number = parent.localToGlobal(zero_point).x
-			var zero_y:Number = parent.localToGlobal(zero_point).y
+			var zero_x:Number    = parent.localToGlobal(zero_point).x
+			var zero_y:Number    = parent.localToGlobal(zero_point).y
 			
-			this.x = - zero_x + StageReference.getStage().stageWidth - h_padding
-			this.y = - zero_y + StageReference.getStage().stageHeight - v_padding
+			this.x = - zero_x + StageReference.getStage().stageWidth  - _h_padding;
+			this.y = - zero_y + StageReference.getStage().stageHeight - _v_padding;
 		}
 		
-		//// //// //// //// //// RESIZE PADDING SETTERS //// //// //// //// ////
-		//// //// //// //// //// RESIZE PADDING SETTERS //// //// //// //// ////
-		
-		public function set horizontal_padding(value:int):void
-		{
-			h_padding = value;
-		}
-		
-		public function set vertical_padding(value:int):void
-		{
-			v_padding = value;
-		}
-		
-		//// //// //// //// //// RESOURCE MANAGEMENT
-		//// //// //// //// //// RESOURCE MANAGEMENT
-		//// //// //// //// //// RESOURCE MANAGEMENT
+		/// //// //// //// //// RESOURCE MANAGEMENT
+		/// //// //// //// //// RESOURCE MANAGEMENT
+		/// //// //// //// //// RESOURCE MANAGEMENT
 		
 		public function goodbye(duration:Number=NaN):void
 		{
@@ -368,6 +374,11 @@
 		
 		public function cleanMe():void
 		{
+			if (this.hasEventListener(Event.ENTER_FRAME) || this.hasEventListener(Event.RESIZE)) 
+			{
+				this.removeEventListeners();
+			}
+			
 			destroy()
 		}
 	}
