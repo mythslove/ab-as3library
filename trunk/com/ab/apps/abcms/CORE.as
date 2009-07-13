@@ -4,15 +4,14 @@
 	* @author ABº
 	*/
 	
-	import com.ab.events.CentralEventSystem
-	/// import abcms.menusections.SectionsMenu
-	
-	import com.ab.display.ABSprite
-	import com.ab.services.ServerCommunication
-	//import com.ab.as3websystem.core.system.ScreenSettings
 	//import com.ab.web.ABCore
+	import com.ab.apps.abcms.mainmodules.menu.MainMenu;
+	import com.ab.events.CentralEventSystem;
+	import com.ab.apps.appgenerics.ScreenSettings;
+	import com.ab.display.ABSprite;
+	import com.ab.services.ServerCommunication;
 	import org.casalib.util.StageReference
-	
+	/// import abcms.menusections.SectionsMenu
 	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -24,33 +23,32 @@
 	{
 		private var _ABCMS:ABCMS;
 		
-		private var _events_system:CentralEventSystem
-		private var _server_communication:ServerCommunication;
 		private var _logger:ABLogger;
 		private var _keyboard:AppKeyboardControl;
+		private var _events_system:CentralEventSystem;
+		private var _server_communication:ServerCommunication;
 		
-		//private var _screen_settings:ScreenSettings;
-		//private var test_menu:SectionsMenu;
-		//private var main_panel:Panel;
+		public var bg:MovieClip;
 		
-		public var bg_mc:Object;
+		///private var test_menu:SectionsMenu;
 		
 		public function CORE() 
 		{
-			trace("")
-			initVars()
-			start()
+			initVars();
+			start();
 		}
 		
 		private function start():void
 		{
 			//this.addChild(_ABCMS)
 			this.addChild(_logger)
+			this.addChild(_ABCMS)
 		}
 		
 		private function initVars():void
 		{
 			StageReference.setStage(stage)
+			ScreenSettings.init()
 			
 			_ABCMS         = new ABCMS(this);
 			_logger        = new ABLogger();

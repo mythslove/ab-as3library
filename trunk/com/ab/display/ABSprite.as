@@ -41,8 +41,8 @@
 		private var _v_padding:int = 0;
 		
 		public var _EASING_SPEED:int=8;
-		private var _custom_height:Number;
-		private var _custom_width:Number;
+		public var _custom_height:Number=0;
+		public var _custom_width:Number=0;
 		
 		public function ABSprite() 
 		{
@@ -198,12 +198,16 @@
 		/// //// //// //// //// ALIGN METHODS
 		/// //// //// //// //// ALIGN METHODS
 		
-		public function setAlign(_type:String, _smooth:Boolean=true, custom_height:Number=0, custom_width:Number=0):void
+		public function setAlign(_type:String, _smooth:Boolean=true, __custom_height:Number=0, __custom_width:Number=0):void
 		{
 			_SMOOTH_ALIGN  = _smooth
 			_ALIGN_TYPE    = _type
-			_custom_height = custom_height;
-			_custom_width  = custom_width;
+			
+			_custom_height = __custom_height == 0 ? _custom_height : __custom_height;
+			_custom_width  = __custom_width  == 0 ? _custom_width  : __custom_width;
+			
+			//_custom_height = custom_height;
+			//_custom_width  = custom_width;
 			
 			if (this.hasEventListener(Event.ENTER_FRAME) || this.hasEventListener(Event.RESIZE)) 
 			{
@@ -275,39 +279,39 @@
 		private function centerResizeEnterFrame(e:Event):void // FALTA APLICAR SMOOTHNESS
 		{
 			var zero_point:Point = new Point(0, 0);
-			var zero_x:Number = parent.localToGlobal(zero_point).x
-			var zero_y:Number = parent.localToGlobal(zero_point).y
+			//var zero_x:Number = parent.localToGlobal(zero_point).x
+			//var zero_y:Number = parent.localToGlobal(zero_point).y
 			
 			var final_x:Number = 0;
 			var final_y:Number = 0;
 			
 			if (_custom_width != 0) 
 			{
-				final_x = (StageReference.getStage().stageWidth / 2) - (_custom_width / 2) - zero_x;
+				final_x = (StageReference.getStage().stageWidth / 2) - (_custom_width / 2)// - zero_x;
 			}
 			else
 			{
-				final_x = (StageReference.getStage().stageWidth / 2) - (this.width / 2) - zero_x;
+				final_x = (StageReference.getStage().stageWidth / 2) - (this.width / 2)// - zero_x;
 			}
 			
 			if (_custom_height != 0) 
 			{
-				final_y = (StageReference.getStage().stageHeight / 2) - (_custom_height / 2) - zero_y;
+				final_y = (StageReference.getStage().stageHeight / 2) - (_custom_height / 2)// - zero_y;
 			}
 			else
 			{
-				final_y = (StageReference.getStage().stageHeight / 2) - (this.height / 2) - zero_y;
+				final_y = (StageReference.getStage().stageHeight / 2) - (this.height / 2)// - zero_y;
 			}
 			
 			if (_SMOOTH_ALIGN == true)
 			{
-				this.x += Math.round((final_x - this.x) / _EASING_SPEED)
-				this.y += Math.round((final_y - this.y) / _EASING_SPEED)
+				this.x += Math.round((final_x - this.x) / _EASING_SPEED);
+				this.y += Math.round((final_y - this.y) / _EASING_SPEED);
 			}
 			else
 			{
-				this.x = final_x
-				this.y = final_y
+				this.x = final_x;
+				this.y = final_y;
 			}
 		}
 		

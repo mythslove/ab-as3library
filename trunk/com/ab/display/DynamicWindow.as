@@ -20,8 +20,8 @@
 	
 	public class DynamicWindow extends ABSprite
 	{
-		private var _align_mode:String="center";
-		private var _content_holder:Sprite;
+		//private var _align_mode:String="center";
+		//private var _content_holder:Sprite;
 		
 		public function DynamicWindow() 
 		{
@@ -39,16 +39,16 @@
 		
 		private function initVars():void
 		{
-			_content_holder = new Sprite();
+			//_content_holder = new Sprite();
 		}
 		
 		private function start():void
 		{
 			/// uma entrada porreira
 			
-			/// create graphics
+			/// create graphics NOT - control graphics instead
 			
-			this.addChild(_content_holder)
+			//this.addChild(_content_holder)
 		}
 		
 	}

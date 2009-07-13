@@ -40,6 +40,18 @@
 			_LOGIN 			= new LoginWindow();
 			_USER_MANAGER   = new UserManager();
 			
+			_MAIN_MENU.title		 		= "MAIN MENU";
+			_MAIN_MENU.custom_width 		= 300;
+			_MAIN_MENU.custom_height 		= 600;
+			_MAIN_MENU.tab_area_size		= 40;
+			_MAIN_MENU.buttons_area_size	= 300;
+			_MAIN_MENU.elements_spacing		= 1;
+			_MAIN_MENU.frame_size 			= 5;
+			_MAIN_MENU.x		 			= 0;
+			_MAIN_MENU.y		 			= 0;
+			
+			_MAIN_MENU.setAlign("center");			
+			
 			_top_level 		= new Sprite();
 			_content_level 	= new Sprite();
 			_bg_level 		= new Sprite();
@@ -55,18 +67,22 @@
 			this.addChild(_content_level);
 			this.addChild(_bg_level);
 			
-			createMainMenu()
-			invokeLogin()
+			_content_level.x = 0;
+			_content_level.y = 0;
+			
+			createMainMenu();
+			invokeLogin();
 		}
 		
 		private function invokeLogin():void
 		{
-			_content_level.addChild(_LOGIN);
+			/// _content_level.addChild(_LOGIN);
 		}
 		
 		private function createMainMenu():void
 		{
 			_content_level.addChild(_MAIN_MENU);
+			//addChild(_MAIN_MENU);
 		}
 		
 	}

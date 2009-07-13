@@ -3,6 +3,9 @@
 	/**
 	* 
 	* @author ABº
+	* http://www.antoniobrandao.com/
+	* http://blog.antoniobrandao.com/
+	* 
 	* use it screw it and sell it, no problem
 	* 
 	* @about
