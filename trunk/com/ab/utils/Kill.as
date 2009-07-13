@@ -15,8 +15,9 @@
 	import flash.display.MovieClip
 	import flash.system.System
 	import fl.motion.easing.*
-	
-	import com.ab.as3websystem.util.TweenLite
+	import gs.TweenLite;
+	import gs.TweenLite
+	//import com.ab.as3websystem.util.TweenLite
 	
 	public class Kill
 	{
@@ -25,6 +26,19 @@
 		{
 			/// this class needs work
 		}
+		
+		public static function killAllObjectsFromParent(_parent:Object):void
+		{
+			for each (var value:Object in _parent)
+			{
+				_parent.removeChild(value)
+				
+				value = null;
+				
+				//trace ("Kill ::: killAllObjectsFromParent ::: removed one"); 
+			}
+		}
+		/*
 		
 		///////////// SIMPLE ///////////////////////////////////////////////////////////////////////////////////////
 		
@@ -91,7 +105,7 @@
 			mc_in_array[0].parent.removeChild(mc_in_array[0]);
 			
 			System.gc()
-		}
+		}*/
 	}
 	
 }

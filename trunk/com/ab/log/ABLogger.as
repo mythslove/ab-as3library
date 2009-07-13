@@ -18,9 +18,10 @@
 		private var _mask:Sprite;
 		private var _content:Sprite;
 		private var _bg:Sprite;
-		private var _item_spacing:int=5;
-		private var _totalwidth:int=200;
-		private var _totalheight:int=400;
+		private var _item_spacing:int = 5;
+		private var _totalwidth:int   = 200;
+		private var _totalheight:int  = 400;
+		private var _visible:Boolean  = false;
 		//private var _PREVIOUS_ITEMS:Array;
 		
 		public function ABLogger() 
@@ -28,6 +29,9 @@
 			trace ("ABLogger ::: Constructor()" ); 
 			
 			setSingleton()
+			
+			this.alpha   = 0;
+			this.visible = _visible;
 			
 			initVars()
 			
@@ -128,9 +132,31 @@
 			//newitem.addEventListener(Event.ADDED_TO_STAGE, itemAddedHandler, false, 0, true)
 		}
 		
+		private function show():void
+		{
+			Make.MCVisible(this)
+		}
+		
 		private function hide():void
 		{
 			Make.MCInvisible(this)
+		}
+		
+		private function toggleVisible():void
+		{
+			if (this._visible == true) 
+			{
+				this._visible = false;
+				
+				hide()
+			}
+			else
+			{
+				this._visible = true;
+				
+				show()
+			}
+			
 		}
 		
 		private function checkVisibility():void
