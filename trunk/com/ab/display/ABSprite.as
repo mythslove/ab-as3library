@@ -121,7 +121,7 @@
 		/// //// //// //// //// MOVE METHODS //// //// //// //// //// 
 		
 		/// ////////////////////// TO POSITION X
-		public function GoToPositionX(xpos:Number, duration:Number, alphavalue=NaN, _transition:String="EaseOutSine"):void
+		public function GoToPositionX(xpos:Number, duration:Number=0.5, alphavalue=NaN, _transition:String="EaseOutSine"):void
 		{
 			if (isNaN(alphavalue)) 
 			{
@@ -216,6 +216,10 @@
 			
 			switch (_type) 
 			{
+				case "left":
+					StageReference.getStage().addEventListener(Event.ENTER_FRAME, leftResizeEnterFrame, false, 0, true);
+					break;
+					
 				case "center":
 					StageReference.getStage().addEventListener(Event.ENTER_FRAME, centerResizeEnterFrame, false, 0, true);
 					break;
@@ -226,18 +230,22 @@
 					
 				case "topleft":
 					StageReference.getStage().addEventListener(Event.RESIZE, topleftResizeEnterFrame, false, 0, true);
+					topleftResizeEnterFrame(new Event(Event.RESIZE))
 					break;
 					
 				case "topright":
 					StageReference.getStage().addEventListener(Event.RESIZE, toprightResizeEnterFrame, false, 0, true);
+					toprightResizeEnterFrame(new Event(Event.RESIZE))
 					break;
 					
 				case "bottomleft":
 					StageReference.getStage().addEventListener(Event.RESIZE, bottomleftResizeEnterFrame, false, 0, true);
+					bottomleftResizeEnterFrame(new Event(Event.RESIZE))
 					break;
 					
 				case "bottomright":
 					StageReference.getStage().addEventListener(Event.RESIZE, bottomrightResizeEnterFrame, false, 0, true);
+					bottomrightResizeEnterFrame(new Event(Event.RESIZE))
 					break;
 			}
 		}
@@ -246,6 +254,10 @@
 		{
 			switch (_ALIGN_TYPE) 
 			{
+				case "left":
+					StageReference.getStage().removeEventListener(Event.RESIZE, leftResizeEnterFrame);
+					break;
+					
 				case "center":
 					StageReference.getStage().removeEventListener(Event.ENTER_FRAME, centerResizeEnterFrame);
 					break;
@@ -337,6 +349,17 @@
 			this.y = -zero_y + _v_padding
 		}
 		
+		private function leftResizeEnterFrame(e:Event):void    // INACABADO (falta opçao smooth)
+		{
+			var zero_point:Point = new Point(0, 0);
+			//var zero_x:Number = parent.localToGlobal(zero_point).x
+			//var zero_y:Number = parent.localToGlobal(zero_point).y
+			
+			GoToPositionX(0 + _h_padding, 0.2)
+			//this.x = 0 + _h_padding;
+			this.y = StageReference.getStage().stageHeight / 2 - _custom_height / 2;// - zero_y;
+		}
+		
 		private function toprightResizeEnterFrame(e:Event):void     // INACABADO (falta opçao smooth)
 		{
 			var zero_point:Point = new Point(0, 0);
@@ -378,10 +401,7 @@
 		
 		public function cleanMe():void
 		{
-			if (this.hasEventListener(Event.ENTER_FRAME) || this.hasEventListener(Event.RESIZE)) 
-			{
-				this.removeEventListeners();
-			}
+			this.removeEventListeners();
 			
 			destroy()
 		}

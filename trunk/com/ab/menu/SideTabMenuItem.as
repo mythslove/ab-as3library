@@ -13,10 +13,13 @@
 		private var _index:int;
 		private var _title:int;
 		private var _lead:int;
+		private var _menu:SideTabMenu;
 		
-		public function SideTabMenuItem() 
+		public function SideTabMenuItem(menu:SideTabMenu)
 		{
 			initVars();
+			
+			_menu = menu;
 			
 			setListeners();
 			

@@ -44,13 +44,13 @@
 			_MAIN_MENU.custom_width 		= 300;
 			_MAIN_MENU.custom_height 		= 600;
 			_MAIN_MENU.tab_area_size		= 40;
-			_MAIN_MENU.buttons_area_size	= 300;
+			//_MAIN_MENU.buttons_area_size	= 300;
 			_MAIN_MENU.elements_spacing		= 1;
 			_MAIN_MENU.frame_size 			= 5;
 			_MAIN_MENU.x		 			= 0;
 			_MAIN_MENU.y		 			= 0;
-			
-			_MAIN_MENU.setAlign("center");			
+			//_MAIN_MENU.h_padding 			= -_MAIN_MENU.custom_width + _MAIN_MENU.tab_area_size + _MAIN_MENU.elements_spacing ;
+			_MAIN_MENU.status 				= "docked";
 			
 			_top_level 		= new Sprite();
 			_content_level 	= new Sprite();
