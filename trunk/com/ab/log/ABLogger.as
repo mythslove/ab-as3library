@@ -4,11 +4,14 @@
 	* @author ABº
 	*/
 	
+	import com.ab.ui.YScroller;
+	import com.ab.log.ABLoggerItem;
 	import com.ab.utils.Get;
 	import com.ab.utils.Make;
+	
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import com.ab.log.ABLoggerItem;
+	
 	import caurina.transitions.Tweener;
 	import org.casalib.util.StageReference;
 	
@@ -18,10 +21,11 @@
 		private var _mask:Sprite;
 		private var _content:Sprite;
 		private var _bg:Sprite;
-		private var _item_spacing:int = 5;
-		private var _totalwidth:int   = 200;
-		private var _totalheight:int  = 400;
-		private var _visible:Boolean  = false;
+		private var _item_spacing:int  = 5;
+		private var _totalwidth:int    = 200;
+		private var _totalheight:int   = 380;
+		private var _visible:Boolean   = false;
+		private var _scrooling:Boolean = false;
 		//private var _PREVIOUS_ITEMS:Array;
 		
 		public function ABLogger() 
@@ -30,22 +34,23 @@
 			
 			setSingleton()
 			
+			this.y		 = 50;
 			this.alpha   = 0;
 			this.visible = _visible;
 			
 			initVars()
 			
-			this.addEventListener(Event.ADDED_TO_STAGE, addedHandler, false, 0, true)
+			this.addEventListener(Event.ADDED_TO_STAGE, addedHandler, false, 0, true);
 		}
 		
-		public function get item_spacing():int 				{ return _item_spacing;  }
-		public function set item_spacing(value:int):void  	{ _item_spacing = value; }
+		public function get item_spacing():int 				{ return _item_spacing;  };
+		public function set item_spacing(value:int):void  	{ _item_spacing = value; };
 		
-		public function get totalwidth():int 				{ return _totalwidth; 	 }
-		public function set totalwidth(value:int):void  	{ _totalwidth = value; 	 }
+		public function get totalwidth():int 				{ return _totalwidth; 	 };
+		public function set totalwidth(value:int):void  	{ _totalwidth = value; 	 };
 		
-		public function get totalheight():int 				{ return _totalheight; }
-		public function set totalheight(value:int):void  	{ _totalheight = value; }
+		public function get totalheight():int 				{ return _totalheight;   };
+		public function set totalheight(value:int):void  	{ _totalheight = value;  };
 		
 		private function initVars():void
 		{
@@ -95,7 +100,7 @@
 		{
 			checkVisibility();
 			
-			var _previous_items:Array = new Array()
+			var _previous_items:Array = new Array();
 			var _need_to_move:Boolean = false;
 			
 			if (_content.numChildren != 0) 
@@ -112,59 +117,64 @@
 			if (_need_to_move == true) 
 			{
 				for (var i:int = 0; i < _previous_items.length; i++) 
-				{
-					//Tweener.addTween(_previous_items[i], { y:_previous_items[i].y + newitem.height, time:0.2, transition:"EaseOutSine" } ); // _previous_items[i].y += newitem.height;
+ 				{
 					_previous_items[i]._height = _previous_items[i]._height + newitem.height + _item_spacing;
-					//_previous_items[i].y = _previous_items[i].y + newitem.height;
 					
-					if (_previous_items[i].y > _totalheight) 
-					{
-						_previous_items[i].die()
-					}
-					else
-					{
-						Tweener.addTween(_previous_items[i], { y:_previous_items[i]._height, time:0.2, transition:"EaseOutSine" } );
-					}
-					
+					Tweener.addTween(_previous_items[i], { y:_previous_items[i]._height, time:0.2, transition:"EaseOutSine", onComplete:checkHeight() } );
 				}
 			}
+		}
+		
+		private function checkHeight():void
+		{
+			if (_scrooling == false) 
+			{
+				if (_content.height > _mask.height)
+				{
+					_scrooling = true;
+					
+					applyScrool();
+				}				
+			}
+		}
+		
+		private function applyScrool():void
+		{
+			var newscrool:YScroller 	 = new YScroller();
 			
-			//newitem.addEventListener(Event.ADDED_TO_STAGE, itemAddedHandler, false, 0, true)
+			newscrool.target_clip 		 = _content;
+			newscrool.visible_height 	 = _mask.height + 10;
+			newscrool.scroll_distance 	 = _mask.height;
+			newscrool.frame_length 		 = 5;
+			newscrool.handle_alpha 		 = .5;
+			newscrool.scrooltrack_alpha  = .5;
+			newscrool.scrooltrack_colour = 0xFF0000;
+			
+			newscrool.x = this.width + 1;
+			//newscrool.y = 5;
+			//newscrool._handleheight = this.width + 5;
+			
+			this.addChild(newscrool)
 		}
 		
-		public function show():void
-		{
-			Make.MCVisible(this)
-		}
-		
-		public function hide():void
-		{
-			Make.MCInvisible(this)
-		}
+		public function show():void { Make.MCVisible(this);   }
+		public function hide():void { Make.MCInvisible(this); }
 		
 		public function toggleVisible():void
 		{
 			if (this._visible == true) 
 			{
-				this._visible = false;
-				
-				hide()
+				this._visible = false; hide();
 			}
 			else
 			{
-				this._visible = true;
-				
-				show()
+				this._visible = true;  show();
 			}
-			
 		}
 		
 		private function checkVisibility():void
 		{
-			if (this.alpha == 0) 
-			{
-				Make.MCVisible(this)
-			}
+			if (this._visible == false)  { Make.MCVisible(this) };
 		}
 		
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON START
