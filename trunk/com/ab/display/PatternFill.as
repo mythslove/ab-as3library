@@ -8,6 +8,7 @@
 	*/
 	
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	
 	public class PatternFill 
@@ -17,7 +18,7 @@
 			//
 		//}
 		
-		public static function create(_width:Number, _height:Number, _icon_data:Array = ['   ', ' * ', '   ' ], _color:Number = 0x000000):Sprite
+		public static function create(_target:DisplayObject, _width:Number, _height:Number, _icon_data:Array = ['   ', ' * ', '   ' ], _color:Number = 0x000000):void
 		{
 			var num_rows:int = _icon_data.length;
 			
@@ -48,7 +49,11 @@
 			sp.graphics.drawRect(0, 0, _width, _height);
 			sp.graphics.endFill();
 			
-			return sp;
+			//return sp;
+			
+			_target.addChild(sp);
+			
+			/// target = null ?
 		}
 	}
 	

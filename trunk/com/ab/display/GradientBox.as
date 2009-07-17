@@ -7,6 +7,7 @@
 	* http://www.antoniobrandao.com/
 	*/
 	
+	import flash.display.DisplayObject;
 	import flash.display.GradientType;
 	import flash.display.Shape;
 	import flash.display.Sprite;
@@ -20,7 +21,7 @@
 			
 		}
 		
-		public static function createShape(_colour1:uint=0xffffff, _colour2:uint=0x000000, _width:Number=100, _height:Number=100, _start_alpha:Number=1.0, _end_alpha:Number=1.0, _rotation:Number=1.5707963267948966):Shape
+		public static function createShape(_target:DisplayObject, _colour1:uint=0xffffff, _colour2:uint=0x000000, _width:Number=100, _height:Number=100, _start_alpha:Number=1.0, _end_alpha:Number=1.0, _rotation:Number=1.5707963267948966):Shape
 		{
 			/// default _rotation is (Math.PI/180)*90
 			
