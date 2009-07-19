@@ -32,8 +32,10 @@
 		private var _tabtext_style:TextFormat;
 		private var _bg_color:uint=0xFFFFFF;
 		private var _tab_text_color:uint=0xFFFFFF;
-		private var _status:String="docked";
+		private var _status:String = "docked";
 		
+		private var _menu_item_type:Class=null;
+		private var _items:Array;
 		//import com.ab.display.ABSprite; setalign
 		
 		public function SideTabMenu()
@@ -54,12 +56,23 @@
 			/// /// 
 		}
 		
+		private function initVars():void
+		{
+			_items = new Array();
+		}
+		
 		private function addedHandler(e:Event):void 
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, addedHandler)
 			
+			initVars()
 			buildVisuals()
 			addEventListeners()
+		}
+		
+		public function buildButtons():void
+		{
+			
 		}
 		
 		private function buildVisuals():void
@@ -200,6 +213,9 @@
 			
 			Tweener.addTween(_tab_text, { alpha:0.5, time:0.5} );
 		}
+		
+		public function get menu_item_type():Class 					{ return _menu_item_type; 		};
+		public function set menu_item_type(value:Class):void  		{ _menu_item_type = value; 		};
 		
 		public function get tab_area_size():Number 					{ return _tab_area_size; 	  	};
 		public function set tab_area_size(value:Number):void  		{ _tab_area_size = value; 	  	};

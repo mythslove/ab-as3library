@@ -15,7 +15,7 @@
 	import com.ab.apps.abcms.mainmodules.browsers.MediaBrowser;
 	import com.ab.apps.abcms.mainmodules.editors.ItemEditor;
 	import com.ab.apps.abcms.mainmodules.editors.MediaEditor;
-	import com.ab.apps.abcms.mainmodules.menu.MainMenu;
+	import com.ab.apps.abcms.mainmodules.menu.ABCMSMainMenu;
 	
 	public class ABCMS extends CasaSprite
 	{
@@ -25,7 +25,7 @@
 		
 		private var _USER_MANAGER:UserManager;
 		private var _LOGIN:LoginWindow;
-		private var _MAIN_MENU:MainMenu;
+		private var _MAIN_MENU:ABCMSMainMenu;
 		
 		public function ABCMS(root:CORE) 
 		{
@@ -36,7 +36,7 @@
 		
 		private function initVars():void
 		{
-			_MAIN_MENU 		= new MainMenu();
+			_MAIN_MENU 		= new ABCMSMainMenu();
 			_LOGIN 			= new LoginWindow();
 			_USER_MANAGER   = new UserManager();
 			
