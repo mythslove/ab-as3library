@@ -32,7 +32,7 @@
 			{
 				_LANG = value;
 				
-				//dispatchEvent(new I18NEvent(I18NEvent.LANG_CHANGE));
+				dispatchEvent(new I18NEvent(I18NEvent.LANG_CHANGE));
 			}
 		}
 		
