@@ -19,10 +19,10 @@
 		private static var _LANG:String  = EN;
 		
 		
-		public function I18N() 
-		{
+		//public function I18N() 
+		//{
 			//super();
-		}
+		//}
 		
 		static public function get LANG():String { return _LANG; }
 		
