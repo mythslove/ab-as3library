@@ -15,20 +15,46 @@
 		private var _lead:int;
 		private var _menu:SideTabMenu;
 		
-		public function SideTabMenuItem(menu:SideTabMenu)
+		public function SideTabMenuItem()
 		{
 			initVars();
-			
-			_menu = menu;
 			
 			setListeners();
 			
 			this.addEventListener(Event.ADDED_TO_STAGE, addedHandler, false, 0, true);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, removedHandler, false, 0, true);
 		}
 		
 		private function addedHandler(e:Event):void 
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, addedHandler);
+			
+			this.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
+			
+			build();
+		}
+		
+		private function removedHandler(e:Event):void 
+		{
+			this.removeEventListener(MouseEvent.CLICK, onClick);
+			this.removeEventListener(Event.REMOVED_FROM_STAGE, removedHandler);
+		}
+		
+		protected function onClick(e:MouseEvent):void
+		{
+			/// nothing, please extend
+		}
+		
+		protected function build():void
+		{
+			trace("SideTabMenuItem ::: build")
+			
+			/// nothing, please extend
+		}
+		
+		protected function update():void
+		{
+			/// nothing, please extend
 		}
 		
 		private function initVars():void

@@ -4,18 +4,16 @@
 	* @author ABº
 	*/
 	
+	import com.ab.apps.abcms.mainmodules.menu.ABCMSMainMenu;
 	import com.ab.apps.abcms.mainmodules.session.UserManager;
 	import com.ab.apps.abcms.mainmodules.session.LoginWindow;
+	import com.ab.apps.appgenerics.lang.I18N;
+	//import com.ab.lang.I18N;
+	
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import org.casalib.display.CasaSprite;
 	
-	import com.ab.apps.abcms.mainmodules.browsers.SectionsNavigator;
-	import com.ab.apps.abcms.mainmodules.browsers.ItemsBrowser;
-	import com.ab.apps.abcms.mainmodules.browsers.MediaBrowser;
-	import com.ab.apps.abcms.mainmodules.editors.ItemEditor;
-	import com.ab.apps.abcms.mainmodules.editors.MediaEditor;
-	import com.ab.apps.abcms.mainmodules.menu.ABCMSMainMenu;
 	
 	public class ABCMS extends CasaSprite
 	{
@@ -26,16 +24,24 @@
 		private var _USER_MANAGER:UserManager;
 		private var _LOGIN:LoginWindow;
 		private var _MAIN_MENU:ABCMSMainMenu;
+		private var _ROOT_CORE:CORE;
+		private var _I18N:I18N;
 		
 		public function ABCMS(root:CORE) 
 		{
-			initVars()
+			_ROOT_CORE = root;
 			
-			start()
+			initVars();
+			
+			start();
 		}
 		
 		private function initVars():void
 		{
+			//_I18N = new I18N();
+			
+			I18N.LANG = I18N.EN;
+			
 			_MAIN_MENU 		= new ABCMSMainMenu();
 			_LOGIN 			= new LoginWindow();
 			_USER_MANAGER   = new UserManager();

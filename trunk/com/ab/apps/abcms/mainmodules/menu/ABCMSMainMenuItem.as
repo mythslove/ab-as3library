@@ -4,36 +4,80 @@
 	* @author ABº
 	*/
 	
+	import com.ab.apps.appgenerics.lang.I18N;
+	import com.ab.apps.appgenerics.lang.I18NEvent;
 	import com.ab.menu.SideTabMenuItem;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.text.TextField;
 	
 	public class ABCMSMainMenuItem extends SideTabMenuItem
 	{
-		private var _cat:int;
-		private var _name_pt:String;
-		private var _name_en:String;
-		private var _desc_pt:String;
-		private var _desc_en:String;
+		private var title_tf:TextField;
+		private var desc_tf:TextField;
 		
-		public function ABCMSMainMenuItem() 
+		public var data = {
+			title: { en: "Untitled", pt: "Sem titulo" },
+			description: { en: "Untitled", pt: "Sem titulo" }
+		};
+		
+		public function ABCMSMainMenuItem(data = null) 
 		{
+			if (data) this.data = data;
 			
+			initVars();
+			addListeners()
 		}
 		
-		public function get cat():int 					{ return _cat; 		}
-		public function set cat(value:int):void  		{ _cat = value; 	}
+		private function initVars():void
+		{
+			title_tf = new TextField();
+			desc_tf  = new TextField();
+		}
 		
-		public function get name_pt():String 			{ return _name_pt; 	}
-		public function set name_pt(value:String):void  { _name_pt = value; }
+		private function addListeners():void
+		{
+			this.addEventListener(I18NEvent.LANGUAGE_CHANGE, update, false, 0, true);
+		}
 		
-		public function get name_en():String 			{ return _name_en; 	}
-		public function set name_en(value:String):void  { _name_en = value; }
+		override protected function update():void
+		{
+			/// change textfield value
+			//titleLabel.value = I18N.translate(this.data.title);
+			
+			trace("123 :" + this.data.title.pt);
+			trace("1234 :" + this.data.title);
+			
+			title_tf.text = I18N.translate(this.data.title);
+			desc_tf.text  = I18N.translate(this.data.description);
+		}
 		
-		public function get desc_pt():String 			{ return _desc_pt; 	}
-		public function set desc_pt(value:String):void  { _desc_pt = value; }
+		/// work functions
 		
-		public function get desc_en():String 			{ return _desc_en; 	}
-		public function set desc_en(value:String):void  { _desc_en = value; }
+		override protected function onClick(e:MouseEvent):void
+		{
+			trace("ABCMSMainMenuItem ::: onClick()")
+		}
 		
+		protected override function build():void
+		{
+			trace("ABCMSMainMenuItem ::: build")
+			
+			addChild(title_tf);
+			addChild(desc_tf);
+			
+			title_tf.x = 10;
+			title_tf.y = 10;
+			desc_tf.x  = 10;
+			desc_tf.y  = 30;
+			
+			trace("sssssss")
+			trace(desc_tf.text)
+			
+			update();
+			
+			//title_tf
+			//desc_tf.text
+		}   
 	}
-	
 }

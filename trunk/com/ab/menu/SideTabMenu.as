@@ -20,14 +20,14 @@
 		private var _tab:Sprite;
 		private var _mask:Sprite;
 		private var _buttons_holder:Sprite;
-		private var _bg_colour:uint=0x222222;
+		private var _bg_colour:uint=0x111111;
 		private var _tab_text:TextField;
 		private var _title:String="Unnamed SideTabMenu";
 		
 		private var _tab_area_size:Number     = 10;
 		private var _buttons_area_size:Number = 100;
 		private var _elements_spacing:Number  = 100;
-		private var _frame_size:Number        = 5;
+		private var _content_indent:Number    = 5;
 		private var _arial_fmt:TextFormat;
 		private var _tabtext_style:TextFormat;
 		private var _bg_color:uint=0xFFFFFF;
@@ -35,7 +35,8 @@
 		private var _status:String = "docked";
 		
 		private var _menu_item_type:Class=null;
-		private var _items:Array;
+		private var _sidetabmenuitems:Array;
+		private var _button_spacing:Number;
 		//import com.ab.display.ABSprite; setalign
 		
 		public function SideTabMenu()
@@ -58,29 +59,42 @@
 		
 		private function initVars():void
 		{
-			_items = new Array();
+			_sidetabmenuitems = new Array();
 		}
 		
 		private function addedHandler(e:Event):void 
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, addedHandler)
 			
-			initVars()
-			buildVisuals()
-			addEventListeners()
+			initVars();
+			buildVisuals();
+			addEventListeners();
 		}
 		
 		public function buildButtons():void
 		{
+			//for each(var mi:SideTabMenuItem in _sidetabmenuitems)
+			//{
+				//
+			//}
 			
+			for (var i:int = 0; i < _sidetabmenuitems.length; i++) 
+			{
+				_buttons_holder.addChild(_sidetabmenuitems[i]);
+				
+				_sidetabmenuitems[i].y = i * _sidetabmenuitems[i].height + _button_spacing;
+			}
+			//_sidetabmenuitems.forEach(addChild, _buttons_holder);
+			
+			//_sidetabmenuitems.forEach(function(mi:SideTabMenuItem):void {} addChild, _buttons_holder);
 		}
 		
 		private function buildVisuals():void
 		{
-			_bg      		= new Sprite()
-			_tab     		= new Sprite()
-			_mask 			= new Sprite()
-			_buttons_holder = new Sprite()
+			_bg      		= new Sprite();
+			_tab     		= new Sprite();
+			_mask 			= new Sprite();
+			_buttons_holder = new Sprite();
 			
 			/// BG
 			_bg.graphics.beginFill(_bg_colour);
@@ -93,8 +107,8 @@
 			_mask.graphics.beginFill(0xFF0000);
 			_mask.graphics.drawRect(0,
 									0, 
-									_custom_width - _tab_area_size - _elements_spacing - _frame_size * 2,
-									_custom_height - _frame_size * 2);
+									_custom_width - _tab_area_size - _elements_spacing - _content_indent * 2,
+									_custom_height - _content_indent * 2);
 			_mask.graphics.endFill();
 			
 			/// TAB
@@ -124,8 +138,8 @@
 			_tab_text.x 				= 30;
 			
 			/// BUTTONS HOLDER
-			_buttons_holder.x 		= _frame_size;
-			_buttons_holder.y 		= _frame_size;
+			_buttons_holder.x 		= _content_indent;
+			_buttons_holder.y 		= _content_indent;
 			_buttons_holder.mask 	= _mask;
 			
 			_bg.graphics.beginFill(0x222222);
@@ -167,6 +181,7 @@
 		{
 			_bg_colour = value;
 			
+			_bg.graphics.clear();
 			_bg.graphics.beginFill(value);
 			_bg.graphics.drawRect(0, 0, _custom_width, _custom_height);
 			_bg.graphics.endFill();
@@ -226,17 +241,20 @@
 		public function get elements_spacing():Number 				{ return _elements_spacing;   	};
 		public function set elements_spacing(value:Number):void  	{ _elements_spacing = value;  	};
 		
-		public function get frame_size():Number 					{ return _frame_size; 			};
-		public function set frame_size(value:Number):void  			{ _frame_size = value; 			};
+		public function get content_indent():Number 				{ return _content_indent; 		};
+		public function set content_indent(value:Number):void  		{ _content_indent = value; 		};
 		
 		public function get title():String 							{ return _title; 				};
 		public function set title(value:String):void  				{ _title = value; 				};
 		
-		public function get bg_color():uint 			{ return _bg_color; }
-		public function set bg_color(value:uint):void  	{ _bg_color = value;  _bg.graphics.beginFill(_bg_color); }
+		public function get tab_text_color():uint 					{ return _tab_text_color; }
+		public function set tab_text_color(value:uint):void 		{ _tab_text_color = value; _tabtext_style.color = _tab_text_color; }
 		
-		public function get tab_text_color():uint 			{ return _tab_text_color; }
-		public function set tab_text_color(value:uint):void { _tab_text_color = value; _tabtext_style.color = _tab_text_color; }
+		public function get sidetabmenuitems():Array 				{ return _sidetabmenuitems; }
+		public function set sidetabmenuitems(value:Array):void 		{ _sidetabmenuitems = value; }
+		
+		public function get button_spacing():Number					{ return _button_spacing; }
+		public function set button_spacing(value:Number):void  		{ _button_spacing = value; }
 	}
 	
 }

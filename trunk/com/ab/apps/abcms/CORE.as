@@ -5,7 +5,7 @@
 	*/
 	
 	//import com.ab.web.ABCore
-	import com.ab.apps.abcms.mainmodules.menu.MainMenu;
+	///import com.ab.apps.abcms.mainmodules.menu.MainMenu;
 	import com.ab.events.CentralEventSystem;
 	import com.ab.apps.appgenerics.ScreenSettings;
 	import com.ab.display.ABSprite;
@@ -41,14 +41,14 @@
 		private function start():void
 		{
 			//this.addChild(_ABCMS)
-			this.addChild(_logger)
-			this.addChild(_ABCMS)
+			this.addChild(_logger);
+			this.addChild(_ABCMS);
 		}
 		
 		private function initVars():void
 		{
-			StageReference.setStage(stage)
-			ScreenSettings.init()
+			StageReference.setStage(stage);
+			ScreenSettings.init();
 			
 			_ABCMS         = new ABCMS(this);
 			_logger        = new ABLogger();
@@ -59,20 +59,12 @@
 			
 			//ABCore.getSingleton();
 			
-			trace("asd")
+			trace("CORE initialized");
 		}
 		
 	}
 	
 }
-
-
-
-
-
-
-
-
 
 
 

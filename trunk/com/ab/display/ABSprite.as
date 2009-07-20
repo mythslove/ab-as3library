@@ -68,10 +68,15 @@
 		public function get h_padding():int 					{ return _h_padding;      }
 		public function set h_padding(value:int):void 			{ _h_padding = value;     }
 		
-		public function get custom_height():Number 				{ return _custom_height;  }
+		public function get custom_height():Number 				{ return _custom_height;  onCustomHeightChange() }
+		
 		public function set custom_height(value:Number):void  	{ _custom_height = value; }
 		
-		public function get custom_width():Number 				{ return _custom_width;   }
+		public function get custom_width():Number 				{ return _custom_width;   onCustomWidthChange()}
+		
+		public function onCustomHeightChange():void { }
+		public function onCustomWidthChange():void  { }
+		
 		public function set custom_width(value:Number):void  	{ _custom_width = value;  }
 		
 		/// //// //// //// //// ALPHA METHODS //// //// //// //// ////

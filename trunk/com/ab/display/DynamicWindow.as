@@ -30,8 +30,8 @@
 		private var _content_holder:Sprite;
 		private var _mask:Sprite;
 		
-		private var _frame_pattern_data:Array();
-		private var _bg_pattern_data:Array();
+		private var _frame_pattern_data:Array;
+		private var _bg_pattern_data:Array;
 		
 		public function DynamicWindow() 
 		{
@@ -78,7 +78,7 @@
 			//this.addChild(_content_holder)
 		}
 		
-		public function buildBG(_type:String="solid", __width:Number, __height:Number):void
+		public function buildBG(__width:Number, __height:Number, _type:String="solid"):void
 		{
 			switch (_type) 
 			{
@@ -87,16 +87,16 @@
 				break;
 				
 				case "pattern":
-					PatternFill.create(_bg, __width, __height, _bg_pattern_data, 0x000000);
+					//PatternFill.create(_bg, __width, __height, _bg_pattern_data, 0x000000);
 				break;
 				
 				case "gradient":
-					GradientBox.createShape(_bg, __width, __height, _bg_pattern_data, 0x000000);
+					//GradientBox.createShape(_bg, __width, __height, _bg_pattern_data, 0x000000);
 				break;
 			}
 		}
 		
-		public function buildFrame(_type:String="solid", __width:Number, __height:Number):void
+		public function buildFrame( __width:Number, __height:Number, _type:String="solid"):void
 		{
 			switch (_type) 
 			{
@@ -104,10 +104,10 @@
 					/// not done yet
 				break;
 				case "pattern":
-					PatternFill.create(_frame, __width, __height, _frame_pattern_data, 0x000000);
+					//PatternFill.create(_frame, __width, __height, _frame_pattern_data, 0x000000);
 				break;
 				case "gradient":
-					GradientBox.createShape(_bg, __width, __height, _frame_pattern_data, 0x000000);
+					//GradientBox.createShape(_bg, __width, __height, _frame_pattern_data, 0x000000);
 				break;
 			}
 		}
@@ -125,14 +125,14 @@
 		{ 
 			/// tween mask to custom width
 			
-			Tweener.addTween(bg,    { width:_custom_width - (2*_frame_size), time:.5, transition:"EaseOutSine" } );
+			Tweener.addTween(_bg,   { width:_custom_width - (2*_frame_size), time:.5, transition:"EaseOutSine" } );
 			Tweener.addTween(_mask, { width:_custom_width, time:.5, transition:"EaseOutSine" } );
 		};
 		
 		override public function onCustomHeightChange():void 
 		{
 			/// tween mask to custom height
-			Tweener.addTween(bg,    { height:_custom_height - (2*_frame_size), time:.5, transition:"EaseOutSine" } );
+			Tweener.addTween(_bg,   { height:_custom_height - (2*_frame_size), time:.5, transition:"EaseOutSine" } );
 			Tweener.addTween(_mask, { height:_custom_height, time:.5, transition:"EaseOutSine" } );
 		};
 		

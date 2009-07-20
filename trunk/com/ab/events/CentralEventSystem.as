@@ -48,13 +48,13 @@
 				throw new Error("Error: CentralEventSystem can only be accessed through CentralEventSystem.getInstance()");
 			}
 			
-			trace("::: CentralEventSystem Cnostructor :::")
+			trace("::: CentralEventSystem Constructor :::")
 		}
 		
 		public static function getSingleton():CentralEventSystem
 		{
 			return instance;
-		}	
+		}
 		
 		override public function dispatchEvent($event:Event):Boolean
 		{
