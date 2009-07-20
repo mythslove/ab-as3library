@@ -36,7 +36,7 @@
 	public dynamic class ABSprite extends CasaSprite
 	{
 		private var _SMOOTH_ALIGN = false;
-		private var _ALIGN_TYPE:String;
+		private var _ALIGN_TYPE:String="";
 		private var _h_padding:int = 0;
 		private var _v_padding:int = 0;
 		
@@ -68,16 +68,17 @@
 		public function get h_padding():int 					{ return _h_padding;      }
 		public function set h_padding(value:int):void 			{ _h_padding = value;     }
 		
-		public function get custom_height():Number 				{ return _custom_height;  onCustomHeightChange() }
+		public function get custom_height():Number 				{ return _custom_height;  }
+		public function set custom_height(value:Number):void  	{ _custom_height = value; onCustomHeightChange(); }
 		
-		public function set custom_height(value:Number):void  	{ _custom_height = value; }
+		public function get custom_width():Number 				{ return _custom_width;   }
+		public function set custom_width(value:Number):void  	{ _custom_width = value;  onCustomWidthChange();  }
 		
-		public function get custom_width():Number 				{ return _custom_width;   onCustomWidthChange()}
+		public function get ALIGN_TYPE():String 				{ return _ALIGN_TYPE; 	  }
+		public function set ALIGN_TYPE(value:String):void  		{ _ALIGN_TYPE = value; 	  }
 		
-		public function onCustomHeightChange():void { }
-		public function onCustomWidthChange():void  { }
-		
-		public function set custom_width(value:Number):void  	{ _custom_width = value;  }
+		public function onCustomWidthChange():void 				{ };
+		public function onCustomHeightChange():void 			{ };
 		
 		/// //// //// //// //// ALPHA METHODS //// //// //// //// ////
 		/// //// //// //// //// ALPHA METHODS //// //// //// //// ////
@@ -85,16 +86,16 @@
 		
 		public function GoVisible(duration:Number=NaN, onCompleteFunc:Function=null, _transition:String="EaseOutSine"):void
 		{
-			this.alpha = 0
-			this.visible = true
+			this.alpha = 0;
+			this.visible = true;
 			
 			if (onCompleteFunc != null)
 			{
-				Tweener.addTween(this, {alpha:1, time:isNaN(duration) ? 0.5 : duration, transition:_transition, onComplete:onCompleteFunc })  //Tweener.addTween(this, {alpha:1, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:onCompleteFunc, onCompleteParams:[this]})				
+				Tweener.addTween(this, {alpha:1, time:isNaN(duration) ? 0.5 : duration, transition:_transition, onComplete:onCompleteFunc });  //Tweener.addTween(this, {alpha:1, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:onCompleteFunc, onCompleteParams:[this]})				
 			}
 			else
 			{
-				Tweener.addTween(this, {alpha:1, time:isNaN(duration) ? 0.5 : duration, transition:_transition})
+				Tweener.addTween(this, {alpha:1, time:isNaN(duration) ? 0.5 : duration, transition:_transition});
 			}
 		}
 		
@@ -106,18 +107,18 @@
 		/// go to alpha zero and set invisible = true - with optional onComplete Function
 		public function GoInvisibleWithOnComplete(duration:Number=NaN, oncompletefunc:Function=null):void
 		{
-			Tweener.addTween(this, { alpha:0, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:function() { this.visible = false;  oncompletefunc() }} )
+			Tweener.addTween(this, { alpha:0, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:function() { this.visible = false;  oncompletefunc() }} );
 		}
 		
 		public function GoToAlpha(alphavalue:Number, duration:Number=NaN, onCompleteFunc:Function=null):void
 		{
 			if (onCompleteFunc != null)
 			{
-				Tweener.addTween(this, {alpha:alphavalue, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:onCompleteFunc, onCompleteParams:[this]})
+				Tweener.addTween(this, {alpha:alphavalue, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:onCompleteFunc, onCompleteParams:[this]});
 			}
 			else
 			{
-				Tweener.addTween(this, {alpha:alphavalue, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine"})
+				Tweener.addTween(this, {alpha:alphavalue, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine"});
 			}
 		}
 		
@@ -296,34 +297,46 @@
 		private function centerResizeEnterFrame(e:Event):void // FALTA APLICAR SMOOTHNESS
 		{
 			var zero_point:Point = new Point(0, 0);
-			//var zero_x:Number = parent.localToGlobal(zero_point).x
-			//var zero_y:Number = parent.localToGlobal(zero_point).y
+			var zero_x:Number;
+			var zero_y:Number;
 			
 			var final_x:Number = 0;
 			var final_y:Number = 0;
 			
-			if (_custom_width != 0) 
+			if (parent != null) 
 			{
-				final_x = (StageReference.getStage().stageWidth / 2) - (_custom_width / 2)// - zero_x;
+				zero_x = parent.localToGlobal(zero_point).x;
+				zero_y = parent.localToGlobal(zero_point).y;
 			}
 			else
 			{
-				final_x = (StageReference.getStage().stageWidth / 2) - (this.width / 2)// - zero_x;
+				zero_x = 0;
+				zero_y = 0;
+			}
+			
+			if (_custom_width != 0) 
+			{
+				final_x = (StageReference.getStage().stageWidth / 2) - (_custom_width / 2) - zero_x;
+			}
+			else
+			{
+				final_x = (StageReference.getStage().stageWidth / 2) - (this.width / 2) - zero_x;
 			}
 			
 			if (_custom_height != 0) 
 			{
-				final_y = (StageReference.getStage().stageHeight / 2) - (_custom_height / 2)// - zero_y;
+				final_y = (StageReference.getStage().stageHeight / 2) - (_custom_height / 2) - zero_y;
 			}
 			else
 			{
-				final_y = (StageReference.getStage().stageHeight / 2) - (this.height / 2)// - zero_y;
+				final_y = (StageReference.getStage().stageHeight / 2) - (this.height / 2) - zero_y;
 			}
 			
 			if (_SMOOTH_ALIGN == true)
 			{
-				this.x += Math.round((final_x - this.x) / _EASING_SPEED);
-				this.y += Math.round((final_y - this.y) / _EASING_SPEED);
+				if (this.x != final_x)  { this.x += Math.round((final_x - this.x) / _EASING_SPEED); }
+				
+				if (this.y != final_y)  { this.y += Math.round((final_y - this.y) / _EASING_SPEED); }
 			}
 			else
 			{
@@ -354,18 +367,21 @@
 			this.y = -zero_y + _v_padding
 		}
 		
-		private function leftResizeEnterFrame(e:Event):void    // INACABADO (falta opçao smooth)
+		private function leftResizeEnterFrame(e:Event):void    /// INACABADO (falta opçao smooth)
 		{
 			var zero_point:Point = new Point(0, 0);
 			//var zero_x:Number = parent.localToGlobal(zero_point).x
 			//var zero_y:Number = parent.localToGlobal(zero_point).y
 			
-			GoToPositionX(0 + _h_padding, 0.2)
+			if (this.x != 0 + _h_padding) 
+			{
+				GoToPositionX(0 + _h_padding, 0.2)
+			}
 			//this.x = 0 + _h_padding;
 			this.y = StageReference.getStage().stageHeight / 2 - _custom_height / 2;// - zero_y;
 		}
 		
-		private function toprightResizeEnterFrame(e:Event):void     // INACABADO (falta opçao smooth)
+		private function toprightResizeEnterFrame(e:Event):void     /// INACABADO (falta opçao smooth)
 		{
 			var zero_point:Point = new Point(0, 0);
 			var zero_x:Number = parent.localToGlobal(zero_point).x
@@ -375,17 +391,28 @@
 			this.y = -zero_y + _v_padding
 		}
 		
-		private function bottomleftResizeEnterFrame(e:Event):void     // INACABADO (falta opçao smooth)
+		private function bottomleftResizeEnterFrame(e:Event):void     /// INACABADO (falta opçao smooth)
 		{
 			var zero_point:Point = new Point(0, 0);
-			var zero_x:Number = parent.localToGlobal(zero_point).x
-			var zero_y:Number = parent.localToGlobal(zero_point).y
+			var zero_x:Number;
+			var zero_y:Number;
 			
-			this.x = -zero_x + _h_padding
-			this.y = StageReference.getStage().stageHeight - this.height - _v_padding - zero_y
+			if (parent != null) 
+			{
+				zero_x = parent.localToGlobal(zero_point).x;
+				zero_y = parent.localToGlobal(zero_point).y;
+			}                                         
+			else
+			{
+				zero_x = 0;
+				zero_y = 0;
+			}
+			
+			this.x = -zero_x + _h_padding;
+			this.y = StageReference.getStage().stageHeight - this.height - _v_padding - zero_y;
 		}
 		
-		private function bottomrightResizeEnterFrame(e:Event):void  // INACABADO (falta opçao smooth)
+		private function bottomrightResizeEnterFrame(e:Event):void  /// INACABADO (falta opçao smooth)
 		{
 			var zero_point:Point = new Point(0, 0);
 			var zero_x:Number    = parent.localToGlobal(zero_point).x
@@ -408,7 +435,7 @@
 		{
 			this.removeEventListeners();
 			
-			destroy()
+			destroy();
 		}
 	}
 }

@@ -15,8 +15,10 @@
 	
 	public class PatternFill extends Sprite
 	{
-		public function PatternFill(_target:Object, _width:Number, _height:Number, _icon_data:Array, _color:Number = 0x000000, _transparency:Number = 1):void
+		public function PatternFill(_width:Number, _height:Number, _icon_data:Array, _color:Number = 0x000000, _transparency:Number = 1):void
 		{
+			/// _target:Object, 
+			
 			var num_rows:int = _icon_data.length;
 			
 			var mybitmapdata:BitmapData = new BitmapData(num_rows, num_rows, true, _color);

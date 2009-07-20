@@ -13,16 +13,12 @@
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	
-	public class GradientBox 
+	public class GradientBox extends Sprite
 	{
 		
-		public function GradientBox() 
+		public function GradientBox(_colour1:uint=0xffffff, _colour2:uint=0x000000, _width:Number=100, _height:Number=100, _start_alpha:Number=1.0, _end_alpha:Number=1.0, _rotation:Number=1.5707963267948966):void
 		{
-			
-		}
-		
-		public static function createShape(_target:DisplayObject, _colour1:uint=0xffffff, _colour2:uint=0x000000, _width:Number=100, _height:Number=100, _start_alpha:Number=1.0, _end_alpha:Number=1.0, _rotation:Number=1.5707963267948966):Shape
-		{
+			/// _target:DisplayObject, 
 			/// default _rotation is (Math.PI/180)*90
 			
 			var shape1:Shape = new Shape();
@@ -37,7 +33,9 @@
 			shape1.graphics.drawRect( 0.0, 0.0, _width, _height);
 			shape1.graphics.endFill();
 			
-			return shape1;
+			this.addChild(shape1);
+			
+			//	return shape1;
 		}
 		
 		/*
