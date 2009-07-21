@@ -60,6 +60,8 @@
 			_bg 				= new Sprite();
 			_content_holder 	= new Sprite();
 			_mask 				= new Sprite();
+			
+			updateMask();
 		}
 		
 		private function addedHandler(e:Event):void 
@@ -73,9 +75,13 @@
 			this.addChild(_content_holder);
 			this.addChild(_mask); 
 			
-			_content_holder.mask = _mask;
+			_content_holder.x = frame_size;
 			
-			build();
+			//updateMask();
+			
+			//_content_holder.mask = _mask;
+			
+			builddynamicwindow();
 		}
 		
 		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// 
@@ -84,12 +90,21 @@
 		
 		public function insertDynamicWindowComponent(component:DynamicWindowComponent):void
 		{
+			trace ("DynamicWindow ::: insertDynamicWindowComponent = ");
+			
 			_content_holder.addChild(component)
+			
+			trace ("insertDynamicWindowComponent ::: _content_holder = " + _content_holder ); 
+			trace ("insertDynamicWindowComponent ::: _content_holder.alpha = " + _content_holder.alpha ); 
+			trace ("insertDynamicWindowComponent ::: _content_holder.visible = " + _content_holder.visible ); 
 		}
 		
-		public function build():void
+		public function builddynamicwindow():void
 		{
-			/// please override			
+			/// please override	like this
+			
+			/// override public function builddynamicwindow():void
+			/// { code };
 			
 			
 			//this.addChild(_content_holder)
@@ -148,23 +163,31 @@
 		/// VISUAL BEHAVIOUR FUNCTIONS
 		/// VISUAL BEHAVIOUR FUNCTIONS
 		
+		private function updateMask():void
+		{
+			_mask.graphics.clear()
+			_mask.graphics.beginFill(0x000000);
+			_mask.graphics.drawRect(0, 0, _custom_width, _custom_width);
+			_mask.graphics.endFill();
+		}
+		
 		override public function onCustomWidthChange():void 
 		{ 
 			/// tween mask to custom width
 			
-			Tweener.addTween(_bg,    { width:_custom_width - (2*_frame_size), time:.5, transition:"EaseOutSine" } );
+			Tweener.addTween(_bg,   { width:_custom_width - (2*_frame_size), time:.5, transition:"EaseOutSine" } );
 			Tweener.addTween(_mask, { width:_custom_width, time:.5, transition:"EaseOutSine" } );
 		};
 		
 		override public function onCustomHeightChange():void 
 		{
 			/// tween mask to custom height
-			Tweener.addTween(_bg,    { height:_custom_height - (2*_frame_size), time:.5, transition:"EaseOutSine" } );
+			Tweener.addTween(_bg,   { height:_custom_height - (2*_frame_size), time:.5, transition:"EaseOutSine" } );
 			Tweener.addTween(_mask, { height:_custom_height, time:.5, transition:"EaseOutSine" } );
 		};
 		
 		public function get frame_size():Number 					{ return _frame_size;  			};
-		public function set frame_size(value:Number):void  			{ _frame_size = value; 			};
+		public function set frame_size(value:Number):void  			{ _frame_size = value; _content_holder.x = value; };
 		
 		public function get frame_pattern_data():Array 				{ return _frame_pattern_data; 	};
 		public function set frame_pattern_data(value:Array):void  	{ _frame_pattern_data = value; 	};
