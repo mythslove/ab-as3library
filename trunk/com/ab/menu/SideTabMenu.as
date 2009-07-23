@@ -4,6 +4,7 @@
 	* @author ABº
 	*/
 	import caurina.transitions.Tweener;
+	import com.ab.display.ABSprite;
 	import com.ab.log.ABLogger
 	import com.ab.display.DynamicWindow;
 	import flash.display.Sprite;
@@ -13,7 +14,7 @@
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	
-	public class SideTabMenu extends DynamicWindow
+	public class SideTabMenu extends ABSprite;
 	{
 		//[Embed(source="C:\WINDOWS\Fonts\Arial.TTF", fontFamily="Arial")]
 		private var _bg:Sprite;

@@ -7,6 +7,7 @@
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import com.ab.apps.appgenerics.lang.I18NEvent
+	import com.ab.events.CentralEventSystem;
 	
 	public class I18N extends EventDispatcher
 	{
@@ -32,7 +33,7 @@
 			{
 				_LANG = value;
 				
-				dispatchEvent(new I18NEvent(I18NEvent.LANG_CHANGE));
+				CentralEventSystem.getSingleton().dispatchEvent(new I18NEvent(I18NEvent.LANG_CHANGE));
 			}
 		}
 		
