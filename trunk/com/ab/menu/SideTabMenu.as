@@ -14,7 +14,7 @@
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	
-	public class SideTabMenu extends ABSprite;
+	public class SideTabMenu extends ABSprite
 	{
 		//[Embed(source="C:\WINDOWS\Fonts\Arial.TTF", fontFamily="Arial")]
 		private var _bg:Sprite;

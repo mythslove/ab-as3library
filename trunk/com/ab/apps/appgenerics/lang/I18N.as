@@ -33,7 +33,7 @@
 			{
 				_LANG = value;
 				
-				CentralEventSystem.getSingleton().dispatchEvent(new I18NEvent(I18NEvent.LANG_CHANGE));
+				CentralEventSystem.getSingleton().dispatchEvent(new I18NEvent(I18NEvent.LANGUAGE_CHANGE));
 			}
 		}
 		
