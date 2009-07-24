@@ -16,6 +16,8 @@
 	
 	public class ABCMSSiteVars
 	{
+		/// MAIN MENU
+		
 		public static const MAIN_MENU = [
 			{
 				title: {

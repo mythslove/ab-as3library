@@ -11,7 +11,7 @@
 	
 	public class I18N extends EventDispatcher
 	{
-		private static var instance:I18N = new I18N();
+		//private static var instance:I18N = new I18N();
 		
 		public static const EN:String    = "en";
 		public static const PT:String    = "pt";
@@ -39,8 +39,8 @@
 		
 		static public function translate(o:Object):String
 		{
-			trace(_LANG)
-			trace(o)
+			//trace(_LANG)
+			//trace(o)
 			
 			var t:Object = o[_LANG];
 			

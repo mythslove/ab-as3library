@@ -13,6 +13,7 @@
 	import flash.events.Event
 	import org.casalib.util.StageReference
 	import flash.geom.Point
+	import caurina.transitions.properties.FilterShortcuts
 	
 	/* Métodos Funcionais:
 	 * 
@@ -35,16 +36,19 @@
 	
 	public dynamic class ABSprite extends CasaSprite
 	{
-		private var _SMOOTH_ALIGN 		 = false;
-		private var _ALIGN_TYPE:String	 = "";
-		private var _h_padding:int 		 = 0;
-		private var _v_padding:int 		 = 0;
+		private var _SMOOTH_ALIGN 		 	= false;
+		private var _ALIGN_TYPE:String	 	= "";
+		private var _h_padding:int 		 	= 0;
+		private var _v_padding:int 		 	= 0;
 		
-		public var _EASING_SPEED:int 	 = 8;
-		public var _custom_height:Number = 0;
-		public var _custom_width:Number  = 0;
-		private var _ALIGN_SCOPE:String  = "global";
+		private var _ALIGN_SCOPE:String  	= "global";
 		private var custom_parent:*;
+		private var align_set:Boolean 	 	= false;
+		
+		public var _EASING_SPEED:int 	 	= 8;
+		public var _custom_height:Number 	= 0;
+		public var _custom_width:Number  	= 0;
+		public var using_filters:Boolean	= false;
 		
 		public function ABSprite() 
 		{
@@ -208,6 +212,11 @@
 		
 		public function setAlign(_type:String, _smooth:Boolean=true, __custom_height:Number=0, __custom_width:Number=0, _scope:String="global", _custom_parent:Object=null):void
 		{
+			if (align_set == true) 
+			{
+				removeAlign();
+			}
+			
 			_SMOOTH_ALIGN  = _smooth;
 			_ALIGN_TYPE    = _type;
 			_ALIGN_SCOPE   = _scope;
@@ -223,10 +232,7 @@
 			__custom_height == 0 ? _custom_height = _custom_height : _custom_height = __custom_height;
 			__custom_width  == 0 ? _custom_width  = _custom_width  : _custom_width  = __custom_width;
 			
-			if (this.hasEventListener(Event.ENTER_FRAME) || this.hasEventListener(Event.RESIZE)) 
-			{
-				removeAlign()
-			}
+			align_set = true;
 			
 			switch (_type) 
 			{
@@ -254,7 +260,6 @@
 					
 				case "bottom":
 					StageReference.getStage().addEventListener(Event.ENTER_FRAME, bottomResizeEnterFrame, false, 0, true);
-					bottomResizeEnterFrame(new Event(Event.RESIZE))
 					break;
 					
 				case "bottomleft":
@@ -274,7 +279,7 @@
 			switch (_ALIGN_TYPE) 
 			{
 				case "left":
-					StageReference.getStage().removeEventListener(Event.RESIZE, leftResizeEnterFrame);
+					StageReference.getStage().removeEventListener(Event.ENTER_FRAME, leftResizeEnterFrame);
 					break;
 					
 				case "center":
@@ -296,6 +301,7 @@
 				case "bottom":
 					StageReference.getStage().removeEventListener(Event.ENTER_FRAME, bottomResizeEnterFrame);
 					break;
+					
 				case "bottomleft":
 					StageReference.getStage().removeEventListener(Event.RESIZE, bottomleftResizeEnterFrame);
 					break;
@@ -376,8 +382,14 @@
 		private function topleftResizeEnterFrame(e:Event):void    // INACABADO (falta opçao smooth)
 		{
 			var zero_point:Point = new Point(0, 0);
-			var zero_x:Number = parent.localToGlobal(zero_point).x
-			var zero_y:Number = parent.localToGlobal(zero_point).y
+			var zero_x:Number=0;
+			var zero_y:Number=0;
+			
+			if (parent) 
+			{
+				zero_x = parent.localToGlobal(zero_point).x;
+				zero_y = parent.localToGlobal(zero_point).y;				
+			}
 			
 			this.x = -zero_x + _h_padding
 			this.y = -zero_y + _v_padding
@@ -400,8 +412,14 @@
 		private function toprightResizeEnterFrame(e:Event):void     /// INACABADO (falta opçao smooth)
 		{
 			var zero_point:Point = new Point(0, 0);
-			var zero_x:Number = parent.localToGlobal(zero_point).x
-			var zero_y:Number = parent.localToGlobal(zero_point).y
+			var zero_x:Number=0;
+			var zero_y:Number=0;
+			
+			if (parent) 
+			{
+				zero_x = parent.localToGlobal(zero_point).x;
+				zero_y = parent.localToGlobal(zero_point).y;				
+			}
 			
 			this.x = StageReference.getStage().stageWidth - _h_padding - zero_x
 			this.y = -zero_y + _v_padding
@@ -473,9 +491,23 @@
 			this.y = - zero_y + StageReference.getStage().stageHeight - _v_padding;
 		}
 		
+		public function blurOutAndExecuteFunction(_function:Function, duration:Number=NaN):void
+		{
+			if (!using_filters) 	{ FilterShortcuts.init(); using_filters = true; }
+			
+			Tweener.addTween(this, 	{ alpha:0, _Blur_blurX:40, _Blur_blurY:40, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:_function } )
+		}
+		
 		/// //// //// //// //// RESOURCE MANAGEMENT
 		/// //// //// //// //// RESOURCE MANAGEMENT
 		/// //// //// //// //// RESOURCE MANAGEMENT
+		
+		public function blurOutAndDie(duration:Number=NaN):void
+		{
+			if (!using_filters) 	{ FilterShortcuts.init(); using_filters = true; }
+			
+			Tweener.addTween(this, 	{ alpha:0, _Blur_blurX:40, _Blur_blurY:40, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:cleanMe } )
+		}
 		
 		public function goodbye(duration:Number=NaN):void
 		{

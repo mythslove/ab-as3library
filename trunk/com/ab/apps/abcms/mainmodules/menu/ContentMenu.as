@@ -4,6 +4,7 @@
 	* @author ABº
 	*/
 	
+	import com.ab.apps.appgenerics.AppLevelsManagement;
 	import com.ab.display.DynamicWindow;
 	import flash.events.Event;
 	
@@ -24,7 +25,9 @@
 		
 		private function build():void
 		{
+			trace ("ContentMenu ::: build()"); 
 			
+			AppLevelsManagement.getSingleton().showWarning("UNDER CONSTRUCTION");
 		}
 		
 	}

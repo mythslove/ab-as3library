@@ -4,13 +4,13 @@
 	* @author ABº
 	*/
 	
-	import com.ab.display.DynamicWindow
+	import com.ab.apps.appgenerics.AppLevelsManagement;
+	import com.ab.display.ABSprite;
 	import flash.events.Event;
 	
-	public class ABCMSBasicSiteDefinitions extends DynamicWindow
+	public class ABCMSBasicSiteDefinitions extends ABSprite
 	{
-		import com.ab.display.DynamicWindow;
-		import flash.events.Event;
+		
 		
 		public function ABCMSBasicSiteDefinitions() 
 		{
@@ -26,7 +26,9 @@
 		
 		private function build():void
 		{
+			trace ("ABCMSBasicSiteDefinitions ::: build()"); 
 			
+			AppLevelsManagement.getSingleton().showWarning("UNDER CONSTRUCTION - PLEASE FUCK OFF AND COME BACK LATER");
 		}
 		
 	}

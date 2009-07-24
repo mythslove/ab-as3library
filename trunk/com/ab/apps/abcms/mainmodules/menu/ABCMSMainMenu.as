@@ -40,19 +40,15 @@
 			_items = new Array();
 			
 			_num_options = ABCMSSiteVars.MAIN_MENU.length;
-			
-			button_spacing = 5;
 		}
 		
 		private function init():void
 		{
-			trace("_num_options = " + _num_options)
-			
 			for (var i:int = 0; i < _num_options; i++)
 			{
-				var newitem:ABCMSMainMenuItem = new ABCMSMainMenuItem();
+				var newitem:ABCMSMainMenuItem = new ABCMSMainMenuItem(this);
 				
-				trace("MAIN_MENU[i] = " + ABCMSSiteVars.MAIN_MENU[i])
+				newitem.custom_height = 100;
 				
 				newitem.data = ABCMSSiteVars.MAIN_MENU[i];
 				

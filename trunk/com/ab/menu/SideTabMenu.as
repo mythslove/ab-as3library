@@ -19,6 +19,7 @@
 		//[Embed(source="C:\WINDOWS\Fonts\Arial.TTF", fontFamily="Arial")]
 		private var _bg:Sprite;
 		private var _tab:Sprite;
+		private var _tab_bg:Sprite;
 		private var _mask:Sprite;
 		private var _buttons_holder:Sprite;
 		private var _bg_colour:uint=0x111111;
@@ -38,10 +39,12 @@
 		private var _menu_item_type:Class=null;
 		private var _sidetabmenuitems:Array;
 		private var _button_spacing:Number;
+		private var _contents_height:Number=0;
 		//import com.ab.display.ABSprite; setalign
 		
 		public function SideTabMenu()
 		{
+			initVars();
 			
 			this.addEventListener(Event.ADDED_TO_STAGE, addedHandler, false, 0, true)
 			
@@ -60,43 +63,65 @@
 		
 		private function initVars():void
 		{
-			_sidetabmenuitems = new Array();
+			_sidetabmenuitems 	= new Array();
+			_tabtext_style 		= new TextFormat();
+			
+			_bg      			= new Sprite();
+			_tab     			= new Sprite();
+			_tab_bg    			= new Sprite();
+			_mask 				= new Sprite();
+			_buttons_holder 	= new Sprite();
 		}
 		
 		private function addedHandler(e:Event):void 
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, addedHandler)
 			
-			initVars();
 			buildVisuals();
 			addEventListeners();
 		}
 		
 		public function buildButtons():void
 		{
-			//for each(var mi:SideTabMenuItem in _sidetabmenuitems)
-			//{
-				//
-			//}
-			
 			for (var i:int = 0; i < _sidetabmenuitems.length; i++) 
 			{
 				_buttons_holder.addChild(_sidetabmenuitems[i]);
 				
-				_sidetabmenuitems[i].y = i * _sidetabmenuitems[i].height + _button_spacing;
+				if (_sidetabmenuitems[i].custom_height == null) 
+				{
+					_contents_height += _sidetabmenuitems[i].height;
+					
+					_sidetabmenuitems[i].y = i * _sidetabmenuitems[i].height + _button_spacing;
+				}
+				else
+				{
+					_contents_height += _sidetabmenuitems[i].custom_height;
+					
+					_sidetabmenuitems[i].y = i * (_sidetabmenuitems[i].custom_height + _button_spacing);
+				}
+				
 			}
-			//_sidetabmenuitems.forEach(addChild, _buttons_holder);
 			
+			finishedBuildingButtons()
+			//_sidetabmenuitems.forEach(addChild, _buttons_holder);
 			//_sidetabmenuitems.forEach(function(mi:SideTabMenuItem):void {} addChild, _buttons_holder);
+			//for each(var mi:SideTabMenuItem in _sidetabmenuitems) { };
+		}
+		
+		private function finishedBuildingButtons():void
+		{
+			_contents_height = _contents_height + ((_sidetabmenuitems.length+1) * _button_spacing);
+			
+			if (_buttons_holder.height < _bg.height) 
+			{
+				_bg.height 		= _contents_height;
+				_tab_bg.height 	= _contents_height;
+				custom_height 	= _contents_height;
+			}
 		}
 		
 		private function buildVisuals():void
 		{
-			_bg      		= new Sprite();
-			_tab     		= new Sprite();
-			_mask 			= new Sprite();
-			_buttons_holder = new Sprite();
-			
 			/// BG
 			_bg.graphics.beginFill(_bg_colour);
 			_bg.graphics.drawRect(0, 0, _custom_width - _tab_area_size - _elements_spacing, _custom_height);
@@ -114,42 +139,40 @@
 			
 			/// TAB
 			
+			_tab.mouseChildren = false;
 			_tab.x = _custom_width - _tab_area_size;
-			_tab.graphics.beginFill(_bg_colour);
-			_tab.graphics.drawRect(0, 0, _tab_area_size, _custom_height);
-			_tab.graphics.endFill();
+			_tab_bg.graphics.beginFill(_bg_colour);
+			_tab_bg.graphics.drawRect(0, 0, _tab_area_size, _custom_height);
+			_tab_bg.graphics.endFill();
 			
 			/// TAB TEXT
 			
-			var font:ArialMENUH2 = new ArialMENUH2();
-			
-			_tabtext_style 		 = new TextFormat();
-			_tabtext_style.font  = font.fontName;
-			_tabtext_style.color = _tab_text_color;
-			
 			_tab_text 					= new TextField();
-			_tab_text.embedFonts 	 	= true;
 			_tab_text.autoSize 	 		= TextFieldAutoSize.LEFT;
 			_tab_text.defaultTextFormat = _tabtext_style;
+			_tab_text.embedFonts 	 	= true;
 			_tab_text.text 		 		= _title;
-			_tab_text.alpha			 	= 0.5;
+			_tab_text.alpha			 	= 1;
 			_tab_text.rotation 		 	= 90;
 			_tab_text.selectable 		= false;
-			_tab_text.y 				= _custom_height / 2 - _tab_text.height / 2;
-			_tab_text.x 				= 30;
+			_tab_text.y 				= _tab_area_size/4;//_custom_height / 2 - _tab_text.height / 2;
+			_tab_text.x 				= _tab_area_size - 1;
+			
+			//trace("_tab_text.text = " + _tab_text.alpha)
 			
 			/// BUTTONS HOLDER
 			_buttons_holder.x 		= _content_indent;
 			_buttons_holder.y 		= _content_indent;
-			_buttons_holder.mask 	= _mask;
+			//_buttons_holder.mask 	= _mask;
 			
-			_bg.graphics.beginFill(0x222222);
+			_bg.graphics.beginFill(_bg_colour);
 			
 			addChild(_bg);
 			addChild(_tab);
 			addChild(_buttons_holder);
-			addChild(_mask);
+			//addChild(_mask);
 			
+			_tab.addChild(_tab_bg);
 			_tab.addChild(_tab_text);
 		}
 		
@@ -182,10 +205,13 @@
 		{
 			_bg_colour = value;
 			
-			_bg.graphics.clear();
-			_bg.graphics.beginFill(value);
-			_bg.graphics.drawRect(0, 0, _custom_width, _custom_height);
-			_bg.graphics.endFill();
+			if (_bg != null) 
+			{
+				_bg.graphics.clear();
+				_bg.graphics.beginFill(value);
+				_bg.graphics.drawRect(0, 0, _custom_width, _custom_height);
+				_bg.graphics.endFill();
+			}
 		}
 		
 		public function get status():String { return _status; }
@@ -219,9 +245,10 @@
 			Tweener.addTween(_tab_text, { alpha:1, time:0.5} );
 		}
 		
-		private function setDocked():void
+		public function setDocked():void
 		{
 			setAlign("left", true, 0, 0);
+			
 			h_padding = custom_width - tab_area_size - elements_spacing;
 			h_padding = h_padding * ( -1);
 			
@@ -248,14 +275,14 @@
 		public function get title():String 							{ return _title; 				};
 		public function set title(value:String):void  				{ _title = value; 				};
 		
-		public function get tab_text_color():uint 					{ return _tab_text_color; }
-		public function set tab_text_color(value:uint):void 		{ _tab_text_color = value; _tabtext_style.color = _tab_text_color; }
+		public function get sidetabmenuitems():Array 				{ return _sidetabmenuitems; 	};
+		public function set sidetabmenuitems(value:Array):void 		{ _sidetabmenuitems = value; 	};
 		
-		public function get sidetabmenuitems():Array 				{ return _sidetabmenuitems; }
-		public function set sidetabmenuitems(value:Array):void 		{ _sidetabmenuitems = value; }
+		public function get button_spacing():Number					{ return _button_spacing; 		};
+		public function set button_spacing(value:Number):void  		{ _button_spacing = value; 		};
 		
-		public function get button_spacing():Number					{ return _button_spacing; }
-		public function set button_spacing(value:Number):void  		{ _button_spacing = value; }
-	}
+		public function get tabtext_style():TextFormat 				{ return _tabtext_style; 		};
+		public function set tabtext_style(value:TextFormat):void 	{ _tabtext_style = value; 		};
+	}                                                                                    
 	
 }
