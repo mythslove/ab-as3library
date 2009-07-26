@@ -1,46 +1,43 @@
-
-/**
-* @author ABº
-* @version 1.0
-* 
-* IF YOU USE AMFPHP YOU KNOW HOW TO USE THIS CLASS
-*/
-
 package com.ab.services
 {
+	/**
+	* @author ABº
+	* @version 1.0
+	*/
+	
 	import com.niarbtfel.remoting.*
 	import com.niarbtfel.remoting.cache.RemotingCache;
 	import com.niarbtfel.remoting.events.*
-	//import com.edigma.ui.AlertWindow;
 	
-    public class ServiceProxy
+    public class UploadServiceProxy
 	{
-		private static var singleton : ServiceProxy
+		private static var singleton:UploadServiceProxy
         
         // Remoting Service
 		private var _conn:RemotingConnection
         private var _serv:RemotingService;
-		public var _AMF_PATH:String = "http://www.antoniobrandao.com/amfphp/gateway.php";
-		public var _AMF_FILE:String = "ab_services";
+		private var _PATH_AMF:String = "http://www.antoniobrandao.com/amfphp/gateway.php";
+		//private var _PATH_AMF:String = "http://amf.edg.pt/flashservices/gateway.php";
 		
 		/**
+		 * 
 		 * @return unique instance of ApplicationInfo
 		 */
 		
-        public static function getInstance() : ServiceProxy
+        public static function getInstance() : UploadServiceProxy
         {
             if ( singleton == null )
-                singleton = new ServiceProxy( arguments.callee );
+                singleton = new UploadServiceProxy( arguments.callee );
             return singleton;
         }
 		
 		
-        public function ServiceProxy( caller : Function = null )
+        public function UploadServiceProxy( caller : Function = null )
         {
-            if( caller != ServiceProxy.getInstance ){
-                throw new Error ("ServiceProxy ::: ServiceProxy is a singleton class, use getInstance() instead");
-			}else if ( ServiceProxy.singleton != null ){
-				throw new Error( "ServiceProxy ::: Only one ServiceProxy instance should be instantiated" );	
+            if( caller != UploadServiceProxy.getInstance ){
+                throw new Error ("UploadServiceProxy ::: UploadServiceProxy is a singleton class, use getInstance() instead");
+			}else if ( UploadServiceProxy.singleton != null ){
+				throw new Error( "UploadServiceProxy ::: Only one UploadServiceProxy instance should be instantiated" );	
 			}else {
 				init();
 			}
@@ -48,8 +45,8 @@ package com.ab.services
 		
 		private function init():void
 		{
-            // init connection 
-			_conn = new RemotingConnection(_AMF_PATH, 0);
+            // init connection  
+			_conn = new RemotingConnection(_PATH_AMF, 0);
 			_conn.addEventListener(ConnectionEvent.CONNECTED, onConnectHandler);
 			_conn.addEventListener(ConnectionEvent.FAILED, onConnectFailedHandler);
 			_conn.addEventListener(ConnectionEvent.DISCONNECT, onDisconnectHandler);
@@ -57,7 +54,7 @@ package com.ab.services
 			_conn.addEventListener(ConnectionEvent.SECURITY_ERROR, onSecurityHandler);
 			
 			//init service
-			_serv = new RemotingService(_conn, _AMF_FILE, 10000, 1, true);
+			_serv = new RemotingService(_conn,"upload",10000,1,true);
 			_serv.addEventListener(CallEvent.TIMEOUT, onTimeoutHandler);
 			_serv.addEventListener(CallEvent.RETRY, onRetryHandler);
 			_serv.addEventListener(CallEvent.REQUEST_SENT, onRequestSentHandler);
@@ -82,41 +79,43 @@ package com.ab.services
 		//connection handlers
 		private function onConnectHandler(e:ConnectionEvent):void
 		{
-			trace("ServiceProxy ::: service connected");
+			trace("UploadServiceProxy ::: service connected");
 		}
 		private function onConnectFailedHandler(e:ConnectionEvent):void
 		{
-			trace("ServiceProxy ::: service connectionFailed");
+			trace("UploadServiceProxy ::: service connectionFailed");
 		}
 		private function onDisconnectHandler(e:ConnectionEvent):void
 		{
-			trace("ServiceProxy ::: service disconnected");
+			trace("UploadServiceProxy ::: service disconnected");
 		}
 		private function onFormatErrorHandler(e:ConnectionEvent):void
 		{
-			trace("ServiceProxy ::: service format error");
+			trace("UploadServiceProxy ::: service format error");
 		}
 		private function onSecurityHandler(e:ConnectionEvent):void
 		{
-			trace("ServiceProxy ::: service security error");
+			trace("UploadServiceProxy ::: service security error");
 		}
 		
 		//service handlers
 		private function onTimeoutHandler(e:CallEvent):void
 		{
-			trace("ServiceProxy ::: service timeout" );
+			trace("UploadServiceProxy ::: service timeout" );
 		}			
 		private function onRetryHandler(e:CallEvent):void
 		{
-			trace("ServiceProxy ::: service retry call");
+			trace("UploadServiceProxy ::: service retry call");
 		}
 		private function onRequestSentHandler(e:CallEvent):void
 		{
-			trace("ServiceProxy ::: service request sent");
+			trace("UploadServiceProxy ::: service request sent");
 		}	
 		private function onServicehaltedHandler(e:CallEvent):void
 		{
-			trace("ServiceProxy ::: service halted");
+			trace("UploadServiceProxy ::: service halted");
 		}
+		
     }
+	
 }

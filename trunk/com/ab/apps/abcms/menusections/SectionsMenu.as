@@ -6,11 +6,11 @@
 	
 	import com.ab.display.ABSprite;
 	import com.ab.ui.menu.DynamicStackMenu;
-	import abcms.menusections.assets.SectionItem
+	import abcms.menusections.assets.SectionItem;
 	import com.bumpslide.ui.BaseClip;
 	import flash.display.MovieClip;
-	import flash.display.DisplayObject
-	import com.bumpslide.ui.Component
+	import flash.display.DisplayObject;
+	import com.bumpslide.ui.Component;
 	import flash.events.MouseEvent;
 	
 	public class SectionsMenu extends ABSprite

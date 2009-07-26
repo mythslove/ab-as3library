@@ -4,14 +4,14 @@
 	* @author ABº
 	*/
 	
+	import caurina.transitions.properties.CurveModifiers;
 	import com.ab.apps.appgenerics.AppLevelsManagement;
 	import com.ab.display.ABSprite;
 	import flash.events.Event;
+	import com.ab.services.ServerCommunication;
 	
 	public class ABCMSBasicSiteDefinitions extends ABSprite
 	{
-		
-		
 		public function ABCMSBasicSiteDefinitions() 
 		{
 			this.addEventListener(Event.ADDED_TO_STAGE, addedHandler, false, 0, true)
@@ -29,6 +29,16 @@
 			trace ("ABCMSBasicSiteDefinitions ::: build()"); 
 			
 			AppLevelsManagement.getSingleton().showWarning("UNDER CONSTRUCTION - PLEASE FUCK OFF AND COME BACK LATER");
+			
+			var asd:Array = new Array();
+			asd = [];
+			
+			ServerCommunication.__singleton.listSectionsRequest("asdasd", yeah, [asd], 323);
+		}
+		
+		private function yeah(O:Object):void
+		{
+			trace("result999");
 		}
 		
 	}
