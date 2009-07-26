@@ -2,6 +2,8 @@
 {
 	/**
 	* @author ABº
+	* 
+	* TODO: Move AppLevelsManagement to CORE
 	*/
 	
 	import com.ab.apps.appgenerics.AppLevelsManagement;

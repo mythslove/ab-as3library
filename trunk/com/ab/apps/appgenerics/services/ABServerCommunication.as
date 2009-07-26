@@ -1,7 +1,9 @@
-﻿package com.ab.services 
+﻿package com.ab.apps.appgenerics.services
 {
 	/**
 	* @author ABº
+	* 
+	* This class was built to suit my own server services it might not suit your needs
 	*/
 	
 	import flash.display.MovieClip;
@@ -13,11 +15,11 @@
 	import com.niarbtfel.remoting.events.FaultEvent
 	
 	
-	public class ServerCommunication 
+	public class ABServerCommunication 
 	{
-		public static var __singleton:ServerCommunication
+		public static var __singleton:ABServerCommunication
 		
-		public function ServerCommunication()
+		public function ABServerCommunication()
 		{
 			setSingleton();
 		}
@@ -36,7 +38,7 @@
 		
 		public function listSections(value:Number, resultFunction:Function):void
 		{
-			trace("ServerCommunication ::: listSectionItemsRequest()")
+			trace("ABServerCommunication ::: listSectionItemsRequest()")
 			
 			var a:Array = new Array();
 			
@@ -48,7 +50,7 @@
 		public function listSectionsRequest(cat_id:int, resultFunction:Function):void
 		{
 			
-			trace("ServerCommunication ::: listSectionItemsRequest()")
+			trace("ABServerCommunication ::: listSectionItemsRequest()")
 			
 			var a:Array = new Array();
 			
@@ -62,41 +64,41 @@
 		
 		private function faultHandler(e:FaultEvent):void // inserir parametro
 		{
-			trace ("ServerCommunication ::: faultHandler() ::: e.fault = " + e.fault );
+			trace ("ABServerCommunication ::: faultHandler() ::: e.fault = " + e.fault );
 		}
 		
 		private function inserirFaultHandler(e:FaultEvent):void // inserir parametro
 		{
-			trace("ServerCommunication ::: inserirFaultHandler()")
+			trace("ABServerCommunication ::: inserirFaultHandler()")
 			
 			// preloader off
 		}
 		
-		/// /////////////////////////////////////////////////////////////////////// SINGLETON START
-		/// /////////////////////////////////////////////////////////////////////// SINGLETON START
+		/// SINGLETON START
+		/// SINGLETON START
 		
 		private function setSingleton():void
 		{
 			if (__singleton != null) 
 			{
-				throw new Error("ServerCommunication ::: SINGLETON REPLICATION ATTEMPTED")
+				throw new Error("ABServerCommunication ::: SINGLETON REPLICATION ATTEMPTED")
 			}
 			
 			__singleton = this
 		}
 		
-		public static function get singleton():ServerCommunication
+		public static function get singleton():ABServerCommunication
 		{
 			if (__singleton == null)
 			{
-				throw new Error("ServerCommunication ::: SINGLETON DOES NOT EXIST (CORE FAILED TO INITIALIZE?)")
+				throw new Error("ABServerCommunication ::: SINGLETON DOES NOT EXIST (CORE FAILED TO INITIALIZE?)")
 			}
 			
 			return __singleton;
 		}
 		
-		/// ///////////////////////////////////////////////////////////////////////////// SINGLETON END
-		/// ///////////////////////////////////////////////////////////////////////////// SINGLETON END
+		/// SINGLETON END
+		/// SINGLETON END
 		
 	}
 	

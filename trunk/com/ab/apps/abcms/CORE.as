@@ -2,6 +2,8 @@
 {
 	/**
 	* @author ABº
+	* 
+	* TODO: Bring AppLevelsManagement here
 	*/
 	
 	//import com.ab.web.ABCore
@@ -9,7 +11,7 @@
 	import com.ab.events.CentralEventSystem;
 	import com.ab.apps.appgenerics.ScreenSettings;
 	import com.ab.display.ABSprite;
-	import com.ab.services.ServerCommunication;
+	import com.ab.apps.appgenerics.services.ABServerCommunication;
 	import org.casalib.util.StageReference
 	/// import abcms.menusections.SectionsMenu
 	
@@ -26,7 +28,7 @@
 		private var _logger:ABLogger;
 		private var _keyboard:AppKeyboardControl;
 		private var _events_system:CentralEventSystem;
-		private var _server_communication:ServerCommunication;
+		private var _server_communication:ABServerCommunication;
 		
 		public var bg:MovieClip;
 		
@@ -50,14 +52,11 @@
 			StageReference.setStage(stage);
 			ScreenSettings.init();
 			
-			_ABCMS         = new ABCMS(this);
-			_logger        = new ABLogger();
-			_logger.totalwidth = 300;
-			_keyboard	   = new AppKeyboardControl();
-			
-			_server_communication = new ServerCommunication();
-			
-			//ABCore.getSingleton();
+			_ABCMS         			= new ABCMS(this);
+			_logger        			= new ABLogger();
+			_logger.totalwidth 		= 300;
+			_keyboard	   			= new AppKeyboardControl();
+			_server_communication 	= new ABServerCommunication();
 			
 			trace("CORE initialized");
 		}

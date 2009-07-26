@@ -8,7 +8,7 @@
 	import com.ab.apps.appgenerics.AppLevelsManagement;
 	import com.ab.display.ABSprite;
 	import flash.events.Event;
-	import com.ab.services.ServerCommunication;
+	import com.ab.apps.appgenerics.services.ABServerCommunication;
 	
 	public class ABCMSBasicSiteDefinitions extends ABSprite
 	{
@@ -33,7 +33,7 @@
 			var asd:Array = new Array();
 			asd = [];
 			
-			ServerCommunication.__singleton.listSectionsRequest("asdasd", yeah, [asd], 323);
+			ABServerCommunication.__singleton.listSectionsRequest(1, yeah);
 		}
 		
 		private function yeah(O:Object):void
