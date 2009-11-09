@@ -3,7 +3,16 @@
 	/**
 	* @author ABº
 	* 
-	* @EDIGMACOM
+	*					  |//
+	*			   		 (o o)
+	*	+----------oOO----(_)------------------+
+	*	|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+	*	|~~~~~~~~~~~~ ¤   ABº   ¤ ~~~~~~~~~~~~~|
+	*	|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+	*	+---------------------oOO--------------+
+    * 	               |__|__|
+    *                   || ||
+    *                  ooO Ooo
 	* 
 	* This class manages all application data collected from the XML
 	* and provides data collection methods for the objects
