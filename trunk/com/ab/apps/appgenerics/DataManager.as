@@ -1,4 +1,4 @@
-﻿package
+﻿package com.ab.apps.appgenerics
 {
 	/**
 	* @author ABº
@@ -14,17 +14,20 @@
     *                   || ||
     *                  ooO Ooo
 	* 
-	* This class manages all application data collected from the XML
+	* This class manages all application data
 	* and provides data collection methods for the objects
 	*/
 	
-	import CORE;
+	//import com.ab.apps.appgenerics.CORE;
+	import com.ab.apps.appgenerics.events.AppEvent;
+	import com.edigma.services.ServerCommunication;
 	import com.edigma.web.EdigmaCore;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import gs.dataTransfer.XMLManager;
+	import com.ab.events.CentralEventSystem;
 	
 	public class DataManager extends Sprite
 	{
@@ -33,50 +36,96 @@
 		
 		/// private
 		//private var _data:Object
-		private var _data:XML
-		private var _root:CORE;
+		private var _data:*
+		private var _type:String=null;
+		private var _amfresults_num:int=0;
 		
-		public function DataManager(root:CORE)
+		public function DataManager(type:String=null)
 		{
 			setSingleton();
 			
-			_root = root;
-			
-			initVars()
+			_type = type;
 		}
 		
 		/// getters / setters
-		public function get data():XML 				{ return _data; };
-		public function set data(value:XML):void  	{ _data = value; };
+		public function get data():* 				{ return _data; };
+		public function set data(value:*):void  	{ _data = value; };
 		
-		//public function start() 						{ getData(); };
+		public function start() 						{ init(); };
 		
-		private function initVars():void 				{ _data = new XML() };
+		private function init():void 				
+		{ 
+			if (_type != null) 
+			{
+				switch (_type) 
+				{
+					case "XML":
+						getXMLData();
+					break;
+					
+					case "AMF":
+						getAMFData();
+					break;
+				}
+			}
+		};
 		
-		public function getData():void 				
+		private function getAMFData():void
+		{
+			/// insert AMF requests here
+			
+			_amfresults_num = 2;
+			
+			ServerCommunication.singleton.listarRelatedFilesRequest(onAMFDataReceived, 5, 1, 1, 5);
+			
+			ServerCommunication.singleton.listarRequest(onAMFDataReceived, 6, 1);
+		}
+		
+		private function onAMFDataReceived(o:Object):void 
+		{
+			trace ("DataManager ::: onAMFDataReceived");
+			
+			/// insert AMF results handling here
+			//trace ("DataManager ::: o.result = " + o.result ); 
+			
+			if (_amfresults_num == 2) 
+			{
+				_data = new Object();
+				_data.videos = new Object();
+				_data.images = new Object();
+			}
+			
+			_amfresults_num--;
+			
+			if (o.result.id_categoria == 6)
+			{
+				_data.videos = o.result;
+			}
+			else
+			{
+				_data.images = o.result;
+			}
+			
+			if (_amfresults_num == 0) 
+			{
+				CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.LOADED_DATA, true));
+			}
+		}
+		
+		public function getXMLData():void
 		{
 			var xmlLoader:URLLoader = new URLLoader();
 			var xmlData:XML = new XML();
 			
-			xmlLoader.addEventListener(Event.COMPLETE, onDataReceived);
-			
-			xmlLoader.load(new URLRequest(EdigmaCore.getSingleton().CONTENTS_XML_PATH + "data.xml"));
+			xmlLoader.addEventListener(Event.COMPLETE, onXMLDataReceived);
 		}
-		private function onDataReceived(e:Event):void 
+		private function onXMLDataReceived(e:Event):void 
 		{
 			var xmlData:XML = new XML(e.target.data);
-			
+			//_data = new XML();
 			_data = xmlData;
 			
-			_root.loadedData = true;
-			
-			//trace(_data.pergunta[0].property.(attribute('id') == "grupo").text());
-			//trace(xmlData..(attribute('id') == "grupo").text());
-			//
-			//for each(var p:String in xmlData.pergunta.property.(@id == "pergunta").text())
-			//{
-			//	trace(p);
-			//}*/
+			CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.LOADED_DATA, true));
 		}
 		
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON START
@@ -84,7 +133,7 @@
 		{
 			if (__singleton != null)  { throw new Error("DataManager ::: SINGLETON REPLICATION ATTEMPTED") }; __singleton = this;
 		}
-		public static function getSingleton():DataManager
+		public static function get singleton():DataManager
 		{
 			if (__singleton == null) { throw new Error("DataManager ::: SINGLETON DOES NOT EXIST (CORE FAILED TO INITIALIZE?)") }; return __singleton;
 		}

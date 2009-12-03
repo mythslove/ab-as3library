@@ -1,4 +1,4 @@
-﻿package
+﻿package com.ab.apps.appgenerics
 {
 	/**
 	* @author ABº
@@ -8,7 +8,7 @@
 	
 	import org.casalib.time.Inactivity;
 	import org.casalib.events.InactivityEvent;
-	import AppManager;
+	import com.ab.apps.appgenerics.AppManager;
 	
 	public class InactivityManager 
 	{
@@ -27,7 +27,7 @@
 		{
 			trace("User inactive for " + e.milliseconds + " milliseconds.");
 			
-			AppManager.getSingleton().inactivityDetectedCommand();
+			AppManager.singleton.inactivityDetectedCommand();
 			
 			this.userActive = false;
 		}
@@ -36,7 +36,7 @@
 		{
 			trace("User active after being inactive for " + e.milliseconds + " milliseconds.");
 			
-			AppManager.getSingleton().inactivityEndedCommand();
+			AppManager.singleton.inactivityEndedCommand();
 			
 			this.userActive = true;
 		}

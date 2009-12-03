@@ -1,7 +1,7 @@
-﻿package
+﻿package com.ab.apps.appgenerics
 {
 	/**
-	*   AS3 CORE System
+	*   ABº AS3 CORE System
 	* 
 	*   @author ABº
 	*                              .::::.                   
@@ -12,7 +12,7 @@
 	*                              ':::::::::::.            
 	*                                .::::::::::::::'       
 	*                              .:::::::::::...          
-	*                             ::::::::::::::''          
+	*                             :::::::::::::''          
 	*                 .:::.       '::::::::''::::           
 	*               .::::::::.      ':::::'  '::::          
 	*              .::::':::::::.    :::::    '::::.        
@@ -24,6 +24,8 @@
 	* ..''''':'                    ':::::.'                 
 	*/
 	
+	import com.ab.apps.appgenerics.events.AppEvent;
+	import com.edigma.services.ServerCommunication;
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
@@ -35,13 +37,9 @@
 	import net.hires.debug.Stats;
 	import com.edigma.web.EdigmaCore;
 	
-	import AppManager;
-	import DataManager;
-	import InactivityManager;
-	
-	/// IMPORT APPLICATION CLASS
-	import NokiaQuiz;
-	/// /// /// /// /// /// ////
+	import com.ab.apps.appgenerics.AppManager;
+	import com.ab.apps.appgenerics.DataManager;
+	import com.ab.apps.appgenerics.InactivityManager;
 	
 	public class CORE extends Sprite
 	{
@@ -50,6 +48,7 @@
 		private var _loadedSettings:Boolean=false;
 		private var _loadedData:Boolean=false;
 		private var _CentralEventSystem:CentralEventSystem;
+		public var _serverCommunication:ServerCommunication;
 		private var _appLogger:ABLogger;
 		
 		/// public
@@ -57,12 +56,16 @@
 		public var dataManager:DataManager;
 		public var inactivityManager:InactivityManager;
 		public var _appLevel:Sprite;
+		public var _appClass:*;
 		
 		
 		public function CORE()
 		{
 			stage.displayState = StageDisplayState.FULL_SCREEN;
 			this.addEventListener(Event.ADDED_TO_STAGE, addedToStage);
+			
+			CentralEventSystem.singleton.addEventListener(AppEvent.LOADED_DATA, loadedData, false, 0 , true);
+			CentralEventSystem.singleton.addEventListener(AppEvent.LOADED_SETTINGS, loadedSettings, false, 0 , true);
 		}
 		
 		private function addedToStage(e:Event):void  { init(); }
@@ -71,9 +74,10 @@
 		{ 
 			StageReference.setStage(this.stage); 
 			
-			_appLevel  		= new Sprite();
-			_appLogger 		= new ABLogger();
-			_appInfo   		= new EdigmaCore(this);
+			_appLevel  				= new Sprite();
+			_appLogger 				= new ABLogger();
+			_appInfo   				= new EdigmaCore();
+			_serverCommunication 	= new ServerCommunication();
 			
 			stage.addChild(_appLevel);
 			stage.addChild(_appLogger);
@@ -81,12 +85,12 @@
 			_appLogger.x += 300;
 		}
 		
-		public function get loadedSettings():Boolean 				{ return _loadedSettings; }
-		public function set loadedSettings(value:Boolean):void
-		{ 
-			/// this setter is called after EdigmaCore finishes loading settings XML
+		private function loadedSettings(e:AppEvent):void 
+		{
+			trace ("CORE ::: loadedSettings()"); 
 			
-			_loadedSettings = value; 
+			/// this setter is called after EdigmaCore finishes loading settings XML
+			CentralEventSystem.singleton.removeEventListener(AppEvent.LOADED_SETTINGS, loadedSettings);
 			
 			initMainVars();
 		}
@@ -95,28 +99,25 @@
 		{
 			trace ("CORE ::: initMainVars()"); 
 			
-			inactivityManager 	= new InactivityManager(_appInfo.INACTIVITY_TIME);
-			appManager 			= new AppManager(_appLevel, NokiaQuiz);
-			dataManager 		= new DataManager(this);
+			inactivityManager 	 = new InactivityManager(_appInfo.INACTIVITY_TIME);
+			appManager 			 = new AppManager(_appLevel, _appClass);
+			dataManager 		 = new DataManager("AMF");
 			
-			dataManager.getData();
+			dataManager.start();
 		}
 		
-		public function get loadedData():Boolean 			{ return _loadedData; }
-		public function set loadedData(value:Boolean):void
+		private function loadedData(e:AppEvent):void 
 		{
-			/// this setter is called after DataManager finishes loading "anos.xml"
-			
-			trace ("CORE ::: loadedData()"); 
-			
-			_loadedData = value;
+			/// this setter is called after DataManager finishes loading data
+			CentralEventSystem.singleton.removeEventListener(AppEvent.LOADED_DATA, loadedData);
+			trace ("CORE ::: loadedData()");
 			
 			/// here the visual application actually starts
 			appManager.start();
 			
 			/// add stats analyser
-			//var _stats = stage.addChild(new Stats())
-		    //_stats.y = -100;
+			var _stats = stage.addChild(new Stats())
+		    _stats.y = -100;
 		}
 	} 
 }

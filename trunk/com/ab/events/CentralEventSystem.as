@@ -22,7 +22,7 @@
 	* 
 	* 	  import com.ab.events.CentralEventSystem
 	* 
-	* 	  CentralEventSystem.getInstance().addEventListener(ExampleEvent.EVENT_TYPE, eventListenerFunction)  ( LISTENERS ARE ADDED TO THE SIGLETON ITSELF)
+	* 	  CentralEventSystem.singleton.addEventListener(ExampleEvent.EVENT_TYPE, eventListenerFunction)  ( LISTENERS ARE ADDED TO THE SIGLETON ITSELF)
 	* 
 	* 	  public function mesaInteractiveEventListener(e:ExampleEvent):void 
 	*	  { 
@@ -51,7 +51,7 @@
 			trace("::: CentralEventSystem Constructor :::")
 		}
 		
-		public static function getSingleton():CentralEventSystem
+		public static function get singleton():CentralEventSystem
 		{
 			return instance;
 		}
