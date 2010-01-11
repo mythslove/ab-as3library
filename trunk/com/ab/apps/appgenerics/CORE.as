@@ -11,8 +11,8 @@
 	*                             :::::::::::::::'          
 	*                              ':::::::::::.            
 	*                                .::::::::::::::'       
-	*                              .:::::::::::...          
-	*                             :::::::::::::''          
+	*                              .:::::::::::...             
+	*                             ::::::::::::::''     
 	*                 .:::.       '::::::::''::::           
 	*               .::::::::.      ':::::'  '::::          
 	*              .::::':::::::.    :::::    '::::.        
@@ -61,7 +61,7 @@
 		
 		public function CORE()
 		{
-			stage.displayState = StageDisplayState.FULL_SCREEN;
+			///stage.displayState = StageDisplayState.FULL_SCREEN;
 			this.addEventListener(Event.ADDED_TO_STAGE, addedToStage);
 			
 			CentralEventSystem.singleton.addEventListener(AppEvent.LOADED_DATA, loadedData, false, 0 , true);
@@ -125,15 +125,6 @@
 /**
  * @NOTES
  * 
- * tirar o video
- * 
- * * procurar nao passar referencias aos filhos
- * 
- * 
- * mudar a cena das cartas:
- * - usar um tweenzinho no inicio para as mexer: rotation e random +/-x  |||  +/-y
- * - nenhuma deve ter enterFrame no inicio
- * 
  * 
  **/
 
@@ -151,10 +142,3 @@
 //dowski roulette
 //booty loops
 // minimize to maximize
- 
- 
- 
-
-
-
-

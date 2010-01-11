@@ -21,6 +21,7 @@
 		/// private
 		private var _APP_LEVEL:Sprite;
 		private var _APP_CLASS:Class;
+		public var _APP_INSTANCE:*;
 		
 		/// protected	
 		protected var _key:Key;
@@ -35,8 +36,6 @@
 			
 			_APP_LEVEL = applevel;
 			_APP_CLASS = appClass;
-			
-			trace ("AppManager ::: _APP_CLASS = " + _APP_CLASS ); 
 			
 			this._key = Key.getInstance();
 			
@@ -78,7 +77,7 @@
 				break;
 				case Keyboard.F8:
 					//openItem(7)
-					ABLogger.getSingleton().toggleVisible();
+					ABLogger.singleton.toggleVisible();
 				break;
 				case Keyboard.F5:
 					/// podia ser ir para home / close all
@@ -92,7 +91,9 @@
 			
 			/// here the "APP CLASS" is added in the "APP LEVEL";
 			
-			_APP_LEVEL.addChild(new _APP_CLASS());
+			_APP_INSTANCE = new _APP_CLASS();
+			
+			_APP_LEVEL.addChild(_APP_INSTANCE);
 		}
 		
 		/// action to perform on inactivity

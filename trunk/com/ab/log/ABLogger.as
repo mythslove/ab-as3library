@@ -98,7 +98,7 @@
 		
 		public function echo(_string:String)
 		{
-			checkVisibility();
+			//checkVisibility();
 			
 			var _previous_items:Array = new Array();
 			var _need_to_move:Boolean = false;
@@ -190,7 +190,7 @@
 			__singleton = this
 		}
 		
-		public static function getSingleton():ABLogger
+		public static function get singleton():ABLogger
 		{
 			if (__singleton == null)
 			{

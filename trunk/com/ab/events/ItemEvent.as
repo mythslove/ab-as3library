@@ -13,6 +13,7 @@
 	{
 		public static const OPEN_ITEM:String  = "openitem";
 		public static const CLOSE_ITEM:String = "closeitem";
+		public static const LOADED:String 	  = "loaded";
 		
 		public var data:*;
 		

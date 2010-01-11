@@ -20,6 +20,7 @@
 	
 	//import com.ab.apps.appgenerics.CORE;
 	import com.ab.apps.appgenerics.events.AppEvent;
+	import com.ab.log.ABLogger;
 	import com.edigma.services.ServerCommunication;
 	import com.edigma.web.EdigmaCore;
 	import flash.display.Sprite;
@@ -28,6 +29,7 @@
 	import flash.net.URLRequest;
 	import gs.dataTransfer.XMLManager;
 	import com.ab.events.CentralEventSystem;
+	import org.casalib.util.StageReference;
 	
 	public class DataManager extends Sprite
 	{
@@ -45,6 +47,13 @@
 			setSingleton();
 			
 			_type = type;
+			
+			setVars();
+		}
+		
+		private function setVars():void
+		{
+			_data = new Object();
 		}
 		
 		/// getters / setters
@@ -74,25 +83,64 @@
 		{
 			/// insert AMF requests here
 			
-			_amfresults_num = 2;
+			if (StageReference.getStage().loaderInfo.parameters.vmode != null) 
+			{
+				var _slideshow_mode = StageReference.getStage().loaderInfo.parameters.vmode.toUpperCase();
+				
+				ABLogger.singleton.echo("DataManager SLIDESHOW MODE = " + _slideshow_mode);
+				
+				if (_slideshow_mode == "MIXED") 
+				{
+					_amfresults_num = 2;
+					
+					ServerCommunication.singleton.listarRelatedFilesRequest(onAMFDataReceived, StageReference.getStage().loaderInfo.parameters.vcatimg, 1, 1, 5);
+					
+					ServerCommunication.singleton.listarRequest(onAMFDataReceived, StageReference.getStage().loaderInfo.parameters.vcatvid, 1);
+				}
+				
+				if (_slideshow_mode == "VIDEOS") 
+				{
+					ServerCommunication.singleton.listarRequest(onAMFVideosOnlyDataReceived, StageReference.getStage().loaderInfo.parameters.vcatvid, 1);
+				}
+				
+				if (_slideshow_mode == "IMAGES") 
+				{
+					ServerCommunication.singleton.listarRequest(onAMFImagesOnlyDataReceived, StageReference.getStage().loaderInfo.parameters.vcatimg, 1);
+				}				
+			}
+		}
+		
+		private function onAMFImagesOnlyDataReceived(o:Object):void
+		{
+			//_data.videos 	= new Object();
+			_data.images 	= new Object();
 			
-			ServerCommunication.singleton.listarRelatedFilesRequest(onAMFDataReceived, 5, 1, 1, 5);
+			_data.images 	= o.result;
 			
-			ServerCommunication.singleton.listarRequest(onAMFDataReceived, 6, 1);
+			CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.LOADED_DATA, true));
+		}
+		
+		private function onAMFVideosOnlyDataReceived(o:Object):void
+		{
+			_data.videos 	= new Object();
+			//_data.images 	= new Object();
+			
+			_data.videos 	= o.result;
+			
+			CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.LOADED_DATA, true));
 		}
 		
 		private function onAMFDataReceived(o:Object):void 
 		{
-			trace ("DataManager ::: onAMFDataReceived");
+			//trace ("DataManager ::: onAMFDataReceived");
 			
 			/// insert AMF results handling here
 			//trace ("DataManager ::: o.result = " + o.result ); 
 			
 			if (_amfresults_num == 2) 
 			{
-				_data = new Object();
-				_data.videos = new Object();
-				_data.images = new Object();
+				_data.videos 	= new Object();
+				_data.images 	= new Object();
 			}
 			
 			_amfresults_num--;
@@ -119,6 +167,7 @@
 			
 			xmlLoader.addEventListener(Event.COMPLETE, onXMLDataReceived);
 		}
+		
 		private function onXMLDataReceived(e:Event):void 
 		{
 			var xmlData:XML = new XML(e.target.data);
