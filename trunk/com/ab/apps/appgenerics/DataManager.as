@@ -83,36 +83,62 @@
 		{
 			/// insert AMF requests here
 			
+			var _slideshow_mode:String
+			
 			if (StageReference.getStage().loaderInfo.parameters.vmode != null) 
 			{
-				var _slideshow_mode = StageReference.getStage().loaderInfo.parameters.vmode.toUpperCase();
+				_slideshow_mode = StageReference.getStage().loaderInfo.parameters.vmode.toUpperCase();
+			}
+			else
+			{
+				_slideshow_mode = "MIXED";
+			}
+			
+			//ABLogger.singleton.echo("DataManager SLIDESHOW MODE = " + _slideshow_mode);
+			
+			var _CATIMG:int;
+			var _CATVID:int;
+			
+			if (StageReference.getStage().loaderInfo.parameters.vcatimg != null && StageReference.getStage().loaderInfo.parameters.vcatimg != "") 
+			{
+				_CATIMG		= StageReference.getStage().loaderInfo.parameters.vcatimg;
+			}
+			else
+			{
+				_CATIMG		= 5;
+			}
+			
+			if (StageReference.getStage().loaderInfo.parameters.vcatvid != null && StageReference.getStage().loaderInfo.parameters.vcatvid != "") 
+			{
+				_CATVID		= StageReference.getStage().loaderInfo.parameters.vcatvid;
+			}
+			else
+			{
+				_CATVID		= 6;
+			}
+			
+			if (_slideshow_mode == "MIXED") 
+			{
+				_amfresults_num = 2;
 				
-				ABLogger.singleton.echo("DataManager SLIDESHOW MODE = " + _slideshow_mode);
+				ServerCommunication.singleton.listarRelatedFilesRequest(onAMFDataReceived, _CATIMG, 1, 1, 5);
 				
-				if (_slideshow_mode == "MIXED") 
-				{
-					_amfresults_num = 2;
-					
-					ServerCommunication.singleton.listarRelatedFilesRequest(onAMFDataReceived, StageReference.getStage().loaderInfo.parameters.vcatimg, 1, 1, 5);
-					
-					ServerCommunication.singleton.listarRequest(onAMFDataReceived, StageReference.getStage().loaderInfo.parameters.vcatvid, 1);
-				}
-				
-				if (_slideshow_mode == "VIDEOS") 
-				{
-					ServerCommunication.singleton.listarRequest(onAMFVideosOnlyDataReceived, StageReference.getStage().loaderInfo.parameters.vcatvid, 1);
-				}
-				
-				if (_slideshow_mode == "IMAGES") 
-				{
-					ServerCommunication.singleton.listarRequest(onAMFImagesOnlyDataReceived, StageReference.getStage().loaderInfo.parameters.vcatimg, 1);
-				}				
+				ServerCommunication.singleton.listarRequest(onAMFDataReceived, _CATVID, 1);
+			}
+			
+			if (_slideshow_mode == "VIDEOS") 
+			{
+				ServerCommunication.singleton.listarRequest(onAMFVideosOnlyDataReceived, _CATVID, 1);
+			}
+			
+			if (_slideshow_mode == "IMAGES") 
+			{
+				ServerCommunication.singleton.listarRequest(onAMFImagesOnlyDataReceived, _CATIMG, 1);
 			}
 		}
 		
 		private function onAMFImagesOnlyDataReceived(o:Object):void
 		{
-			//_data.videos 	= new Object();
 			_data.images 	= new Object();
 			
 			_data.images 	= o.result;
@@ -123,7 +149,6 @@
 		private function onAMFVideosOnlyDataReceived(o:Object):void
 		{
 			_data.videos 	= new Object();
-			//_data.images 	= new Object();
 			
 			_data.videos 	= o.result;
 			
@@ -134,8 +159,7 @@
 		{
 			//trace ("DataManager ::: onAMFDataReceived");
 			
-			/// insert AMF results handling here
-			//trace ("DataManager ::: o.result = " + o.result ); 
+			/// AMF results handling here
 			
 			if (_amfresults_num == 2) 
 			{
@@ -170,7 +194,7 @@
 		
 		private function onXMLDataReceived(e:Event):void 
 		{
-			var xmlData:XML = new XML(e.target.data);
+			var xmlData:XML = new XML(e.target.data); /// assuming root node is named "data"
 			//_data = new XML();
 			_data = xmlData;
 			

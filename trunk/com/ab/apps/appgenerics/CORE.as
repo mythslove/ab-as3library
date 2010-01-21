@@ -110,22 +110,20 @@
 		{
 			/// this setter is called after DataManager finishes loading data
 			CentralEventSystem.singleton.removeEventListener(AppEvent.LOADED_DATA, loadedData);
-			trace ("CORE ::: loadedData()");
+			trace ("CORE ::: loaded Data, start AppManager");
 			
 			/// here the visual application actually starts
 			appManager.start();
 			
 			/// add stats analyser
-			var _stats = stage.addChild(new Stats())
-		    _stats.y = -100;
+			//var _stats = stage.addChild(new Stats())
+		    //_stats.y = -100;
 		}
 	} 
 }
 
 /**
  * @NOTES
- * 
- * 
  **/
 
  /// last night a clichaved my life

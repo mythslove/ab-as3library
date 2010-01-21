@@ -40,6 +40,18 @@
 		}
 		
 		/**
+		 * Capitalize a word (First character upper case, all others lower case)
+		 * @param word - string to capitalize.
+		 * @return String
+		 * @example <listing version="1.0">
+		 * 		var new_word = ABStringUtils.capitalizeWord("capitalized")
+		 * </listing>
+		 */
+		public static function capitalizeWord(word:String):String
+		{
+			return word.charAt(0).toUpperCase() + word.slice(1, word.length);
+		}
+		/**
 		 * Extract all values from eg. SWFAddress strings etc.
 		 * @param _string - string to search in.
 		 * @param _param - parameter to search in string.
@@ -62,6 +74,23 @@
 			return o;
 		}
 		
+		/**
+		 * Generate a random string (with letters and numbers)
+		 * @param lengh - length of the random string to generate.
+		 * @return String
+		 * @example <listing version="1.0">
+		 * 		var random_string = ABStringUtils.randomString(20)
+		 * </listing>
+		 */
+		public static function randomString(length:int = 9):String
+		{
+			var chars:String  = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
+			var result:String = '';
+			
+			for (var i:int = 0; i < length; i++)
+					result += chars.substr(Math.floor(Math.random() * chars.length), 1);
+			return result;
+		}
 		/**
 		 * Extract specific values from eg. SWFAddress strings etc.
 		 * @param _string - string to search in.
