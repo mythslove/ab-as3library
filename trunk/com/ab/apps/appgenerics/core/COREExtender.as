@@ -1,6 +1,9 @@
 ﻿package
 {
 	/**
+	*   TO USE THIS CLASS YOU MUST IMPORT YOUR APPLICATION CLASS - LOOK BELOW
+	* 
+	* 
 	*   ABº AS3 CORE System
 	* 
 	*   @author ABº

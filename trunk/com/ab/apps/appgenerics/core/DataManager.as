@@ -1,4 +1,4 @@
-﻿package com.ab.apps.appgenerics
+﻿package com.ab.apps.appgenerics.core
 {
 	/**
 	* @author ABº
@@ -26,6 +26,7 @@
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.net.URLLoader;
+	//import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	import gs.dataTransfer.XMLManager;
 	import com.ab.events.CentralEventSystem;
@@ -35,12 +36,15 @@
 	{
 		/// public
 		public static var __singleton:DataManager;
+		public var xml_path:String="SDFSDF";
 		
 		/// private
 		//private var _data:Object
 		private var _data:*
 		private var _type:String=null;
-		private var _amfresults_num:int=0;
+		private var _amfresults_num:int = 0;
+		
+		
 		
 		public function DataManager(type:String=null)
 		{
@@ -60,7 +64,7 @@
 		public function get data():* 				{ return _data; };
 		public function set data(value:*):void  	{ _data = value; };
 		
-		public function start() 						{ init(); };
+		public function loadBaseData() 				{ init(); };
 		
 		private function init():void 				
 		{ 
@@ -83,76 +87,7 @@
 		{
 			/// insert AMF requests here
 			
-			var _slideshow_mode:String
-			
-			if (StageReference.getStage().loaderInfo.parameters.vmode != null) 
-			{
-				_slideshow_mode = StageReference.getStage().loaderInfo.parameters.vmode.toUpperCase();
-			}
-			else
-			{
-				_slideshow_mode = "MIXED";
-			}
-			
-			//ABLogger.singleton.echo("DataManager SLIDESHOW MODE = " + _slideshow_mode);
-			
-			var _CATIMG:int;
-			var _CATVID:int;
-			
-			if (StageReference.getStage().loaderInfo.parameters.vcatimg != null && StageReference.getStage().loaderInfo.parameters.vcatimg != "") 
-			{
-				_CATIMG		= StageReference.getStage().loaderInfo.parameters.vcatimg;
-			}
-			else
-			{
-				_CATIMG		= 5;
-			}
-			
-			if (StageReference.getStage().loaderInfo.parameters.vcatvid != null && StageReference.getStage().loaderInfo.parameters.vcatvid != "") 
-			{
-				_CATVID		= StageReference.getStage().loaderInfo.parameters.vcatvid;
-			}
-			else
-			{
-				_CATVID		= 6;
-			}
-			
-			if (_slideshow_mode == "MIXED") 
-			{
-				_amfresults_num = 2;
-				
-				ServerCommunication.singleton.listarRelatedFilesRequest(onAMFDataReceived, _CATIMG, 1, 1, 5);
-				
-				ServerCommunication.singleton.listarRequest(onAMFDataReceived, _CATVID, 1);
-			}
-			
-			if (_slideshow_mode == "VIDEOS") 
-			{
-				ServerCommunication.singleton.listarRequest(onAMFVideosOnlyDataReceived, _CATVID, 1);
-			}
-			
-			if (_slideshow_mode == "IMAGES") 
-			{
-				ServerCommunication.singleton.listarRequest(onAMFImagesOnlyDataReceived, _CATIMG, 1);
-			}
-		}
-		
-		private function onAMFImagesOnlyDataReceived(o:Object):void
-		{
-			_data.images 	= new Object();
-			
-			_data.images 	= o.result;
-			
-			CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.LOADED_DATA, true));
-		}
-		
-		private function onAMFVideosOnlyDataReceived(o:Object):void
-		{
-			_data.videos 	= new Object();
-			
-			_data.videos 	= o.result;
-			
-			CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.LOADED_DATA, true));
+			//ServerCommunication.singleton.listarRequest(onAMFImagesOnlyDataReceived, _CATIMG, 1);}
 		}
 		
 		private function onAMFDataReceived(o:Object):void 
@@ -160,36 +95,23 @@
 			//trace ("DataManager ::: onAMFDataReceived");
 			
 			/// AMF results handling here
-			
-			if (_amfresults_num == 2) 
-			{
-				_data.videos 	= new Object();
-				_data.images 	= new Object();
-			}
-			
-			_amfresults_num--;
-			
-			if (o.result.id_categoria == 6)
-			{
-				_data.videos = o.result;
-			}
-			else
-			{
-				_data.images = o.result;
-			}
-			
-			if (_amfresults_num == 0) 
-			{
-				CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.LOADED_DATA, true));
-			}
 		}
 		
 		public function getXMLData():void
 		{
-			var xmlLoader:URLLoader = new URLLoader();
-			var xmlData:XML = new XML();
-			
-			xmlLoader.addEventListener(Event.COMPLETE, onXMLDataReceived);
+			if (xml_path != "") 
+			{
+				var xmlData:XML 		= new XML();
+				var xmlLoader:URLLoader = new URLLoader();
+				
+				xmlLoader.load(new URLRequest("contents/data.xml"));
+				
+				xmlLoader.addEventListener(Event.COMPLETE, onXMLDataReceived);
+			}
+			else
+			{
+				trace("XML FILE HAS NOT BEEN SPECIFIED")
+			}
 		}
 		
 		private function onXMLDataReceived(e:Event):void 

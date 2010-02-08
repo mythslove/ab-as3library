@@ -1,14 +1,11 @@
-﻿package com.ab.apps.appgenerics
+﻿package com.ab.apps.appgenerics.core
 {
 	/**
 	* @author AB
 	*/
 	
-	//import CORE;
-	import com.ab.apps.appgenerics.events.AppEvent;
-	import com.ab.events.ItemEvent;
-	import com.ab.events.CentralEventSystem;
-	import com.ab.log.ABLogger;
+	
+	import flash.events.MouseEvent;
 	import org.casalib.ui.Key;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -16,17 +13,25 @@
 	import flash.ui.Keyboard;
 	import org.casalib.util.StageReference;
 	
+	import com.ab.apps.appgenerics.events.AppEvent;
+	import com.ab.apps.appgenerics.events.ItemEvent;
+	import com.ab.events.CentralEventSystem;
+	import com.ab.log.ABLogger;
+	
 	public class AppManager extends Sprite
 	{
 		/// private
 		private var _APP_LEVEL:Sprite;
 		private var _APP_CLASS:Class;
+		
+		/// public
 		public var _APP_INSTANCE:*;
+		public var _MOUSE_STATE:String = "up"; // or "down"
 		
 		/// protected	
 		protected var _key:Key;
 		
-		/// public
+		/// singleton
 		public static var __singleton:AppManager;
 		
 		
@@ -37,9 +42,24 @@
 			_APP_LEVEL = applevel;
 			_APP_CLASS = appClass;
 			
+			//import _APP_CLASS;
+			
 			this._key = Key.getInstance();
 			
 			this._key.addEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
+			
+			StageReference.getStage().addEventListener(MouseEvent.MOUSE_UP, 	mouseUpHandler);
+			StageReference.getStage().addEventListener(MouseEvent.MOUSE_DOWN,	mouseDownHandler);
+		}
+		
+		private function mouseUpHandler(e:MouseEvent):void 
+		{
+			_MOUSE_STATE = "up";
+		}
+		
+		private function mouseDownHandler(e:MouseEvent):void 
+		{
+			_MOUSE_STATE = "down";
 		}
 		
 		private function keyDownHandler(e:KeyboardEvent):void 

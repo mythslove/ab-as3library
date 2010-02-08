@@ -1,4 +1,4 @@
-﻿package com.ab.apps.appgenerics
+﻿package com.ab.apps.appgenerics.core
 {
 	/**
 	*   ABº AS3 CORE System
@@ -24,44 +24,52 @@
 	* ..''''':'                    ':::::.'                 
 	*/
 	
-	import com.ab.apps.appgenerics.events.AppEvent;
-	import com.edigma.services.ServerCommunication;
+	/// flash imports
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
-	import org.casalib.util.StageReference;
 	
+	/// from other libs
+	import org.casalib.util.StageReference;
+	import net.hires.debug.Stats;
+	
+	/// edigma
+	import com.edigma.web.EdigmaCore;
+	import com.edigma.services.ServerCommunication;
+	
+	/// ab
 	import com.ab.log.ABLogger;
 	import com.ab.events.CentralEventSystem;
-	
-	import net.hires.debug.Stats;
-	import com.edigma.web.EdigmaCore;
-	
-	import com.ab.apps.appgenerics.AppManager;
-	import com.ab.apps.appgenerics.DataManager;
-	import com.ab.apps.appgenerics.InactivityManager;
+	/// ab app generics
+	import com.ab.apps.appgenerics.events.AppEvent;
+	import com.ab.apps.appgenerics.core.AppManager;
+	import com.ab.apps.appgenerics.core.DataManager;
+	import com.ab.apps.appgenerics.core.InactivityManager;
+	import com.ab.apps.appgenerics.core.ScreenSettings;
 	
 	public class CORE extends Sprite
 	{
+		public var APPLICATION_CLASS:Class = ARQUEHOJEVIDEOWALL; /// <------- REQUIRED - DEFINES MAIN APPLICATION CLASS
+		
 		/// private
 		private var _appInfo:EdigmaCore;
-		private var _loadedSettings:Boolean=false;
-		private var _loadedData:Boolean=false;
+		private var _loadedSettings:Boolean = false;
+		private var _loadedData:Boolean 	= false;
 		private var _CentralEventSystem:CentralEventSystem;
-		public var _serverCommunication:ServerCommunication;
 		private var _appLogger:ABLogger;
 		
 		/// public
+		//public var _serverCommunication:ServerCommunication;
 		public var appManager:AppManager;
 		public var dataManager:DataManager;
 		public var inactivityManager:InactivityManager;
 		public var _appLevel:Sprite;
-		public var _appClass:*;
 		
 		
 		public function CORE()
 		{
-			///stage.displayState = StageDisplayState.FULL_SCREEN;
+			trace("ABº AS3 CORE System - Constructor");
+			
 			this.addEventListener(Event.ADDED_TO_STAGE, addedToStage);
 			
 			CentralEventSystem.singleton.addEventListener(AppEvent.LOADED_DATA, loadedData, false, 0 , true);
@@ -74,10 +82,12 @@
 		{ 
 			StageReference.setStage(this.stage); 
 			
+			ScreenSettings.init();
+			
 			_appLevel  				= new Sprite();
 			_appLogger 				= new ABLogger();
 			_appInfo   				= new EdigmaCore();
-			_serverCommunication 	= new ServerCommunication();
+			///_serverCommunication 	= new ServerCommunication();
 			
 			stage.addChild(_appLevel);
 			stage.addChild(_appLogger);
@@ -99,11 +109,11 @@
 		{
 			trace ("CORE ::: initMainVars()"); 
 			
-			inactivityManager 	 = new InactivityManager(_appInfo.INACTIVITY_TIME);
-			appManager 			 = new AppManager(_appLevel, _appClass);
-			dataManager 		 = new DataManager("AMF");
+			inactivityManager 	= new InactivityManager(_appInfo.INACTIVITY_TIME);
+			appManager 			= new AppManager(_appLevel, APPLICATION_CLASS);
+			dataManager 		= new DataManager("XML");
 			
-			dataManager.start();
+			dataManager.loadBaseData();
 		}
 		
 		private function loadedData(e:AppEvent):void 
@@ -125,18 +135,3 @@
 /**
  * @NOTES
  **/
-
- /// last night a clichaved my life
- //aufgang baroque
- //run it duke dumont
- 
-//ambivalent creeps EP
-//woody woodpecker
-//hobo from A to B
-//lessizmore
-//tolga fidan violente
-//minilogue animals remixes
-//robag wruhme abusus adde
-//dowski roulette
-//booty loops
-// minimize to maximize

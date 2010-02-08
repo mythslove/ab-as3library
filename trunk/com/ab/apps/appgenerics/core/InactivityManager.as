@@ -1,4 +1,4 @@
-﻿package com.ab.apps.appgenerics
+﻿package com.ab.apps.appgenerics.core
 {
 	/**
 	* @author ABº
@@ -8,7 +8,7 @@
 	
 	import org.casalib.time.Inactivity;
 	import org.casalib.events.InactivityEvent;
-	import com.ab.apps.appgenerics.AppManager;
+	import com.ab.apps.appgenerics.core.AppManager;
 	
 	public class InactivityManager 
 	{

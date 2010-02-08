@@ -1,4 +1,4 @@
-﻿package com.ab.apps.appgenerics 
+﻿package com.ab.apps.appgenerics.core
 {
 	/**
 	* @author ABº

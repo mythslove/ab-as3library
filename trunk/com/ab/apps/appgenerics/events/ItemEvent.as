@@ -1,4 +1,4 @@
-﻿package com.ab.events
+﻿package com.ab.apps.appgenerics.events
 {
 	/**
 	* @author ABº
@@ -11,9 +11,10 @@
 	
 	public class ItemEvent extends Event
 	{
-		public static const OPEN_ITEM:String  = "openitem";
-		public static const CLOSE_ITEM:String = "closeitem";
-		public static const LOADED:String 	  = "loaded";
+		public static const OPEN_ITEM:String  	= "openitem";
+		public static const CLOSE_ITEM:String 	= "closeitem";
+		public static const LOADED:String 	  	= "loaded";
+		public static const DATA_LOADED:String	= "dataloaded";
 		
 		public var data:*;
 		
