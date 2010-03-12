@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+	<!-- caminho para o site -->
+	<property id="SITE_PATH" value="http://www.antoniobrandao.com/"/>
+	
+	<!-- caminho para a gateway do AMF -->
+	<property id="AMF_PATH" value="http://www.antoniobrandao.com/amfphp/gateway.php"/>
+	
+	<!--  caminho para os conteudos -->
+	<property id="CONTENTS_PATH" value="contents/"/>
+	
+	<!-- tempo para detectar inactividade - em milisegundos -->
+	<property id="INACTIVITY_TIME" value="10000"/>
+</settings>

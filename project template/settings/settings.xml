@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+	
+	<!--  caminho para os conteudos --> 
+	<property id="CONTENTS_PATH" value="contents/"/>
+	
+	<!-- tempo para detectar inactividade - em milisegundos -->
+	<property id="INACTIVITY_TIME" value="10000"/>
+	
+	<!-- tempo de duração de slide de foto - em segundos -->
+	<property id="FOTO_SLIDE_DURATION" value="5"/>
+	
+</settings>
