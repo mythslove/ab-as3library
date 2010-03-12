@@ -14,6 +14,9 @@
 		public static const ACTIVITY_RESUMED:String  	= "activityresumed";
 		public static const INACTIVITY_DETECTED:String 	= "inactivitydetected";
 		public static const TOGGLE_MAIN_MENU:String 	= "togglemainmenu";
+		public static const APP_STEP_FURTHER:String 	= "appstepfurther";
+		public static const UPDATE_MENU:String 			= "updatemenu";
+		public static const CLEAN_MENU:String 			= "cleanmenu";
 		
 		/// interactivity events
 		//public static const MOUSE_UP:String 			= "mouseup";

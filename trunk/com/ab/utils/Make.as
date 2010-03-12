@@ -78,19 +78,26 @@
 		/// Makes an Object MovieClip visible with optional duration and onComplete Function
 		public static function MCVisible(mc:Object, duration:Number=0.5, onCompleteFunc:Function=null, _delay:Number=0.0):void
 		{
-			if (mc.alpha == 0 || mc.visible == false) 
+			if (mc != null) 
 			{
-				mc.alpha = 0
-				mc.visible = true
-				
-				if (onCompleteFunc != null)
+				if (mc.alpha == 0 || mc.visible == false) 
 				{
-					Tweener.addTween(mc, {alpha:1, time:duration, transition:"EaseOutSine", delay:_delay, onComplete:onCompleteFunc, onCompleteParams:[mc]})
+					mc.alpha = 0
+					mc.visible = true
+					
+					if (onCompleteFunc != null)
+					{
+						Tweener.addTween(mc, {alpha:1, time:duration, transition:"EaseOutSine", delay:_delay, onComplete:onCompleteFunc, onCompleteParams:[mc]})
+					}
+					else
+					{
+						Tweener.addTween(mc, {alpha:1, time:duration, transition:"EaseOutSine", delay:_delay })
+					}	
 				}
-				else
-				{
-					Tweener.addTween(mc, {alpha:1, time:duration, transition:"EaseOutSine", delay:_delay })
-				}	
+			}
+			else
+			{
+				trace("AB :: Make :: MCVisible() ERROR: provided mc is Null");
 			}
 		}
 		

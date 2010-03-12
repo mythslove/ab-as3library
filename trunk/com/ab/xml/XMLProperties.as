@@ -1,4 +1,5 @@
-﻿package com.edigma.xml {
+﻿package com.ab.xml 
+{
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;	
 	import flash.utils.Proxy;	
@@ -12,8 +13,11 @@
 
 	
 	/**
-	 * @author Frederico Garcia
-	 */
+	* @author Jesse Freeman, minor changes by Frederico Garcia
+	* 
+	* original: http://flashartofwar.com/2007/07/13/as-3-settings-utility/
+	*/
+	
 	dynamic public class XMLProperties extends Proxy implements IEventDispatcher {
 		//--------------------------------------------------------------------------
 		//
@@ -144,7 +148,7 @@
 		 *  
 		 */
 		public function removeEventListener(type : String, listener : Function, useCapture : Boolean = false) : void {
-
+			
 			_eventDispatcher.removeEventListener(type, listener, useCapture);
 		}
 		
@@ -153,10 +157,10 @@
 		 *  
 		 */
 		public function willTrigger(type : String) : Boolean {
-
+		
 			return _eventDispatcher.willTrigger(type);
 		}
-
+		
 		//----------------------------------
 		//  PROXY METHODS
 		//----------------------------------
@@ -175,7 +179,7 @@
 		 */
 		override flash_proxy function callProperty(name : *, ... rest) : * {
 			var _item : Object = new Object(); 
-
+			
 			return _item[name].apply(_item, rest);
 		}
 		
@@ -184,7 +188,6 @@
 		//  Event handlers
 		//
 		//--------------------------------------------------------------------------
-				
 	}
 }
 

@@ -36,11 +36,10 @@
 	{
 		/// public
 		public static var __singleton:DataManager;
-		public var xml_path:String="SDFSDF";
+		public var xml_path:String="";
 		
 		/// private
-		//private var _data:Object
-		private var _data:*
+		private var _data:Object
 		private var _type:String=null;
 		private var _amfresults_num:int = 0;
 		
@@ -55,10 +54,7 @@
 			setVars();
 		}
 		
-		private function setVars():void
-		{
-			_data = new Object();
-		}
+		private function setVars():void { _data = new Object(); }
 		
 		/// getters / setters
 		public function get data():* 				{ return _data; };
@@ -72,13 +68,8 @@
 			{
 				switch (_type) 
 				{
-					case "XML":
-						getXMLData();
-					break;
-					
-					case "AMF":
-						getAMFData();
-					break;
+					case "XML":		getXMLData();	break;
+					case "AMF": 	getAMFData();	break;
 				}
 			}
 		};
@@ -104,7 +95,7 @@
 				var xmlData:XML 		= new XML();
 				var xmlLoader:URLLoader = new URLLoader();
 				
-				xmlLoader.load(new URLRequest("contents/data.xml"));
+				xmlLoader.load(new URLRequest(xml_path));
 				
 				xmlLoader.addEventListener(Event.COMPLETE, onXMLDataReceived);
 			}
@@ -116,9 +107,13 @@
 		
 		private function onXMLDataReceived(e:Event):void 
 		{
+			trace ("DataManager ::: onXMLDataReceived()"); 
+			
 			var xmlData:XML = new XML(e.target.data); /// assuming root node is named "data"
-			//_data = new XML();
+			
 			_data = xmlData;
+			
+			//trace ("DataManager ::: item.main = " + _data.item.length() ); 
 			
 			CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.LOADED_DATA, true));
 		}

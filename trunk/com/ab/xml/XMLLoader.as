@@ -1,12 +1,17 @@
-﻿package com.edigma.xml {
+﻿package com.ab.xml 
+{
 	import flash.events.Event;
 	import flash.net.URLRequest;
 	import flash.net.URLLoader;
 	import flash.utils.Dictionary;
 
+	
 	/**
-	 * @author Frederico Garcia
-	 */
+	* @author Jesse Freeman
+	* 
+	* http://flashartofwar.com/2007/07/13/as-3-settings-utility/
+	*/
+	
 	public class XMLLoader {
 		//--------------------------------------------------------------------------
 		//

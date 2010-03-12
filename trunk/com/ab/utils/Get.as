@@ -24,10 +24,7 @@
 		static private var _custom_resize_width:Number=0;
 		static private var _custom_resize_height:Number=0;
 		
-		public function Get()
-		{
-			
-		}   
+		public function Get() { };
 		
 		
 		/// returns a random number between two values
@@ -154,18 +151,22 @@
 			return childrenArray;
 		}
 		
-		/** 
-		 * Returns a bounding rectangle for the visible contents of a DisplayObject. Note that you will be limited 
-		 * by the max dimensions of a BitmapData instance (2880px for FP9). 
-		 */ 
+		/**
+		* Get the visible bounds of an object returned in a Rectangle
+		* 
+		* Maximum measureable dimensions of the supplied object: 2000x2000.
+		*/
 		public static function getVisibleBounds(source:DisplayObject):Rectangle 
 		{ 
-			const bitmapData : BitmapData = new BitmapData(source.width, source.height, true, 0); 
-			bitmapData.draw(source); 
-			const bounds : Rectangle = bitmapData.getColorBoundsRect(0xFF000000, 0, false); 
+			var wrongBounds:Rectangle 	= source.getBounds(source); 
+			var matrix:Matrix 			= new Matrix(); 
+			matrix.translate(-wrongBounds.x, -wrongBounds.y); 
+			var bitmapData:BitmapData 	= new BitmapData(source.width, source.height, true, 0x00000000); 
+			bitmapData.draw(source, matrix); 
+			var bounds:Rectangle 		= bitmapData.getColorBoundsRect(0xFF000000, 0, false); 
 			bitmapData.dispose(); 
 			return bounds; 
-		} 
+		}
 		
 		/**
 		* Maximum measureable dimensions of the supplied object: 2000x2000.
@@ -194,5 +195,6 @@
 		  bitmapData.dispose(); 
 		  return bounds.x + bounds.width;
 		}
+		
 	}
 }

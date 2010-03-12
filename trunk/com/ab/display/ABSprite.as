@@ -5,7 +5,10 @@
 	* ABº
 	*/
 	
+	import flash.display.BitmapData;
 	import flash.display.MovieClip;
+	import flash.geom.Matrix;
+	import flash.geom.Rectangle;
 	import org.casalib.display.CasaSprite
 	import org.casalib.display.CasaMovieClip
 	import caurina.transitions.Tweener
@@ -52,7 +55,17 @@
 		
 		public function ABSprite() 
 		{
-			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			addEventListener(Event.ADDED_TO_STAGE, 		onAddedToStage, 	false, 0, true);
+			addEventListener(Event.REMOVED_FROM_STAGE, 	onRemovedFromStage, false, 0, true);
+		}
+		
+		private function onRemovedFromStage(e:Event):void 
+		{
+			if (align_set == true) { removeAlign(); }
+			
+			custom_parent == null;
+			
+			removeEventListener(Event.REMOVED_FROM_STAGE, 	onRemovedFromStage);
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -310,6 +323,8 @@
 					StageReference.getStage().removeEventListener(Event.RESIZE, bottomrightResizeEnterFrame);
 					break;
 			}
+			
+			align_set = false;
 		}
 		
 		/// //// //// //// //// RESIZE HANDLERS
@@ -498,6 +513,22 @@
 			Tweener.addTween(this, 	{ alpha:0, _Blur_blurX:40, _Blur_blurY:40, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:_function } )
 		}
 		
+		/// //// //// //// //// MISC UTILITIES
+		/// //// //// //// //// MISC UTILITIES
+		/// //// //// //// //// MISC UTILITIES
+		
+		public function get visibleBounds():Rectangle 
+		{ 
+			var wrongBounds:Rectangle 	= this.getBounds(this); 
+			var matrix:Matrix 			= new Matrix(); 
+			matrix.translate(-wrongBounds.x, -wrongBounds.y); 
+			var bitmapData:BitmapData 	= new BitmapData(this.width, this.height, true, 0x00000000); 
+			bitmapData.draw(this, matrix); 
+			var bounds:Rectangle 		= bitmapData.getColorBoundsRect(0xFF000000, 0, false); 
+			bitmapData.dispose(); 
+			return bounds; 
+		}
+		
 		/// //// //// //// //// RESOURCE MANAGEMENT
 		/// //// //// //// //// RESOURCE MANAGEMENT
 		/// //// //// //// //// RESOURCE MANAGEMENT
@@ -516,7 +547,11 @@
 		
 		public function cleanMe():void
 		{
+			trace ("ABSprite ::: cleanMe()"); 
+			
 			custom_parent = null;
+			
+			if (align_set == true)  { removeAlign(); }
 			
 			this.removeEventListeners();
 			

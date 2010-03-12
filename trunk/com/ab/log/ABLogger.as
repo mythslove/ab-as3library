@@ -7,7 +7,10 @@
 	import com.ab.ui.YScroller;
 	import com.ab.log.ABLoggerItem;
 	import com.ab.utils.Get;
+	import com.ab.utils.HitTest;
 	import com.ab.utils.Make;
+	import com.ab.utils.Move;
+	import flash.events.MouseEvent;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -18,6 +21,7 @@
 	public class ABLogger extends Sprite
 	{
 		public static var __singleton:ABLogger;
+		
 		private var _mask:Sprite;
 		private var _content:Sprite;
 		private var _bg:Sprite;
@@ -26,6 +30,15 @@
 		private var _totalheight:int   = 380;
 		private var _visible:Boolean   = false;
 		private var _scrooling:Boolean = false;
+		private var _ref_x:Number;
+		private var _ref_y:Number;
+		
+		/// public options
+		private var _start_visible:Boolean;
+		
+		/// sys
+		private var _active:Boolean;
+		private var _dragging:Boolean;
 		//private var _PREVIOUS_ITEMS:Array;
 		
 		public function ABLogger() 
@@ -35,12 +48,14 @@
 			setSingleton()
 			
 			this.y		 = 50;
-			this.alpha   = 0;
+			this.x		 = 50;
+			//this.alpha   = 0;
 			this.visible = _visible;
 			
 			initVars()
 			
-			this.addEventListener(Event.ADDED_TO_STAGE, addedHandler, false, 0, true);
+			this.addEventListener(Event.ADDED_TO_STAGE, 	addedHandler, 	false, 0, true);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, removedHandler, false, 0, true);
 		}
 		
 		public function get item_spacing():int 				{ return _item_spacing;  };
@@ -61,10 +76,52 @@
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, addedHandler)
 			
-			buildVisuals()
-			//buildTF()
-			//buildMASK()
-			/// buildScroller() when the TF becomes higher than the mask
+			trace ("ABLogger ::: buildVisuals()");
+			
+			buildVisuals();
+			
+			setInteractions();
+			
+			if (_start_visible == true)  { show(); };
+		}
+		
+		private function setInteractions():void
+		{
+			_ref_x = StageReference.getStage().mouseX;
+			_ref_y = StageReference.getStage().mouseY;
+			
+			StageReference.getStage().addEventListener(MouseEvent.MOUSE_UP, 	mouseUpHandler);
+			StageReference.getStage().addEventListener(MouseEvent.MOUSE_DOWN,	mouseDownHandler);
+		}
+		
+		private function mouseDownHandler(e:MouseEvent):void
+		{
+			trace ("ABLogger ::: mouseDownHandler:"); 
+			
+			if (HitTest.MouseHitObject(this, StageReference.getStage()) == true) 
+			{
+				StageReference.getStage().addEventListener(MouseEvent.MOUSE_MOVE, temporaryMouseMoveHandler, false, 0, true);
+				
+				_dragging = true;
+			}
+		}
+		
+		private function mouseUpHandler(e:MouseEvent):void 
+		{
+			trace ("ABLogger ::: mouseUpHandler: removing drag"); 
+			
+			if (_dragging == true) 
+			{
+				StageReference.getStage().removeEventListener(MouseEvent.MOUSE_MOVE, temporaryMouseMoveHandler);
+			}
+		}
+		
+		private function temporaryMouseMoveHandler(e:MouseEvent):void 
+		{
+			var new_x:Number = StageReference.getStage().mouseX - this.width / 2;
+			var new_y:Number = StageReference.getStage().mouseY - 10;
+			
+			Move.ToPositionXY(this, new_x, new_y, 0.5);
 		}
 		
 		private function buildVisuals():void
@@ -157,8 +214,8 @@
 			this.addChild(newscrool)
 		}
 		
-		public function show():void { Make.MCVisible(this);   }
-		public function hide():void { Make.MCInvisible(this); }
+		public function show():void { Make.MCVisible(this);   _active = true  };
+		public function hide():void { Make.MCInvisible(this); _active = false };
 		
 		public function toggleVisible():void
 		{
@@ -175,6 +232,12 @@
 		private function checkVisibility():void
 		{
 			if (this._visible == false)  { Make.MCVisible(this) };
+		}
+		
+		private function removedHandler(e:Event):void 
+		{
+			StageReference.getStage().removeEventListener(MouseEvent.MOUSE_UP, 		mouseUpHandler);
+			StageReference.getStage().removeEventListener(MouseEvent.MOUSE_DOWN,	mouseDownHandler);
 		}
 		
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON START
@@ -199,6 +262,9 @@
 			
 			return __singleton;
 		}
+		
+		public function get start_visible():Boolean 			{ return _start_visible;  };
+		public function set start_visible(value:Boolean):void  	{ _start_visible = value; };
 		
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END

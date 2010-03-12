@@ -6,6 +6,7 @@
 	
 	
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import org.casalib.ui.Key;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -17,12 +18,18 @@
 	import com.ab.apps.appgenerics.events.ItemEvent;
 	import com.ab.events.CentralEventSystem;
 	import com.ab.log.ABLogger;
+	import flash.display.DisplayObject;
 	
 	public class AppManager extends Sprite
 	{
 		/// private
 		private var _APP_LEVEL:Sprite;
+		private var _TOP_LEVEL:Sprite;
+		private var _MENU_LEVEL:Sprite;
+		private var _MAIN_LEVEL:Sprite;
+		private var _BACK_LEVEL:Sprite;
 		private var _APP_CLASS:Class;
+		private var _MAIN_MENU_OPEN:Boolean;
 		
 		/// public
 		public var _APP_INSTANCE:*;
@@ -42,7 +49,7 @@
 			_APP_LEVEL = applevel;
 			_APP_CLASS = appClass;
 			
-			//import _APP_CLASS;
+			createAppLevels();
 			
 			this._key = Key.getInstance();
 			
@@ -52,15 +59,21 @@
 			StageReference.getStage().addEventListener(MouseEvent.MOUSE_DOWN,	mouseDownHandler);
 		}
 		
-		private function mouseUpHandler(e:MouseEvent):void 
+		private function createAppLevels():void
 		{
-			_MOUSE_STATE = "up";
+			_BACK_LEVEL = new Sprite();
+			_MAIN_LEVEL = new Sprite();
+			_MENU_LEVEL = new Sprite();
+			_TOP_LEVEL  = new Sprite();
+			
+			_APP_LEVEL.addChildAt(_BACK_LEVEL, 0);
+			_APP_LEVEL.addChildAt(_MAIN_LEVEL, 1);
+			_APP_LEVEL.addChildAt(_MENU_LEVEL, 2);
+			_APP_LEVEL.addChildAt(_TOP_LEVEL,  3);
 		}
 		
-		private function mouseDownHandler(e:MouseEvent):void 
-		{
-			_MOUSE_STATE = "down";
-		}
+		private function mouseUpHandler(e:MouseEvent):void  	{ _MOUSE_STATE = "up";   };
+		private function mouseDownHandler(e:MouseEvent):void  	{ _MOUSE_STATE = "down"; };
 		
 		private function keyDownHandler(e:KeyboardEvent):void 
 		{
@@ -100,20 +113,54 @@
 					ABLogger.singleton.toggleVisible();
 				break;
 				case Keyboard.F5:
+					ABLogger.singleton.echo("kasd lakjd lakjd klajd");
 					/// podia ser ir para home / close all
 				break;
 			}
 		}
 		
-		public function start()
+		public function startApplicationClass()
 		{
-			trace ("AppManager ::: start()");
+			_APP_INSTANCE = new _APP_CLASS();
+			
+			_APP_INSTANCE.start();
+		}
+		
+		public function addApplicationClassToStage()
+		{
+			trace ("AppManager ::: addApplicationClassToStage()");
 			
 			/// here the "APP CLASS" is added in the "APP LEVEL";
 			
 			_APP_INSTANCE = new _APP_CLASS();
 			
 			_APP_LEVEL.addChild(_APP_INSTANCE);
+			
+			createObjectinLevel(_APP_INSTANCE, "MAIN");
+		}
+		
+		/// create objects in specific application levels
+		public function createObjectinLevel(object:DisplayObject, level:String="MAIN", coordinates:Point=null):void
+		{
+			trace ("AppManager ::: createObjectinLevel ::: LEVEL = " + level);
+			
+			if (coordinates == null)  { coordinates = new Point(0, 0); }
+			
+			if (object != null)
+			{
+				if (object is DisplayObject)
+				{
+					switch(level)
+					{
+						case "BACK":	_BACK_LEVEL.addChild(object);	break;
+						case "MAIN":	_MAIN_LEVEL.addChild(object);	break;
+						case "MENU":	_MENU_LEVEL.addChild(object);	break;
+						case "TOP":		_TOP_LEVEL.addChild(object);	break;
+					}
+				}
+				else { trace ("ERROR: AppManager ::: createObjectinLevel() -> PROVIDED OBJECT IS NOT DISPLAYOBJECT"); }
+			}
+			else { trace ("ERROR: AppManager ::: createObjectinLevel() -> PROVIDED OBJECT IS NULL"); }
 		}
 		
 		/// action to perform on inactivity
@@ -141,6 +188,10 @@
 			if (__singleton == null) { throw new Error("AppManager ::: SINGLETON DOES NOT EXIST (CORE FAILED TO INITIALIZE?)") }
 			return __singleton;
 		}
+		
+		public function get MAIN_MENU_OPEN():Boolean 			{ return _MAIN_MENU_OPEN;  };
+		public function set MAIN_MENU_OPEN(value:Boolean):void  { _MAIN_MENU_OPEN = value; };
+		
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END
 	}
 	
