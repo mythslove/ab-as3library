@@ -46,7 +46,6 @@
 	import com.ab.apps.appgenerics.events.AppEvent;
 	import com.ab.apps.appgenerics.core.AppManager;
 	import com.ab.apps.appgenerics.core.DataManager;
-	import com.ab.apps.appgenerics.core.InactivityManager;
 	import com.ab.apps.appgenerics.core.ScreenSettings;
 	
 	public class CORE extends Sprite
@@ -65,7 +64,6 @@
 		//public var _serverCommunication:ServerCommunication;
 		public var appManager:AppManager;
 		public var dataManager:DataManager;
-		public var inactivityManager:InactivityManager;
 		public var _appLevel:Sprite;
 		
 		public function CORE()
@@ -73,7 +71,6 @@
 			trace("ABº AS3 CORE System - Constructor");
 			
 			this.addEventListener(Event.ADDED_TO_STAGE, addedToStage);
-			
 			
 			CentralEventSystem.singleton.addEventListener(AppEvent.LOADED_DATA, loadedData, false, 0 , true);
 			CentralEventSystem.singleton.addEventListener(AppEvent.LOADED_SETTINGS, loadedSettings, false, 0 , true);
@@ -118,7 +115,6 @@
 		{
 			trace ("CORE ::: step 3 ::: initMainVars()");
 			
-			inactivityManager 		= new InactivityManager(_appInfo.INACTIVITY_TIME);
 			appManager 				= new AppManager(_appLevel, APPLICATION_CLASS);
 			dataManager 			= new DataManager("XML");
 			

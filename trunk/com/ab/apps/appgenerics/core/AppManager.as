@@ -19,6 +19,7 @@
 	import com.ab.events.CentralEventSystem;
 	import com.ab.log.ABLogger;
 	import flash.display.DisplayObject;
+	import com.ab.apps.appgenerics.core.InactivityManager;
 	
 	public class AppManager extends Sprite
 	{
@@ -30,6 +31,15 @@
 		private var _BACK_LEVEL:Sprite;
 		private var _APP_CLASS:Class;
 		private var _MAIN_MENU_OPEN:Boolean;
+		
+		/// inactivity
+		public var inactivityManager:InactivityManager;
+		
+		/// SCREENSAVER
+		private var _SCREEN_SAVER_TIME:Number=20;
+		private var _SCREEN_SAVER_CLASS:Class;
+		private var _SCREEN_SAVER_ACTIVE:Boolean=false;
+		
 		
 		/// public
 		public var _APP_INSTANCE:*;
@@ -113,7 +123,7 @@
 					ABLogger.singleton.toggleVisible();
 				break;
 				case Keyboard.F5:
-					ABLogger.singleton.echo("kasd lakjd lakjd klajd");
+					COREApi.log("F5");
 					/// podia ser ir para home / close all
 				break;
 			}
@@ -163,17 +173,36 @@
 			else { trace ("ERROR: AppManager ::: createObjectinLevel() -> PROVIDED OBJECT IS NULL"); }
 		}
 		
+		/// set up inactivity handler
+		
+		public function setScreenSaver(_class:*, _active:Boolean=true, _time:Number=NaN):void
+		{
+			_SCREEN_SAVER_CLASS 	= _class;
+			_SCREEN_SAVER_ACTIVE	= _active;
+			_SCREEN_SAVER_TIME 		= isNaN(_time) ? 20000 : _time;
+			
+			inactivityManager = new InactivityManager(_SCREEN_SAVER_TIME);
+		}
+		
 		/// action to perform on inactivity
+		
 		public function inactivityDetectedCommand():void
 		{
-			trace ("AppManager ::: inactivityDetected ");
+			//trace ("AppManager ::: inactivityDetected ");
 			CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.INACTIVITY_DETECTED, ""));
+			
+			if (_SCREEN_SAVER_CLASS != null && _SCREEN_SAVER_ACTIVE == true)
+			{
+				var ss = new _SCREEN_SAVER_CLASS();
+				
+				createObjectinLevel(ss, "TOP");
+			}
 		}
 		
 		/// action to perform on inactivity end
 		public function inactivityEndedCommand():void
 		{
-			trace ("AppManager ::: activityDetected ");
+			//trace ("AppManager ::: activityDetected ");
 			CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.ACTIVITY_RESUMED, ""));
 		}
 		
@@ -189,8 +218,15 @@
 			return __singleton;
 		}
 		
-		public function get MAIN_MENU_OPEN():Boolean 			{ return _MAIN_MENU_OPEN;  };
-		public function set MAIN_MENU_OPEN(value:Boolean):void  { _MAIN_MENU_OPEN = value; };
+		public function get MAIN_MENU_OPEN():Boolean 					{ return _MAIN_MENU_OPEN;  		};
+		public function set MAIN_MENU_OPEN(value:Boolean):void  		{ _MAIN_MENU_OPEN = value; 		};
+		
+		public function get SCREEN_SAVER_ACTIVE():Boolean 				{ return _SCREEN_SAVER_ACTIVE;  };
+		public function set SCREEN_SAVER_ACTIVE(value:Boolean):void  	{ _SCREEN_SAVER_ACTIVE = value; };
+		public function get SCREEN_SAVER_CLASS():Class 					{ return _SCREEN_SAVER_CLASS;   };
+		public function set SCREEN_SAVER_CLASS(value:Class):void  		{ _SCREEN_SAVER_CLASS = value;  };
+		public function get SCREEN_SAVER_TIME():Number 					{ return _SCREEN_SAVER_TIME; 	};
+		public function set SCREEN_SAVER_TIME(value:Number):void  		{ _SCREEN_SAVER_TIME = value; 	};
 		
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END
 	}

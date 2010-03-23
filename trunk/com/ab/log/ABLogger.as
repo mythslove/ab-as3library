@@ -43,7 +43,7 @@
 		
 		public function ABLogger() 
 		{
-			trace ("ABLogger ::: Constructor()" ); 
+			//trace ("ABLogger ::: Constructor()" ); 
 			
 			setSingleton()
 			
@@ -76,7 +76,7 @@
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, addedHandler)
 			
-			trace ("ABLogger ::: buildVisuals()");
+			//trace ("ABLogger ::: buildVisuals()");
 			
 			buildVisuals();
 			
@@ -96,7 +96,7 @@
 		
 		private function mouseDownHandler(e:MouseEvent):void
 		{
-			trace ("ABLogger ::: mouseDownHandler:"); 
+			//trace ("ABLogger ::: mouseDownHandler:"); 
 			
 			if (HitTest.MouseHitObject(this, StageReference.getStage()) == true) 
 			{
@@ -108,7 +108,7 @@
 		
 		private function mouseUpHandler(e:MouseEvent):void 
 		{
-			trace ("ABLogger ::: mouseUpHandler: removing drag"); 
+			//trace ("ABLogger ::: mouseUpHandler: removing drag"); 
 			
 			if (_dragging == true) 
 			{

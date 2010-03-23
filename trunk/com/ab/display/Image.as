@@ -49,8 +49,12 @@
 		public var _width:Number  = 0;
 		public var _height:Number = 0;
 		
+		private var _constructorArgs:Array;
+		
 		public function Image(given_url:String, onImageLoadComplete:Function=null, onImageLoadProgress:Function=null):void
         {
+			_constructorArgs = arguments;
+			
 			_ON_COMPLETE_FUNCTION = onImageLoadComplete;
 			_ON_PROGRESS_FUNCTION = onImageLoadProgress;
 			
@@ -71,17 +75,15 @@
 		
 		public function setResizeOnLoad(w:Number, h:Number):void
 		{
-			if (w != null) 
+			if (w)
 			{
-				if (h != null) 
+				if (h)
 				{
-					resize  = true;	_width  = w; _height = h;
+					resize = true;	_width  = w; _height = h;
 				}
-				
-				else { trace ("ERROR: Image ::: setResizeOnLoad() -> Height for resize not provided or null."); }
+				else { trace ("ERROR: Image ::: setResizeOnLoad() -> Height for resize not provided or NaN."); }
 			}
-			
-			else { trace ("ERROR: Image ::: setResizeOnLoad() -> Width for resize not provided or null."); }
+			else { trace ("ERROR: Image ::: setResizeOnLoad() -> Width for resize not provided or NaN."); }
 			
 		}
 		
