@@ -11,11 +11,9 @@
 	* 
 	* @requirements
 	* FIRST YOU NEED TO INITIALIZE A STAGE REFERENCE
-	* THIS CLASS USES CASALIB's STAGEREFERENCE CLASS
+	* THIS CLASS USES CASALIB's STAGEREFERENCE CLASS (www.casalib.org)
 	* WHICH IS INITIALIZED IN THE ROOT WITH "StageReference.setStage(stage)"
-	* IF YOU HAVE A RESIZEABLE STAGE YOU NEED TO TWEAK THIS CLASS (line 61)
-	* 
-	* StageReference is required (www.casalib.org)
+	* IF YOU HAVE A RESIZEABLE STAGE YOU NEED TO TWEAK THIS CLASS
 	* 
 	* @example
 	* import com.ab.display.special.MotionBlurAsset;
@@ -26,8 +24,7 @@
 	* var nicevarname:MotionBlurAsset = new MotionBlurAsset(library_asset_linkage_name);
 	* addChild(nicevarname);
 	* 
-	* // then add movement behaviours
-	* 
+	* // then add movement behaviours if you want to see anything happening
 	*/
 	
 	import com.ab.display.ABSprite;

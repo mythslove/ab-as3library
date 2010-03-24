@@ -35,6 +35,7 @@
 			displayobject.filters 	= filter;
 		}
 		
+		/// returns a sepia filter
 		public static function sepia():Array
 		{
 			/// usage: your_displayobject.filters	= ABBitmapEffects.sepia();
@@ -47,6 +48,7 @@
 			return filter;
 		}
 		
+		/// returns a grayscale filter
 		public static function grayscale():Array
 		{
 			/// usage: your_displayobject.filters	= ABBitmapEffects.grayscale();
@@ -59,9 +61,10 @@
 			return filter;
 		}
 		
+		/// returns a brighten filter
 		public static function brighten():Array
 		{
-			/// usage: your_displayobject.filters	= ABBitmapEffects.grayscale();
+			/** @usage: your_displayobject.filters	= ABBitmapEffects.brighten(); */
 			
 			var cmFilter	= new ColorMatrixFilter(brighten_matrix);
 			var filter		= new Array();
@@ -69,6 +72,42 @@
 			filter.splice(0, 1, cmFilter);
 			
 			return filter;
+		}
+		
+		public static function applySepia(o:DisplayObject):Array
+		{
+			/* usage: ABBitmapEffects.applySepia(your_displayobject); */
+			
+			var cmFilter	= new ColorMatrixFilter(sepia_matrix);
+			var filter		= new Array();
+			
+			filter.splice(0, 1, cmFilter);
+			
+			o.filters = filter;
+		}
+		
+		public static function applyGrayscale(o:DisplayObject):Array
+		{
+			/// usage: ABBitmapEffects.applyGrayscale(your_displayobject);
+			
+			var cmFilter	= new ColorMatrixFilter(grayscale_matrix);
+			var filter		= new Array();
+			
+			filter.splice(0, 1, cmFilter);
+			
+			o.filters = filter;
+		}
+		
+		public static function applyBrighten(o:DisplayObject):Array
+		{
+			/// usage: ABBitmapEffects.applyBrighten(your_displayobject);
+			
+			var cmFilter	= new ColorMatrixFilter(brighten_matrix);
+			var filter		= new Array();
+			
+			filter.splice(0, 1, cmFilter);
+			
+			o.filters = filter;
 		}
 	}
 	
