@@ -11,7 +11,7 @@
 	* @USAGE : 
 	* 
 	*     - to dispatch events:
-	* 
+	*  
 	* 	  import com.ab.events.CentralEventSystem
 	* 
 	* 	  CentralEventSystem.getInstance().dispatchEvent(new ExampleEvent(ExampleEvent.EVENT_TYPE, some_data));
@@ -45,7 +45,7 @@
 			
 			if (instance)
 			{
-				throw new Error("Error: CentralEventSystem can only be accessed through CentralEventSystem.getInstance()");
+				throw new Error("Error: CentralEventSystem can only be accessed through CentralEventSystem.getInstance() ");
 			}
 			
 			trace("::: CentralEventSystem Constructor :::")
