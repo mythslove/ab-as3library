@@ -10,8 +10,10 @@
 	import com.ab.apps.appgenerics.core.AppManager;
 	import com.ab.apps.appgenerics.core.ScreenSettings;
 	import com.ab.apps.appgenerics.core.InactivityManager;
+	import flash.display.StageDisplayState;
 	import flash.geom.Point;
 	import com.ab.log.ABLogger;
+	import org.casalib.util.StageReference;
 	
 	public class COREApi
 	{
@@ -25,7 +27,10 @@
 		{
 			if (object != null) 
 			{
-				if (coordinates == null)  { coordinates = new Point(0, 0); }
+				if (coordinates == null)  
+				{ 
+					coordinates = new Point(0, 0); 
+				}
 				
 				AppManager.singleton.createObjectinLevel(object, level, coordinates);
 			}
@@ -58,6 +63,18 @@
 			{ 
 				trace("< ERROR > COREApi ::: setScreenSaver() ::: Provided class NULL or not specified"); 
 			}
+		}
+		
+		/// SET FULLSCREEN
+		public static function setFullscreen():void
+		{
+			StageReference.getStage().displayState = StageDisplayState.FULL_SCREEN;
+		}
+		
+		/// SET NORMAL SCREEN
+		public static function setNormalScreen():void
+		{
+			StageReference.getStage().displayState = StageDisplayState.NORMAL;
 		}
 		
 		public static function setScreenSaverOn():void	{ AppManager.singleton.SCREEN_SAVER_ACTIVE = true;   };

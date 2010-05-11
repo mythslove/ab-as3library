@@ -5,6 +5,7 @@
 	*/
 	
 	
+	import caurina.transitions.properties.ColorShortcuts;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import org.casalib.ui.Key;
@@ -60,6 +61,8 @@
 			_APP_CLASS = appClass;
 			
 			createAppLevels();
+			
+			ColorShortcuts.init();
 			
 			this._key = Key.getInstance();
 			
@@ -129,14 +132,14 @@
 			}
 		}
 		
-		public function startApplicationClass()
+		public function startApplicationClass():void
 		{
 			_APP_INSTANCE = new _APP_CLASS();
 			
 			_APP_INSTANCE.start();
 		}
 		
-		public function addApplicationClassToStage()
+		public function addApplicationClassToStage():void
 		{
 			trace ("AppManager ::: addApplicationClassToStage()");
 			
@@ -144,9 +147,9 @@
 			
 			_APP_INSTANCE = new _APP_CLASS();
 			
-			_APP_LEVEL.addChild(_APP_INSTANCE);
-			
 			createObjectinLevel(_APP_INSTANCE, "MAIN");
+			
+			_APP_INSTANCE.start();
 		}
 		
 		/// create objects in specific application levels
@@ -160,6 +163,9 @@
 			{
 				if (object is DisplayObject)
 				{
+					object.x = coordinates.x;
+					object.y = coordinates.y;
+					
 					switch(level)
 					{
 						case "BACK":	_BACK_LEVEL.addChild(object);	break;

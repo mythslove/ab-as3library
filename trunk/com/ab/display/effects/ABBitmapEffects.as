@@ -18,7 +18,7 @@
 		/** @main adjust color method */
 		/** @alters a displayobject's color configuration */
 		/** @usage: ABBitmapEffects.adjustColour(your_displayobject, brightness, contrast, hue, saturation); */
-		public static function adjustColour(displayobject:DisplayObject, brightness:Number=NaN, contrast:Number=NaN, hue:Number=NaN, saturation:Number=NaN):Array
+		public static function adjustColour(displayobject:DisplayObject, brightness:Number=NaN, contrast:Number=NaN, hue:Number=NaN, saturation:Number=NaN):void
 		{
 			var color:AdjustColor;
 			var colorMatrix:ColorMatrixFilter;
@@ -39,10 +39,23 @@
 			displayobject.filters 		= filter;
 		}
 		
+		/** @main apply specific color matrix */
+		/** @alters a displayobject's color configuration */
+		/** @usage: ABBitmapEffects.adjustColour(your_displayobject, color_matrix); */
+		public static function applyColorMatrix(o:DisplayObject, colorMatrix:Array):void
+		{
+			var cmFilter	= new ColorMatrixFilter(colorMatrix);
+			var filter		= new Array();
+			
+			filter.splice(0, 1, cmFilter);
+			
+			o.filters 		= filter;
+		}
+		
 		/// DIRECT APPLICATIONS BELOW
 		
 		/** @usage: ABBitmapEffects.applySepia(your_displayobject); */
-		public static function applySepia(o:DisplayObject):Array
+		public static function applySepia(o:DisplayObject):void
 		{
 			var cmFilter	= new ColorMatrixFilter(sepia_matrix);
 			var filter		= new Array();
@@ -53,7 +66,7 @@
 		}
 		
 		/** @usage: ABBitmapEffects.applyGrayscale(your_displayobject); */
-		public static function applyGrayscale(o:DisplayObject):Array
+		public static function applyGrayscale(o:DisplayObject):void
 		{
 			var cmFilter	= new ColorMatrixFilter(grayscale_matrix);
 			var filter		= new Array();
@@ -64,7 +77,7 @@
 		}
 		
 		/** @usage: ABBitmapEffects.applyBrighten(your_displayobject); */
-		public static function applyBrighten(o:DisplayObject):Array
+		public static function applyBrighten(o:DisplayObject):void
 		{
 			var cmFilter	= new ColorMatrixFilter(brighten_matrix);
 			var filter		= new Array();

@@ -11,8 +11,8 @@
 	*                             :::::::::::::::'          
 	*                              ':::::::::::.            
 	*                                .::::::::::::::'       
-	*                              .:::::::::::...             
-	*                             ::::::::::::::''     
+	*                              .:::::::::::...          
+	*                             ::::::::::::::''          
 	*                 .:::.       '::::::::''::::           
 	*               .::::::::.      ':::::'  '::::          
 	*              .::::':::::::.    :::::    '::::.        
@@ -50,7 +50,8 @@
 	
 	public class CORE extends Sprite
 	{
-		public var APPLICATION_CLASS:Class = ARQUEHOJEVIDEOWALL; /// <------- REQUIRED - DEFINES MAIN APPLICATION CLASS
+		//public var APPLICATION_CLASS:Class = ARQUEHOJEVIDEOWALL; /// <------- REQUIRED - DEFINES MAIN APPLICATION CLASS
+		private var _APPLICATION_CLASS:Class; /// <------- REQUIRED - DEFINES MAIN APPLICATION CLASS
 		
 		/// private
 		//protected static var _api:COREApi;
@@ -76,13 +77,14 @@
 			CentralEventSystem.singleton.addEventListener(AppEvent.LOADED_SETTINGS, loadedSettings, false, 0 , true);
 		}
 		
-		private function addedToStage(e:Event):void  { init(); }
+		//private function addedToStage(e:Event):void  { init(); }
+		private function addedToStage(e:Event):void  {  "CORE added to stage"; }
 		
-		private function init():void
+		public function init():void
 		{ 
 			trace ("CORE ::: step 1 ::: init()"); 
 			
-			StageReference.setStage(this.stage); 
+			StageReference.setStage(stage);
 			
 			ScreenSettings.init();
 			
@@ -115,10 +117,11 @@
 		{
 			trace ("CORE ::: step 3 ::: initMainVars()");
 			
-			appManager 				= new AppManager(_appLevel, APPLICATION_CLASS);
-			dataManager 			= new DataManager("XML");
+			appManager 					= new AppManager(_appLevel, APPLICATION_CLASS);
 			
-			dataManager.xml_path 	= "contents/CONTENTS.xml";
+			dataManager 				= new DataManager("XML");
+			dataManager.xml_path 		= EdigmaCore.singleton.XML_PATH;
+			dataManager.main_xml_file	= EdigmaCore.singleton.MAIN_XML_FILE;
 			
 			dataManager.loadBaseData();
 		}
@@ -131,12 +134,16 @@
 			CentralEventSystem.singleton.removeEventListener(AppEvent.LOADED_DATA, loadedData);
 			
 			/// here the visual application actually starts
-			appManager.startApplicationClass();
+			appManager.addApplicationClassToStage();
+			//appManager.startApplicationClass();
 			
 			/// add stats analyser
 			//var _stats = stage.addChild(new Stats())
 		    //_stats.y = -100;
 		}
+		
+		public function get APPLICATION_CLASS():Class 			{ return _APPLICATION_CLASS;  }
+		public function set APPLICATION_CLASS(value:Class):void { _APPLICATION_CLASS = value; init();}
 	} 
 }
 

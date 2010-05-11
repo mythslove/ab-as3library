@@ -5,20 +5,18 @@
 	* 
 	*					  |//
 	*			   		 (o o)
-	*	+----------oOO----(_)------------------+
-	*	|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-	*	|~~~~~~~~~~~~ ¤   ABº   ¤ ~~~~~~~~~~~~~|
-	*	|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-	*	+---------------------oOO--------------+
-    * 	               |__|__|
-    *                   || ||
-    *                  ooO Ooo
+	*	+----------oOO----)_(--------------------------------+
+	*	|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+	*	|~~~~~~~This class manages all application data~~~~~~|
+	*	|~~~~~~~~and provides data collection methods~~~~~~~~|
+	*	|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+	*	+-----------------------oOO--------------------------+
+    * 	                |__|__|
+    *                    || ||
+    *                   ooO Ooo
 	* 
-	* This class manages all application data
-	* and provides data collection methods for the objects
 	*/
 	
-	//import com.ab.apps.appgenerics.CORE;
 	import com.ab.apps.appgenerics.events.AppEvent;
 	import com.ab.log.ABLogger;
 	import com.edigma.services.ServerCommunication;
@@ -26,24 +24,24 @@
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.net.URLLoader;
-	//import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	import gs.dataTransfer.XMLManager;
 	import com.ab.events.CentralEventSystem;
 	import org.casalib.util.StageReference;
+	import com.ab.apps.appgenerics.xml.XMLDataGetter;
 	
 	public class DataManager extends Sprite
 	{
 		/// public
-		public static var __singleton:DataManager;
+		private static var __singleton:DataManager;
 		public var xml_path:String="";
+		public var main_xml_file:String="";
 		
 		/// private
 		private var _data:Object
-		private var _type:String=null;
+		private var _type:String = null;
 		private var _amfresults_num:int = 0;
-		
-		
+		private var _xml_data_getter:XMLDataGetter;
 		
 		public function DataManager(type:String=null)
 		{
@@ -54,7 +52,12 @@
 			setVars();
 		}
 		
-		private function setVars():void { _data = new Object(); }
+		private function setVars():void 
+		{ 
+			_data = new Object(); 
+			
+			_xml_data_getter = new XMLDataGetter();
+		}
 		
 		/// getters / setters
 		public function get data():* 				{ return _data; };
@@ -90,12 +93,12 @@
 		
 		public function getXMLData():void
 		{
-			if (xml_path != "") 
+			if (xml_path != "" && main_xml_file != "") 
 			{
 				var xmlData:XML 		= new XML();
 				var xmlLoader:URLLoader = new URLLoader();
 				
-				xmlLoader.load(new URLRequest(xml_path));
+				xmlLoader.load(new URLRequest(xml_path + main_xml_file));
 				
 				xmlLoader.addEventListener(Event.COMPLETE, onXMLDataReceived);
 			}

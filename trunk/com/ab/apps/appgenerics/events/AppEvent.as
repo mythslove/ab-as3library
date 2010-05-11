@@ -8,6 +8,7 @@
 	
 	public class AppEvent extends Event
 	{
+		public static const INTRO_RESUMED:String 		= "introresumed";
 		public static const LOADED_SETTINGS:String 		= "loadedsettings";
 		public static const LOADED_DATA:String 			= "loadeddata";
 		public static const MODE_CHANGE:String 			= "modechange";
@@ -17,6 +18,7 @@
 		public static const APP_STEP_FURTHER:String 	= "appstepfurther";
 		public static const UPDATE_MENU:String 			= "updatemenu";
 		public static const CLEAN_MENU:String 			= "cleanmenu";
+		public static const RESET_APP:String 			= "resetapp";
 		
 		/// interactivity events
 		//public static const MOUSE_UP:String 			= "mouseup";
