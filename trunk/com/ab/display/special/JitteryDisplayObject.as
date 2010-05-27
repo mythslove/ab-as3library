@@ -20,6 +20,7 @@ package com.ab.display.special
 	import flash.geom.Point;
 	import flash.media.Sound;
 	import flash.display.DisplayObject;
+	import org.casalib.display.CasaSprite;
 	/// ab
 	import com.ab.display.ABSprite;
 	/// other
@@ -27,7 +28,9 @@ package com.ab.display.special
 	
 	public class JitteryDisplayObject extends ABSprite
 	{
-		private var my_object:DisplayObject;
+		//private var my_object:DisplayObject;
+		
+		private var _mouse_over:Boolean;
 		
 		private var staticTimes:int;
 		private var fuzzMin:int;
@@ -36,36 +39,53 @@ package com.ab.display.special
 		private var dmFilter:DisplacementMapFilter = createDMFilter();
 		private var _staticSound:Sound;// = new StaticSound();
 		private var _sound_set:Boolean = false;
+		private var roll_over_and_out_effect_activated:Boolean=false;
 		
 		/// constructor
-		public function JitteryDisplayObject(display_object:DisplayObject) 
+		//public function JitteryDisplayObject(display_object:DisplayObject) 
+		public function JitteryDisplayObject()
 		{
-			my_object = display_object;
+			//my_object = display_object;
 			
-			this.addEventListener(Event.ADDED_TO_STAGE, removedHandler, false, 0, true)
+			//this.addEventListener(Event.ADDED_TO_STAGE, 	addedHandler, false, 0, true)
+			this.addEventListener(Event.REMOVED_FROM_STAGE, removedHandler, false, 0, true)
 			// start displaying the static effect
-			addEventListener(Event.ENTER_FRAME, displayStatic, false, 0, true);
+			this.addEventListener(Event.ENTER_FRAME, 		displayStatic, false, 0, true);
+			
+			//this.addEventListener(MouseEvent.ROLL_OVER, jitteryRollOver, false, 0, true);
 		}
 		
 		/// clean listeners after death
 		private function removedHandler(e:Event):void 
 		{
-			this.removeEventListener(Event.ADDED_TO_STAGE, 		removedHandler);
-			my_object.removeEventListener(MouseEvent.ROLL_OVER, onRollOver);
-			my_object.removeEventListener(MouseEvent.ROLL_OUT,  onRollOut);
+			this.removeEventListener(Event.REMOVED_FROM_STAGE,	removedHandler);
+			
+			_mouse_over = false;
+			
+			if (roll_over_and_out_effect_activated == true) 
+			{
+				this.removeEventListener(MouseEvent.ROLL_OVER,	jitteryRollOver);
+				this.removeEventListener(MouseEvent.ROLL_OUT,	jitteryRollOut);
+			}
 		}
 		
 		/// set roll over & out handlers
-		public function activate rollOverRollOutEffects():void
+		public function activaterollOverRollOutEffects():void
 		{
-			my_object.addEventListener(MouseEvent.ROLL_OVER, onRollOver, false, 0, true);
-			my_object.addEventListener(MouseEvent.ROLL_OUT,  onRollOut,  false, 0, true);
+			roll_over_and_out_effect_activated = true;
+			
+			this.addEventListener(MouseEvent.ROLL_OVER, 	jitteryRollOver, false, 0, true);
+			this.addEventListener(MouseEvent.ROLL_OUT,  	jitteryRollOut,  false, 0, true);
 		}
 		
 		/// ROLL OVER handler
-		private function onRollOver(e:MouseEvent):void 
+		private function jitteryRollOver(e:MouseEvent):void 
 		{
-			Tweener.addTween(my_object, { scaleX: 1.1, time: .5, transition: "easeOutElastic" } );
+			trace( "com.ab.display.special.JitteryDisplayObject.jitteryRollOver");
+			
+			_mouse_over = true;
+			//Tweener.addTween(this, { scaleX: 1.1, time: .5, transition: "easeOutElastic" } );
+			Tweener.addTween(this, { scaleX: 1.1, time: .5, transition: "easeOutElastic" } );
 			
 			setStaticHigh();
 			
@@ -73,9 +93,11 @@ package com.ab.display.special
 		}
 		
 		/// ROLL OUT handler
-		private function onRollOut(e:MouseEvent):void 
+		private function jitteryRollOut(e:MouseEvent):void 
 		{
-			Tweener.addTween(my_object, { scaleX: 1, time: .5, transition: "easeOutElastic" } );
+			_mouse_over = false;
+			
+			Tweener.addTween(this, { scaleX: 1, time: .5, transition: "easeOutElastic" } );
 			setStaticMedium();
 		}
 		
@@ -98,16 +120,19 @@ package com.ab.display.special
 		// apply fuzzyness constantly
 		private function displayStatic(e:Event):void 
 		{
-			staticTimes --;
-			
-			dmFilter.scaleX 	= randRange(fuzzMin, fuzzMax);
-			dmFilter.mapPoint 	= new Point(0, randRange(0, -160));
-			my_object.filters 	= new Array(dmFilter);
-			
-			if (staticTimes <= 0)
+			if (_mouse_over == true) 
 			{
-				fuzzMin = 0;
-				fuzzMax = 2;
+				staticTimes --;
+				
+				dmFilter.scaleX 	= randRange(fuzzMin, fuzzMax);
+				dmFilter.mapPoint 	= new Point(0, randRange(0, -160));
+				this.filters 	= new Array(dmFilter);
+				
+				if (staticTimes <= 0)
+				{
+					fuzzMin = 0;
+					fuzzMax = 2;
+				}
 			}
 		}	
 		
