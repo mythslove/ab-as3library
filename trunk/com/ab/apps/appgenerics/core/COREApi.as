@@ -10,41 +10,54 @@
 	import com.ab.apps.appgenerics.core.AppManager;
 	import com.ab.apps.appgenerics.core.ScreenSettings;
 	import com.ab.apps.appgenerics.core.InactivityManager;
+	import com.ab.display.FloatWarning;
+	import flash.display.DisplayObject;
 	import flash.display.StageDisplayState;
 	import flash.geom.Point;
-	import com.ab.log.ABLogger;
+	import com.edigma.log.Logger;
 	import org.casalib.util.StageReference;
 	
 	public class COREApi
 	{
-		public static const LEVEL_BACK:String = "BACK";
-		public static const LEVEL_MAIN:String = "MAIN";
-		public static const LEVEL_MENU:String = "MENU";
-		public static const LEVEL_TOP:String  = "TOP";
+		public static const LEVEL_BACK:String 		 = "BACK";
+		public static const LEVEL_MAIN:String 		 = "MAIN";
+		public static const LEVEL_MENU:String 		 = "MENU";
+		public static const LEVEL_TOP:String  		 = "TOP";	
+		public static const LEVEL_ALERT:String  	 = "ALERT";	
+		public static const LEVEL_SCREENSAVER:String = "SCREENSAVER";	
 		
 		/// OBJECT CREATION IN LEVELS
-		public static function createObjectinLevel(object:*, level:String="MAIN", coordinates:Point=null):void
+		public static function addChildToLevel(child:DisplayObject, level:String="MAIN", coordinates:Point=null):void
 		{
-			if (object != null) 
+			if (child != null) 
 			{
-				if (coordinates == null)  
-				{ 
-					coordinates = new Point(0, 0); 
+				if (child is DisplayObject) 
+				{
+					if (coordinates == null)  
+					{ 
+						coordinates = new Point(0, 0); 
+					}
+					
+					AppManager.singleton.addChildToLevel(child, level, coordinates);
+				}
+				else
+				{
+					trace("< ERROR > COREApi ::: addChildToLevel() ::: PROVIDED OBJECT IS NOT DISPLAYOBJECT"); 
 				}
 				
-				AppManager.singleton.createObjectinLevel(object, level, coordinates);
 			}
 			else 
 			{ 
-				trace("< ERROR > COREApi ::: createObjectinLevel() ::: Object is NULL or not specified"); 
+				trace("< ERROR > COREApi ::: addChildToLevel() ::: Object is NULL or not specified"); 
 			}	
 		}
+		
 		/// LOGGING TOOL
 		public static function log(s:String):void
 		{
 			if (s) 
 			{
-				ABLogger.singleton.echo(s); 
+				Logger.singleton.log(s); 
 			} 
 			else 
 			{ 
@@ -63,6 +76,15 @@
 			{ 
 				trace("< ERROR > COREApi ::: setScreenSaver() ::: Provided class NULL or not specified"); 
 			}
+		}
+		
+		/// SHOW WARNING
+		public static function showWarning(message:String, type:String="normal", time:Number=2):void
+		{
+			// "normal" or "error" types may be used
+			var warning:FloatWarning = new FloatWarning(message, type, time);
+			
+			addChildToLevel(warning, LEVEL_TOP);
 		}
 		
 		/// SET FULLSCREEN
@@ -99,7 +121,7 @@
             //COREApi.getSWFAddress();
             //COREApi.getSWFAddressParameters().param1;
             //
-            //COREApi.createObjectInLevel(CloseButton, CoreAPI.LEVEL_MAIN, { x:10, y:10, alpha:0.1, cacheAsBitmap:true } );
+            //COREApi.addChildToLevel(CloseButton, CoreAPI.LEVEL_MAIN, { x:10, y:10, alpha:0.1, cacheAsBitmap:true } );
             //
             //COREApi.log(); 
 			
