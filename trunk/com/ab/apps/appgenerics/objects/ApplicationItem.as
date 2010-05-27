@@ -5,13 +5,8 @@
 	*/
 	
 	import caurina.transitions.Tweener;
-	import com.ab.display.Image;
 	import com.ab.events.CentralEventSystem;
-	import flash.display.MovieClip;
 	import flash.display.Sprite;
-	
-	import com.ab.utils.Make;
-	import com.edigma.web.EdigmaCore;
 	
 	import flash.events.Event;
 	import org.casalib.display.CasaSprite;
@@ -20,17 +15,17 @@
 	import com.ab.apps.appgenerics.events.ItemEvent;
 	import com.ab.apps.appgenerics.events.AppEvent;
 	
-	//public class ApplicationItem extends MovieClip
 	public class ApplicationItem extends CasaSprite
 	{
-		//private var _data:Array;
+		private var _data:Array;
 		private var _closed:Boolean=false;
 		
 		public function ApplicationItem() 
 		{
-			//trace ("ApplicationItem()"); 
+			trace ("ApplicationItem()"); 
 			
-			CentralEventSystem.singleton.addEventListener(ItemEvent.OPEN_ITEM, this.openItemHandler, false, 0, true);
+			CentralEventSystem.singleton.addEventListener(ItemEvent.OPEN_ITEM,  this.openItemHandler, false, 0, true);
+			CentralEventSystem.singleton.addEventListener(ItemEvent.CLOSE_ITEM, this.closeItemHandler, false, 0, true);
 			
 			this.addEventListener(Event.ADDED_TO_STAGE, addedHandler, false, 0, true);
 		}
@@ -42,18 +37,23 @@
 			start();
 		}
 		
+		private function closeItemHandler(e:ItemEvent):void
+		{
+			if (e.data == "close_application_items") 
+			{
+				close(); 
+				
+				_closed = true;
+			}
+		}
+		
 		public function start():void
 		{
 			/// override this function
 		}
 		
-		public function openItemHandler(e:ItemEvent):void  
+		public function openItemHandler(e:ItemEvent):void
 		{ 
-			//trace("CLOSING ITEM");
-			
-			close(); 
-			
-			_closed = true;
 			
 		}
 		
@@ -64,7 +64,8 @@
 		
 		public function endClose():void 			
 		{
-			CentralEventSystem.singleton.removeEventListener(ItemEvent.OPEN_ITEM, this.openItemHandler);
+			CentralEventSystem.singleton.removeEventListener(ItemEvent.OPEN_ITEM,  this.openItemHandler);
+			CentralEventSystem.singleton.removeEventListener(ItemEvent.CLOSE_ITEM, this.closeItemHandler);
 			
 			destroy();
 		}
@@ -72,8 +73,8 @@
 		public function get closed():Boolean 			{ return _closed; }
 		public function set closed(value:Boolean):void  { _closed = value; }
 		
-		//public function get data():Array 				{ return _data;  };
-		//public function set data(value:Array):void  	{ _data = value; };
+		public function get data():Array 				{ return _data;  };
+		public function set data(value:Array):void  	{ _data = value; };
 		
 	}
 	
