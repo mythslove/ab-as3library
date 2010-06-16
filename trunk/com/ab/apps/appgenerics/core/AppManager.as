@@ -4,6 +4,16 @@
 	* @author AB
 	*/
 	
+	/// features list
+	
+	/// APP LEVELS construction & management
+	/// "please wait message" handling
+	/// inactivity handling
+	/// screensaver handling (with inactivity handling);
+	/// a few predefined keyboard shortcuts
+	/// var for app MODE
+	/// var for app LANG
+	/// var for mouse state (up/down)
 	
 	import caurina.transitions.properties.ColorShortcuts;
 	import caurina.transitions.properties.FilterShortcuts;
@@ -42,19 +52,26 @@
 		public var inactivityManager:InactivityManager;
 		
 		/// SCREENSAVER
-		private var _SCREEN_SAVER_TIME:Number=20;
+		private var _SCREEN_SAVER_TIME:Number=20000;
 		private var _SCREEN_SAVER_CLASS:Class;
 		private var _SCREEN_SAVER_ACTIVE:Boolean=false;
 		
 		/// public
+		public var MODE:String = "";
+		public var LANG:String = "";
 		public var _APP_INSTANCE:*;
-		public var _MOUSE_STATE:String = "up"; // or "down"
+		public var _MOUSE_STATE:String = "UP"; // or "DOWN"
 		
 		/// protected	
 		protected var _key:Key;
 		
 		/// singleton
 		public static var __singleton:AppManager;
+		
+		/// please wait message
+		private var pleasewaitmessage:*;
+		private var _please_wait_message_class:Class;
+		private var _please_wait_message_class_set:Boolean=false;
 		
 		
 		public function AppManager(applevel:Sprite, appClass:Class)
@@ -94,8 +111,38 @@
 			_APP_LEVEL.addChildAt(_SCREENSAVER_LEVEL, 	5);
 		}
 		
-		private function mouseUpHandler(e:MouseEvent):void  	{ _MOUSE_STATE = "up";   };
-		private function mouseDownHandler(e:MouseEvent):void  	{ _MOUSE_STATE = "down"; };
+		public function setPleasewaitMessageClass(_class:Class):void
+		{
+			_please_wait_message_class 		= _class;
+			_please_wait_message_class_set 	= true;
+		}
+		
+		public function invokePleaseWaitMessage():void
+		{
+			if (_please_wait_message_class_set == true) 
+			{
+				pleasewaitmessage = new _please_wait_message_class();
+				
+				addChildToLevel(pleasewaitmessage, COREApi.LEVEL_ALERT);
+			}
+			else
+			{
+				trace("PleasewaitMessage Class not defined yet");
+			}
+		}
+		
+		public function closePleaseWaitMessage():void
+		{
+			if (pleasewaitmessage != null) 
+			{
+				pleasewaitmessage.close();
+				
+				pleasewaitmessage = null;
+			}
+		}
+		
+		private function mouseUpHandler(e:MouseEvent):void  	{ _MOUSE_STATE = "UP";   };
+		private function mouseDownHandler(e:MouseEvent):void  	{ _MOUSE_STATE = "DOWN"; };
 		
 		private function keyDownHandler(e:KeyboardEvent):void 
 		{
@@ -197,20 +244,21 @@
 		
 		/// set up inactivity handler
 		
-		public function setScreenSaver(_class:*, _active:Boolean=true, _time:Number=NaN):void
+		public function setScreenSaver(_class:*, _active:Boolean=true, _time:Number=20000):void
 		{
 			_SCREEN_SAVER_CLASS 	= _class;
 			_SCREEN_SAVER_ACTIVE	= _active;
-			_SCREEN_SAVER_TIME 		= isNaN(_time) ? 20000 : _time;
+			_SCREEN_SAVER_TIME 		= _time;
 			
-			inactivityManager = new InactivityManager(_SCREEN_SAVER_TIME);
+			inactivityManager 		= new InactivityManager(_SCREEN_SAVER_TIME);
 		}
 		
 		/// action to perform on inactivity
 		
 		public function inactivityDetectedCommand():void
 		{
-			//trace ("AppManager ::: inactivityDetected ");
+			trace ("AppManager ::: inactivityDetected ");
+			
 			CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.INACTIVITY_DETECTED, ""));
 			
 			callScreenSaver();
@@ -222,7 +270,7 @@
 			{
 				var ss = new _SCREEN_SAVER_CLASS();
 				
-				addChildToLevel(ss, "TOP");
+				addChildToLevel(ss, "SCREENSAVER");
 			}
 		}
 		

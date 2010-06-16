@@ -11,7 +11,9 @@
 	import com.ab.apps.appgenerics.core.ScreenSettings;
 	import com.ab.apps.appgenerics.core.InactivityManager;
 	import com.ab.display.FloatWarning;
+	import elements.DirectorioWarning;
 	import flash.display.DisplayObject;
+	import flash.display.Stage;
 	import flash.display.StageDisplayState;
 	import flash.geom.Point;
 	import com.edigma.log.Logger;
@@ -53,7 +55,7 @@
 		}
 		
 		/// LOGGING TOOL
-		public static function log(s:String):void
+		public static function log(s:*):void
 		{
 			if (s) 
 			{
@@ -82,9 +84,10 @@
 		public static function showWarning(message:String, type:String="normal", time:Number=2):void
 		{
 			// "normal" or "error" types may be used
-			var warning:FloatWarning = new FloatWarning(message, type, time);
+			//var warning:FloatWarning = new FloatWarning(message, type, time);
+			var warning:DirectorioWarning = new DirectorioWarning(message);
 			
-			addChildToLevel(warning, LEVEL_TOP);
+			addChildToLevel(warning, LEVEL_ALERT);
 		}
 		
 		/// SET FULLSCREEN

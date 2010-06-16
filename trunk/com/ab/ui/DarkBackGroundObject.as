@@ -17,56 +17,82 @@
 	{
 		private var bg_mc:ABSprite
 		private var assetholder_mc:ABSprite
-		private var _instance:*
+		private var _object:*
+		private var _bg_colour:uint;
 		
-		public function DarkBackGroundObject(preloader_asset:*, bg_colour:uint=0x000000)
+		public function DarkBackGroundObject(object:*, bg_colour:uint=0x000000)
 		{
-			this.x = 0
-			this.y = 0
-			this.alpha = 0
+			this.x 			= 0;
+			this.y 			= 0;
+			this.alpha 		= 0;
 			
-			bg_mc = new ABSprite()
-			assetholder_mc =  new ABSprite()
+			_bg_colour 		= bg_colour;
+			_object 		= object;
 			
-			this.addChildAt(bg_mc, 0)
+			this.addEventListener(Event.ADDED_TO_STAGE, addedHandler, false, 0, true);
+		}
+		
+		public function addedHandler(e:Event):void 
+		{
+			this.removeEventListener(Event.ADDED_TO_STAGE, addedHandler);
 			
-			_instance = assetholder_mc.addChild(new preloader_asset())
+			bg_mc 			= new ABSprite();
+			assetholder_mc 	= new ABSprite();
 			
-			assetholder_mc.setAlign("center", true)
+			this.addChildAt(bg_mc, 0);
+			this.addChildAt(assetholder_mc, 1);
 			
-			if (bg_colour != 0) 
-			{
-				bg_mc.alpha = 0.6
-				bg_mc.setAlign("stretch")
-				bg_mc.graphics.beginFill(bg_colour)
-				bg_mc.graphics.drawRoundRect(0, 0, StageReference.getStage().stageWidth, StageReference.getStage().stageHeight, 0, 0);
-				bg_mc.graphics.endFill();
-			}
+			assetholder_mc.addChild(_object);
 			
-			GoVisible()
+			_object.x = -_object.width  / 2;
+			_object.y = -_object.height / 2;
+			
+			//_instance 		= assetholder_mc.addChild(object);
+			
+			assetholder_mc.setAlign("center", true);
+			
+			this.addEventListener(MouseEvent.CLICK, clickHandler, false, 0, true);
+			//StageReference.getStage().addEventListener(Event.RESIZE, resizeHandler, false, 0, true);
+			
+			bg_mc.alpha = 0.8;
+			bg_mc.setAlign("stretch");
+			bg_mc.graphics.beginFill(_bg_colour);
+			bg_mc.graphics.drawRoundRect(0, 0, StageReference.getStage().stageWidth, StageReference.getStage().stageHeight, 0, 0);
+			bg_mc.graphics.endFill();
+			
+			GoVisible();
+		}
+		
+		private function clickHandler(e:MouseEvent):void 
+		{
+			this.removeEventListener(MouseEvent.CLICK, clickHandler);
+			
+			
+			blurOutAndExecuteFunction(endClose, 0.5);
+			//Tweener.addTween(assetholder_mc, { alpha:0, _Blur_blurX:40, _Blur_blurY:40, time:0.8, scaleX:1.3, scaleY:1.3, transition:"EaseInOutBack", onComplete:close } )
 		}
 		
 		public function close():void
 		{
-			GoInvisibleWithOnComplete(1, endClose)
+			blurOutAndExecuteFunction(endClose, 0.5);
 		}
 		
 		private function endClose():void
 		{
-			bg_mc.removeAlign()
-			assetholder_mc.removeAlign()
+			assetholder_mc.removeAlign();
+			bg_mc.removeAlign();
 			
-			bg_mc.destroy()
-			assetholder_mc.destroy()
+			bg_mc.destroy();
+			assetholder_mc.destroy();
 			
-			destroy()
+			destroy();
 		}
 		
-		public static function create(target_object:Object, preloader_asset:*, bg_colour:uint=0x000000):DarkBackGroundObject
-		{
-			var _instance:* = new DarkBackGroundObject(target_object, preloader_asset, bg_colour);
-			target_object.addChild(_instance);
-			return _instance;
-		}	
+		//public static function create(object:*, bg_colour:uint=0x000000):DarkBackGroundObject
+		//{
+			//var _instance:* = new DarkBackGroundObject(object, bg_colour);
+			//assetholder_mc.addChild(_instance);
+			//return _instance;
+		//}	
 	}
 }

@@ -2,44 +2,39 @@
 {
 	/**
 	* @author ABº
-	* 
-	* http://www.antoniobrandao.com/
-	* http://blog.antoniobrandao.com/
 	*/
 	
-	import caurina.transitions.properties.ColorShortcuts;
-	import com.ab.display.ABSprite;
+	import com.edigma.log.Logger;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
-	import flash.system.System
 	//import com.ab.utils.DebugTF
-	import com.ab.utils.Move
-	import caurina.transitions.Tweener
-	import org.casalib.util.StageReference
-	import flash.display.Stage
+	import caurina.transitions.Tweener;
+	import org.casalib.util.StageReference;
+	import flash.display.Stage;
 	
-	public class YScroller extends ABSprite
+	public class YScroller extends Sprite
 	{
 		/// physical content
 		private var _handle:Sprite
 		private var _scrooltrack:Sprite
 		
 		/// colours
-		private var _handle_colour:uint        = 0xCCCCCC;
+		private var _handle_colour:uint        = 0xffffff;
 		private var _scrooltrack_colour:uint   = 0x222222;
 		
 		/// setup vars - main
 		private var _target_clip:Object;				/// target object
 		private var _scrool_distance:Number;     		/// handle total work height
 		private var _visible_height:Number;      		/// target object's visible height (masked area)
-		private var _frame_length:Number;      			/// target object's visible height (masked area)
+		private var _frame_length:Number;
 		
 		/// setup vars - design
 		private var _handle_width:Number	   = 10;
 		private var _handle_height:Number      = 20;
+		private var _use_scrooltrack:Boolean   = true;
 		private var _scrooltrack_width:Number  = 20;
 		private var _scrooltrack_height:Number = 100;
 		private var _scrooltrack_alpha:Number  = 1;
@@ -53,16 +48,24 @@
 		
 		/// work vars level 2
 		private var rectangle:Rectangle;
-		private var _hit_root:Object = null;
 		private var indent:Number;
-		private var _HIT_ROOT:Object=null;
+		private var _hit_root:Object=null;
 		private var _scrooltrack100percentPosition:Number;
 		private var _target_finalY:Number;
 		
-		//public function YScroller(target_clip:Object, scroll_distance:Number, visible_height:Number, hit_root:Object=null)
 		public function YScroller()
 		{
 			this.addEventListener(Event.ADDED_TO_STAGE, addedHandler, false, 0, true);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, removedHandler, false, 0, true);
+		}
+		
+		private function removedHandler(e:Event):void 
+		{
+			this.removeEventListener(Event.REMOVED_FROM_STAGE, removedHandler);
+			
+			_target_clip = null;
+			
+			deActivate();
 		}
 		
 		private function addedHandler(e:Event):void 
@@ -82,7 +85,18 @@
 		public function set target_clip(value:Object):void  		{ _target_clip = value; 		};
 		
 		public function get scroll_distance():Number 				{ return _scrool_distance; 		};
-		public function set scroll_distance(value:Number):void  	{ _scrool_distance = value; 	};
+		public function set scroll_distance(value:Number):void  	
+		{ 
+			_scrool_distance   = value; 
+			_handle_maximum_y  = _scrool_distance - _handle_height;	
+			
+			_scrooltrack_height = value;
+			
+			if (_scrooltrack != null)
+			{
+				_scrooltrack.height = value;
+			}
+		};
 		
 		public function get visible_height():Number 				{ return _visible_height; 		};
 		public function set visible_height(value:Number):void  		{ _visible_height = value; 		};
@@ -111,28 +125,40 @@
 		public function get handle_alpha():Number 					{ return _handle_alpha; 		};
 		public function set handle_alpha(value:Number):void  		{ _handle_alpha = value; 		};
 		
+		public function get hit_root():Object 						{ return _hit_root; 			};
+		public function set hit_root(value:Object):void  			{ _hit_root = value; 			};
+		
+		public function get use_scrooltrack():Boolean 				{ return _use_scrooltrack; 		};
+		public function set use_scrooltrack(value:Boolean):void  	{ _use_scrooltrack = value; 	};
+		
+		public function get scrooltrack_width():Number 				{ return _scrooltrack_width; }
+		public function set scrooltrack_width(value:Number):void  	{ _scrooltrack_width = value; }
+		
 		private function buildGraphics():void
 		{
-			_handle 	 = new Sprite();
-			_scrooltrack = new Sprite();
+			if (_use_scrooltrack == true) 
+			{
+				/// scrooltrack
+				_scrooltrack = new Sprite();
+				
+				_scrooltrack.graphics.beginFill(_scrooltrack_colour)
+				_scrooltrack.graphics.drawRect(0, 0, _scrooltrack_width, _scrooltrack_height);
+				_scrooltrack.graphics.endFill();			
+				_scrooltrack.alpha 	= _scrooltrack_alpha;
+				
+				this.addChild(_scrooltrack);
+			}
 			
 			/// handle
+			_handle 	 	= new Sprite();
+			_handle.x 		= _frame_length;
+			_handle.y 		= _frame_length;
+			_handle.alpha 	= _handle_alpha;
+			
 			_handle.graphics.beginFill(_handle_colour);
 			_handle.graphics.drawRect(0, 0, _handle_width, _handle_height);
 			_handle.graphics.endFill();
 			
-			_handle.x = _frame_length;
-			_handle.y = _frame_length;
-			
-			/// scrooltrack
-			_scrooltrack.graphics.beginFill(_scrooltrack_colour)
-			_scrooltrack.graphics.drawRect(0, 0, _scrooltrack_width, _visible_height);
-			_scrooltrack.graphics.endFill();			
-			
-			_scrooltrack.alpha 	= _scrooltrack_alpha;
-			_handle.alpha 		= _handle_alpha;
-			
-			this.addChild(_scrooltrack);
 			this.addChild(_handle);
 		}
 		
@@ -151,18 +177,16 @@
 			_handle_minimum_y = _frame_length;
 			_handle_maximum_y = _scrool_distance - _handle_height;// - _frame_length * 2;
 			
-			_handle_minimum_y 		= _handle.y;
+			_handle_minimum_y = _handle.y;
 			
 			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 		}
 		
 		public function mouseWheelHandler(event:MouseEvent):void 
 		{
-			var go:Boolean = false;
-			
-			if (_HIT_ROOT != null)
+			if (_hit_root != null)
 			{
-				if (_HIT_ROOT.hitTestPoint(StageReference.getStage().mouseX, StageReference.getStage().mouseY, true));
+				if (_hit_root.hitTestPoint(StageReference.getStage().mouseX, StageReference.getStage().mouseY, true));
 				{
 					performMouseWheel(event.delta);
 				}
@@ -210,47 +234,47 @@
 		public function deActivate():void
 		{
 			_handle.buttonMode = false;
-			stage.removeEventListener(MouseEvent.MOUSE_UP, releaseHandle);
-			this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
 			_handle.removeEventListener(MouseEvent.MOUSE_DOWN, clickHandle);
+			
+			this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
+			
+			StageReference.getStage().removeEventListener(MouseEvent.MOUSE_UP,    releaseHandle);
+			StageReference.getStage().removeEventListener(MouseEvent.MOUSE_WHEEL, mouseWheelHandler);
 		}
 		
 		public function reActivate():void
 		{
 			_handle.buttonMode = true;
-			stage.addEventListener(MouseEvent.MOUSE_UP, releaseHandle);
-			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 			_handle.addEventListener(MouseEvent.MOUSE_DOWN, clickHandle);
+			
+			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
+			
+			StageReference.getStage().addEventListener(MouseEvent.MOUSE_UP, 	releaseHandle);
+			StageReference.getStage().addEventListener(MouseEvent.MOUSE_WHEEL, 	mouseWheelHandler);
 		}
 		
 		private function clickHandle(e:MouseEvent)
 		{
 			rectangle = new Rectangle(_frame_length, _handle_minimum_y, 0, _handle_maximum_y);
-			_handle.startDrag(false, rectangle	);
+			_handle.startDrag(false, rectangle);
 		}
 		
 		private function releaseHandle(e:MouseEvent)  	{ _handle.stopDrag(); };
 		private function enterFrameHandler(e:Event) 	{ positionContent();  };
-		public  function gotoZero():void 				{ Move.ToPositionY(_handle, _handle_minimum_y, 0.2) }
+		public  function gotoZero():void 				{ Tweener.addTween(_handle, { y:_handle_minimum_y, time:0.2 } ); }
 		
 		private function positionContent():void
 		{
-			var _handle_relative_pos = _handle.y - _handle_minimum_y;
-			var _distance:Number     = _scrool_distance - _handle.height;
-			
-			_handle_percent_position = Math.floor( ( _handle_relative_pos * 100) / _distance); 
-			
-			var work_height:Number = ( -_target_clip.height + _scrool_distance + _frame_length)
-			
-			var ref_num:Number = (work_height * _handle_percent_position) / 100
-			
-			ref_num = ref_num - _frame_length;;
-			
-			_target_finalY = (ref_num * _handle_percent_position) / 100;
-			
-			_target_finalY = _target_finalY + _frame_length;
-			
-			Tweener.addTween(_target_clip, { y:_target_finalY, time:0.3, transition:"EaseOutSine" } );
+			var _handle_relative_pos 			= _handle.y - _handle_minimum_y;
+			var _distance:Number     			= _scrool_distance - _handle.height;
+			_handle_percent_position 			= Math.floor( ( _handle_relative_pos * 100) / _distance); 
+			var work_height:Number 				= ( -_target_clip.height + _scrool_distance + _frame_length);
+			var ref_num:Number 					= (work_height * _handle_percent_position) / 100;
+			ref_num 							= ref_num - _frame_length;
+			_target_finalY 						= (ref_num * _handle_percent_position) / 100;
+			_target_finalY 						= _target_finalY + _frame_length;
+			Tweener.addTween(_target_clip, 		{ y:_target_finalY, time:0.3, transition:"EaseOutSine" } );
+			if (_handle.y > _handle_maximum_y)  { _handle.y = _handle_maximum_y; };
 		}
 	}
 }

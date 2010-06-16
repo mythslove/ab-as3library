@@ -11,11 +11,14 @@
 	import flash.events.Event;
 	import org.casalib.display.CasaSprite;
 	
-	/// app generics
+	/// ab
+	import com.ab.display.ABSprite;
+	
+	/// ab - app generics
 	import com.ab.apps.appgenerics.events.ItemEvent;
 	import com.ab.apps.appgenerics.events.AppEvent;
 	
-	public class ApplicationItem extends CasaSprite
+	public class ApplicationItem extends ABSprite
 	{
 		private var _data:Array;
 		private var _closed:Boolean=false;
@@ -30,14 +33,14 @@
 			this.addEventListener(Event.ADDED_TO_STAGE, addedHandler, false, 0, true);
 		}
 		
-		private function addedHandler(e:Event):void 
+		public function addedHandler(e:Event):void 
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, addedHandler);
 			
 			start();
 		}
 		
-		private function closeItemHandler(e:ItemEvent):void
+		public function closeItemHandler(e:ItemEvent):void
 		{
 			if (e.data == "close_application_items") 
 			{
@@ -59,14 +62,16 @@
 		
 		public function close():void 
 		{
-			Tweener.addTween(this, { alpha:0, time:0.5, onComplete:endClose } ); 
-		}
-		
-		public function endClose():void 			
-		{
+			_closed = true;
+			
 			CentralEventSystem.singleton.removeEventListener(ItemEvent.OPEN_ITEM,  this.openItemHandler);
 			CentralEventSystem.singleton.removeEventListener(ItemEvent.CLOSE_ITEM, this.closeItemHandler);
 			
+			Tweener.addTween(this, { alpha:0, time:0.5, onComplete:endClose } ); 
+		}
+		
+		public function endClose():void
+		{
 			destroy();
 		}
 		

@@ -8,6 +8,7 @@
 	
 	public class AppEvent extends Event
 	{
+		public static const START:String 				= "start";
 		public static const INTRO_RESUMED:String 		= "introresumed";
 		public static const LOADED_SETTINGS:String 		= "loadedsettings";
 		public static const LOADED_DATA:String 			= "loadeddata";
@@ -15,6 +16,7 @@
 		public static const ACTIVITY_RESUMED:String  	= "activityresumed";
 		public static const INACTIVITY_DETECTED:String 	= "inactivitydetected";
 		public static const TOGGLE_MAIN_MENU:String 	= "togglemainmenu";
+		public static const TOGGLE:String 				= "toggle";
 		public static const APP_STEP_FURTHER:String 	= "appstepfurther";
 		public static const UPDATE_MENU:String 			= "updatemenu";
 		public static const CLEAN_MENU:String 			= "cleanmenu";
@@ -22,7 +24,7 @@
 		
 		/// interactivity events
 		//public static const MOUSE_UP:String 			= "mouseup";
-		//public static const MOUSE_DOWN:String 			= "mousedown";
+		//public static const MOUSE_DOWN:String 		= "mousedown";
 		
 		public var data:*;
 		
