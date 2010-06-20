@@ -90,8 +90,6 @@
 			
 			this.visible = _visible;
 			
-			initVars();
-			
 			this.addEventListener(Event.ADDED_TO_STAGE, 	addedHandler, 	false, 0, true);
 			this.addEventListener(Event.REMOVED_FROM_STAGE, removedHandler, false, 0, true);
 		}
@@ -124,11 +122,6 @@
 		
 		public function get totalheight():int 				{ return _totalheight;   };
 		public function set totalheight(value:int):void  	{ _totalheight = value;  };
-		
-		private function initVars():void
-		{
-			this.alpha = 0;
-		}
 		
 		private function addedHandler(e:Event):void 
 		{
