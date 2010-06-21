@@ -66,7 +66,7 @@
 		protected var _key:Key;
 		
 		/// singleton
-		public static var __singleton:AppManager;
+		private static var __singleton:AppManager;
 		
 		/// please wait message
 		private var pleasewaitmessage:*;
