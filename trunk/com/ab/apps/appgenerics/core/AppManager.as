@@ -50,6 +50,8 @@
 		
 		/// inactivity
 		public var inactivityManager:InactivityManager;
+		/// custom
+		public var PLAYING_VIDEO:String=false;
 		
 		/// SCREENSAVER
 		private var _SCREEN_SAVER_TIME:Number=20000;
@@ -243,6 +245,11 @@
 		}
 		
 		/// set up inactivity handler
+		
+		public function armInactivityAlert(time:Number):void
+		{
+			inactivityManager = new InactivityManager(time);
+		}
 		
 		public function setScreenSaver(_class:*, _active:Boolean=true, _time:Number=20000):void
 		{
