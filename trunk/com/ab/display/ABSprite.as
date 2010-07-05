@@ -99,6 +99,15 @@
 		public function onCustomWidthChange():void 				{ };
 		public function onCustomHeightChange():void 			{ };
 		
+		/// FORCE WHOLE PIXEL
+		/// FORCE WHOLE PIXEL
+		/// FORCE WHOLE PIXEL
+		
+		override public function set x( value:Number ):void 		{ super.x = Math.round( value ); }
+		override public function set y( value:Number ):void 		{ super.y = Math.round( value ); }
+		override public function set width( value:Number ):void 	{ super.width = Math.round( value ); }
+		override public function set height( value:Number ):void 	{ super.height = Math.round( value ); }
+		
 		/// //// //// //// //// ALPHA METHODS //// //// //// //// ////
 		/// //// //// //// //// ALPHA METHODS //// //// //// //// ////
 		/// //// //// //// //// ALPHA METHODS //// //// //// //// ////
@@ -108,14 +117,7 @@
 			this.alpha = 0;
 			this.visible = true;
 			
-			if (onCompleteFunc != null)
-			{
-				Tweener.addTween(this, {alpha:1, time:isNaN(duration) ? 0.5 : duration, transition:_transition, onComplete:onCompleteFunc });  //Tweener.addTween(this, {alpha:1, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:onCompleteFunc, onCompleteParams:[this]})				
-			}
-			else
-			{
-				Tweener.addTween(this, {alpha:1, time:isNaN(duration) ? 0.5 : duration, transition:_transition});
-			}
+			Tweener.addTween(this, {alpha:1, time:isNaN(duration) ? 0.5 : duration, transition:_transition, onComplete:onCompleteFunc });  //Tweener.addTween(this, {alpha:1, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:onCompleteFunc, onCompleteParams:[this]})				
 		}
 		
 		public function GoInvisible(duration:Number=NaN, _transition:String="EaseOutSine"):void
@@ -148,47 +150,26 @@
 		/// ////////////////////// TO POSITION X
 		public function GoToPositionX(xpos:Number, duration:Number=0.5, alphavalue=NaN, _transition:String="EaseOutSine"):void
 		{
-			if (isNaN(alphavalue)) 
-			{
-				Tweener.addTween(this, { x:xpos, time:duration, transition:_transition } );
-			}
-			else
-			{
-				Tweener.addTween(this, { x:xpos, time:duration, alpha:alphavalue, transition: _transition } );
-			}	
+			Tweener.addTween(this, { x:xpos, time:duration, alpha:isNaN(alphavalue) ? 0.5 : alphavalue, transition:_transition } );
 		}
 		
 		/// /////////////////////// TO POSITION Y
 		public function GoToPositionY(ypos:Number, duration:Number, alphavalue:Number=NaN, _transition:String="EaseOutSine"):void
 		{
-			if (isNaN(alphavalue)) 
-			{
-				Tweener.addTween(this, { y:ypos, time:duration, transition:_transition } );
-			}
-			else
-			{
-				Tweener.addTween(this, { y:ypos, time:duration, alpha:alphavalue, transition:_transition } );
-			}
+			Tweener.addTween(this, { y:ypos, time:duration, alpha:isNaN(alphavalue) ? 0.5 : alphavalue, transition:_transition } );
 		}
 		
 		/// /////////////////////// TO POSITION X Y
 		public function GoToPositionXY(xpos:Number, ypos:Number, duration:Number, alphavalue:Number=NaN, transitionstyle:String="EaseOutsine"):void
 		{
-			if (isNaN(alphavalue)) 
-			{
-				Tweener.addTween(this, { x:xpos, y:ypos, time:duration, transition:transitionstyle } );
-			}
-			else
-			{
-				Tweener.addTween(this, { x:xpos, y:ypos, time:duration, alpha:alphavalue, transition:transitionstyle } );
-			}
+			Tweener.addTween(this, { x:xpos, y:ypos, time:duration, alpha:isNaN(alphavalue) ? 0.5 : alphavalue, transition:transitionstyle } );
 		}
 		
 		/// //// //// //// //// SIZE METHODS
 		/// //// //// //// //// SIZE METHODS
 		/// //// //// //// //// SIZE METHODS
 		
-		public function SizeToXY(_width:Number=NaN, _height:Number=NaN, _duration:Number=0.5, _alpha:Number=NaN, _transitionstyle:String="EaseOutsine"):void
+		public function SizeToXY(_width:Number=NaN, _height:Number=NaN, _duration:Number=0.5, _alpha:Number=NaN, _transitionstyle:String="EaseOutSine"):void
 		{
 			Tweener.addTween(this, { 	width:isNaN(_width) ? this.width : _width,
 										height:isNaN(_height) ? this.height : _height,
@@ -552,8 +533,6 @@
 			custom_parent = null;
 			
 			if (align_set == true)  { removeAlign(); }
-			
-			this.removeEventListeners();
 			
 			destroy();
 		}

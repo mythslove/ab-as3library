@@ -37,7 +37,7 @@
 	/// edigma
 	import com.edigma.web.EdigmaCore;
 	import com.edigma.services.ServerCommunication;
-	import com.edigma.log.Logger;
+	import com.ab.log.Logger;
 	
 	/// ab
 	//import com.ab.log.ABLogger;
@@ -122,8 +122,7 @@
 			CentralEventSystem.singleton.removeEventListener(AppEvent.LOADED_DATA, loadedBaseData);
 			
 			/// here the visual application actually starts
-			appManager.addApplicationClassToStage();
-			//appManager.startApplicationClass();
+			appManager.addApplicationClassToStage(); // the application class should catch the ADDED_TO_STAGE event to start
 			
 			/// add stats analyser
 			//var _stats = stage.addChild(new Stats())

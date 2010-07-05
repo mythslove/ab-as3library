@@ -11,29 +11,33 @@
 	/// inactivity system
 	/// screensaver handling (integrated with inactivity system);
 	/// a few predefined keyboard shortcuts, room for more
-	/// var for app MODE
-	/// var for app LANG
+	/// var for app MODE && MODE_CHANGE event dispatching on MODE change
+	/// var for app LANG && LANG_CHANGE event dispatching on LANG change
 	/// var for mouse state (up/down)
 	/// some other useful "state" vars
 	
-	import caurina.transitions.properties.ColorShortcuts;
-	import caurina.transitions.properties.FilterShortcuts;
-	import com.edigma.web.EdigmaCore;
+	/// flash
+	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
-	import org.casalib.ui.Key;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
+	
+	/// libs
+	import caurina.transitions.properties.ColorShortcuts;
+	import caurina.transitions.properties.FilterShortcuts;
+	import org.casalib.ui.Key;
 	import org.casalib.util.StageReference;
 	
+	/// ab
+	import com.ab.log.Logger;
+	import com.ab.events.CentralEventSystem;
 	import com.ab.apps.appgenerics.events.AppEvent;
 	import com.ab.apps.appgenerics.events.ItemEvent;
-	import com.ab.events.CentralEventSystem;
-	import com.edigma.log.Logger;
-	import flash.display.DisplayObject;
 	import com.ab.apps.appgenerics.core.InactivityManager;
+	import com.ab.apps.appgenerics.settings.XMLSettings;
 	
 	public class AppManager extends Sprite
 	{
@@ -47,33 +51,30 @@
 		private var _BACK_LEVEL:Sprite;
 		
 		/// helper "state" vars
-		public var MODE:String = "";
-		public var LANG:String = "";
+		private var _MODE:String = "";
+		private var _LANG:String = "";
 		public var PLAYING_VIDEO:String=false;
-		public var MAIN_MENU_OPEN:Boolean;
 		public var MOUSE_STATE:String = "UP"; // or "DOWN"
-		
-		/// don't touch these
-		public var APP_INSTANCE:*;
-		private var _APP_CLASS:Class;
 		
 		/// INACTIVITY
 		public var inactivityManager:InactivityManager;
 		
 		/// SCREENSAVER
-		private var _SCREEN_SAVER_TIME:Number=20000;
-		private var _SCREEN_SAVER_CLASS:Class;
-		private var _SCREEN_SAVER_ACTIVE:Boolean=false;
+		private var _screen_saver_time:Number=20000;
+		private var _screen_saver_class:Class;
+		private var _screen_saver_set:Boolean=false;
 		
 		/// keyboard
 		protected var _key:Key;
 		
 		/// please wait message
-		private var pleasewaitmessage:*;
+		private var _pleasewaitmessage:*;
 		private var _please_wait_message_class:Class;
 		private var _please_wait_message_class_set:Boolean=false;
 		
-		/// singleton
+		/// system ::: don't touch these
+		public var APP_INSTANCE:*;
+		private var _APP_CLASS:Class;
 		private static var __singleton:AppManager;
 		
 		
@@ -124,9 +125,9 @@
 		{
 			if (_please_wait_message_class_set == true) 
 			{
-				pleasewaitmessage = new _please_wait_message_class();
+				_pleasewaitmessage = new _please_wait_message_class();
 				
-				addChildToLevel(pleasewaitmessage, COREApi.LEVEL_ALERT);
+				addChildToLevel(_pleasewaitmessage, COREApi.LEVEL_ALERT);
 			}
 			else
 			{
@@ -136,11 +137,11 @@
 		
 		public function closePleaseWaitMessage():void
 		{
-			if (pleasewaitmessage != null) 
+			if (_pleasewaitmessage != null) 
 			{
-				pleasewaitmessage.close();
+				_pleasewaitmessage.close();
 				
-				pleasewaitmessage = null;
+				_pleasewaitmessage = null;
 			}
 		}
 		
@@ -153,30 +154,6 @@
 			
 			switch (e.keyCode) 
 			{
-				case 49:
-				break;
-				
-				case 50:
-				break;
-				
-				case 51:
-				break;
-				
-				case 52:
-				break;
-				
-				case 53:
-				break;
-				
-				case 54:
-				break;
-				
-				case 55:
-				break;
-				
-				case 56:
-				break;
-				
 				case 57:
 				break;
 				
@@ -185,21 +162,14 @@
 				break;
 				
 				case Keyboard.F9:
-					EdigmaCore.singleton.DEBUG_MODE = true;
+					XMLSettings.singleton.DEBUG_MODE = true;
 					CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.MODE_CHANGE, "debug"));
 				break;
 				//case Keyboard.F5:
 					//COREApi.log("F5");
-					/// podia ser ir para home / close all
+					// podia ser ir para home / close all
 				//break;
 			}
-		}
-		
-		public function startApplicationClass():void
-		{
-			APP_INSTANCE = new _APP_CLASS();
-			
-			APP_INSTANCE.start();
 		}
 		
 		public function addApplicationClassToStage():void
@@ -251,50 +221,71 @@
 		
 		public function setScreenSaver(_class:*, _active:Boolean=true, _time:Number=20000):void
 		{
-			_SCREEN_SAVER_CLASS 	= _class;
-			_SCREEN_SAVER_ACTIVE	= _active;
-			_SCREEN_SAVER_TIME 		= _time;
+			_screen_saver_class 	= _class;
+			_screen_saver_set		= _active;
+			_screen_saver_time 		= _time;
 			
-			inactivityManager 		= new InactivityManager(_SCREEN_SAVER_TIME);
+			inactivityManager 		= new InactivityManager(_screen_saver_time);
 		}
 		
 		/// action to perform on inactivity
-		
 		public function inactivityDetectedCommand():void
 		{
-			trace ("AppManager ::: inactivityDetected ");
+			//trace ("AppManager ::: inactivityDetected ");
 			
 			CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.INACTIVITY_DETECTED, ""));
 			
 			callScreenSaver();
 		}
 		
-		private function callScreenSaver():void
-		{
-			if (_SCREEN_SAVER_CLASS != null && _SCREEN_SAVER_ACTIVE == true)
-			{
-				var ss = new _SCREEN_SAVER_CLASS();
-				
-				addChildToLevel(ss, "SCREENSAVER");
-			}
-		}
-		
 		/// action to perform on inactivity end
-		
 		public function inactivityEndedCommand():void
 		{
 			//trace ("AppManager ::: activityDetected ");
 			CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.ACTIVITY_RESUMED, ""));
 		}
 		
-		/// getters // setters
+		private function callScreenSaver():void
+		{
+			if (_screen_saver_class != null && _screen_saver_set == true)
+			{
+				var ss = new _screen_saver_class();
+				
+				addChildToLevel(ss, "SCREENSAVER");
+			}
+		}
 		
-		public function get SCREEN_SAVER_ACTIVE():Boolean 				{ return _SCREEN_SAVER_ACTIVE;  };
-		public function set SCREEN_SAVER_ACTIVE(value:Boolean):void  	{ _SCREEN_SAVER_ACTIVE = value; };
-		public function get SCREEN_SAVER_CLASS():Class 					{ return _SCREEN_SAVER_CLASS;   };
-		public function set SCREEN_SAVER_CLASS(value:Class):void  		{ _SCREEN_SAVER_CLASS = value;  };
-		public function get SCREEN_SAVER_TIME():Number 					{ return _SCREEN_SAVER_TIME; 	};
-		public function set SCREEN_SAVER_TIME(value:Number):void  		{ _SCREEN_SAVER_TIME = value; 	};
+		public function get MODE():String { return _MODE; }
+		
+		public function set MODE(value:String):void 
+		{
+			if (_MODE != value) 
+			{
+				_MODE = value;
+				
+				COREApi.dispatchEvent(new AppEvent(AppEvent.MODE_CHANGE, value));
+			}
+		}
+		
+		public function get LANG():String { return _LANG; }
+		
+		public function set LANG(value:String):void 
+		{
+			if (_LANG != value) 
+			{
+				_LANG = value;
+				
+				COREApi.dispatchEvent(new AppEvent(AppEvent.LANG_CHANGE, value));
+			}
+		}
+		
+		/// getters // setters
+		public function get screen_saver_set():Boolean 					{ return _screen_saver_set;  	};
+		public function set screen_saver_set(value:Boolean):void  		{ _screen_saver_set = value; 	};
+		public function get screen_saver_class():Class 					{ return _screen_saver_class;   };
+		public function set screen_saver_class(value:Class):void  		{ _screen_saver_class = value;  };
+		public function get screen_saver_time():Number 					{ return _screen_saver_time; 	};
+		public function set screen_saver_time(value:Number):void  		{ _screen_saver_time = value; 	};
 		
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON START
 		private function setSingleton():void
@@ -307,7 +298,6 @@
 			if (__singleton == null) { throw new Error("AppManager ::: SINGLETON DOES NOT EXIST (CORE FAILED TO INITIALIZE?)") }
 			return __singleton;
 		}
-		
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END
 	}
 	
