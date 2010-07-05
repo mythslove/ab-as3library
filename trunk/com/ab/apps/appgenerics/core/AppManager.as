@@ -8,12 +8,13 @@
 	
 	/// APP LEVELS construction & management
 	/// "please wait message" handling
-	/// inactivity handling
-	/// screensaver handling (with inactivity handling);
-	/// a few predefined keyboard shortcuts
+	/// inactivity system
+	/// screensaver handling (integrated with inactivity system);
+	/// a few predefined keyboard shortcuts, room for more
 	/// var for app MODE
 	/// var for app LANG
 	/// var for mouse state (up/down)
+	/// some other useful "state" vars
 	
 	import caurina.transitions.properties.ColorShortcuts;
 	import caurina.transitions.properties.FilterShortcuts;
@@ -36,7 +37,7 @@
 	
 	public class AppManager extends Sprite
 	{
-		/// private
+		/// APP LEVELS
 		private var _SCREENSAVER_LEVEL:Sprite;
 		private var _ALERT_LEVEL:Sprite;
 		private var _APP_LEVEL:Sprite;
@@ -45,35 +46,35 @@
 		private var _MAIN_LEVEL:Sprite;
 		private var _BACK_LEVEL:Sprite;
 		
-		private var _APP_CLASS:Class;
-		private var _MAIN_MENU_OPEN:Boolean;
-		
-		/// inactivity
-		public var inactivityManager:InactivityManager;
-		/// custom
+		/// helper "state" vars
+		public var MODE:String = "";
+		public var LANG:String = "";
 		public var PLAYING_VIDEO:String=false;
+		public var MAIN_MENU_OPEN:Boolean;
+		public var MOUSE_STATE:String = "UP"; // or "DOWN"
+		
+		/// don't touch these
+		public var APP_INSTANCE:*;
+		private var _APP_CLASS:Class;
+		
+		/// INACTIVITY
+		public var inactivityManager:InactivityManager;
 		
 		/// SCREENSAVER
 		private var _SCREEN_SAVER_TIME:Number=20000;
 		private var _SCREEN_SAVER_CLASS:Class;
 		private var _SCREEN_SAVER_ACTIVE:Boolean=false;
 		
-		/// public
-		public var MODE:String = "";
-		public var LANG:String = "";
-		public var _APP_INSTANCE:*;
-		public var _MOUSE_STATE:String = "UP"; // or "DOWN"
-		
-		/// protected	
+		/// keyboard
 		protected var _key:Key;
-		
-		/// singleton
-		private static var __singleton:AppManager;
 		
 		/// please wait message
 		private var pleasewaitmessage:*;
 		private var _please_wait_message_class:Class;
 		private var _please_wait_message_class_set:Boolean=false;
+		
+		/// singleton
+		private static var __singleton:AppManager;
 		
 		
 		public function AppManager(applevel:Sprite, appClass:Class)
@@ -143,8 +144,8 @@
 			}
 		}
 		
-		private function mouseUpHandler(e:MouseEvent):void  	{ _MOUSE_STATE = "UP";   };
-		private function mouseDownHandler(e:MouseEvent):void  	{ _MOUSE_STATE = "DOWN"; };
+		private function mouseUpHandler(e:MouseEvent):void  	{ MOUSE_STATE = "UP";   };
+		private function mouseDownHandler(e:MouseEvent):void  	{ MOUSE_STATE = "DOWN"; };
 		
 		private function keyDownHandler(e:KeyboardEvent):void 
 		{
@@ -196,9 +197,9 @@
 		
 		public function startApplicationClass():void
 		{
-			_APP_INSTANCE = new _APP_CLASS();
+			APP_INSTANCE = new _APP_CLASS();
 			
-			_APP_INSTANCE.start();
+			APP_INSTANCE.start();
 		}
 		
 		public function addApplicationClassToStage():void
@@ -207,11 +208,11 @@
 			
 			/// here the "APP CLASS" is added in the "APP LEVEL";
 			
-			_APP_INSTANCE = new _APP_CLASS();
+			APP_INSTANCE = new _APP_CLASS();
 			
-			addChildToLevel(_APP_INSTANCE, "MAIN");
+			addChildToLevel(APP_INSTANCE, "MAIN");
 			
-			_APP_INSTANCE.start();
+			APP_INSTANCE.start();
 		}
 		
 		/// create objects in specific application levels
@@ -220,14 +221,11 @@
 		{
 			trace ("AppManager ::: addChildToLevel ::: LEVEL = " + level);
 			
-			if (coordinates == null)  { coordinates = new Point(0, 0); }
-			
 			if (object != null)
 			{
 				if (object is DisplayObject)
 				{
-					object.x = coordinates.x;
-					object.y = coordinates.y;
+					if (coordinates != null)  { object.x = coordinates.x; object.y = coordinates.y; }
 					
 					switch(level)
 					{
@@ -290,9 +288,6 @@
 		}
 		
 		/// getters // setters
-		
-		public function get MAIN_MENU_OPEN():Boolean 					{ return _MAIN_MENU_OPEN;  		};
-		public function set MAIN_MENU_OPEN(value:Boolean):void  		{ _MAIN_MENU_OPEN = value; 		};
 		
 		public function get SCREEN_SAVER_ACTIVE():Boolean 				{ return _SCREEN_SAVER_ACTIVE;  };
 		public function set SCREEN_SAVER_ACTIVE(value:Boolean):void  	{ _SCREEN_SAVER_ACTIVE = value; };
