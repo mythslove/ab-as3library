@@ -5,6 +5,7 @@
 	* ABº
 	*/
 	
+	import com.ab.display.utils.Alignment;
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
 	import flash.geom.Matrix;
@@ -39,12 +40,14 @@
 	
 	public dynamic class ABSprite extends CasaSprite
 	{
-		private var _SMOOTH_ALIGN 		 	= false;
-		private var _ALIGN_TYPE:String	 	= "";
+		private var _smooth_align 		 	= false;
+		private var _align_type:String	 	= "";
 		private var _h_padding:int 		 	= 0;
 		private var _v_padding:int 		 	= 0;
 		
-		private var _ALIGN_SCOPE:String  	= "global";
+		public var rp:Point; // registration point
+		
+		private var _align_scope:String  	= "global";
 		private var custom_parent:*;
 		private var align_set:Boolean 	 	= false;
 		
@@ -55,6 +58,8 @@
 		
 		public function ABSprite() 
 		{
+			setRegistration();
+			
 			addEventListener(Event.ADDED_TO_STAGE, 		onAddedToStage, 	false, 0, true);
 			addEventListener(Event.REMOVED_FROM_STAGE, 	onRemovedFromStage, false, 0, true);
 		}
@@ -78,6 +83,91 @@
 			}
 		}
 		
+		/// dynamic movie features
+		/// dynamic movie features
+		/// dynamic movie features
+		
+		public function get x2():Number
+		{
+			var p:Point = this.parent.globalToLocal(this.localToGlobal(rp));
+			return p.x;
+		}
+		
+		public function set x2(value:Number):void
+		{
+			var p:Point = this.parent.globalToLocal(this.localToGlobal(rp));
+			this.x += value - p.x;
+		}
+		
+		public function get y2():Number
+		{
+			var p:Point = this.parent.globalToLocal(this.localToGlobal(rp));
+			return p.y;
+		}
+		
+		public function set y2(value:Number):void
+		{
+			var p:Point = this.parent.globalToLocal(this.localToGlobal(rp));
+			this.y += value - p.y;
+		}
+		
+		public function setRegistration(x:Number=0, y:Number=0):void
+		{
+			rp = new Point(x, y);
+		}
+		
+		public function get scaleX2():Number
+		{
+			return this.scaleX;
+		}
+		
+		public function set scaleX2(value:Number):void
+		{
+			this.setProperty2("scaleX", value);
+		}
+		
+		public function get scaleY2():Number
+		{
+			return this.scaleY;
+		}
+		
+		public function set scaleY2(value:Number):void
+		{
+			this.setProperty2("scaleY", value);
+		}
+		
+		public function get rotation2():Number
+		{
+			return this.rotation;
+		}
+		
+		public function set rotation2(value:Number):void
+		{
+			this.setProperty2("rotation", value);
+		}
+		
+		public function get mouseX2():Number
+		{
+			return Math.round(this.mouseX - rp.x);
+		}
+		
+		public function get mouseY2():Number
+		{
+			return Math.round(this.mouseY - rp.y);
+		}
+		
+		public function setProperty2(prop:String, n:Number):void
+		{
+			var a:Point = this.parent.globalToLocal(this.localToGlobal(rp));
+			
+			this[prop] = n;
+			
+			var b:Point = this.parent.globalToLocal(this.localToGlobal(rp));
+			
+			this.x -= b.x - a.x;
+			this.y -= b.y - a.y;
+		}
+		
 		/// //// //// //// //// GETTERS / SETTERS //// //// //// //// ////
 		/// //// //// //// //// GETTERS / SETTERS //// //// //// //// ////
 		
@@ -93,8 +183,8 @@
 		public function get custom_width():Number 				{ return _custom_width;   }
 		public function set custom_width(value:Number):void  	{ _custom_width = value;  onCustomWidthChange();  }
 		
-		public function get ALIGN_TYPE():String 				{ return _ALIGN_TYPE; 	  }
-		public function set ALIGN_TYPE(value:String):void  		{ _ALIGN_TYPE = value; 	  }
+		public function get align_type():String 				{ return _align_type; 	  }
+		public function set align_type(value:String):void  		{ _align_type = value; 	  }
 		
 		public function onCustomWidthChange():void 				{ };
 		public function onCustomHeightChange():void 			{ };
@@ -195,7 +285,7 @@
 		/// //// //// //// //// COLOUR METHODS
 		/// //// //// //// //// COLOUR METHODS
 		
-		public function Colorize(colour:*, _time:Number, _transition:String = "EaseOutSine" ):void
+		public function Colorize(colour:*, _time:Number=0.5, _transition:String = "EaseOutSine" ):void
 		{
 			Tweener.addTween(this, { _color:colour, time:_time, transition:_transition } );
 		}
@@ -206,19 +296,13 @@
 		
 		public function setAlign(_type:String, _smooth:Boolean=true, __custom_height:Number=0, __custom_width:Number=0, _scope:String="global", _custom_parent:Object=null):void
 		{
-			if (align_set == true) 
-			{
-				removeAlign();
-			}
+			if (align_set == true) { removeAlign(); }
 			
-			_SMOOTH_ALIGN  = _smooth;
-			_ALIGN_TYPE    = _type;
-			_ALIGN_SCOPE   = _scope;
+			_smooth_align  = _smooth;
+			_align_type    = _type;
+			_align_scope   = _scope;
 			
-			if (_custom_parent != null) 
-			{
-				this.custom_parent = _custom_parent;
-			}
+			if (_custom_parent != null) { this.custom_parent = _custom_parent; }
 			
 			//_custom_height = __custom_height == 0 ? _custom_height : __custom_height;
 			//_custom_width  = __custom_width  == 0 ? _custom_width  : __custom_width;
@@ -230,38 +314,38 @@
 			
 			switch (_type) 
 			{
-				case "left":
+				case Alignment.LEFT:
 					StageReference.getStage().addEventListener(Event.ENTER_FRAME, leftResizeEnterFrame, false, 0, true);
 					break;
 					
-				case "center":
+				case Alignment.CENTER:
 					StageReference.getStage().addEventListener(Event.ENTER_FRAME, centerResizeEnterFrame, false, 0, true);
 					break;
 					
-				case "stretch":
+				case Alignment.STRETCH:
 					StageReference.getStage().addEventListener(Event.ENTER_FRAME, stretchResizeEnterFrame, false, 0, true);
 					break;
 					
-				case "topleft":
+				case Alignment.TOP_LEFT:
 					StageReference.getStage().addEventListener(Event.RESIZE, topleftResizeEnterFrame, false, 0, true);
 					topleftResizeEnterFrame(new Event(Event.RESIZE))
 					break;
 					
-				case "topright":
+				case Alignment.TOP_RIGHT:
 					StageReference.getStage().addEventListener(Event.RESIZE, toprightResizeEnterFrame, false, 0, true);
 					toprightResizeEnterFrame(new Event(Event.RESIZE))
 					break;
 					
-				case "bottom":
+				case Alignment.BOTTOM:
 					StageReference.getStage().addEventListener(Event.ENTER_FRAME, bottomResizeEnterFrame, false, 0, true);
 					break;
 					
-				case "bottomleft":
+				case Alignment.BOTTOM_LEFT:
 					StageReference.getStage().addEventListener(Event.RESIZE, bottomleftResizeEnterFrame, false, 0, true);
 					bottomleftResizeEnterFrame(new Event(Event.RESIZE))
 					break;
 					
-				case "bottomright":
+				case Alignment.BOTTOM_RIGHT:
 					StageReference.getStage().addEventListener(Event.RESIZE, bottomrightResizeEnterFrame, false, 0, true);
 					bottomrightResizeEnterFrame(new Event(Event.RESIZE))
 					break;
@@ -270,42 +354,42 @@
 		
 		public function removeAlign():void
 		{
-			switch (_ALIGN_TYPE) 
+			align_set = false;
+			
+			switch (_align_type) 
 			{
-				case "left":
+				case Alignment.LEFT:
 					StageReference.getStage().removeEventListener(Event.ENTER_FRAME, leftResizeEnterFrame);
 					break;
 					
-				case "center":
+				case Alignment.CENTER:
 					StageReference.getStage().removeEventListener(Event.ENTER_FRAME, centerResizeEnterFrame);
 					break;
 					
-				case "stretch":
+				case Alignment.STRETCH:
 					StageReference.getStage().removeEventListener(Event.ENTER_FRAME, stretchResizeEnterFrame);
 					break;
 					
-				case "topleft":
+				case Alignment.TOP_LEFT:
 					StageReference.getStage().removeEventListener(Event.RESIZE, topleftResizeEnterFrame);
 					break;
 					
-				case "topright":
+				case Alignment.TOP_RIGHT:
 					StageReference.getStage().removeEventListener(Event.RESIZE, toprightResizeEnterFrame);
 					break;
 					
-				case "bottom":
+				case Alignment.BOTTOM:
 					StageReference.getStage().removeEventListener(Event.ENTER_FRAME, bottomResizeEnterFrame);
 					break;
 					
-				case "bottomleft":
+				case Alignment.BOTTOM_LEFT:
 					StageReference.getStage().removeEventListener(Event.RESIZE, bottomleftResizeEnterFrame);
 					break;
 					
-				case "bottomright":
+				case Alignment.BOTTOM_RIGHT:
 					StageReference.getStage().removeEventListener(Event.RESIZE, bottomrightResizeEnterFrame);
 					break;
 			}
-			
-			align_set = false;
 		}
 		
 		/// //// //// //// //// RESIZE HANDLERS
@@ -350,10 +434,9 @@
 				final_y = (StageReference.getStage().stageHeight / 2) - (this.height / 2) - zero_y;
 			}
 			
-			if (_SMOOTH_ALIGN == true)
+			if (_smooth_align == true)
 			{
 				if (this.x != final_x)  { this.x += Math.round((final_x - this.x) / _EASING_SPEED); }
-				
 				if (this.y != final_y)  { this.y += Math.round((final_y - this.y) / _EASING_SPEED); }
 			}
 			else
@@ -427,7 +510,7 @@
 			var zero_x:Number;
 			var zero_y:Number;
 			
-			if (_ALIGN_SCOPE == "global") 
+			if (_align_scope == "global") 
 			{
 				if (parent != null) 
 				{
@@ -443,13 +526,13 @@
 				this.y = StageReference.getStage().stageHeight - this.height - _v_padding - zero_y;
 			}
 			
-			if (_ALIGN_SCOPE == "parent") 
+			if (_align_scope == "parent") 
 			{
 				this.x = (parent.width / 2) - (this.width / 2);
 				this.y = parent.height - this.height - _v_padding;
 			}
 			
-			if (_ALIGN_SCOPE == "customparent") 
+			if (_align_scope == "customparent") 
 			{
 				this.x = (this.custom_parent.width / 2) - (this.width / 2);
 				this.y = this.custom_parent.height - this.height - _v_padding;
@@ -514,11 +597,18 @@
 		/// //// //// //// //// RESOURCE MANAGEMENT
 		/// //// //// //// //// RESOURCE MANAGEMENT
 		
-		public function blurOutAndDie(duration:Number=NaN):void
+		public function elasticDeath(duration:Number=0.5):void
 		{
 			if (!using_filters) 	{ FilterShortcuts.init(); using_filters = true; }
 			
-			Tweener.addTween(this, 	{ alpha:0, _Blur_blurX:40, _Blur_blurY:40, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:cleanMe } )
+			Tweener.addTween(this, 	{ alpha:0, _Blur_blurX:40, _Blur_blurY:40, time:duration, scaleX:1.3, scaleY:1.3, transition:"EaseInOutBack", onComplete:endClose } )
+		}
+		
+		public function blurOutAndDie(duration:Number=0.5):void
+		{
+			if (!using_filters) 	{ FilterShortcuts.init(); using_filters = true; }
+			
+			Tweener.addTween(this, 	{ alpha:0, _Blur_blurX:40, _Blur_blurY:40, time:duration, transition:"EaseOutSine", onComplete:cleanMe } )
 		}
 		
 		public function goodbye(duration:Number=NaN):void
