@@ -122,6 +122,77 @@
 			}
 			return found;
 		}
+		
+		/**
+		 * Remove HTML tags from a String.
+		 * @param string - string to search in.
+		 * @return String without HTML tags
+		 * @example <listing version="1.0">
+		 * 		var plain_text = ABStringUtils.removeHTMLTags(html_text)
+		 * </listing>
+		 */
+		public static function removeHTMLTags ( string : String ) : String
+		{
+			return string.replace( /<.*?>/g , "" ) ;
+		}
+		
+		/**
+		 * Replace HTML tags with a given string.
+		 * @param string  - String with HTML tags.
+		 * @param replace - String to use instead of any HTML tag in original string.
+		 * @return String with HTML tags replaced
+		 * @example <listing version="1.0">
+		 * 		var new_string = ABStringUtils.replaceHTMLTags(html_string, "something")
+		 * </listing>
+		 */
+		public static function replaceHTMLTags ( string : String , replace : String ) : String
+		{
+			return string.replace( /<.*?>/g , replace ) ;
+		}
+		
+		/**
+		 * Converts ActionScript line breaks to the HTML equivalent tag.
+		 * @param string - string to update.
+		 * @return String with HTML tags for line breaks
+		 * @example <listing version="1.0">
+		 * 		var html_string = ABStringUtils.convertLineBreaksToHTML(actionscript_string)
+		 * </listing>
+		 */
+		public static function convertLineBreaksToHTML ( string : String ) : String
+		{
+			return string.split( String.fromCharCode( 13 ) ).join( "<br />" ) ;
+		}
+		
+		/**
+		 * Removes whitespaces from a given String.
+		 * @param string - string to search in.
+		 * @return String without whitespaces
+		 * @example <listing version="1.0">
+		 * 		var new_var = ABStringUtils.removeWhiteSpace(some_string)
+		 * </listing>
+		 */
+		public static function removeWhiteSpace ( string : String ) : String
+		{
+			return string.split( " " ).join( "" ) ;
+		}
+		
+		/**
+		 * Remove extra slashes.
+		 * @param string - string to search in.
+		 * @return String without slashes
+		 * @example <listing version="1.0">
+		 * 		var new_var = ABStringUtils.stripExtraSlashes(some_string)
+		 * </listing>
+		 */
+		public static function stripExtraSlashes ( string : String ) : String
+		{
+			while ( string.charAt( string.length - 1 ) == "/" )
+			{
+				string = string.substr( 0 , string.length - 1 ) ;
+			}
+			if ( string.charAt( 0 ) == "/" ) string = string.substr( 1 , string.length ) ;
+			return string ;
+		}
 	}
 	
 }
