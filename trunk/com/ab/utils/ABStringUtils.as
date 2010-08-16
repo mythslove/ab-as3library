@@ -1,26 +1,18 @@
 ﻿package com.ab.utils 
 {
-	
-	/**
-	* @author ABº
-	* http://blog.antoniobrandao.com/
-	* Co-author Promag (http://blog.namespacepromag.com/
-	* 
-	*/
-	import org.casalib.util.StringUtil
-	
-
 	/**
 	 * ABStringUtils 
+	 * @author ABº
+	 * http://blog.antoniobrandao.com/
 	 */
+	
+	import org.casalib.util.StringUtil
 	
 	public class ABStringUtils 
 	{
+		private static const POSSIBLE_CHARS:Array = ["abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "0123456789", "~`!@#$%^&*()_-+=[{]}|;:'\"\\,<.>/?"];
 		
-		public function ABStringUtils() 
-		{
-			
-		}
+		public function ABStringUtils()  {  }
 		
 		/**
 		 * Replace parameter in string.
@@ -71,7 +63,8 @@
 		}
 		
 		/**
-		 * Extract all values from eg. SWFAddress strings etc.
+		 * Extract all values from eg. SWFAddress strings etc. 
+		 * Co-author Promag (http://blog.namespacepromag.com/
 		 * @param _string - string to search in.
 		 * @param _param - parameter to search in string.
 		 * @return Object
@@ -94,6 +87,7 @@
 		
 		/**
 		 * Extract specific values from eg. SWFAddress strings etc.
+		 * Co-author Promag (http://blog.namespacepromag.com/
 		 * @param _string - string to search in.
 		 * @param _param - parameter to search in string.
 		 * @return String with value or empty string on failure
@@ -193,6 +187,32 @@
 			if ( string.charAt( 0 ) == "/" ) string = string.substr( 1 , string.length ) ;
 			return string ;
 		}
+		
+		/**
+		 * Generate a strong password String.
+		 * @param length - length of desired password.
+		 * @return a strong password
+		 * @example <listing version="1.0">
+		 * 		var new_password = ABStringUtils.generateStrongPassword(12)
+		 * </listing>
+		 */
+		private function generateStrongPassword(length:uint = 32):String 
+		{
+			if (length < 8) length = 8;
+			var pw:String = new String();
+			var charPos:uint = 0;
+			
+			while (pw.length < length)
+			{
+				var chars:String = POSSIBLE_CHARS[charPos];
+				var char:String = chars.charAt(this.getRandomWholeNumber(0, chars.length - 1));
+				var splitPos:uint = this.getRandomWholeNumber(0, pw.length);
+				pw = (pw.substring(0, splitPos) + char + pw.substring(splitPos, pw.length));
+				charPos = (charPos == 3) ? 0 : charPos + 1;
+			}
+			return pw; 
+		}
+		private function getRandomWholeNumber(min:Number, max:Number):Number { return Math.round(((Math.random() * (max - min)) + min)); }
 	}
 	
 }
