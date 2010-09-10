@@ -94,10 +94,10 @@
 		
 		private function loadedSettings(e:AppEvent):void 
 		{
-			trace ("CORE ::: step 2 ::: loadedSettings()"); 
+			trace ("CORE ::: step 2 ::: settings loaded"); 
 			
 			/// this setter is called after EdigmaCore finishes loading settings XML
-			CentralEventSystem.singleton.removeEventListener(AppEvent.LOADED_SETTINGS, loadedSettings);
+			COREApi.removeEventListener(AppEvent.LOADED_SETTINGS, loadedSettings);
 			
 			initMainVars();
 		}
@@ -108,9 +108,14 @@
 			
 			appManager 					= new AppManager(_appLevel, APPLICATION_CLASS);
 			
-			dataManager 				= new DataManager("XML");
-			dataManager.xml_path 		= EdigmaCore.singleton.XML_PATH;
-			dataManager.main_xml_file	= EdigmaCore.singleton.MAIN_XML_FILE;
+			dataManager 				= new DataManager(EdigmaCore.singleton.DATA_TYPE);
+			
+			if (EdigmaCore.singleton.DATA_TYPE == "XML") 
+			{
+				dataManager.xml_path 		= EdigmaCore.singleton.XML_PATH;
+				dataManager.main_xml_file	= EdigmaCore.singleton.MAIN_XML_FILE;
+			}
+			
 			dataManager.loadBaseData();
 		}
 		
@@ -124,17 +129,22 @@
 			/// here the visual application actually starts
 			appManager.addApplicationClassToStage(); // the application class should catch the ADDED_TO_STAGE event to start
 			
-			/// add stats analyser
-			//var _stats = stage.addChild(new Stats())
-		    //_stats.y = -100;
-			
-			_appLogger 		= new Logger();
-			_appLogger.x 	= 100;
-			_appLogger.y 	= 50;
-			
-			//stage.addChild(_appLogger);
-			
-			COREApi.addChildToLevel(_appLogger, COREApi.LEVEL_ALERT );
+			/// add extra tools on debug mode
+			if (EdigmaCore.singleton.DEBUG_MODE == true) 
+			{
+				/// add stats analyser
+				var _stats 		= new Stats();
+				_stats.x 		= 50;
+				_stats.y 		= 50;
+				
+				/// add AB logger
+				_appLogger 		= new Logger();
+				_appLogger.x 	= 100;
+				_appLogger.y 	= 50;
+				
+				COREApi.addChildToLevel(_stats, 	COREApi.LEVEL_ALERT );
+				COREApi.addChildToLevel(_appLogger, COREApi.LEVEL_ALERT );
+			}
 		}
 		
 		/// setting the application outside will call the ini() method

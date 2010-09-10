@@ -18,7 +18,6 @@
 	*/
 	
 	import com.ab.apps.appgenerics.events.AppEvent;
-	import com.ab.log.ABLogger;
 	import com.edigma.services.ServerCommunication;
 	import com.edigma.web.EdigmaCore;
 	import flash.display.Sprite;

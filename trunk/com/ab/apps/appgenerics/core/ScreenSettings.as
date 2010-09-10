@@ -29,6 +29,16 @@
 			StageReference.getStage().showDefaultContextMenu 	= false;
 		}
 		
+		public static function setFullScreen():void
+		{
+			StageReference.getStage().displayState 				= StageDisplayState.FULL_SCREEN;
+		}
+		
+		public static function setNormalScreen():void
+		{
+			StageReference.getStage().displayState 				= StageDisplayState.NORMAL;
+		}
+		
 	}
 	
 }

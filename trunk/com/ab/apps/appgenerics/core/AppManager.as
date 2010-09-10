@@ -4,14 +4,15 @@
 	* @author AB
 	*/
 	
-	/// features list
+	/// APP MANAGER - FEATURES LIST
 	
-	/// APP LEVELS construction & management
+	/// APPLICATION LEVELS construction & management
+	/// instantiation of APPLICATION MODES manager
+	/// initialization of ColorShortcuts and FilterShortcuts
 	/// "please wait message" handling
+	/// screensaver system
 	/// inactivity system
-	/// screensaver handling (integrated with inactivity system);
-	/// a few predefined keyboard shortcuts, room for more
-	/// var for app MODE && MODE_CHANGE event dispatching on MODE change
+	/// a few predefined keyboard shortcuts (ex: start screensaver / set debug mode / set fullscreen / set normal screen) room for more 
 	/// var for app LANG && LANG_CHANGE event dispatching on LANG change
 	/// var for mouse state (up/down)
 	/// some other useful "state" vars
@@ -31,16 +32,20 @@
 	import org.casalib.ui.Key;
 	import org.casalib.util.StageReference;
 	
-	/// ab
+	/// ab lib
 	import com.ab.log.Logger;
 	import com.ab.events.CentralEventSystem;
+	import com.ab.apps.appgenerics.core.AppModesManager;
 	import com.ab.apps.appgenerics.events.AppEvent;
 	import com.ab.apps.appgenerics.events.ItemEvent;
 	import com.ab.apps.appgenerics.core.InactivityManager;
 	import com.ab.apps.appgenerics.settings.XMLSettings;
 	
-	public class AppManager extends Sprite
+	public class AppManager extends Object
 	{
+		/// APP MODES MANAGER
+		private var _app_modes_manager:AppModesManager;
+		
 		/// APP LEVELS
 		private var _SCREENSAVER_LEVEL:Sprite;
 		private var _ALERT_LEVEL:Sprite;
@@ -49,20 +54,24 @@
 		private var _MENU_LEVEL:Sprite;
 		private var _MAIN_LEVEL:Sprite;
 		private var _BACK_LEVEL:Sprite;
+		private var _BACKGROUND_LEVEL:Sprite;
 		
 		/// helper "state" vars
-		private var _MODE:String = "";
-		private var _LANG:String = "";
-		public var PLAYING_VIDEO:String=false;
+		private var _mode:String = "";
+		private var _lang:String = "";
+		public var PLAYING_VIDEO:Boolean=false;
 		public var MOUSE_STATE:String = "UP"; // or "DOWN"
 		
 		/// INACTIVITY
 		public var inactivityManager:InactivityManager;
 		
 		/// SCREENSAVER
+		public var screenSaver_InactivityManager:InactivityManager;
+		private var _screen_saver_set:Boolean=false;
+		private var _screen_saver_on:Boolean=true;
+		private var _screen_saver_active:Boolean=false;
 		private var _screen_saver_time:Number=20000;
 		private var _screen_saver_class:Class;
-		private var _screen_saver_set:Boolean=false;
 		
 		/// keyboard
 		protected var _key:Key;
@@ -82,8 +91,9 @@
 		{
 			setSingleton();
 			
-			_APP_LEVEL = applevel;
-			_APP_CLASS = appClass;
+			_APP_LEVEL 			= applevel;
+			_APP_CLASS 			= appClass;
+			_app_modes_manager 	= new AppModesManager();
 			
 			createAppLevels();
 			
@@ -98,8 +108,13 @@
 			StageReference.getStage().addEventListener(MouseEvent.MOUSE_DOWN,	mouseDownHandler);
 		}
 		
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APP LEVELS
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APP LEVELS
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APP LEVELS
+		
 		private function createAppLevels():void
 		{
+			_BACKGROUND_LEVEL	= new Sprite();
 			_BACK_LEVEL  		= new Sprite();
 			_MAIN_LEVEL  		= new Sprite();
 			_MENU_LEVEL  		= new Sprite();
@@ -107,13 +122,31 @@
 			_ALERT_LEVEL 		= new Sprite();
 			_SCREENSAVER_LEVEL 	= new Sprite();
 			
-			_APP_LEVEL.addChildAt(_BACK_LEVEL,  		0);
-			_APP_LEVEL.addChildAt(_MAIN_LEVEL,  		1);
-			_APP_LEVEL.addChildAt(_MENU_LEVEL,  		2);
-			_APP_LEVEL.addChildAt(_TOP_LEVEL,   		3);
-			_APP_LEVEL.addChildAt(_ALERT_LEVEL, 		4);
-			_APP_LEVEL.addChildAt(_SCREENSAVER_LEVEL, 	5);
+			_APP_LEVEL.addChildAt(_BACKGROUND_LEVEL,	0);
+			_APP_LEVEL.addChildAt(_BACK_LEVEL,  		1);
+			_APP_LEVEL.addChildAt(_MAIN_LEVEL,  		2);
+			_APP_LEVEL.addChildAt(_MENU_LEVEL,  		3);
+			_APP_LEVEL.addChildAt(_TOP_LEVEL,   		4);
+			_APP_LEVEL.addChildAt(_ALERT_LEVEL, 		5);
+			_APP_LEVEL.addChildAt(_SCREENSAVER_LEVEL, 	6);
 		}
+		
+		public function addApplicationClassToStage():void
+		{
+			trace ("AppManager ::: addApplicationClassToStage()");
+			
+			// here the "APP CLASS" is added in the "APP LEVEL";
+			
+			APP_INSTANCE = new _APP_CLASS();
+			
+			addChildToLevel(APP_INSTANCE, "MAIN");
+			
+			APP_INSTANCE.start();
+		}
+		
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// PLEASE WAIT MESSAGE
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// PLEASE WAIT MESSAGE
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// PLEASE WAIT MESSAGE
 		
 		public function setPleasewaitMessageClass(_class:Class):void
 		{
@@ -123,7 +156,7 @@
 		
 		public function invokePleaseWaitMessage():void
 		{
-			if (_please_wait_message_class_set == true) 
+			if (_please_wait_message_class_set == true && _pleasewaitmessage == null)
 			{
 				_pleasewaitmessage = new _please_wait_message_class();
 				
@@ -145,48 +178,50 @@
 			}
 		}
 		
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// MOUSE UP / DOWN REGISTRY
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// MOUSE UP / DOWN REGISTRY
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// MOUSE UP / DOWN REGISTRY
+		
 		private function mouseUpHandler(e:MouseEvent):void  	{ MOUSE_STATE = "UP";   };
 		private function mouseDownHandler(e:MouseEvent):void  	{ MOUSE_STATE = "DOWN"; };
 		
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// BASE KEY FUNCTIONS
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// BASE KEY FUNCTIONS
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// BASE KEY FUNCTIONS
+		
 		private function keyDownHandler(e:KeyboardEvent):void 
 		{
-			//trace ("AppManager ::: keyDownHandler = " + e.keyCode); 
-			
+			//trace ("AppManager ::: keyDownHandler = " + e.keyCode);
 			switch (e.keyCode) 
 			{
-				case 57:
+				case Keyboard.F6:
+					startScreenSaver();
 				break;
 				
-				case Keyboard.F6:
-					callScreenSaver();
-				break;
+				//case Keyboard.F8:
+					// toggle Logger
+				//break;
 				
 				case Keyboard.F9:
 					XMLSettings.singleton.DEBUG_MODE = true;
-					CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.MODE_CHANGE, "debug"));
+					_app_modes_manager.mode = "debug"
 				break;
-				//case Keyboard.F5:
-					//COREApi.log("F5");
-					// podia ser ir para home / close all
-				//break;
+				
+				case Keyboard.F11:
+					ScreenSettings.setFullScreen();
+				break;
+				
+				case Keyboard.F12:
+					ScreenSettings.setNormalScreen();
+				break;
 			}
 		}
 		
-		public function addApplicationClassToStage():void
-		{
-			trace ("AppManager ::: addApplicationClassToStage()");
-			
-			/// here the "APP CLASS" is added in the "APP LEVEL";
-			
-			APP_INSTANCE = new _APP_CLASS();
-			
-			addChildToLevel(APP_INSTANCE, "MAIN");
-			
-			APP_INSTANCE.start();
-		}
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APPLICATION LEVELS
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APPLICATION LEVELS
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APPLICATION LEVELS
 		
 		/// create objects in specific application levels
-		
 		public function addChildToLevel(object:DisplayObject, level:String="MAIN", coordinates:Point=null):void
 		{
 			trace ("AppManager ::: addChildToLevel ::: LEVEL = " + level);
@@ -195,10 +230,11 @@
 			{
 				if (object is DisplayObject)
 				{
-					if (coordinates != null)  { object.x = coordinates.x; object.y = coordinates.y; }
+					if (coordinates != null)  { object.x = coordinates.x; object.y = coordinates.y; };
 					
 					switch(level)
 					{
+						case "BACKGROUND":	_BACKGROUND_LEVEL.addChild(object);	  break;
 						case "BACK":		_BACK_LEVEL.addChild(object);		  break;
 						case "MAIN":		_MAIN_LEVEL.addChild(object);		  break;
 						case "MENU":		_MENU_LEVEL.addChild(object);		  break;
@@ -212,70 +248,50 @@
 			else { trace ("ERROR: AppManager ::: addChildToLevel() -> PROVIDED OBJECT IS NULL"); }
 		}
 		
-		/// set up inactivity handler
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// SCREENSAVER
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// SCREENSAVER
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// SCREENSAVER
 		
-		public function armInactivityAlert(time:Number):void
+		public function setScreenSaver(_class:Class, _time:Number=20000):void
 		{
-			inactivityManager = new InactivityManager(time);
-		}
-		
-		public function setScreenSaver(_class:*, _active:Boolean=true, _time:Number=20000):void
-		{
-			_screen_saver_class 	= _class;
-			_screen_saver_set		= _active;
-			_screen_saver_time 		= _time;
+			_screen_saver_class 		 = _class;	// given screensaver class must extend ApplicationScreensaver
+			_screen_saver_time 			 = _time;
 			
-			inactivityManager 		= new InactivityManager(_screen_saver_time);
-		}
-		
-		/// action to perform on inactivity
-		public function inactivityDetectedCommand():void
-		{
-			//trace ("AppManager ::: inactivityDetected ");
-			
-			CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.INACTIVITY_DETECTED, ""));
-			
-			callScreenSaver();
-		}
-		
-		/// action to perform on inactivity end
-		public function inactivityEndedCommand():void
-		{
-			//trace ("AppManager ::: activityDetected ");
-			CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.ACTIVITY_RESUMED, ""));
-		}
-		
-		private function callScreenSaver():void
-		{
-			if (_screen_saver_class != null && _screen_saver_set == true)
+			if (_screen_saver_set != true) 
 			{
-				var ss = new _screen_saver_class();
+				screenSaver_InactivityManager = new InactivityManager(_screen_saver_time, stopScreenSaver, startScreenSaver);
+			}
+			else
+			{
+				screenSaver_InactivityManager.die();
 				
-				addChildToLevel(ss, "SCREENSAVER");
+				screenSaver_InactivityManager = null;
+				screenSaver_InactivityManager = new InactivityManager(_screen_saver_time, stopScreenSaver, startScreenSaver);
+			}
+			
+			_screen_saver_set = true;
+		}
+		
+		/// invoke screensaver
+		public function startScreenSaver():void
+		{
+			if (_screen_saver_class != null && _screen_saver_set == true && _screen_saver_active == false)
+			{
+				screen_saver_active = true;
+				
+				var screensaver = new _screen_saver_class();
+				
+				addChildToLevel(screensaver, "SCREENSAVER");
 			}
 		}
 		
-		public function get MODE():String { return _MODE; }
-		
-		public function set MODE(value:String):void 
+		private function stopScreenSaver():void
 		{
-			if (_MODE != value) 
+			if (_screen_saver_active == true) 
 			{
-				_MODE = value;
+				screen_saver_active = false;
 				
-				COREApi.dispatchEvent(new AppEvent(AppEvent.MODE_CHANGE, value));
-			}
-		}
-		
-		public function get LANG():String { return _LANG; }
-		
-		public function set LANG(value:String):void 
-		{
-			if (_LANG != value) 
-			{
-				_LANG = value;
-				
-				COREApi.dispatchEvent(new AppEvent(AppEvent.LANG_CHANGE, value));
+				COREApi.dispatchEvent(new AppEvent(AppEvent.ACTIVITY_RESUMED, ""));
 			}
 		}
 		
@@ -286,8 +302,66 @@
 		public function set screen_saver_class(value:Class):void  		{ _screen_saver_class = value;  };
 		public function get screen_saver_time():Number 					{ return _screen_saver_time; 	};
 		public function set screen_saver_time(value:Number):void  		{ _screen_saver_time = value; 	};
+		public function get screen_saver_active():Boolean 			 	{ return _screen_saver_active;  };
+		public function set screen_saver_active(value:Boolean):void  	{ _screen_saver_active = value; };
+		public function get screen_saver_on():Boolean 					{ return _screen_saver_on; 		};
+		public function set screen_saver_on(value:Boolean):void  		{ _screen_saver_on = value; 	};
+		
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// INACTIVITY
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// INACTIVITY
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// INACTIVITY
+		
+		/// set up inactivity handler
+		public function armInactivityAlert(time:Number):void
+		{
+			inactivityManager = new InactivityManager(time, inactivityEndedCommand, inactivityDetectedCommand);
+		}
+		
+		/// action to perform on inactivity
+		public function inactivityDetectedCommand():void
+		{
+			//trace ("AppManager ::: inactivityDetected ");
+			COREApi.dispatchEvent(new AppEvent(AppEvent.INACTIVITY_DETECTED, ""));
+		}
+		
+		/// action to perform on inactivity end
+		public function inactivityEndedCommand():void
+		{
+			//trace ("AppManager ::: activityDetected ");
+			COREApi.dispatchEvent(new AppEvent(AppEvent.ACTIVITY_RESUMED, ""));
+		}
+		
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APPLICATION MODES
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APPLICATION MODES
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APPLICATION MODES
+		
+		public function addApplicationMode(mode_name:String, function_call:Function):void
+		{
+			_app_modes_manager.addMode(mode_name, function_call);
+		}
+		
+		public function get mode():String  				{  return _app_modes_manager.mode; }
+		public function set mode(value:String):void  	{ _app_modes_manager.mode = value; }
+		
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// LANG
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// LANG
+		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// LANG
+		
+		public function get LANG():String 				{ return _lang; }
+		public function set LANG(value:String):void 
+		{
+			if (_lang != value) 
+			{
+				_lang = value;
+				
+				COREApi.dispatchEvent(new AppEvent(AppEvent.LANG_CHANGE, value));
+			}
+		}
 		
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON START
+		/// //////////////////////////////////////////////////////////////////////////// SINGLETON START
+		/// //////////////////////////////////////////////////////////////////////////// SINGLETON START
+		
 		private function setSingleton():void
 		{
 			if (__singleton != null)  { throw new Error("AppManager ::: SINGLETON REPLICATION ATTEMPTED") }
@@ -298,6 +372,9 @@
 			if (__singleton == null) { throw new Error("AppManager ::: SINGLETON DOES NOT EXIST (CORE FAILED TO INITIALIZE?)") }
 			return __singleton;
 		}
+		
+		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END
+		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END
 	}
 	
