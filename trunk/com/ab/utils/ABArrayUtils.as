@@ -35,6 +35,11 @@
 			return arr;
 		}
 		
+		public static function deleteItem(arr:Array, index:int):Array 
+		{
+			arr.splice(index, 1);
+		}
+		
 	}
 	
 }
