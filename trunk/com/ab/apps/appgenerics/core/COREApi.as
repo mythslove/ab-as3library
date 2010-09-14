@@ -18,7 +18,7 @@
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.geom.Point;
-	import com.ab.log.Logger;
+	//import com.ab.log.Logger;
 	import org.casalib.util.StageReference;
 	
 	public class COREApi
@@ -93,7 +93,7 @@
 		{
 			if (s) 
 			{
-				Logger.singleton.log(s); 
+				//Logger.singleton.log(s); 
 			} 
 			else {  trace("< ERROR > COREApi ::: log() ::: String invalid or not specified"); }
 		}
@@ -148,9 +148,9 @@
 		 * @param	listener function
 		 * @return	Nothing.
 		 */
-		public static function addEventListener(e:*, listener_function:Function):void
+		public static function addEventListener(e:*, listener_function:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void
 		{
-			CentralEventSystem.singleton.addEventListener(e, listener_function);
+			CentralEventSystem.singleton.addEventListener(e, listener_function, useCapture, priority, useWeakReference);
 		}
 		
 		/**
