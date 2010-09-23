@@ -15,6 +15,32 @@
 		public function ABStringUtils()  {  }
 		
 		/**
+		 * Returns a String containing the extension of a filename String.
+		 * @param $str - string to process.
+		 * @example <listing version="1.0">
+		 * 		var new_var = "cat=23"
+		 * 		ABStringUtils.extensionOfFile("filename_string.flv")
+		 * 		// trace(new_var) outputs "flv"
+		 * </listing>
+		 * @return Object
+		 */
+		public static function extensionOfFile($str:String):String  
+		{  
+			var str2return:String;
+			
+			if ($str.length < 2)
+			{
+				trace("ABStringUtils ::: strReplace(): provided string must have at least two characters");
+			}
+			else
+			{
+				str2return = String($str).substr(String($str).lastIndexOf("."), String($str).length - 1);
+			}
+			
+			return str2return;
+		}
+		
+		/**
 		 * Replace parameter in string.
 		 * @param $str - string to search in.
 		 * @param &string - string to search for.
@@ -212,7 +238,8 @@
 			}
 			return pw; 
 		}
-		private function getRandomWholeNumber(min:Number, max:Number):Number { return Math.round(((Math.random() * (max - min)) + min)); }
+		
+		
 	}
 	
 }

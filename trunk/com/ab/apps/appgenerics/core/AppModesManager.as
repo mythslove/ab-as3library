@@ -33,26 +33,37 @@ package com.ab.apps.appgenerics.core
 		{ 
 			if (mode_name != mode) 
 			{
-				for (var i:int = 0; i < _modes.length; i++) 
+				switch (mode_name)
 				{
-					if (AppMode(_modes[i]).mode_name == mode_name) 
-					{
-						_mode = AppMode(_modes[i]).mode_name;
+					case AppModes.DEBUG:
 						
-						AppMode(_modes[i]).function_call();
+						COREApi.dispatchEvent(new AppEvent(AppEvent.MODE_CHANGE, AppModes.DEBUG));
 						
-						CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.MODE_CHANGE, _modes[i].mode_name));
+					break;
+					
+					default:
 						
-						break;
-					}
+						for (var i:int = 0; i < _modes.length; i++) 
+						{
+							if (AppMode(_modes[i]).mode_name == mode_name) 
+							{
+								_mode = AppMode(_modes[i]).mode_name;
+								
+								AppMode(_modes[i]).function_call();
+								
+								COREApi.dispatchEvent(new AppEvent(AppEvent.MODE_CHANGE, _modes[i].mode_name));
+								
+								break;
+							}
+						}
+						
+					break;
 				}
 			}			
 		}
 		
-		public function get modes():Array 				{ return _modes;  }
-		//public function set modes(value:Array):void  	{ _modes = value; }
-		
 		public function get mode():String 				{ return _mode; }
+		public function get modes():Array 				{ return _modes;  }
 		
 	}
 

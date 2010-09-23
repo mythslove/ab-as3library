@@ -18,7 +18,7 @@
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	
-	import com.ab.log.ABLogger;
+	//import com.ab.log.ABLogger;
 	import com.ab.apps.abcms.keyboard.AppKeyboardControl;
 	
 	public class CORE extends Sprite

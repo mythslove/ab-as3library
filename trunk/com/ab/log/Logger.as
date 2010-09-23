@@ -35,9 +35,9 @@
 	import flash.events.Event;
 	import flash.ui.Keyboard;
 	
-	/// edigma
-	import com.edigma.ui.YScroller;
-	import com.edigma.log.LoggerItem;
+	/// ab
+	import com.ab.ui.YScroller;
+	import com.ab.log.LoggerItem;
 	
 	/// other libs
 	import caurina.transitions.Tweener;
@@ -46,6 +46,7 @@
 	
 	public class Logger extends Sprite
 	{
+		
 		///singleton
 		private static var __singleton:Logger;
 		
@@ -243,7 +244,9 @@
 					_need_to_move = true;
 				}
 				
-				var newitem = _content.addChild(new LoggerItem(input, _totalwidth, _totalheight))
+				var newitem:LoggerItem = new LoggerItem(input, _totalwidth, _totalheight);
+				
+				_content.addChild(newitem);
 				
 				newitem._height = 0;
 				
@@ -367,7 +370,6 @@
 		
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END
-		
 	}
 	
 }

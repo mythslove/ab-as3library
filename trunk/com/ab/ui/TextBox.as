@@ -15,8 +15,7 @@
 	import flash.system.System
 	import flash.text.TextFormat
 	
-	import com.ab.ui.MCYScroller
-	import com.ab.utils.Move
+
 	import com.ab.utils.Make
 	
 	public class TextBox extends EdigmaSprite
@@ -24,7 +23,7 @@
 		public var _TITULO:String;
 		public var _TEXTO:String;
 		
-		public var textscroller:MCYScroller;
+		//public var textscroller:MCYScroller;
 		
 		public var title_tf:TextField;
 		public var mask_mc:Object;
@@ -96,11 +95,11 @@
 				
 				//Make.MCToAlpha(scrollback_mc, 1)
 				
-				textscroller = new MCYScroller(text_mc, mask_mc.height-10, mask_mc.height-26, parent)
+				//textscroller = new MCYScroller(text_mc, mask_mc.height-10, mask_mc.height-26, parent)
 				
-				scrollholder2_mc.addChild(textscroller)
+				//scrollholder2_mc.addChild(textscroller)
 				
-				textscroller.init()
+				//textscroller.init()
 				
 				scrollback_mc.alpha = 0
 				//scrollback_mc.visible = false

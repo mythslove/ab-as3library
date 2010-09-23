@@ -12,6 +12,7 @@
 		public static const INTRO_RESUMED:String 		= "introresumed";
 		public static const LOADED_SETTINGS:String 		= "loadedsettings";
 		public static const LOADED_DATA:String 			= "loadeddata";
+		public static const RELOAD_DATA:String 			= "reloaddata";
 		public static const MODE_CHANGE:String 			= "modechange";
 		public static const LANG_CHANGE:String 			= "langchange";
 		public static const ACTIVITY_RESUMED:String  	= "activityresumed";

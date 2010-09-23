@@ -7,6 +7,7 @@
 	//import com.ab.apps.appgenerics.core.COREApi;
 	//import com.ab.log.ABLogger;
 	import caurina.transitions.Tweener;
+	import com.ab.apps.appgenerics.core.COREApi;
 	import com.ab.apps.appgenerics.events.ItemEvent;
 	import com.ab.events.CentralEventSystem;
 	import com.ab.utils.Make;
@@ -33,7 +34,8 @@
 		private var netstream:NetStream;
 		private var _duration:Number;
 		private var _autoPlay:Boolean;
-		
+		private var _customwidth:Number;
+		private var _customheight:Number;
 		/// video load
 		protected var _videoLoad:VideoLoad;
 		private var _main_colour:uint=0xFF0000;
@@ -41,26 +43,6 @@
 		public function ABSimpleVideoPlayer() 
 		{
 			this.addEventListener(Event.ADDED_TO_STAGE, addedHandler, false, 0, true);
-			this.addEventListener(MouseEvent.CLICK, clickHandler, false, 0, true);
-			
-			CentralEventSystem.singleton.addEventListener(ItemEvent.CLOSE_ITEM, closeItemHandler, false, 0, true);
-			
-			this.alpha = 0;
-		}
-		
-		private function closeItemHandler(e:ItemEvent):void 
-		{
-			if (e.data != null && e.data == "close_video") 
-			{
-				die();
-			}
-		}
-		
-		private function clickHandler(e:MouseEvent):void 
-		{
-			this.removeEventListener(MouseEvent.CLICK, clickHandler);
-			
-			die();
 		}
 		
 		private function addedHandler(e:Event):void 
@@ -70,10 +52,22 @@
 			start();
 		}
 		
+		public function start():void
+		{
+			this._videoLoad 				= new VideoLoad(_url);
+			
+			this._videoLoad.video.width  	= _customwidth;
+			this._videoLoad.video.height 	= _customheight;
+			
+			this._videoLoad.start();
+			
+			this.addChild(this._videoLoad.video);
+			
+			this.alpha = 1;
+		}
+		
 		public function close():void
 		{
-			CentralEventSystem.singleton.removeEventListener(ItemEvent.CLOSE_ITEM, closeItemHandler);
-			
 			if (this._videoLoad != null) 
 			{
 				this._videoLoad.netStream.close();
@@ -89,54 +83,10 @@
 			destroy();
 		}
 		
-		public function start()
-		{
-			//trace( "ABSimpleVideoPlayer :: start");
-			
-			this._videoLoad 				= new VideoLoad(_url);
-			//this._videoLoad.preventCache 	= true; 
-			this._videoLoad.addEventListener(VideoLoadEvent.PROGRESS, this._onProgress, false, 0, true);
-			this._videoLoad.addEventListener(VideoLoadEvent.BUFFERED, this._onBuffered, false, 0, true);
-			
-			this._videoLoad.video.width  	= StageReference.getStage().stageWidth;
-			this._videoLoad.video.height 	= StageReference.getStage().stageHeight;
-			
-			if (_autoPlay != true) 
-			{
-				this._videoLoad.pauseStart 	= true;
-				///videocontroller.showBigPlayButton();
-			}
-			else
-			{
-				this._videoLoad.pauseStart  = false;
-				this._videoLoad.start(); 
-			}
-			
-			this.addChild(this._videoLoad.video);
-			
-			videocontroller 				= new ABSimpleVideoPlayerController();
-			videocontroller.netstream 		= this._videoLoad.netStream;
-			videocontroller.videoload 		= this._videoLoad;
-			videocontroller.videoload 		= this._videoLoad;
-			videocontroller.main_colour		= _main_colour;
-			videocontroller.alpha			= 0;
-			//
-			videocontroller.setColours();
-			
-			this.addChild(videocontroller);
-			
-			videocontroller.y = 215;
-			
-			videocontroller.playpause_button.visible 			= true;
-			videocontroller.playpause_button.play_btn.visible 	= true;
-			videocontroller.playpause_button.pause_btn.visible 	= false;
-			
-			Tweener.addTween(this, { alpha:1, time:1} );
-		}
-		
 		public function die():void
 		{
-			Tweener.addTween(this, { alpha:0, time:1, onComplete:close} );
+			//Tweener.addTween(this, { alpha:0, time:1, onComplete:close} );
+			close();
 		}
 		
 		protected function _onProgress(e:VideoLoadEvent):void 
@@ -164,18 +114,18 @@
 		}
 		
 		private function timeReadEnterFrame(e:Event):void 
-		{
+		{/*
 			var seconds:Number = Math.round(this._videoLoad.netStream.time);
 			
 			if (seconds < 60) 
 			{
 				if (seconds >= 10) 
 				{
-					videocontroller.time_tf.text = "00:" + seconds;
+					//videocontroller.time_tf.text = "00:" + seconds;
 				}
 				else
 				{
-					videocontroller.time_tf.text = "00:0" + seconds;
+					//videocontroller.time_tf.text = "00:0" + seconds;
 				}
 			}
 			else
@@ -206,7 +156,7 @@
 						videocontroller.time_tf.text = "0" + minutes + ":0" + secondsleft;
 					}
 				}
-			}
+			}*/
 		}
 		
 		protected function _onBuffered(e:VideoLoadEvent):void 
@@ -237,6 +187,20 @@
 		public function set autoPlay(value:Boolean):void  	{ _autoPlay = value; };
 		
 		public function set main_colour(value:uint):void  	{ _main_colour = value; }
+		
+		public function get customwidth():Number { return _customwidth; }
+		
+		public function set customwidth(value:Number):void 
+		{
+			_customwidth = value;
+		}
+		
+		public function get customheight():Number { return _customheight; }
+		
+		public function set customheight(value:Number):void 
+		{
+			_customheight = value;
+		}
 		
 	}
 	

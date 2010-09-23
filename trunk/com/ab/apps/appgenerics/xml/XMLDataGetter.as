@@ -26,8 +26,8 @@
 			
 			if (xml_file_path != "") 
 			{
-				if (root_node_name != "") 
-				{
+				//if (root_node_name != "") 
+				//{
 					return_function = return_func;
 					this.root_node_name = root_node_name;
 					
@@ -37,11 +37,11 @@
 					xmlLoader.load(new URLRequest(xml_file_path));
 					
 					xmlLoader.addEventListener(Event.COMPLETE, onXMLDataReceived, false, 0, true);
-				}
-				else
-				{
-					trace("XMLDataGetter ::: XML ROOT NODE NAME HAS NOT BEEN SPECIFIED");
-				}
+				//}
+				//else
+				//{
+					//trace("XMLDataGetter ::: XML ROOT NODE NAME HAS NOT BEEN SPECIFIED");
+				//}
 			}
 			else
 			{
@@ -53,7 +53,7 @@
 		{
 			//trace ("XMLDataGetter ::: onXMLDataReceived()"); 
 			
-			var xmlData:XML = new XML(e.target[root_node_name]);
+			var xmlData:XML = new XML(e.target.data);
 			
 			return_function(xmlData);
 		}
@@ -61,7 +61,7 @@
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON START
 		private function setSingleton():void
 		{
-			if (__singleton != null)  { throw new Error("XMLDataGetter ::: SINGLETON REPLICATION ATTEMPTED") }; __singleton = this;
+			if (__singleton != null)  { return; }; __singleton = this; //throw new Error("XMLDataGetter ::: SINGLETON REPLICATION ATTEMPTED")
 		}
 		public static function get singleton():XMLDataGetter
 		{

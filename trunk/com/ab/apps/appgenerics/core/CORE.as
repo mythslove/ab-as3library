@@ -29,6 +29,7 @@
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import org.libspark.ui.SWFWheel;
 	
 	/// from other libs
 	import org.casalib.util.StageReference;
@@ -36,12 +37,11 @@
 	
 	/// edigma
 	import com.edigma.web.EdigmaCore;
-	import com.edigma.services.ServerCommunication;
-	import com.ab.log.Logger;
+	//import com.edigma.services.ServerCommunication;
 	
 	/// ab
-	//import com.ab.log.ABLogger;
 	import com.ab.events.CentralEventSystem;
+	import com.ab.log.Logger;
 	/// ab app generics
 	//import com.ab.apps.appgenerics.core.COREApi;
 	import com.ab.apps.appgenerics.events.AppEvent;
@@ -62,7 +62,12 @@
 		//public var _serverCommunication:ServerCommunication;
 		public var appManager:AppManager;
 		public var dataManager:DataManager;
+		public var keyboardManager:KeyboardManager;
 		public var _appLevel:Sprite;
+		public var _loggerLevel:Sprite;
+		public var _statsLevel:Sprite;
+		
+		private var _loaderinfo_parameters:Object=new Object();
 		
 		public function CORE()
 		{
@@ -70,8 +75,8 @@
 			
 			this.addEventListener(Event.ADDED_TO_STAGE, addedToStage);
 			
-			CentralEventSystem.singleton.addEventListener(AppEvent.LOADED_DATA, loadedBaseData, false, 0 , true);
-			CentralEventSystem.singleton.addEventListener(AppEvent.LOADED_SETTINGS, loadedSettings, false, 0 , true);
+			COREApi.addEventListener(AppEvent.LOADED_DATA, loadedBaseData, false, 0 , true);
+			COREApi.addEventListener(AppEvent.LOADED_SETTINGS, loadedSettings, false, 0 , true);
 		}
 		
 		//private function addedToStage(e:Event):void  { init(); }
@@ -81,24 +86,34 @@
 		{ 
 			trace ("CORE ::: step 1 ::: init()"); 
 			
+			SWFWheel.initialize(stage);
+			
 			StageReference.setStage(stage);
 			
 			ScreenSettings.init();
 			
 			_appLevel  				= new Sprite();
+			_loggerLevel			= new Sprite();
+			_statsLevel				= new Sprite();
 			_appInfo   				= new EdigmaCore();
 			///_serverCommunication 	= new ServerCommunication();
 			
-			stage.addChild(_appLevel);
+			stage.addChildAt(_appLevel,    0);
+			stage.addChildAt(_statsLevel,  1);
+			stage.addChildAt(_loggerLevel, 2);
+			
+			//loadedSettings(new AppEvent(AppEvent.LOADED_SETTINGS, ""));
+			loadedSettings();
 		}
 		
-		private function loadedSettings(e:AppEvent):void 
+		//private function loadedSettings(e:AppEvent):void 
+		private function loadedSettings():void 
 		{
 			trace ("CORE ::: step 2 ::: settings loaded"); 
 			
 			/// this setter is called after EdigmaCore finishes loading settings XML
-			COREApi.removeEventListener(AppEvent.LOADED_SETTINGS, loadedSettings);
-			
+			//COREApi.removeEventListener(AppEvent.LOADED_SETTINGS, loadedSettings);
+			//
 			initMainVars();
 		}
 		
@@ -106,8 +121,11 @@
 		{
 			trace ("CORE ::: step 3 ::: initMainVars()");
 			
-			appManager 					= new AppManager(_appLevel, APPLICATION_CLASS);
+			appManager 		= new AppManager(_appLevel, APPLICATION_CLASS);
+			keyboardManager = new KeyboardManager();
 			
+			//appManager.core 			= this;
+			/*
 			dataManager 				= new DataManager(EdigmaCore.singleton.DATA_TYPE);
 			
 			if (EdigmaCore.singleton.DATA_TYPE == "XML") 
@@ -116,40 +134,52 @@
 				dataManager.main_xml_file	= EdigmaCore.singleton.MAIN_XML_FILE;
 			}
 			
-			dataManager.loadBaseData();
+			dataManager.loadBaseData();*/
+			loadedBaseData(new AppEvent(AppEvent.LOADED_DATA, ""));
 		}
 		
 		private function loadedBaseData(e:AppEvent):void
 		{
+			e.stopPropagation();
 			trace ("CORE ::: step 4 ::: loaded Data, start AppManager");
 			
 			/// this setter is called after DataManager finishes loading base data
-			CentralEventSystem.singleton.removeEventListener(AppEvent.LOADED_DATA, loadedBaseData);
+			COREApi.removeEventListener(AppEvent.LOADED_DATA, loadedBaseData);
 			
 			/// here the visual application actually starts
-			appManager.addApplicationClassToStage(); // the application class should catch the ADDED_TO_STAGE event to start
+			AppManager.singleton.addApplicationClassToStage(); // the application class should catch the ADDED_TO_STAGE event to start
 			
 			/// add extra tools on debug mode
-			if (EdigmaCore.singleton.DEBUG_MODE == true) 
-			{
+			//if (EdigmaCore.singleton.DEBUG_MODE == true) 
+			//{
 				/// add stats analyser
-				var _stats 		= new Stats();
-				_stats.x 		= 50;
-				_stats.y 		= 50;
+				var _stats:Stats	= new Stats();
+				_stats.x 			= 50;
+				_stats.y 			= 50;
+				
 				
 				/// add AB logger
-				_appLogger 		= new Logger();
-				_appLogger.x 	= 100;
-				_appLogger.y 	= 50;
+				_appLogger 			= new Logger();
+				_appLogger.x 		= 100;
+				_appLogger.y 		= 50;
 				
-				COREApi.addChildToLevel(_stats, 	COREApi.LEVEL_ALERT );
-				COREApi.addChildToLevel(_appLogger, COREApi.LEVEL_ALERT );
-			}
+				_statsLevel.addChild(_stats);
+				_loggerLevel.addChild(_appLogger);
+			//}
 		}
 		
 		/// setting the application outside will call the ini() method
 		public function set APPLICATION_CLASS(value:Class):void { _APPLICATION_CLASS = value; init();}
 		public function get APPLICATION_CLASS():Class 			{ return _APPLICATION_CLASS;  }
+		
+		public function get loaderinfo_parameters():Object { return _loaderinfo_parameters; }
+		
+		public function set loaderinfo_parameters(value:Object):void 
+		{
+			_loaderinfo_parameters = value;
+			
+			//AppManager.singleton.loaderinfo_parameters = loaderinfo_parameters;
+		}
 		
 	} 
 }

@@ -52,6 +52,7 @@
 		
 		public function start():void
 		{
+			trace( "ApplicationItem.start" );
 			/// override this function
 		}
 		

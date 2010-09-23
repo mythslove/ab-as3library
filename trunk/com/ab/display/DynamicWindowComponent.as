@@ -117,7 +117,7 @@
 					_bg.graphics.beginFill(_bg_colour);
 					_bg.graphics.drawRect(0, 0, __width, __height);
 					_bg.graphics.endFill();
-					_bg.alpha = _transparency;
+					_bg.alpha_bg.alpha = _transparency;
 				break;
 				
 				case "pattern":

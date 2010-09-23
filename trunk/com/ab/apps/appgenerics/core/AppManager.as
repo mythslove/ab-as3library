@@ -12,13 +12,14 @@
 	/// "please wait message" handling
 	/// screensaver system
 	/// inactivity system
-	/// a few predefined keyboard shortcuts (ex: start screensaver / set debug mode / set fullscreen / set normal screen) room for more 
 	/// var for app LANG && LANG_CHANGE event dispatching on LANG change
 	/// var for mouse state (up/down)
 	/// some other useful "state" vars
 	
 	/// flash
+	import caurina.transitions.properties.CurveModifiers;
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.display.Sprite;
@@ -29,17 +30,16 @@
 	/// libs
 	import caurina.transitions.properties.ColorShortcuts;
 	import caurina.transitions.properties.FilterShortcuts;
-	import org.casalib.ui.Key;
 	import org.casalib.util.StageReference;
 	
 	/// ab lib
-	import com.ab.log.Logger;
+	//import com.ab.log.Logger;
 	import com.ab.events.CentralEventSystem;
 	import com.ab.apps.appgenerics.core.AppModesManager;
 	import com.ab.apps.appgenerics.events.AppEvent;
 	import com.ab.apps.appgenerics.events.ItemEvent;
 	import com.ab.apps.appgenerics.core.InactivityManager;
-	import com.ab.apps.appgenerics.settings.XMLSettings;
+	//import com.ab.apps.appgenerics.settings.XMLSettings;
 	
 	public class AppManager extends Object
 	{
@@ -47,6 +47,7 @@
 		private var _app_modes_manager:AppModesManager;
 		
 		/// APP LEVELS
+		private var _LOGGER_LEVEL:Sprite;
 		private var _SCREENSAVER_LEVEL:Sprite;
 		private var _ALERT_LEVEL:Sprite;
 		private var _APP_LEVEL:Sprite;
@@ -73,9 +74,6 @@
 		private var _screen_saver_time:Number=20000;
 		private var _screen_saver_class:Class;
 		
-		/// keyboard
-		protected var _key:Key;
-		
 		/// please wait message
 		private var _pleasewaitmessage:*;
 		private var _please_wait_message_class:Class;
@@ -84,8 +82,10 @@
 		/// system ::: don't touch these
 		public var APP_INSTANCE:*;
 		private var _APP_CLASS:Class;
-		private static var __singleton:AppManager;
 		
+		private var _core:CORE;
+		
+		private static var __singleton:AppManager;
 		
 		public function AppManager(applevel:Sprite, appClass:Class)
 		{
@@ -93,16 +93,13 @@
 			
 			_APP_LEVEL 			= applevel;
 			_APP_CLASS 			= appClass;
+			
+			/// create application modes manager
 			_app_modes_manager 	= new AppModesManager();
 			
-			createAppLevels();
-			
-			ColorShortcuts.init();
-			FilterShortcuts.init();
-			
-			this._key = Key.getInstance();
-			
-			this._key.addEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
+			ColorShortcuts.init(); 	/// init color tweening
+			FilterShortcuts.init();	/// init filters tweening
+			CurveModifiers.init();	/// init bezier tweening
 			
 			StageReference.getStage().addEventListener(MouseEvent.MOUSE_UP, 	mouseUpHandler);
 			StageReference.getStage().addEventListener(MouseEvent.MOUSE_DOWN,	mouseDownHandler);
@@ -112,7 +109,7 @@
 		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APP LEVELS
 		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APP LEVELS
 		
-		private function createAppLevels():void
+		private function createAppLevels(app_instance:DisplayObjectContainer):void
 		{
 			_BACKGROUND_LEVEL	= new Sprite();
 			_BACK_LEVEL  		= new Sprite();
@@ -121,14 +118,16 @@
 			_TOP_LEVEL   		= new Sprite();
 			_ALERT_LEVEL 		= new Sprite();
 			_SCREENSAVER_LEVEL 	= new Sprite();
+			_LOGGER_LEVEL	 	= new Sprite();
 			
-			_APP_LEVEL.addChildAt(_BACKGROUND_LEVEL,	0);
-			_APP_LEVEL.addChildAt(_BACK_LEVEL,  		1);
-			_APP_LEVEL.addChildAt(_MAIN_LEVEL,  		2);
-			_APP_LEVEL.addChildAt(_MENU_LEVEL,  		3);
-			_APP_LEVEL.addChildAt(_TOP_LEVEL,   		4);
-			_APP_LEVEL.addChildAt(_ALERT_LEVEL, 		5);
-			_APP_LEVEL.addChildAt(_SCREENSAVER_LEVEL, 	6);
+			app_instance.addChildAt(_BACKGROUND_LEVEL,	0);
+			app_instance.addChildAt(_BACK_LEVEL,  		1);
+			app_instance.addChildAt(_MAIN_LEVEL,  		2);
+			app_instance.addChildAt(_MENU_LEVEL,  		3);
+			app_instance.addChildAt(_TOP_LEVEL,   		4);
+			app_instance.addChildAt(_ALERT_LEVEL, 		5);
+			app_instance.addChildAt(_SCREENSAVER_LEVEL, 6);
+			app_instance.addChildAt(_LOGGER_LEVEL, 		7);
 		}
 		
 		public function addApplicationClassToStage():void
@@ -137,10 +136,24 @@
 			
 			// here the "APP CLASS" is added in the "APP LEVEL";
 			
+			/// create an instance of the main application class
 			APP_INSTANCE = new _APP_CLASS();
 			
-			addChildToLevel(APP_INSTANCE, "MAIN");
+			/// create the application levels within the application instance
+			createAppLevels(APP_INSTANCE);
 			
+			/// wait until the application instance is added to stage to invoke it's start method
+			DisplayObject(APP_INSTANCE).addEventListener(Event.ADDED_TO_STAGE, applicationInstanceAddedToStageHandler);
+			
+			/// add the instance of the main application class to the stage
+			_APP_LEVEL.addChild(APP_INSTANCE);
+		}
+		
+		private function applicationInstanceAddedToStageHandler(e:Event):void 
+		{
+			DisplayObject(APP_INSTANCE).removeEventListener(Event.ADDED_TO_STAGE, applicationInstanceAddedToStageHandler);
+			
+			/// invoke the application's start method
 			APP_INSTANCE.start();
 		}
 		
@@ -185,38 +198,6 @@
 		private function mouseUpHandler(e:MouseEvent):void  	{ MOUSE_STATE = "UP";   };
 		private function mouseDownHandler(e:MouseEvent):void  	{ MOUSE_STATE = "DOWN"; };
 		
-		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// BASE KEY FUNCTIONS
-		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// BASE KEY FUNCTIONS
-		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// BASE KEY FUNCTIONS
-		
-		private function keyDownHandler(e:KeyboardEvent):void 
-		{
-			//trace ("AppManager ::: keyDownHandler = " + e.keyCode);
-			switch (e.keyCode) 
-			{
-				case Keyboard.F6:
-					startScreenSaver();
-				break;
-				
-				//case Keyboard.F8:
-					// toggle Logger
-				//break;
-				
-				case Keyboard.F9:
-					XMLSettings.singleton.DEBUG_MODE = true;
-					_app_modes_manager.mode = "debug"
-				break;
-				
-				case Keyboard.F11:
-					ScreenSettings.setFullScreen();
-				break;
-				
-				case Keyboard.F12:
-					ScreenSettings.setNormalScreen();
-				break;
-			}
-		}
-		
 		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APPLICATION LEVELS
 		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APPLICATION LEVELS
 		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APPLICATION LEVELS
@@ -234,13 +215,14 @@
 					
 					switch(level)
 					{
-						case "BACKGROUND":	_BACKGROUND_LEVEL.addChild(object);	  break;
-						case "BACK":		_BACK_LEVEL.addChild(object);		  break;
-						case "MAIN":		_MAIN_LEVEL.addChild(object);		  break;
-						case "MENU":		_MENU_LEVEL.addChild(object);		  break;
-						case "TOP":			_TOP_LEVEL.addChild(object);		  break;
-						case "ALERT":		_ALERT_LEVEL.addChild(object);		  break;
-						case "SCREENSAVER":	_SCREENSAVER_LEVEL.addChild(object);  break;
+						case "BACKGROUND":	_BACKGROUND_LEVEL.addChild(object);	  	break;
+						case "BACK":		_BACK_LEVEL.addChild(object);		  	break;
+						case "MAIN":		_MAIN_LEVEL.addChild(object);		  	break;
+						case "MENU":		_MENU_LEVEL.addChild(object);		  	break;
+						case "TOP":			_TOP_LEVEL.addChild(object);		  	break;
+						case "ALERT":		_ALERT_LEVEL.addChild(object);		  	break;
+						case "SCREENSAVER":	_SCREENSAVER_LEVEL.addChild(object);  	break;
+						case "LOGGER":		_LOGGER_LEVEL.addChild(object);  		break;
 					}
 				}
 				else { trace ("ERROR: AppManager ::: addChildToLevel() -> PROVIDED OBJECT IS NOT DISPLAYOBJECT"); }
@@ -279,7 +261,7 @@
 			{
 				screen_saver_active = true;
 				
-				var screensaver = new _screen_saver_class();
+				var screensaver:* = new _screen_saver_class();
 				
 				addChildToLevel(screensaver, "SCREENSAVER");
 			}
@@ -364,13 +346,20 @@
 		
 		private function setSingleton():void
 		{
-			if (__singleton != null)  { throw new Error("AppManager ::: SINGLETON REPLICATION ATTEMPTED") }
-			__singleton = this
+			if (__singleton != null)  { return; }; //throw new Error("AppManager ::: SINGLETON REPLICATION ATTEMPTED")
+			__singleton = this;
 		}
 		public static function get singleton():AppManager
 		{
 			if (__singleton == null) { throw new Error("AppManager ::: SINGLETON DOES NOT EXIST (CORE FAILED TO INITIALIZE?)") }
 			return __singleton;
+		}
+		
+		public function get core():CORE { return _core; }
+		
+		public function set core(value:CORE):void 
+		{
+			_core = value;
 		}
 		
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END

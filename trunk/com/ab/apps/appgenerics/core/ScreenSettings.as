@@ -22,7 +22,7 @@
 		
 		public static function init():void
 		{
-			StageReference.getStage().displayState 				= StageDisplayState.FULL_SCREEN;
+			StageReference.getStage().displayState 				= StageDisplayState.NORMAL;
 			StageReference.getStage().quality 					= StageQuality.BEST;
 			StageReference.getStage().scaleMode 				= StageScaleMode.NO_SCALE;
 			StageReference.getStage().align 					= StageAlign.TOP_LEFT;

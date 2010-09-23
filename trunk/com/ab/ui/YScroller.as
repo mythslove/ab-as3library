@@ -4,18 +4,19 @@
 	* @author ABº
 	*/
 	
-	import com.edigma.log.Logger;
+	//import com.edigma.log.Logger;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
+	import org.casalib.display.CasaSprite;
 	//import com.ab.utils.DebugTF
 	import caurina.transitions.Tweener;
 	import org.casalib.util.StageReference;
 	import flash.display.Stage;
 	
-	public class YScroller extends Sprite
+	public class YScroller extends CasaSprite
 	{
 		/// physical content
 		private var _handle:Sprite
@@ -184,6 +185,7 @@
 		
 		public function mouseWheelHandler(event:MouseEvent):void 
 		{
+			/*
 			if (_hit_root != null)
 			{
 				if (_hit_root.hitTestPoint(StageReference.getStage().mouseX, StageReference.getStage().mouseY, true));
@@ -194,7 +196,7 @@
 			else
 			{
 				performMouseWheel(event.delta);
-			}
+			}*/
 		}
 		
 		private function performMouseWheel(_DELTA:Number):void
@@ -253,19 +255,19 @@
 			StageReference.getStage().addEventListener(MouseEvent.MOUSE_WHEEL, 	mouseWheelHandler);
 		}
 		
-		private function clickHandle(e:MouseEvent)
+		private function clickHandle(e:MouseEvent):void
 		{
 			rectangle = new Rectangle(_frame_length, _handle_minimum_y, 0, _handle_maximum_y);
 			_handle.startDrag(false, rectangle);
 		}
 		
-		private function releaseHandle(e:MouseEvent)  	{ _handle.stopDrag(); };
-		private function enterFrameHandler(e:Event) 	{ positionContent();  };
+		private function releaseHandle(e:MouseEvent):void 	{ _handle.stopDrag(); };
+		private function enterFrameHandler(e:Event):void 	{ positionContent();  };
 		public  function gotoZero():void 				{ Tweener.addTween(_handle, { y:_handle_minimum_y, time:0.2 } ); }
 		
 		private function positionContent():void
 		{
-			var _handle_relative_pos 			= _handle.y - _handle_minimum_y;
+			var _handle_relative_pos:Number		= _handle.y - _handle_minimum_y;
 			var _distance:Number     			= _scrool_distance - _handle.height;
 			_handle_percent_position 			= Math.floor( ( _handle_relative_pos * 100) / _distance); 
 			var work_height:Number 				= ( -_target_clip.height + _scrool_distance + _frame_length);

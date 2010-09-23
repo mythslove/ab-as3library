@@ -40,7 +40,7 @@
 	
 	public dynamic class ABSprite extends CasaSprite
 	{
-		private var _smooth_align 		 	= false;
+		private var _smooth_align:Boolean 		 	= false;
 		private var _align_type:String	 	= "";
 		private var _h_padding:int 		 	= 0;
 		private var _v_padding:int 		 	= 0;
@@ -212,13 +212,13 @@
 		
 		public function GoInvisible(duration:Number=NaN, _transition:String="EaseOutSine"):void
 		{
-			Tweener.addTween(this, { alpha:0, time:isNaN(duration) ? 0.5 : duration, transition:_transition, onComplete:function(){this.visible = false}} )
+			Tweener.addTween(this, { alpha:0, time:isNaN(duration) ? 0.5 : duration, transition:_transition, onComplete:function():void{this.visible = false}} )
 		}
 		
 		/// go to alpha zero and set invisible = true - with optional onComplete Function
 		public function GoInvisibleWithOnComplete(duration:Number=NaN, oncompletefunc:Function=null):void
 		{
-			Tweener.addTween(this, { alpha:0, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:function() { this.visible = false;  oncompletefunc() }} );
+			Tweener.addTween(this, { alpha:0, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:function():void { this.visible = false;  oncompletefunc() }} );
 		}
 		
 		public function GoToAlpha(alphavalue:Number, duration:Number=NaN, onCompleteFunc:Function=null):void
@@ -238,7 +238,7 @@
 		/// //// //// //// //// MOVE METHODS //// //// //// //// //// 
 		
 		/// ////////////////////// TO POSITION X
-		public function GoToPositionX(xpos:Number, duration:Number=0.5, alphavalue=NaN, _transition:String="EaseOutSine"):void
+		public function GoToPositionX(xpos:Number, duration:Number=0.5, alphavalue:Number=NaN, _transition:String="EaseOutSine"):void
 		{
 			Tweener.addTween(this, { x:xpos, time:duration, alpha:isNaN(alphavalue) ? 0.5 : alphavalue, transition:_transition } );
 		}
@@ -601,7 +601,7 @@
 		{
 			if (!using_filters) 	{ FilterShortcuts.init(); using_filters = true; }
 			
-			Tweener.addTween(this, 	{ alpha:0, _Blur_blurX:40, _Blur_blurY:40, time:duration, scaleX:1.3, scaleY:1.3, transition:"EaseInOutBack", onComplete:endClose } )
+			Tweener.addTween(this, 	{ alpha:0, _Blur_blurX:40, _Blur_blurY:40, time:duration, scaleX:1.3, scaleY:1.3, transition:"EaseInOutBack", onComplete:cleanMe } )
 		}
 		
 		public function blurOutAndDie(duration:Number=0.5):void

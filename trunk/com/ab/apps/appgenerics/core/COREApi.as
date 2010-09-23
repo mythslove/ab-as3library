@@ -11,6 +11,7 @@
 	import com.ab.apps.appgenerics.core.ScreenSettings;
 	import com.ab.apps.appgenerics.core.InactivityManager;
 	import com.ab.apps.appgenerics.events.AppEvent;
+	import com.ab.apps.appgenerics.xml.XMLDataGetter;
 	import com.ab.events.CentralEventSystem;
 	import com.ab.display.FloatWarning;
 	import flash.display.DisplayObject;
@@ -18,19 +19,19 @@
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.geom.Point;
-	//import com.ab.log.Logger;
+	import com.ab.log.Logger;
 	import org.casalib.util.StageReference;
 	
 	public class COREApi
 	{
-		public static const LEVEL_BACKGROUND:String  = "BACKGROUND";
-		public static const LEVEL_BACK:String 		 = "BACK";
-		public static const LEVEL_MAIN:String 		 = "MAIN";
-		public static const LEVEL_MENU:String 		 = "MENU";
-		public static const LEVEL_TOP:String  		 = "TOP";	
-		public static const LEVEL_ALERT:String  	 = "ALERT";	
-		public static const LEVEL_SCREENSAVER:String = "SCREENSAVER";	
-		
+		public static const LEVEL_BACKGROUND:String  	= "BACKGROUND";
+		public static const LEVEL_BACK:String 		 	= "BACK";
+		public static const LEVEL_MAIN:String 		 	= "MAIN";
+		public static const LEVEL_MENU:String 		 	= "MENU";
+		public static const LEVEL_TOP:String  		 	= "TOP";	
+		public static const LEVEL_ALERT:String  	 	= "ALERT";	
+		public static const LEVEL_SCREENSAVER:String 	= "SCREENSAVER";	
+		public static const LEVEL_LOGGER:String 		= "LOGGER";	
 		
 		/**
 		 * ADD APPLICATION MODE
@@ -72,15 +73,9 @@
 					
 					AppManager.singleton.addChildToLevel(child, level, coordinates);
 				}
-				else
-				{
-					trace("< ERROR > COREApi ::: addChildToLevel() ::: PROVIDED OBJECT IS NOT DISPLAYOBJECT"); 
-				}
+				else { trace("< ERROR > COREApi ::: addChildToLevel() ::: PROVIDED OBJECT IS NOT A DISPLAYOBJECT");  }
 			}
-			else 
-			{ 
-				trace("< ERROR > COREApi ::: addChildToLevel() ::: Object is NULL or not specified"); 
-			}	
+			else { trace("< ERROR > COREApi ::: addChildToLevel() ::: DisplayObject is NULL or not specified");  }	
 		}
 		
 		/**
@@ -93,7 +88,7 @@
 		{
 			if (s) 
 			{
-				//Logger.singleton.log(s); 
+				Logger.singleton.log(s); 
 			} 
 			else {  trace("< ERROR > COREApi ::: log() ::: String invalid or not specified"); }
 		}
@@ -225,6 +220,16 @@
 		public static function closePleaseWaitMessage():void
 		{
 			AppManager.singleton.closePleaseWaitMessage();
+		}
+		
+		/**
+		 * Extract XML data from a file
+		 * Retrieves XML data from given URL and returns the XML data object to a provided function
+		 * @return	Nothing.
+		 */
+		public static function getXMLdata(return_function:Function, xml_path:String, root_node:String="data"):void
+		{
+			XMLDataGetter.singleton.getDataXML(return_function, xml_path, root_node);
 		}
 	}
 	

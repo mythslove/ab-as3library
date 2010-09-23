@@ -22,6 +22,7 @@
 	import com.edigma.web.EdigmaCore;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import gs.dataTransfer.XMLManager;
@@ -29,7 +30,7 @@
 	import org.casalib.util.StageReference;
 	import com.ab.apps.appgenerics.xml.XMLDataGetter;
 	
-	public class DataManager extends Sprite
+	public class DataManager extends Object
 	{
 		/// public
 		private static var __singleton:DataManager;
@@ -62,7 +63,7 @@
 		public function get data():* 				{ return _data; };
 		public function set data(value:*):void  	{ _data = value; };
 		
-		public function loadBaseData() 				{ init(); };
+		public function loadBaseData():void 				{ init(); };
 		
 		private function init():void 				
 		{ 
@@ -80,12 +81,12 @@
 		{
 			/// insert AMF requests here
 			
-			//ServerCommunication.singleton.listarRequest(onAMFImagesOnlyDataReceived, _CATIMG, 1);}
+			//ServerCommunication.singleton.listarRequest(onAMFImagesOnlyDataReceived, _CATIMG, 1);
 		}
 		
 		private function onAMFDataReceived(o:Object):void 
 		{
-			//trace ("DataManager ::: onAMFDataReceived");
+			trace ("DataManager ::: onAMFDataReceived");
 			
 			/// AMF results handling here
 		}
@@ -123,7 +124,7 @@
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON START
 		private function setSingleton():void
 		{
-			if (__singleton != null)  { throw new Error("DataManager ::: SINGLETON REPLICATION ATTEMPTED") }; __singleton = this;
+			if (__singleton != null)  { return; }; __singleton = this; //throw new Error("DataManager ::: SINGLETON REPLICATION ATTEMPTED")
 		}
 		public static function get singleton():DataManager
 		{

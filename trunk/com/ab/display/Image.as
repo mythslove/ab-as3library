@@ -22,9 +22,11 @@
 	* 
 	*/
 	
+	import com.ab.apps.appgenerics.core.COREApi;
 	import com.ab.utils.CropBitmapData;
 	import flash.display.Bitmap;
     import flash.display.Loader;
+	import flash.system.LoaderContext;
     import flash.display.Sprite;
     import flash.events.*;
 	import flash.geom.Rectangle;
@@ -89,7 +91,10 @@
 		
 		public function load():void
 		{
-			loader.load(request);
+			var context:LoaderContext = new LoaderContext();
+			context.checkPolicyFile = true;
+
+			loader.load(request, context);
 		}
 		
 		/// ////////////////////////////////////////////////// LISTENERS
@@ -109,7 +114,7 @@
 		{
             //trace("completeHandler: " + event);
 			
-			var image = loader.content as Bitmap;
+			var image:* = loader.content as Bitmap;
 			image.smoothing = true;
 			
 			if (resize == true)  
@@ -121,12 +126,6 @@
 					//trace ("1 Image ::: width before  = "  + image.width);
 					//trace ("1 Image ::: height before = "  + image.height);
 				}
-				
-				//var newsize:Rectangle = RatioUtil.scaleToWidth(new Rectangle(0, 0, image.width, image.height), new Rectangle(0, 0, _width, _height));
-				//var newsize:Rectangle = RatioUtil.scaleWidth(new Rectangle(0, 0, image.width, image.height), _height);
-				//var newsize:Rectangle = RatioUtil.scaleHeight(new Rectangle(0, 0, image.width, image.height), _width);
-				//image.width  = newsize.width;
-				//image.height = newsize.height;
 				
 				var nu_w:Number 
 				var nu_h:Number 
@@ -173,6 +172,8 @@
 			}
 			
 			addChild(image);
+			
+			if (_ON_COMPLETE_FUNCTION != null)  { _ON_COMPLETE_FUNCTION(this)   };
         }
 		
         private function httpStatusHandler(event:HTTPStatusEvent):void
@@ -182,12 +183,14 @@
 		
         private function initHandler(event:Event):void
 		{
-			if (_ON_COMPLETE_FUNCTION != null)  { _ON_COMPLETE_FUNCTION(this)   };
+			
         }
 		
         private function ioErrorHandler(event:IOErrorEvent):void 
 		{
             //trace("ioErrorHandler: " + event);
+			
+			COREApi.showWarning("Error loading image: " + String(event.type));
         }
 		
         private function progressHandler(event:ProgressEvent):void 

@@ -103,7 +103,7 @@
 		
 		public static function MCInvisible(mc:Object, duration:Number=NaN):void
 		{
-			Tweener.addTween(mc, { alpha:0, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:function(){mc.visible = false}} )
+			Tweener.addTween(mc, { alpha:0, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:function():void{mc.visible = false}} )
 		}
 		public static function MCInvisibleWithOnComplete(mc:Object, oncompletefunc:Function=null, duration:Number=NaN):void
 		{
@@ -150,7 +150,7 @@
 		
 		public static function ArrayFadeOut(array:Array, duration:Number, exception:Object=null, onitemcomplete_function:Function=null, on_total_complete_function:Function=null):void
 		{
-			var tmpArray = new Array()
+			var tmpArray:Array = new Array()
 			
 			for (var i:int = 0; i < array.length; i++) 
 			{
@@ -203,9 +203,9 @@
 		///////////// TIME ///////////////////////////////////////////////////////////////////////////////////////
 		
 		/// Makes times (in seconds) and executes a given function
-		public static function TimeAndExecuteFunction(duration:Number, func:Function)
+		public static function TimeAndExecuteFunction(duration:Number, func:Function):void
 		{
-			var auxTimeVar = duration * 1000
+			var auxTimeVar:Number = duration * 1000
 			
 			setTimeout(func, auxTimeVar)
 		}

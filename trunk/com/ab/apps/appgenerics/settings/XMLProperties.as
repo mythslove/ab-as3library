@@ -23,6 +23,7 @@
 		/**
 		 *  Constructor
 		 */
+		
 		public function XMLProperties(enforcer : SingletonEnforcer) 
 		{
 			if (enforcer == null) 

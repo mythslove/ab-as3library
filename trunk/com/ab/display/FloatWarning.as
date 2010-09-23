@@ -77,20 +77,20 @@
 			
 			this.alpha 	= 0;
 			this.x 		= StageReference.getStage().stageWidth / 2 - this.width / 2;
-			this.y 		= StageReference.getStage().stageHeight;
+			this.y 		= -100;
 			
 			/// make time and go away
 			
 			aux_var = 0;
 			
-			Tweener.addTween(this, { alpha:1, y:StageReference.getStage().stageHeight - (this.height * 2), time:0.5} );
+			Tweener.addTween(this, { alpha:1, y:10, time:0.5} );
 			
-			Tweener.addTween(this, { aux_var:1, time:2, onComplete:startClose } );
+			Tweener.addTween(this, { aux_var:1, time:5, onComplete:startClose } );
 		}
 		
 		private function startClose():void
 		{
-			Tweener.addTween(this, { alpha:0, time:1, y:StageReference.getStage().stageHeight, transition:"EaseInOutExpo", onComplete:endClose } );
+			Tweener.addTween(this, { alpha:0, time:1, y:-100, transition:"EaseInOutExpo", onComplete:endClose } );
 		}
 		
 		private function endClose():void
