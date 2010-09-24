@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+	<template name="template1"> 
+	  <slot size="2" type="image"/> 
+	  <slot size="4" type="video"/> 
+	</template>
+	<template name="template2"> 
+	  <slot size="1" type="image" /> 
+	  <slot size="1" type="image" /> 
+	  <slot size="1" type="image" /> 
+	  <slot size="1" type="image" /> 
+	  <slot size="1" type="image" /> 
+	  <slot size="1" type="image" /> 
+	</template>
+</templates>

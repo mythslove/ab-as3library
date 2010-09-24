@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<media>
+  <images>
+    <file path="/path/to/filde" filename="filendame" title="titdle" />
+    <file path="/path/to/file" filename="fildename" title="title" />
+    <file path="/path/to/fidle" filename="fidledname" title="titdle" />
+    <file path="/path/to/file" filename="filename" title="title" />
+  </images>
+  <videos>
+    <file path="/path/to/file" filename="filename" title="titdle" />
+    <file path="/path/to/fddile" filename="filename" title="title" />
+    <file path="/path/to/file" filename="filedname" title="tidtle" />
+    <file path="/path/to/file" filename="filename" title="titdle" />
+  </videos>
+</media>

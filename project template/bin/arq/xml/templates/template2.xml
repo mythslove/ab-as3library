@@ -1,0 +1,14 @@
+<templates>
+<template name="template2"> 
+  <slot size="1" type="image" /> 
+  <slot size="1" type="image" /> 
+  <slot size="1" type="image" /> 
+  <slot size="1" type="image" /> 
+  <slot size="1" type="image" /> 
+  <slot size="1" type="image" /> 
+</template>
+<template name="template1"> 
+  <slot size="2" type="image"/> 
+  <slot size="4" type="video"/> 
+</template>
+</templates>
