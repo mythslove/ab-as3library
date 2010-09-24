@@ -9,9 +9,9 @@
 	public class ContextMenuManager extends EventDispatcher
 	{
 		protected var menu:ContextMenu;
-		protected var target:InteractiveObject;
+		protected var target:*;
 		
-		public function ContextMenuManager(target:InteractiveObject, hideBuiltInItems:Boolean = true)
+		public function ContextMenuManager(target:*, hideBuiltInItems:Boolean = true)
 		{
 			this.target = target;
 			
@@ -19,7 +19,7 @@
 			
 			if(hideBuiltInItems) { menu.hideBuiltInItems(); }
 			
-			this.target.contextMenu = menu;
+			target.contextMenu = menu;
 			
 			menu.addEventListener(ContextMenuEvent.MENU_SELECT, runEvent);
 		}

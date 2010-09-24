@@ -15,6 +15,7 @@
 	import com.ab.events.CentralEventSystem;
 	import com.ab.display.FloatWarning;
 	import flash.display.DisplayObject;
+	import flash.display.Graphics;
 	import flash.display.Stage;
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
@@ -120,22 +121,6 @@
 		public static function setScreenSaverOff():void { AppManager.singleton.screen_saver_on = false;  };
 		
 		/**
-		 * SHOW WARNING
-		 * Displays a warning on top of everything (in the ALERT_LEVEL)
-		 * @param	message
-		 * @param	type
-		 * @param 	time
-		 * @return	Nothing.
-		 */
-		public static function showWarning(message:String, type:String="normal", time:Number=2):void
-		{
-			// "normal" or "error" types may be used
-			var warning:FloatWarning = new FloatWarning(message, type, time);
-			
-			addChildToLevel(warning, LEVEL_ALERT);
-		}
-		
-		/**
 		 * ADD EVENT LISTENER
 		 * Registers an event listener in com.ab.events.CentralEventSystem.
 		 * Only Events dispatched by the same CentralEventSystem will be received.
@@ -193,6 +178,22 @@
 		}
 		
 		/**
+		 * SHOW WARNING
+		 * Displays a warning on top of everything (in the ALERT_LEVEL)
+		 * @param	message
+		 * @param	type
+		 * @param 	time
+		 * @return	Nothing.
+		 */
+		public static function showWarning(message:String, type:String="type_normal", origin:String="origin_top", time:Number=2, bg_colour:uint=0x000000):void
+		{
+			// "normal" or "error" types may be used
+			var warning:FloatWarning = new FloatWarning(message, type, origin, time, bg_colour);
+			
+			addChildToLevel(warning, LEVEL_ALERT);
+		}
+		
+		/**
 		 * SET "PLEASE WAIT MESSAGE"
 		 * Defines a class to be used when calling the "please wait" method.
 		 * @return	Nothing.
@@ -227,9 +228,29 @@
 		 * Retrieves XML data from given URL and returns the XML data object to a provided function
 		 * @return	Nothing.
 		 */
-		public static function getXMLdata(return_function:Function, xml_path:String, root_node:String="data"):void
+		public static function getXMLdata(xml_path:String, return_function:Function, root_node:String="data"):void
 		{
 			XMLDataGetter.singleton.getDataXML(return_function, xml_path, root_node);
+		}
+		
+		/**
+		 * Insert custom ContexTMenu items in the application
+		 * The handler function is mandatory
+		 * @return	Nothing.
+		 */
+		public static function addContextMenuItem(caption:String, handler:Function, separatorBefore:Boolean = false, enabled:Boolean = true, visible:Boolean = true):void
+		{
+			AppManager.singleton.addContextMenuItem(caption, handler, separatorBefore, enabled, visible);
+		}
+		
+		/**
+		 * Draw vectorial text into a DisplayObject's graphics property
+		 * This method works in conjunction with the AppManager's _vectorialTextManager instance
+		 * @return	Nothing.
+		 */
+		public static function writeVectorText(_graphics:Graphics, _text:String, _font:String, _colour:uint=0x00ff00, _size:Number=24, _leading:Number=0, _x:Number=0, _y:Number=0, _kerning:Number=0):void
+		{
+			AppManager.singleton.writeVectorText(_graphics, _text, _font, _colour, _size, _leading, _x, _y, _kerning);
 		}
 	}
 	

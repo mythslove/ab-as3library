@@ -9,6 +9,7 @@
 	/// APPLICATION LEVELS construction & management
 	/// instantiation of APPLICATION MODES manager
 	/// initialization of ColorShortcuts and FilterShortcuts
+	/// Vector Fonts manager
 	/// "please wait message" handling
 	/// screensaver system
 	/// inactivity system
@@ -18,8 +19,12 @@
 	
 	/// flash
 	import caurina.transitions.properties.CurveModifiers;
+	import com.ab.utils.ContextMenuManager;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Graphics;
+	import flash.display.InteractiveObject;
+	import flash.events.ContextMenuEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.display.Sprite;
@@ -74,6 +79,9 @@
 		private var _screen_saver_time:Number=20000;
 		private var _screen_saver_class:Class;
 		
+		/// context menu manager
+		private var _context_menu_manager:ContextMenuManager;
+		
 		/// please wait message
 		private var _pleasewaitmessage:*;
 		private var _please_wait_message_class:Class;
@@ -84,7 +92,7 @@
 		private var _APP_CLASS:Class;
 		
 		private var _core:CORE;
-		
+		private var _vectorFontsManager:VectorFontsManager;
 		private static var __singleton:AppManager;
 		
 		public function AppManager(applevel:Sprite, appClass:Class)
@@ -97,12 +105,21 @@
 			/// create application modes manager
 			_app_modes_manager 	= new AppModesManager();
 			
+			/// create vector fonts manager
+			_vectorFontsManager = new VectorFontsManager();
+			_vectorFontsManager.init();
+			
 			ColorShortcuts.init(); 	/// init color tweening
 			FilterShortcuts.init();	/// init filters tweening
 			CurveModifiers.init();	/// init bezier tweening
 			
 			StageReference.getStage().addEventListener(MouseEvent.MOUSE_UP, 	mouseUpHandler);
 			StageReference.getStage().addEventListener(MouseEvent.MOUSE_DOWN,	mouseDownHandler);
+		}
+		
+		public function writeVectorText(_graphics:Graphics, _text:String, _font:String, _colour:uint=0x00ff00, _size:Number=24, _leading:Number=0, _x:Number=0, _y:Number=0, _kerning:Number=0):void
+		{
+			_vectorFontsManager.write(_graphics, _text, _font, _colour, _size, _leading, _x, _y, _kerning);
 		}
 		
 		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APP LEVELS
@@ -134,8 +151,6 @@
 		{
 			trace ("AppManager ::: addApplicationClassToStage()");
 			
-			// here the "APP CLASS" is added in the "APP LEVEL";
-			
 			/// create an instance of the main application class
 			APP_INSTANCE = new _APP_CLASS();
 			
@@ -145,8 +160,16 @@
 			/// wait until the application instance is added to stage to invoke it's start method
 			DisplayObject(APP_INSTANCE).addEventListener(Event.ADDED_TO_STAGE, applicationInstanceAddedToStageHandler);
 			
+			/// create context menu manager in application instance
+			_context_menu_manager = new ContextMenuManager(APP_INSTANCE);
+			
 			/// add the instance of the main application class to the stage
 			_APP_LEVEL.addChild(APP_INSTANCE);
+		}
+		
+		public function addContextMenuItem(caption:String, handler:Function, separatorBefore:Boolean = false, enabled:Boolean = true, visible:Boolean = true):void
+		{
+			_context_menu_manager.add(caption, handler, separatorBefore, enabled, visible);
 		}
 		
 		private function applicationInstanceAddedToStageHandler(e:Event):void 
@@ -355,12 +378,8 @@
 			return __singleton;
 		}
 		
-		public function get core():CORE { return _core; }
-		
-		public function set core(value:CORE):void 
-		{
-			_core = value;
-		}
+		public function get core():CORE 			{ return _core;  }
+		public function set core(value:CORE):void  	{ _core = value; }
 		
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END

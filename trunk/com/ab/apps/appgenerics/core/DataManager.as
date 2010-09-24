@@ -63,7 +63,7 @@
 		public function get data():* 				{ return _data; };
 		public function set data(value:*):void  	{ _data = value; };
 		
-		public function loadBaseData():void 				{ init(); };
+		public function loadBaseData():void 		{ init(); };
 		
 		private function init():void 				
 		{ 

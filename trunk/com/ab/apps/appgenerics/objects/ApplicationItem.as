@@ -42,23 +42,24 @@
 		
 		public function closeItemHandler(e:ItemEvent):void
 		{
+			/// normally this function should be overridden
+			
 			if (e.data == "close_application_items") 
 			{
-				close(); 
-				
-				_closed = true;
+				close();
 			}
 		}
 		
 		public function start():void
 		{
+			/// this function should be overridden
+			
 			trace( "ApplicationItem.start" );
-			/// override this function
 		}
 		
 		public function openItemHandler(e:ItemEvent):void
 		{ 
-			
+			/// normally this function should be overridden
 		}
 		
 		public function close():void 

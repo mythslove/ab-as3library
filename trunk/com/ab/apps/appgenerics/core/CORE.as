@@ -79,7 +79,6 @@
 			COREApi.addEventListener(AppEvent.LOADED_SETTINGS, loadedSettings, false, 0 , true);
 		}
 		
-		//private function addedToStage(e:Event):void  { init(); }
 		private function addedToStage(e:Event):void  {  "CORE added to stage"; }
 		
 		public function init():void
@@ -101,19 +100,15 @@
 			stage.addChildAt(_appLevel,    0);
 			stage.addChildAt(_statsLevel,  1);
 			stage.addChildAt(_loggerLevel, 2);
-			
-			//loadedSettings(new AppEvent(AppEvent.LOADED_SETTINGS, ""));
-			loadedSettings();
 		}
 		
-		//private function loadedSettings(e:AppEvent):void 
-		private function loadedSettings():void 
+		private function loadedSettings(e:AppEvent):void
 		{
-			trace ("CORE ::: step 2 ::: settings loaded"); 
+			trace ("CORE ::: step 2 ::: settings loaded");
 			
 			/// this setter is called after EdigmaCore finishes loading settings XML
-			//COREApi.removeEventListener(AppEvent.LOADED_SETTINGS, loadedSettings);
-			//
+			COREApi.removeEventListener(AppEvent.LOADED_SETTINGS, loadedSettings);
+			
 			initMainVars();
 		}
 		
@@ -121,12 +116,15 @@
 		{
 			trace ("CORE ::: step 3 ::: initMainVars()");
 			
+			/// app manager
 			appManager 		= new AppManager(_appLevel, APPLICATION_CLASS);
+			appManager.core = this;
+			
+			/// keyboard manager
 			keyboardManager = new KeyboardManager();
 			
-			//appManager.core 			= this;
-			/*
-			dataManager 				= new DataManager(EdigmaCore.singleton.DATA_TYPE);
+			/// data manager
+			dataManager 	= new DataManager(EdigmaCore.singleton.DATA_TYPE);
 			
 			if (EdigmaCore.singleton.DATA_TYPE == "XML") 
 			{
@@ -134,29 +132,29 @@
 				dataManager.main_xml_file	= EdigmaCore.singleton.MAIN_XML_FILE;
 			}
 			
-			dataManager.loadBaseData();*/
-			loadedBaseData(new AppEvent(AppEvent.LOADED_DATA, ""));
+			dataManager.loadBaseData();
 		}
 		
 		private function loadedBaseData(e:AppEvent):void
 		{
 			e.stopPropagation();
-			trace ("CORE ::: step 4 ::: loaded Data, start AppManager");
 			
 			/// this setter is called after DataManager finishes loading base data
 			COREApi.removeEventListener(AppEvent.LOADED_DATA, loadedBaseData);
 			
+			trace ("CORE ::: step 4 ::: loaded Data, start AppManager");
+			
 			/// here the visual application actually starts
-			AppManager.singleton.addApplicationClassToStage(); // the application class should catch the ADDED_TO_STAGE event to start
+			// a "start()" method will be called from the application class when it is ADDED_TO_STAGE
+			AppManager.singleton.addApplicationClassToStage();
 			
 			/// add extra tools on debug mode
-			//if (EdigmaCore.singleton.DEBUG_MODE == true) 
-			//{
+			if (EdigmaCore.singleton.DEBUG_MODE == true) 
+			{
 				/// add stats analyser
 				var _stats:Stats	= new Stats();
 				_stats.x 			= 50;
 				_stats.y 			= 50;
-				
 				
 				/// add AB logger
 				_appLogger 			= new Logger();
@@ -165,7 +163,7 @@
 				
 				_statsLevel.addChild(_stats);
 				_loggerLevel.addChild(_appLogger);
-			//}
+			}
 		}
 		
 		/// setting the application outside will call the ini() method
