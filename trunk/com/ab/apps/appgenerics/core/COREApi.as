@@ -11,7 +11,7 @@
 	import com.ab.apps.appgenerics.core.ScreenSettings;
 	import com.ab.apps.appgenerics.core.InactivityManager;
 	import com.ab.apps.appgenerics.events.AppEvent;
-	import com.ab.apps.appgenerics.xml.XMLDataGetter;
+	import com.ab.xml.XMLDataGetter;
 	import com.ab.events.CentralEventSystem;
 	import com.ab.display.FloatWarning;
 	import flash.display.DisplayObject;

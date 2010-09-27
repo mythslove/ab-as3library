@@ -27,7 +27,7 @@
 	import gs.dataTransfer.XMLManager;
 	import com.ab.events.CentralEventSystem;
 	import org.casalib.util.StageReference;
-	import com.ab.apps.appgenerics.xml.XMLDataGetter;
+	import com.ab.xml.XMLDataGetter;
 	
 	public class DataManager extends Object
 	{

@@ -6,8 +6,8 @@
 	
 	public class PrivateAreaManager
 	{
-		private static var _LOGGED_IN:Boolean = false;
-		private static var _USER_ID:int = 0;
+		private var _LOGGED_IN:Boolean = false;
+		private var _USER_ID:int = 0;
 		
 		public function PrivateAreaManager() 
 		{

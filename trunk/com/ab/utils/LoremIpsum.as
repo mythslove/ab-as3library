@@ -1,30 +1,10 @@
-﻿package com.ab.util {
-
-	/**
-	 * Some Lorem Ipsum Text
-	 * 
-	 * @author Frederico Garcia
-	 */
-	public class LoremIpsum {
+﻿package com.ab.utils
+{
+	public class LoremIpsum 
+	{
+		public static const COLORS:Array = [ 0x81B3C3, 0xDF6559, 0xF9D574, 0xF29F43, 0x253C4B, 0xffffff];
 		
-		
-		public static const COLORS:Array = [  
-			0x81B3C3,  
-			0xDF6559,  
-			0xF9D574,  
-			0xF29F43,  
-			0x253C4B,  
-			0xffffff];
-				
-		public static const ITEMS:Array = [
-			"Lorem Ipsum",
-			"Consectetuer",
-			"Aenean Volutpat",
-			"Suspendisse",
-			"Maecenas Nec",
-			"Quisque",
-			"Facilisis"
-		];
+		public static const ITEMS:Array = [ "Lorem Ipsum", "Consectetuer", "Aenean Volutpat", "Suspendisse", "Maecenas Nec", "Quisque", "Facilisis" ];
 		
 		public static const IMAGES:Array = [
 			'http://farm1.static.flickr.com/62/169028344_d8cc82370a_m.jpg',
@@ -53,7 +33,7 @@
 			'http://farm1.static.flickr.com/16/88778660_de38e09808_m.jpg'     
 		];
 		
-		public static const TITLE:String = "Lorem Ipsum";
+			public static const TITLE:String = "Lorem Ipsum";
 		
 		public static const SENTENCE:String = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.";
 		
