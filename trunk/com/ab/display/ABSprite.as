@@ -10,14 +10,14 @@
 	import flash.display.MovieClip;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
-	import org.casalib.display.CasaSprite
-	import org.casalib.display.CasaMovieClip
-	import caurina.transitions.Tweener
-	import org.casalib.util.ObjectUtil
-	import flash.events.Event
-	import org.casalib.util.StageReference
-	import flash.geom.Point
-	import caurina.transitions.properties.FilterShortcuts
+	import org.casalib.display.CasaSprite;
+	import org.casalib.display.CasaMovieClip;
+	import caurina.transitions.Tweener;
+	import org.casalib.util.ObjectUtil;
+	import flash.events.Event;
+	import org.casalib.util.StageReference;
+	import flash.geom.Point;
+	import caurina.transitions.properties.FilterShortcuts;
 	
 	/* Métodos Funcionais:
 	 * 
@@ -304,9 +304,6 @@
 			
 			if (_custom_parent != null) { this.custom_parent = _custom_parent; }
 			
-			//_custom_height = __custom_height == 0 ? _custom_height : __custom_height;
-			//_custom_width  = __custom_width  == 0 ? _custom_width  : __custom_width;
-			
 			__custom_height == 0 ? _custom_height = _custom_height : _custom_height = __custom_height;
 			__custom_width  == 0 ? _custom_width  = _custom_width  : _custom_width  = __custom_width;
 			
@@ -314,6 +311,10 @@
 			
 			switch (_type) 
 			{
+				case Alignment.RIGHT:
+					StageReference.getStage().addEventListener(Event.ENTER_FRAME, rightResizeEnterFrame, false, 0, true);
+					break;
+					
 				case Alignment.LEFT:
 					StageReference.getStage().addEventListener(Event.ENTER_FRAME, leftResizeEnterFrame, false, 0, true);
 					break;
@@ -354,41 +355,48 @@
 		
 		public function removeAlign():void
 		{
-			align_set = false;
-			
-			switch (_align_type) 
+			if (align_set == true) 
 			{
-				case Alignment.LEFT:
-					StageReference.getStage().removeEventListener(Event.ENTER_FRAME, leftResizeEnterFrame);
-					break;
-					
-				case Alignment.CENTER:
-					StageReference.getStage().removeEventListener(Event.ENTER_FRAME, centerResizeEnterFrame);
-					break;
-					
-				case Alignment.STRETCH:
-					StageReference.getStage().removeEventListener(Event.ENTER_FRAME, stretchResizeEnterFrame);
-					break;
-					
-				case Alignment.TOP_LEFT:
-					StageReference.getStage().removeEventListener(Event.RESIZE, topleftResizeEnterFrame);
-					break;
-					
-				case Alignment.TOP_RIGHT:
-					StageReference.getStage().removeEventListener(Event.RESIZE, toprightResizeEnterFrame);
-					break;
-					
-				case Alignment.BOTTOM:
-					StageReference.getStage().removeEventListener(Event.ENTER_FRAME, bottomResizeEnterFrame);
-					break;
-					
-				case Alignment.BOTTOM_LEFT:
-					StageReference.getStage().removeEventListener(Event.RESIZE, bottomleftResizeEnterFrame);
-					break;
-					
-				case Alignment.BOTTOM_RIGHT:
-					StageReference.getStage().removeEventListener(Event.RESIZE, bottomrightResizeEnterFrame);
-					break;
+				align_set = false;
+				
+				switch (_align_type) 
+				{
+					case Alignment.RIGHT:
+						StageReference.getStage().removeEventListener(Event.ENTER_FRAME, rightResizeEnterFrame);
+						break;
+						
+					case Alignment.LEFT:
+						StageReference.getStage().removeEventListener(Event.ENTER_FRAME, leftResizeEnterFrame);
+						break;
+						
+					case Alignment.CENTER:
+						StageReference.getStage().removeEventListener(Event.ENTER_FRAME, centerResizeEnterFrame);
+						break;
+						
+					case Alignment.STRETCH:
+						StageReference.getStage().removeEventListener(Event.ENTER_FRAME, stretchResizeEnterFrame);
+						break;
+						
+					case Alignment.TOP_LEFT:
+						StageReference.getStage().removeEventListener(Event.RESIZE, topleftResizeEnterFrame);
+						break;
+						
+					case Alignment.TOP_RIGHT:
+						StageReference.getStage().removeEventListener(Event.RESIZE, toprightResizeEnterFrame);
+						break;
+						
+					case Alignment.BOTTOM:
+						StageReference.getStage().removeEventListener(Event.ENTER_FRAME, bottomResizeEnterFrame);
+						break;
+						
+					case Alignment.BOTTOM_LEFT:
+						StageReference.getStage().removeEventListener(Event.RESIZE, bottomleftResizeEnterFrame);
+						break;
+						
+					case Alignment.BOTTOM_RIGHT:
+						StageReference.getStage().removeEventListener(Event.RESIZE, bottomrightResizeEnterFrame);
+						break;
+				}
 			}
 		}
 		
@@ -477,14 +485,24 @@
 		private function leftResizeEnterFrame(e:Event):void    /// INACABADO (falta opçao smooth)
 		{
 			var zero_point:Point = new Point(0, 0);
+			var finalposition:Number = 0 + _h_padding;
 			//var zero_x:Number = parent.localToGlobal(zero_point).x
 			//var zero_y:Number = parent.localToGlobal(zero_point).y
 			
-			if (this.x != 0 + _h_padding) 
-			{
-				GoToPositionX(0 + _h_padding, 0.2)
-			}
-			//this.x = 0 + _h_padding;
+			if (this.x != finalposition) { GoToPositionX(finalposition, 0.2) }
+			
+			this.y = StageReference.getStage().stageHeight / 2 - _custom_height / 2;// - zero_y;
+		}
+		
+		private function rightResizeEnterFrame(e:Event):void    /// INACABADO (falta opçao smooth)
+		{
+			var zero_point:Point = new Point(0, 0);
+			var finalposition:Number = StageReference.getStage().stageWidth - _h_padding;
+			//var zero_x:Number = parent.localToGlobal(zero_point).x
+			//var zero_y:Number = parent.localToGlobal(zero_point).y
+			
+			if (this.x != finalposition) { GoToPositionX(finalposition, 0.2) }
+			
 			this.y = StageReference.getStage().stageHeight / 2 - _custom_height / 2;// - zero_y;
 		}
 		
@@ -597,21 +615,17 @@
 		/// //// //// //// //// RESOURCE MANAGEMENT
 		/// //// //// //// //// RESOURCE MANAGEMENT
 		
-		public function elasticDeath(duration:Number=0.5):void
+		public function dieWithBlurOutElastic(duration:Number=0.5):void
 		{
-			if (!using_filters) 	{ FilterShortcuts.init(); using_filters = true; }
-			
 			Tweener.addTween(this, 	{ alpha:0, _Blur_blurX:40, _Blur_blurY:40, time:duration, scaleX:1.3, scaleY:1.3, transition:"EaseInOutBack", onComplete:cleanMe } )
 		}
 		
-		public function blurOutAndDie(duration:Number=0.5):void
+		public function dieWithBlurOut(duration:Number=0.5):void
 		{
-			if (!using_filters) 	{ FilterShortcuts.init(); using_filters = true; }
-			
 			Tweener.addTween(this, 	{ alpha:0, _Blur_blurX:40, _Blur_blurY:40, time:duration, transition:"EaseOutSine", onComplete:cleanMe } )
 		}
 		
-		public function goodbye(duration:Number=NaN):void
+		public function die(duration:Number=NaN):void
 		{
 			Tweener.addTween(this, { alpha:0, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:cleanMe } )
 		}
