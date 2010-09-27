@@ -19,7 +19,6 @@
 	
 	import com.ab.apps.appgenerics.events.AppEvent;
 	import com.edigma.services.ServerCommunication;
-	import com.edigma.web.EdigmaCore;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;

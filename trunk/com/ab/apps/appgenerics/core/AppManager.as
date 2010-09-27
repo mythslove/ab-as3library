@@ -87,12 +87,17 @@
 		private var _please_wait_message_class:Class;
 		private var _please_wait_message_class_set:Boolean=false;
 		
+		/// CORE instance
+		private var _core:CORE;
+		
+		/// Vector Fonts Manager
+		private var _vectorFontsManager:VectorFontsManager;
+		
 		/// system ::: don't touch these
 		public var APP_INSTANCE:*;
 		private var _APP_CLASS:Class;
 		
-		private var _core:CORE;
-		private var _vectorFontsManager:VectorFontsManager;
+		/// singleton
 		private static var __singleton:AppManager;
 		
 		public function AppManager(applevel:Sprite, appClass:Class)
@@ -226,7 +231,7 @@
 		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APPLICATION LEVELS
 		
 		/// create objects in specific application levels
-		public function addChildToLevel(object:DisplayObject, level:String="MAIN", coordinates:Point=null):void
+		public function addChildToLevel(object:DisplayObject, level:String="MAIN", propsObj:Object=null):void
 		{
 			trace ("AppManager ::: addChildToLevel ::: LEVEL = " + level);
 			
@@ -234,7 +239,10 @@
 			{
 				if (object is DisplayObject)
 				{
-					if (coordinates != null)  { object.x = coordinates.x; object.y = coordinates.y; };
+					for (var property:String in propsObj)
+					{
+						if (object.hasOwnProperty(property))  { object[property] = propsObj[property]; }
+					}
 					
 					switch(level)
 					{
@@ -248,7 +256,7 @@
 						case "LOGGER":		_LOGGER_LEVEL.addChild(object);  		break;
 					}
 				}
-				else { trace ("ERROR: AppManager ::: addChildToLevel() -> PROVIDED OBJECT IS NOT DISPLAYOBJECT"); }
+				else { trace ("ERROR: AppManager ::: addChildToLevel() -> PROVIDED OBJECT IS NOT A 	DISPLAYOBJECT"); }
 			}
 			else { trace ("ERROR: AppManager ::: addChildToLevel() -> PROVIDED OBJECT IS NULL"); }
 		}

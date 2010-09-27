@@ -64,15 +64,13 @@
 		 * @param 	coordinates
 		 * @return	Nothing.
 		 */
-		public static function addChildToLevel(child:DisplayObject, level:String="MAIN", coordinates:Point=null):void
+		public static function addChildToLevel(child:DisplayObject, level:String="MAIN", propsObj:Object=null):void
 		{
 			if (child != null) 
 			{
 				if (child is DisplayObject) 
 				{
-					if (coordinates != null)   { child.x = coordinates.x; child.y = coordinates.y; }
-					
-					AppManager.singleton.addChildToLevel(child, level, coordinates);
+					AppManager.singleton.addChildToLevel(child, level, propsObj);
 				}
 				else { trace("< ERROR > COREApi ::: addChildToLevel() ::: PROVIDED OBJECT IS NOT A DISPLAYOBJECT");  }
 			}
@@ -251,6 +249,26 @@
 		public static function writeVectorText(_graphics:Graphics, _text:String, _font:String, _colour:uint=0x00ff00, _size:Number=24, _leading:Number=0, _x:Number=0, _y:Number=0, _kerning:Number=0):void
 		{
 			AppManager.singleton.writeVectorText(_graphics, _text, _font, _colour, _size, _leading, _x, _y, _kerning);
+		}
+		
+		/**
+		 * CORE instance acess
+		 * This method provides direct access to the central instance of CORE
+		 * @return	CORE instance.
+		 */
+		public static function core():CORE
+		{
+			return AppManager.singleton.core;
+		}
+		
+		/**
+		 * CORE instance acess
+		 * This method provides direct access to the central instance of CORE
+		 * @return	CORE instance.
+		 */
+		public static function stage():Stage
+		{
+			return StageReference.getStage();
 		}
 	}
 	

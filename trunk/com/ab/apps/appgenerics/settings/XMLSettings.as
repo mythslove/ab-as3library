@@ -1,61 +1,92 @@
 ﻿package com.ab.apps.appgenerics.settings
 {
 	///  flash
+	import com.ab.apps.appgenerics.core.COREApi;
 	import flash.events.Event;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
+	import flash.utils.Dictionary;
 	/// ab
-	import com.ab.apps.appgenerics.settings.*
+	//import com.ab.apps.appgenerics.settings.*
 	import com.ab.apps.appgenerics.events.AppEvent;
 	import com.ab.events.CentralEventSystem;
 	
 	public class XMLSettings 
 	{
 		private static var __singleton:XMLSettings
-		
-		/// generic
-		public var FULL_SCREEN:Boolean;
-		public var DEBUG_MODE:Boolean;
-		public var CONTENTS_PATH:String;
-		public var INACTIVITY_TIME:int;
-		public var XML_PATH:String;
-		public var MAIN_XML_FILE:String;
-		
-		/// project specific
-		//public var TITLE_ES:String;
-		//public var TITLE_EN:String;
-		//public var TITLE_PT:String;
+		private var _data:XML;
+		private var applicationSettings:Dictionary;
+		private var xmlLoader:URLLoader;
 		
 		public function XMLSettings()
 		{
 			setSingleton();
 			
-			load();
+			load("settings/settings.xml");
 		}
 		
-		private function load():void
+		private function load(source:String):void
 		{
-			XMLProperties.init("settings/settings.xml", settings_completeHandler);
+			xmlLoader = new URLLoader();
+			
+			xmlLoader.addEventListener(Event.COMPLETE, xmlLoader_CompleteHandler);
+			
+			xmlLoader.load(new URLRequest(source));
 		}
 		
-		private function settings_completeHandler(e:Event = null):void 
+		private function xmlLoader_CompleteHandler(e:Event):void 
 		{
-			// SETTINGS XML
+			_data = new XML(e.target.data);
+			_data.ignoreWhitespace = true;
 			
-			/// project specific
-			//TITLE_ES 					= XMLProperties.properties.TITLE_ES;
-			//TITLE_EN 					= XMLProperties.properties.TITLE_EN;
-			//TITLE_PT 					= XMLProperties.properties.TITLE_PT;
+			parseXMLData(_data);
+		}
+		
+		private function parseXMLData(value:XML):void
+		{
+			applicationSettings = new Dictionary();
 			
-			/// generic
-			if (XMLProperties.properties.DEBUG_MODE == "true")   { DEBUG_MODE = true;  };
-			if (XMLProperties.properties.DEBUG_MODE == "false")  { DEBUG_MODE = false; }
+			for each (var property:XML in value..property)
+			{
+				var applicationSettingName:String  = property.@id;
+				var applicationSettingValue:String = property.@value;
+				
+				applicationSettings[applicationSettingName] = applicationSettingValue;
+			}
 			
-			XML_PATH 					= XMLProperties.properties.XML_PATH;
-			MAIN_XML_FILE 				= XMLProperties.properties.MAIN_XML_FILE;
-			CONTENTS_PATH 				= XMLProperties.properties.CONTENTS_PATH;
-			INACTIVITY_TIME 			= XMLProperties.properties.INACTIVITY_TIME;
-			FULL_SCREEN 				= XMLProperties.properties.FULL_SCREEN;
-			
-			CentralEventSystem.singleton.dispatchEvent(new AppEvent(AppEvent.LOADED_SETTINGS, true));
+			COREApi.dispatchEvent(new AppEvent(AppEvent.LOADED_SETTINGS, ""));
+		}
+		
+		public function settingValue(id:String):*
+		{
+			switch (applicationSettings[id]) 
+			{
+				case "true":
+					return true;
+				break;
+				case "false":
+					return false;
+				break;
+				case null:
+					return null;
+				break;
+				default:
+					return applicationSettings[id];
+				break;
+			}
+			return ;
+		}
+		
+		public static function setting(id:String):*
+		{
+			if (__singleton == null) 
+			{ 
+				trace("XMLSettings ::: SINGLETON DOES NOT EXIST") 
+			}
+			else
+			{
+				return __singleton.settingValue(id);
+			}
 		}
 		
 		/// /////////////////////////////////////////////////////////////////////// SINGLETON START

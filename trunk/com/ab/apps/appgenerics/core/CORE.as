@@ -29,45 +29,46 @@
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import org.libspark.ui.SWFWheel;
 	
 	/// from other libs
 	import org.casalib.util.StageReference;
 	import net.hires.debug.Stats;
-	
-	/// edigma
-	import com.edigma.web.EdigmaCore;
-	//import com.edigma.services.ServerCommunication;
+	import org.libspark.ui.SWFWheel;
+	import com.addicted2flash.layout.component.Canvas;
 	
 	/// ab
 	import com.ab.events.CentralEventSystem;
 	import com.ab.log.Logger;
 	/// ab app generics
-	//import com.ab.apps.appgenerics.core.COREApi;
 	import com.ab.apps.appgenerics.events.AppEvent;
 	import com.ab.apps.appgenerics.core.AppManager;
 	import com.ab.apps.appgenerics.core.DataManager;
 	import com.ab.apps.appgenerics.core.ScreenSettings;
+	import com.ab.apps.appgenerics.settings.XMLSettings;
 	
 	public class CORE extends Sprite
 	{
-		private var _APPLICATION_CLASS:Class; /// <------- REQUIRED - DEFINES MAIN APPLICATION CLASS -> define this class in a class that extends CORE
+		/// application class
+		private var _APPLICATION_CLASS:Class; /// <------- REQUIRED - DEFINES MAIN APPLICATION CLASS -> set this class in the constructor of a class that extends CORE
 		
 		/// private
-		private var _appInfo:EdigmaCore;
+		private var _appInfo:XMLSettings;
 		private var _CentralEventSystem:CentralEventSystem;
 		private var _appLogger:Logger;
 		
-		/// public
+		/// services
 		//public var _serverCommunication:ServerCommunication;
+		
+		/// managers
 		public var appManager:AppManager;
 		public var dataManager:DataManager;
 		public var keyboardManager:KeyboardManager;
+		/// core levels
 		public var _appLevel:Sprite;
 		public var _loggerLevel:Sprite;
 		public var _statsLevel:Sprite;
-		
-		private var _loaderinfo_parameters:Object=new Object();
+		// loaderinfo parameters
+		//private var _loaderinfo_parameters:Object = new Object();
 		
 		public function CORE()
 		{
@@ -79,7 +80,7 @@
 			COREApi.addEventListener(AppEvent.LOADED_SETTINGS, loadedSettings, false, 0 , true);
 		}
 		
-		private function addedToStage(e:Event):void  {  "CORE added to stage"; }
+		private function addedToStage(e:Event):void { "CORE added to stage"; };
 		
 		public function init():void
 		{ 
@@ -94,7 +95,7 @@
 			_appLevel  				= new Sprite();
 			_loggerLevel			= new Sprite();
 			_statsLevel				= new Sprite();
-			_appInfo   				= new EdigmaCore();
+			_appInfo   				= new XMLSettings();
 			///_serverCommunication 	= new ServerCommunication();
 			
 			stage.addChildAt(_appLevel,    0);
@@ -106,7 +107,7 @@
 		{
 			trace ("CORE ::: step 2 ::: settings loaded");
 			
-			/// this setter is called after EdigmaCore finishes loading settings XML
+			/// this setter is called after XMLSettings finishes loading settings XML
 			COREApi.removeEventListener(AppEvent.LOADED_SETTINGS, loadedSettings);
 			
 			initMainVars();
@@ -124,12 +125,12 @@
 			keyboardManager = new KeyboardManager();
 			
 			/// data manager
-			dataManager 	= new DataManager(EdigmaCore.singleton.DATA_TYPE);
+			dataManager 	= new DataManager(XMLSettings.setting("DATA_TYPE"));
 			
-			if (EdigmaCore.singleton.DATA_TYPE == "XML") 
+			if (XMLSettings.setting("DATA_TYPE") == "XML") 
 			{
-				dataManager.xml_path 		= EdigmaCore.singleton.XML_PATH;
-				dataManager.main_xml_file	= EdigmaCore.singleton.MAIN_XML_FILE;
+				dataManager.xml_path 		= XMLSettings.setting("XML_PATH");
+				dataManager.main_xml_file	= XMLSettings.setting("MAIN_XML_FILE");
 			}
 			
 			dataManager.loadBaseData();
@@ -142,14 +143,12 @@
 			/// this setter is called after DataManager finishes loading base data
 			COREApi.removeEventListener(AppEvent.LOADED_DATA, loadedBaseData);
 			
-			trace ("CORE ::: step 4 ::: loaded Data, start AppManager");
-			
-			/// here the visual application actually starts
-			// a "start()" method will be called from the application class when it is ADDED_TO_STAGE
+			trace ("CORE ::: step 4 ::: loaded Data, start Application class");
+			/// a "start()" method will be called from the application class when it is ADDED_TO_STAGE
 			AppManager.singleton.addApplicationClassToStage();
 			
 			/// add extra tools on debug mode
-			if (EdigmaCore.singleton.DEBUG_MODE == true) 
+			if (XMLSettings.setting("DEBUG_MODE") == true) 
 			{
 				/// add stats analyser
 				var _stats:Stats	= new Stats();
@@ -170,14 +169,14 @@
 		public function set APPLICATION_CLASS(value:Class):void { _APPLICATION_CLASS = value; init();}
 		public function get APPLICATION_CLASS():Class 			{ return _APPLICATION_CLASS;  }
 		
-		public function get loaderinfo_parameters():Object { return _loaderinfo_parameters; }
+		/*public function get loaderinfo_parameters():Object { return _loaderinfo_parameters; }
 		
 		public function set loaderinfo_parameters(value:Object):void 
 		{
 			_loaderinfo_parameters = value;
 			
 			//AppManager.singleton.loaderinfo_parameters = loaderinfo_parameters;
-		}
+		}*/
 		
 	} 
 }
