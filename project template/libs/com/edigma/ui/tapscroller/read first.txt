@@ -1,0 +1,4 @@
+var scroller2:TapScroller = new TapScroller(content, _width, _height);
+scroller2.useVertical = true;
+scroller2.useHorizontal = false
+addChild(scroller2);
