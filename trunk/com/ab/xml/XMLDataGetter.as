@@ -1,4 +1,4 @@
-﻿package com.ab.apps.appgenerics.xml
+﻿package com.ab.xml
 {
 	/**
 	 * A simple class to get the data from a XML file
@@ -8,10 +8,12 @@
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
+	import flash.net.URLRequestHeader;
+	import flash.net.URLRequestMethod;
+	import flash.net.URLVariables;
 	
 	public class XMLDataGetter 
 	{
-		public var root_node_name:String;
 		private var return_function:Function;
 		
 		/// public
@@ -19,29 +21,24 @@
 		
 		public function XMLDataGetter()  { setSingleton(); };
 		
-		public function getDataXML(return_func:Function, xml_file_path:String="", root_node_name:String=""):void
+		public function getDataXML(return_func:Function, xml_file_path:String=""):void
 		{
 			//trace ("XMLDataGetter ::: xml_file_path = " + xml_file_path ); 
 			//trace ("XMLDataGetter ::: return_func = " + return_func ); 
 			
 			if (xml_file_path != "") 
 			{
-				//if (root_node_name != "") 
-				//{
-					return_function = return_func;
-					this.root_node_name = root_node_name;
-					
-					var xmlData:XML 		= new XML();
-					var xmlLoader:URLLoader = new URLLoader();
-					
-					xmlLoader.load(new URLRequest(xml_file_path));
-					
-					xmlLoader.addEventListener(Event.COMPLETE, onXMLDataReceived, false, 0, true);
-				//}
-				//else
-				//{
-					//trace("XMLDataGetter ::: XML ROOT NODE NAME HAS NOT BEEN SPECIFIED");
-				//}
+				return_function 			= return_func;
+				
+				var xmlLoader:URLLoader 	= new URLLoader();
+				var header:URLRequestHeader = new URLRequestHeader("pragma", "no-cache");
+				var request:URLRequest  	= new URLRequest(xml_file_path);
+				request.data 				= new URLVariables("name=lalala");
+				request.method 				= URLRequestMethod.POST;
+				
+				xmlLoader.load(new URLRequest(xml_file_path));
+				
+				xmlLoader.addEventListener(Event.COMPLETE, onXMLDataReceived, false, 0, true);
 			}
 			else
 			{

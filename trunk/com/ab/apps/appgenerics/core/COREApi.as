@@ -226,9 +226,9 @@
 		 * Retrieves XML data from given URL and returns the XML data object to a provided function
 		 * @return	Nothing.
 		 */
-		public static function getXMLdata(xml_path:String, return_function:Function, root_node:String="data"):void
+		public static function getXMLdata(xml_path:String, return_function:Function):void
 		{
-			XMLDataGetter.singleton.getDataXML(return_function, xml_path, root_node);
+			XMLDataGetter.singleton.getDataXML(return_function, xml_path);
 		}
 		
 		/**

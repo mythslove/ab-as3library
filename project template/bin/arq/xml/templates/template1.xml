@@ -1,4 +1,0 @@
-<template name="template1"> 
-  <slot size="2" type="image"/> 
-  <slot size="4" type="video"/> 
-</template>
