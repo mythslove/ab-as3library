@@ -6,6 +6,7 @@ package {
 
 
 		public function Menu() {
+			//
 		}
 
 		public function Attach(o:MenuObserver):void {
