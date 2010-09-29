@@ -6,12 +6,14 @@
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.utils.Dictionary;
+	import flash.utils.flash_proxy;
+	import flash.utils.Proxy;
 	/// ab
 	//import com.ab.apps.appgenerics.settings.*
 	import com.ab.apps.appgenerics.events.AppEvent;
 	import com.ab.events.CentralEventSystem;
 	
-	public class XMLSettings 
+	dynamic public class XMLSettings extends Proxy
 	{
 		private static var __singleton:XMLSettings
 		private var _data:XML;
@@ -77,16 +79,24 @@
 			return ;
 		}
 		
-		public static function setting(id:String):*
+		/// /////////////////////////////////////////////////////////////////////// PROXY
+		/// /////////////////////////////////////////////////////////////////////// PROXY
+		
+		override flash_proxy function getProperty(name:*):*
 		{
-			if (__singleton == null) 
-			{ 
-				trace("XMLSettings ::: SINGLETON DOES NOT EXIST") 
-			}
-			else
-			{
-				return __singleton.settingValue(id);
-			}
+			return __singleton.settingValue(name);
+		}
+		
+		override flash_proxy function setProperty(name:*, value:*):void
+		{
+			applicationSettings[name] = value;
+		}
+		
+		override flash_proxy function callProperty(name:*, ... rest):*
+		{
+			var _item:Object = new Object();
+			
+			return _item[name].apply(_item, rest);
 		}
 		
 		/// /////////////////////////////////////////////////////////////////////// SINGLETON START
@@ -98,9 +108,9 @@
 			__singleton = this
 		}
 		
-		public static function get singleton():XMLSettings
+		public static function get setting():XMLSettings
 		{
-			if (__singleton == null) { throw new Error("XMLSettings ::: SINGLETON DOES NOT EXIST") }
+			if (__singleton == null) { __singleton = new XMLSettings() }
 			return __singleton;
 		}
 		

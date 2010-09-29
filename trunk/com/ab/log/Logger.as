@@ -46,7 +46,6 @@
 	
 	public class Logger extends Sprite
 	{
-		
 		///singleton
 		private static var __singleton:Logger;
 		
@@ -55,9 +54,6 @@
 		private var _totalwidth:int    	= 200;
 		private var _totalheight:int   	= 380;
 		private var _init_x:Number		= 50;
-		private var _init_y:Number		= 50;
-		private var _last_x:Number		= 50;
-		private var _last_y:Number		= 50;
 		
 		/// public options
 		private var _start_visible:Boolean;
@@ -75,6 +71,13 @@
 		
 		/// keyboard
 		protected var _key:Key;
+		
+		///system
+		private var _init_y:Number		= 50;
+		private var _last_x:Number		= 50;
+		private var _last_y:Number		= 50;
+		private var _startdrag_x:Number;
+		private var _startdrag_y:Number;
 		
 		public function Logger() 
 		{
@@ -151,6 +154,9 @@
 				_last_x = this.x;
 				_last_y = this.y;
 				
+				_startdrag_x = this.mouseX;
+				_startdrag_y = this.mouseY;
+				
 				StageReference.getStage().addEventListener(MouseEvent.MOUSE_MOVE, temporaryMouseMoveHandler, false, 0, true);
 				
 				_dragging = true;
@@ -165,7 +171,7 @@
 				
 				StageReference.getStage().removeEventListener(MouseEvent.MOUSE_MOVE, temporaryMouseMoveHandler);
 				
-				if (this.x < 0 || this.x > (StageReference.getStage().stageWidth-10) || this.y < -(this.height / 2) || this.y > StageReference.getStage().stageHeight)
+				if (this.x < -this._bg.width + 20 || this.x > StageReference.getStage().stageWidth - 20 || this.y < -(this._bg.height)+40 || this.y > StageReference.getStage().stageHeight-20)
 				{
 					Tweener.addTween(this, { x:_last_x, y:_last_y, time:0.5 } );
 				}
@@ -174,8 +180,8 @@
 		
 		private function temporaryMouseMoveHandler(e:MouseEvent):void 
 		{
-			var new_x:Number = StageReference.getStage().mouseX - this.width / 2;
-			var new_y:Number = StageReference.getStage().mouseY - 10;
+			var new_x:Number = StageReference.getStage().mouseX - _startdrag_x;
+			var new_y:Number = StageReference.getStage().mouseY - _startdrag_y;
 			
 			Tweener.addTween(this, { x:new_x, y:new_y, time:0.5 } );
 		}

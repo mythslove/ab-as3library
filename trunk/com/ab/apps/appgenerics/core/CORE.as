@@ -63,12 +63,11 @@
 		public var appManager:AppManager;
 		public var dataManager:DataManager;
 		public var keyboardManager:KeyboardManager;
+		
 		/// core levels
 		public var _appLevel:Sprite;
 		public var _loggerLevel:Sprite;
 		public var _statsLevel:Sprite;
-		// loaderinfo parameters
-		//private var _loaderinfo_parameters:Object = new Object();
 		
 		public function CORE()
 		{
@@ -105,7 +104,7 @@
 		
 		private function loadedSettings(e:AppEvent):void
 		{
-			trace ("CORE ::: step 2 ::: settings loaded");
+			trace ("CORE ::: step 2 ::: loadedSettings()");
 			
 			/// this setter is called after XMLSettings finishes loading settings XML
 			COREApi.removeEventListener(AppEvent.LOADED_SETTINGS, loadedSettings);
@@ -124,16 +123,13 @@
 			/// keyboard manager
 			keyboardManager = new KeyboardManager();
 			
-			/// data manager
-			dataManager 	= new DataManager(XMLSettings.setting("DATA_TYPE"));
+			/// load XML/AMF data
 			
-			if (XMLSettings.setting("DATA_TYPE") == "XML") 
+			if (XMLSettings.setting.DATA_TYPE == "XML") 
 			{
-				dataManager.xml_path 		= XMLSettings.setting("XML_PATH");
-				dataManager.main_xml_file	= XMLSettings.setting("MAIN_XML_FILE");
+				DataManager.singleton.xml_path 		= XMLSettings.setting.XML_PATH;
+				DataManager.singleton.main_xml_file = XMLSettings.setting.XML_PATH + XMLSettings.setting.MAIN_XML_FILE;
 			}
-			
-			dataManager.loadBaseData();
 		}
 		
 		private function loadedBaseData(e:AppEvent):void
@@ -148,7 +144,7 @@
 			AppManager.singleton.addApplicationClassToStage();
 			
 			/// add extra tools on debug mode
-			if (XMLSettings.setting("DEBUG_MODE") == true) 
+			if (XMLSettings.setting.DEBUG_MODE == true) 
 			{
 				/// add stats analyser
 				var _stats:Stats	= new Stats();
@@ -163,20 +159,13 @@
 				_statsLevel.addChild(_stats);
 				_loggerLevel.addChild(_appLogger);
 			}
+			
+			if (XMLSettings.setting.FULL_SCREEN == true)  { COREApi.setFullscreen(); };
 		}
 		
 		/// setting the application outside will call the ini() method
 		public function set APPLICATION_CLASS(value:Class):void { _APPLICATION_CLASS = value; init();}
 		public function get APPLICATION_CLASS():Class 			{ return _APPLICATION_CLASS;  }
-		
-		/*public function get loaderinfo_parameters():Object { return _loaderinfo_parameters; }
-		
-		public function set loaderinfo_parameters(value:Object):void 
-		{
-			_loaderinfo_parameters = value;
-			
-			//AppManager.singleton.loaderinfo_parameters = loaderinfo_parameters;
-		}*/
 		
 	} 
 }
