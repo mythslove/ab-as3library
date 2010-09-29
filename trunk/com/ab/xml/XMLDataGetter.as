@@ -62,7 +62,9 @@
 		}
 		public static function get singleton():XMLDataGetter
 		{
-			if (__singleton == null) { throw new Error("XMLDataGetter ::: SINGLETON DOES NOT EXIST (CORE FAILED TO INITIALIZE?)") }; return __singleton;
+			if (__singleton == null) { __singleton = new XMLDataGetter() }
+			
+			return __singleton;
 		}
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END
 		
