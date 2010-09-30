@@ -6,21 +6,15 @@
 	* Esta classe reúne todos os métodos essenciais das classes centrais numa API prática
 	*/
 	
-	import com.ab.apps.appgenerics.core.DataManager;
 	import com.ab.apps.appgenerics.core.AppManager;
-	import com.ab.apps.appgenerics.core.ScreenSettings;
-	import com.ab.apps.appgenerics.core.InactivityManager;
-	import com.ab.apps.appgenerics.events.AppEvent;
-	import com.ab.xml.XMLDataGetter;
-	import com.ab.events.CentralEventSystem;
 	import com.ab.display.FloatWarning;
+	import com.ab.events.CentralEventSystem;
+	import com.ab.log.Logger;
+	import com.ab.xml.XMLDataGetter;
 	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.Stage;
 	import flash.display.StageDisplayState;
-	import flash.events.Event;
-	import flash.geom.Point;
-	import com.ab.log.Logger;
 	import org.casalib.util.StageReference;
 	
 	public class COREApi
@@ -256,17 +250,17 @@
 		 * This method provides direct access to the central instance of CORE
 		 * @return	CORE instance.
 		 */
-		public static function core():CORE
+		public static function get core():CORE
 		{
 			return AppManager.singleton.core;
 		}
 		
 		/**
-		 * CORE instance acess
-		 * This method provides direct access to the central instance of CORE
-		 * @return	CORE instance.
+		 * Stage acess
+		 * This method provides direct access to the stage
+		 * @return	stage.
 		 */
-		public static function stage():Stage
+		public static function get stage():Stage
 		{
 			return StageReference.getStage();
 		}
