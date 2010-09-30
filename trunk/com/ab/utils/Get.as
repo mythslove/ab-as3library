@@ -33,7 +33,7 @@
 		 * @param 	withHours
 		 * @return	The time code as a string.
 		 */
-		function getTimeCodeFromMilliseconds( milliseconds:Number, delimeter:String = ":", withHours:Boolean = false ):String
+		public static function getTimeCodeFromMilliseconds( milliseconds:Number, delimeter:String = ":", withHours:Boolean = false ):String
 		{
 			var posHours:Number = Math.floor( milliseconds / 1000 / 60 / 60 );
 			var posMins:Number = Math.floor( milliseconds / 1000 / 60 );
@@ -87,7 +87,7 @@
 		/// returns an array of all values from an object
 		public static function ValuesFromObject(_object:Object):Array
 		{
-			var return_array = new Array();
+			var return_array:Array = new Array();
 			
 			for each (var value:* in _object)
 			{
@@ -121,7 +121,7 @@
 			_custom_resize_width  = isNaN(custom_width)  ? 0 : custom_width;
 			_custom_resize_height = isNaN(custom_height) ? 0 : custom_height;
 			
-			var bitmaploader = new Loader();
+			var bitmaploader:Loader = new Loader();
 			_bitmaploader = bitmaploader;
 			
 			bitmaploader.load(new URLRequest(path_to_image));
@@ -208,7 +208,7 @@
 		/**
 		* Maximum measureable dimensions of the supplied object: 2000x2000.
 		*/
-		function visibleHeight(o:DisplayObject):Number 
+		public static function visibleHeight(o:DisplayObject):Number 
 		{
 		  var bitmapDataSize:int = 2000;
 		  var bounds:Rectangle;
@@ -222,7 +222,7 @@
 		/**
 		* Maximum measureable dimensions of the supplied object: 2000x2000.
 		*/
-		function visibleWidth(o:DisplayObject):Number 
+		public static function visibleWidth(o:DisplayObject):Number 
 		{
 		  var bitmapDataSize:int = 2000;
 		  var bounds:Rectangle;
