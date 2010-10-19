@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+	
+	<!--  PROJECT SPECIFIC --> 
+	<!--  PROJECT SPECIFIC --> 
+	<!--  PROJECT SPECIFIC --> 
+	
+	<!--  GENERIC  --> 
+	<!--  GENERIC  --> 
+	<!--  GENERIC  --> 
+	
+	<!--  modo DEBUG - "true" or "false" --> 
+	<property id="DEBUG_MODE" value="true"/>
+	
+	<!--  usar o RATO - "true" or "false" --> 
+	<property id="USE_MOUSE" value="false"/>
+	
+	<!--  fullscreen - "true" ou "false" --> 
+	<property id="FULL_SCREEN" value="false"/>
+	
+	<!--  caminho para os conteudos --> 
+	<property id="CONTENTS_PATH" value="arq/img/"/>
+	
+	<!-- fonte de informação: XML ou AMF -->
+	<property id="DATA_TYPE" value="XML"/>
+	
+	<!-- caminho para os ficheiros XML de conteúdos -->
+	<property id="XML_PATH" value="xml/"/>
+	
+	<!-- caminho para o ficheiro XML de conteúdos principal -->
+	<property id="MAIN_XML_FILE" value="maindata.xml"/>
+	
+	<!-- tempo para detectar inactividade - em milisegundos -->
+	<property id="INACTIVITY_TIME" value="5000"/>
+	
+</settings>
