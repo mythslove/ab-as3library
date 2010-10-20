@@ -34,7 +34,6 @@
 	import org.casalib.util.StageReference;
 	import net.hires.debug.Stats;
 	import org.libspark.ui.SWFWheel;
-	import com.addicted2flash.layout.component.Canvas;
 	
 	/// ab
 	import com.ab.events.CentralEventSystem;

@@ -44,16 +44,16 @@
 		private var _align_type:String	 	= "";
 		private var _h_padding:int 		 	= 0;
 		private var _v_padding:int 		 	= 0;
+		private var _custom_height:Number 	= 0;
+		private var _custom_width:Number  	= 0;
 		
-		public var rp:Point; // registration point
+		public var rp:Point; /// registration point
 		
 		private var _align_scope:String  	= "global";
 		private var custom_parent:*;
 		private var align_set:Boolean 	 	= false;
 		
-		public var _EASING_SPEED:int 	 	= 8;
-		public var _custom_height:Number 	= 0;
-		public var _custom_width:Number  	= 0;
+		private var _easing_speed:int 	 	= 8;
 		public var using_filters:Boolean	= false;
 		
 		public function ABSprite() 
@@ -81,6 +81,13 @@
 			{
 				throw new Error("StageReference not initialized: Use StageReference.setStage(this.stage); in the project's root")
 			}
+			
+			start();
+		}
+		
+		public function start():void
+		{
+			/// override this function in order to get some action after this enters the stage
 		}
 		
 		/// dynamic movie features
@@ -171,23 +178,26 @@
 		/// //// //// //// //// GETTERS / SETTERS //// //// //// //// ////
 		/// //// //// //// //// GETTERS / SETTERS //// //// //// //// ////
 		
-		public function get v_padding():int 					{ return _v_padding;      }
-		public function set v_padding(value:int):void 			{ _v_padding = value; 	  }
+		public function get easing_speed():int 					{ return _easing_speed;   };
+		public function set easing_speed(value:int):void  		{ _easing_speed = value;  };
 		
-		public function get h_padding():int 					{ return _h_padding;      }
-		public function set h_padding(value:int):void 			{ _h_padding = value;     }
+		public function get v_padding():int 					{ return _v_padding;      };
+		public function set v_padding(value:int):void 			{ _v_padding = value; 	  };
 		
-		public function get custom_height():Number 				{ return _custom_height;  }
-		public function set custom_height(value:Number):void  	{ _custom_height = value; onCustomHeightChange(); }
+		public function get h_padding():int 					{ return _h_padding;      };
+		public function set h_padding(value:int):void 			{ _h_padding = value;     };
 		
-		public function get custom_width():Number 				{ return _custom_width;   }
-		public function set custom_width(value:Number):void  	{ _custom_width = value;  onCustomWidthChange();  }
+		public function get custom_height():Number 				{ return _custom_height;  };
+		public function set custom_height(value:Number):void  	{ _custom_height = value; onCustomHeightChange(); };
 		
-		public function get align_type():String 				{ return _align_type; 	  }
-		public function set align_type(value:String):void  		{ _align_type = value; 	  }
+		public function get custom_width():Number 				{ return _custom_width;   };
+		public function set custom_width(value:Number):void  	{ _custom_width = value;  onCustomWidthChange();  };
 		
-		public function onCustomWidthChange():void 				{ };
-		public function onCustomHeightChange():void 			{ };
+		public function get align_type():String 				{ return _align_type; 	  };
+		public function set align_type(value:String):void  		{ _align_type = value; 	  };
+		
+		public function onCustomWidthChange():void 				{ }; /// override to use
+		public function onCustomHeightChange():void 			{ }; /// override to use
 		
 		/// FORCE WHOLE PIXEL
 		/// FORCE WHOLE PIXEL
@@ -444,8 +454,8 @@
 			
 			if (_smooth_align == true)
 			{
-				if (this.x != final_x)  { this.x += Math.round((final_x - this.x) / _EASING_SPEED); }
-				if (this.y != final_y)  { this.y += Math.round((final_y - this.y) / _EASING_SPEED); }
+				if (this.x != final_x)  { this.x += Math.round((final_x - this.x) / _easing_speed); }
+				if (this.y != final_y)  { this.y += Math.round((final_y - this.y) / _easing_speed); }
 			}
 			else
 			{
