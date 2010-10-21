@@ -6,15 +6,15 @@
 	* TODO: Move AppLevelsManagement to CORE
 	*/
 	
-	import com.ab.apps.appgenerics.AppLevelsManagement;
-	import com.ab.apps.appgenerics.lang.I18N;
+	import com.ab.core.AppLevelsManager;
+	import com.ab.lang.I18N;
 	import org.casalib.util.StageReference;
 	
 	import com.ab.apps.abcms.mainmodules.menu.ABCMSMainMenu;
 	import com.ab.apps.abcms.mainmodules.session.UserManager;
 	import com.ab.apps.abcms.mainmodules.session.LoginWindow;
 	import com.ab.apps.abcms.mainmodules.configurators.ABCMSSiteTextFormats;
-	import com.ab.apps.appgenerics.level_bg.Background;
+	import com.ab.apps.appobjects.Background;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;

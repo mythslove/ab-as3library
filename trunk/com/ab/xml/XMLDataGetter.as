@@ -1,7 +1,7 @@
 ﻿package com.ab.xml
 {
 	/**
-	 * A simple class to get the data from a XML file
+	* A simple class to get the data from a XML file
 	* @author ABº
 	*/
 	
