@@ -27,15 +27,12 @@ package com.ab.apps.wpflashblog
 		
 		private function getposthandler(result:Object):void
 		{
-			private function handleAmfResult(result:Object):void 
+			for (var prop:* in result) 
 			{
-				for (var prop:* in result) 
-				{
-					trace("myObject." + prop + " = " + result[prop]);
-				}
-				
-				trace(result, result as Array);
+				trace("myObject." + prop + " = " + result[prop]);
 			}
+			
+			trace(result, result as Array);
 		}
 		
 	}

@@ -8,9 +8,9 @@ package
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	
-	import com.ab.apps.appgenerics.core.COREApi;
-	import com.ab.apps.appgenerics.settings.XMLSettings;
-	import com.ab.apps.appgenerics.applicationbase.ABApplicationBase;
+	import com.ab.core.COREApi;
+	import com.ab.settings.XMLSettings;
+	import com.ab.appobjects.applicationbase.ABApplicationBase;
 	
 	public class ApplicationTest extends ABApplicationBase
 	{

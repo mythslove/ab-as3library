@@ -1,10 +1,11 @@
 package com.ab.core
+{
 	/**
 	* @author ABº
 	*/
 	
-	import com.ab.apps.appgenerics.core.AppMode;
-	import com.ab.apps.appgenerics.events.AppEvent;
+	import com.ab.core.AppMode;
+	import com.ab.events.AppEvent;
 	import com.ab.events.CentralEventSystem;
 	
 	public class AppModesManager extends Object
