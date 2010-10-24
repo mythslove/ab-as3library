@@ -4,29 +4,29 @@
 <flex-config>
   <target-player>10.0.0</target-player>
   <compiler>
-    <define>
+    <define append="true">
       <name>CONFIG::debug</name>
       <value>true</value>
     </define>
-    <define>
+    <define append="true">
       <name>CONFIG::release</name>
       <value>false</value>
     </define>
-    <define>
+    <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'21-10-2010'</value>
+      <value>'23-10-2010'</value>
     </define>
     <source-path append="true">
-      <path-element>C:\Documents and Settings\abrandao\Desktop\ab\project template\src</path-element>
-      <path-element>C:\Documents and Settings\abrandao\Desktop\ab\project template\libs</path-element>
+      <path-element>C:\Users\ABº\Desktop\ab\project template\src</path-element>
+      <path-element>C:\Users\ABº\Desktop\ab\project template\libs</path-element>
       <path-element>C:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>C:\Documents and Settings\abrandao\Desktop\ab\project template\lib\assets.swc</path-element>
+      <path-element>C:\Users\ABº\Desktop\ab\project template\lib\assets.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>C:\Documents and Settings\abrandao\Desktop\ab\project template\src\AppCore.as</path-element>
+    <path-element>C:\Users\ABº\Desktop\ab\project template\src\AppCore.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>30</default-frame-rate>

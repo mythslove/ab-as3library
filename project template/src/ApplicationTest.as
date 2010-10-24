@@ -27,7 +27,7 @@ package
 			
 			var flashblog:FlashBlog = new FlashBlog();
 			
-			COREApi.addChildToLevel(flashblog, COREApi.LEVEL_MAIN);
+			FlashBlog.start();
 		}
 	}
 }

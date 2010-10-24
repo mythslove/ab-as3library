@@ -6,35 +6,36 @@ package com.ab.apps.wpflashblog
 	* FlashPressBridge.singleton.getPostByID(getposthandler, 40);
 	*/
 	
+	import com.ab.appobjects.Background;
+	import com.ab.core.COREApi;
+	
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
-	public class FlashBlog extends Sprite
+	public class FlashBlog extends Object
 	{
 		private var main_window:MainWindow;
 		private var main_footer:MainFooter;
+		private var background:ABBlogBackground;
 		
 		public function FlashBlog() 
 		{
-			this.addEventListener(Event.ADDED_TO_STAGE, addedHandler);
-		}
-		
-		private function addedHandler(e:Event):void 
-		{
-			removeEventListener(Event.ADDED_TO_STAGE, addedHandler);
 			
-			start();
 		}
 		
-		private function start():void
+		public function start():void
 		{
 			/// construir a MainWindow
 			main_window = new MainWindow();
-			this.addChild(main_window);
+			COREApi.addChildToLevel(main_window, COREApi.LEVEL_MAIN);
 			
 			/// construir o Mainfooter
 			main_footer = new MainFooter();
-			this.addChild(main_footer);
+			COREApi.addChildToLevel(main_footer, COREApi.LEVEL_MAIN);
+			
+			/// construir o background
+			background = new Background(ABBlogBackground);
+			COREApi.addChildToLevel(background, COREApi.LEVEL_MAIN);
 		}
 		
 	}
