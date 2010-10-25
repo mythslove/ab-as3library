@@ -4,11 +4,10 @@
 	* @author ABº
 	*/
 	
-	//import com.ab.apps.appgenerics.core.COREApi;
 	//import com.ab.log.ABLogger;
 	import caurina.transitions.Tweener;
-	import com.ab.apps.appgenerics.core.COREApi;
-	import com.ab.apps.appgenerics.events.ItemEvent;
+	import com.ab.core.COREApi;
+	import com.ab.events.ItemEvent;
 	import com.ab.events.CentralEventSystem;
 	import com.ab.utils.Make;
 	import com.ab.utils.Move;

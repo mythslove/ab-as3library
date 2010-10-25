@@ -8,6 +8,7 @@
 	import com.ab.display.utils.Alignment;
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
+	import flash.display.Stage;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import org.casalib.display.CasaSprite;
@@ -54,6 +55,7 @@
 		private var align_set:Boolean 	 	= false;
 		
 		private var _easing_speed:int 	 	= 8;
+		private var _stage:Stage;
 		public var using_filters:Boolean	= false;
 		
 		public function ABSprite() 
@@ -77,10 +79,7 @@
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
-			if (StageReference.getStage() == null) 
-			{
-				throw new Error("StageReference not initialized: Use StageReference.setStage(this.stage); in the project's root")
-			}
+			_stage = stage;
 			
 			start();
 		}
@@ -322,42 +321,42 @@
 			switch (_type) 
 			{
 				case Alignment.RIGHT:
-					StageReference.getStage().addEventListener(Event.ENTER_FRAME, rightResizeEnterFrame, false, 0, true);
+					_stage.addEventListener(Event.ENTER_FRAME, rightResizeEnterFrame, false, 0, true);
 					break;
 					
 				case Alignment.LEFT:
-					StageReference.getStage().addEventListener(Event.ENTER_FRAME, leftResizeEnterFrame, false, 0, true);
+					_stage.addEventListener(Event.ENTER_FRAME, leftResizeEnterFrame, false, 0, true);
 					break;
 					
 				case Alignment.CENTER:
-					StageReference.getStage().addEventListener(Event.ENTER_FRAME, centerResizeEnterFrame, false, 0, true);
+					_stage.addEventListener(Event.ENTER_FRAME, centerResizeEnterFrame, false, 0, true);
 					break;
 					
 				case Alignment.STRETCH:
-					StageReference.getStage().addEventListener(Event.ENTER_FRAME, stretchResizeEnterFrame, false, 0, true);
+					_stage.addEventListener(Event.ENTER_FRAME, stretchResizeEnterFrame, false, 0, true);
 					break;
 					
 				case Alignment.TOP_LEFT:
-					StageReference.getStage().addEventListener(Event.RESIZE, topleftResizeEnterFrame, false, 0, true);
+					_stage.addEventListener(Event.RESIZE, topleftResizeEnterFrame, false, 0, true);
 					topleftResizeEnterFrame(new Event(Event.RESIZE))
 					break;
 					
 				case Alignment.TOP_RIGHT:
-					StageReference.getStage().addEventListener(Event.RESIZE, toprightResizeEnterFrame, false, 0, true);
+					_stage.addEventListener(Event.RESIZE, toprightResizeEnterFrame, false, 0, true);
 					toprightResizeEnterFrame(new Event(Event.RESIZE))
 					break;
 					
 				case Alignment.BOTTOM:
-					StageReference.getStage().addEventListener(Event.ENTER_FRAME, bottomResizeEnterFrame, false, 0, true);
+					_stage.addEventListener(Event.ENTER_FRAME, bottomResizeEnterFrame, false, 0, true);
 					break;
 					
 				case Alignment.BOTTOM_LEFT:
-					StageReference.getStage().addEventListener(Event.RESIZE, bottomleftResizeEnterFrame, false, 0, true);
+					_stage.addEventListener(Event.RESIZE, bottomleftResizeEnterFrame, false, 0, true);
 					bottomleftResizeEnterFrame(new Event(Event.RESIZE))
 					break;
 					
 				case Alignment.BOTTOM_RIGHT:
-					StageReference.getStage().addEventListener(Event.RESIZE, bottomrightResizeEnterFrame, false, 0, true);
+					_stage.addEventListener(Event.RESIZE, bottomrightResizeEnterFrame, false, 0, true);
 					bottomrightResizeEnterFrame(new Event(Event.RESIZE))
 					break;
 			}
@@ -372,39 +371,39 @@
 				switch (_align_type) 
 				{
 					case Alignment.RIGHT:
-						StageReference.getStage().removeEventListener(Event.ENTER_FRAME, rightResizeEnterFrame);
+						_stage.removeEventListener(Event.ENTER_FRAME, rightResizeEnterFrame);
 						break;
 						
 					case Alignment.LEFT:
-						StageReference.getStage().removeEventListener(Event.ENTER_FRAME, leftResizeEnterFrame);
+						_stage.removeEventListener(Event.ENTER_FRAME, leftResizeEnterFrame);
 						break;
 						
 					case Alignment.CENTER:
-						StageReference.getStage().removeEventListener(Event.ENTER_FRAME, centerResizeEnterFrame);
+						_stage.removeEventListener(Event.ENTER_FRAME, centerResizeEnterFrame);
 						break;
 						
 					case Alignment.STRETCH:
-						StageReference.getStage().removeEventListener(Event.ENTER_FRAME, stretchResizeEnterFrame);
+						_stage.removeEventListener(Event.ENTER_FRAME, stretchResizeEnterFrame);
 						break;
 						
 					case Alignment.TOP_LEFT:
-						StageReference.getStage().removeEventListener(Event.RESIZE, topleftResizeEnterFrame);
+						_stage.removeEventListener(Event.RESIZE, topleftResizeEnterFrame);
 						break;
 						
 					case Alignment.TOP_RIGHT:
-						StageReference.getStage().removeEventListener(Event.RESIZE, toprightResizeEnterFrame);
+						_stage.removeEventListener(Event.RESIZE, toprightResizeEnterFrame);
 						break;
 						
 					case Alignment.BOTTOM:
-						StageReference.getStage().removeEventListener(Event.ENTER_FRAME, bottomResizeEnterFrame);
+						_stage.removeEventListener(Event.ENTER_FRAME, bottomResizeEnterFrame);
 						break;
 						
 					case Alignment.BOTTOM_LEFT:
-						StageReference.getStage().removeEventListener(Event.RESIZE, bottomleftResizeEnterFrame);
+						_stage.removeEventListener(Event.RESIZE, bottomleftResizeEnterFrame);
 						break;
 						
 					case Alignment.BOTTOM_RIGHT:
-						StageReference.getStage().removeEventListener(Event.RESIZE, bottomrightResizeEnterFrame);
+						_stage.removeEventListener(Event.RESIZE, bottomrightResizeEnterFrame);
 						break;
 				}
 			}
@@ -436,20 +435,20 @@
 			
 			if (_custom_width != 0) 
 			{
-				final_x = (StageReference.getStage().stageWidth / 2) - (_custom_width / 2) - zero_x;
+				final_x = (_stage.stageWidth / 2) - (_custom_width / 2) - zero_x;
 			}
 			else
 			{
-				final_x = (StageReference.getStage().stageWidth / 2) - (this.width / 2) - zero_x;
+				final_x = (_stage.stageWidth / 2) - (this.width / 2) - zero_x;
 			}
 			
 			if (_custom_height != 0) 
 			{
-				final_y = (StageReference.getStage().stageHeight / 2) - (_custom_height / 2) - zero_y;
+				final_y = (_stage.stageHeight / 2) - (_custom_height / 2) - zero_y;
 			}
 			else
 			{
-				final_y = (StageReference.getStage().stageHeight / 2) - (this.height / 2) - zero_y;
+				final_y = (_stage.stageHeight / 2) - (this.height / 2) - zero_y;
 			}
 			
 			if (_smooth_align == true)
@@ -472,8 +471,8 @@
 			
 			this.x = -zero_x - 50
 			this.y = -zero_y - 50
-			this.height = StageReference.getStage().stageHeight + 100
-			this.width = StageReference.getStage().stageWidth + 100
+			this.height = _stage.stageHeight + 100
+			this.width = _stage.stageWidth + 100
 		}
 		
 		private function topleftResizeEnterFrame(e:Event):void    // INACABADO (falta opçao smooth)
@@ -501,19 +500,19 @@
 			
 			if (this.x != finalposition) { GoToPositionX(finalposition, 0.2) }
 			
-			this.y = StageReference.getStage().stageHeight / 2 - _custom_height / 2;// - zero_y;
+			this.y = _stage.stageHeight / 2 - _custom_height / 2;// - zero_y;
 		}
 		
 		private function rightResizeEnterFrame(e:Event):void    /// INACABADO (falta opçao smooth)
 		{
 			var zero_point:Point = new Point(0, 0);
-			var finalposition:Number = StageReference.getStage().stageWidth - _h_padding;
+			var finalposition:Number = _stage.stageWidth - _h_padding;
 			//var zero_x:Number = parent.localToGlobal(zero_point).x
 			//var zero_y:Number = parent.localToGlobal(zero_point).y
 			
 			if (this.x != finalposition) { GoToPositionX(finalposition, 0.2) }
 			
-			this.y = StageReference.getStage().stageHeight / 2 - _custom_height / 2;// - zero_y;
+			this.y = _stage.stageHeight / 2 - _custom_height / 2;// - zero_y;
 		}
 		
 		private function toprightResizeEnterFrame(e:Event):void     /// INACABADO (falta opçao smooth)
@@ -528,7 +527,7 @@
 				zero_y = parent.localToGlobal(zero_point).y;				
 			}
 			
-			this.x = StageReference.getStage().stageWidth - _h_padding - zero_x
+			this.x = _stage.stageWidth - _h_padding - zero_x
 			this.y = -zero_y + _v_padding
 		}
 		
@@ -551,7 +550,7 @@
 				}
 				
 				this.x = -zero_x + _h_padding;
-				this.y = StageReference.getStage().stageHeight - this.height - _v_padding - zero_y;
+				this.y = _stage.stageHeight - this.height - _v_padding - zero_y;
 			}
 			
 			if (_align_scope == "parent") 
@@ -585,7 +584,7 @@
 			}
 			
 			this.x = -zero_x + _h_padding;
-			this.y = StageReference.getStage().stageHeight - this.height - _v_padding - zero_y;
+			this.y = _stage.stageHeight - this.height - _v_padding - zero_y;
 		}
 		
 		private function bottomrightResizeEnterFrame(e:Event):void  /// INACABADO (falta opçao smooth)
@@ -594,8 +593,8 @@
 			var zero_x:Number    = parent.localToGlobal(zero_point).x
 			var zero_y:Number    = parent.localToGlobal(zero_point).y
 			
-			this.x = - zero_x + StageReference.getStage().stageWidth  - _h_padding;
-			this.y = - zero_y + StageReference.getStage().stageHeight - _v_padding;
+			this.x = - zero_x + _stage.stageWidth  - _h_padding;
+			this.y = - zero_y + _stage.stageHeight - _v_padding;
 		}
 		
 		public function blurOutAndExecuteFunction(_function:Function, duration:Number=NaN):void

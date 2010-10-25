@@ -5,8 +5,8 @@
 	*/
 	
 	import com.ab.apps.abcms.mainmodules.configurators.ABCMSSiteTextFormats;
-	import com.ab.apps.appgenerics.lang.I18N;
-	import com.ab.apps.appgenerics.lang.I18NEvent;
+	import com.ab.lang.I18N;
+	import com.ab.lang.I18NEvent;
 	import com.ab.menu.SideTabMenu;
 	import com.ab.menu.SideTabMenuItem;
 	import flash.display.BlendMode;
@@ -14,7 +14,7 @@
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
-	import com.ab.apps.appgenerics.AppLevelsManagement;
+	import com.ab.core.AppLevelsManagement;
 	
 	public class ABCMSMainMenuItem extends SideTabMenuItem
 	{

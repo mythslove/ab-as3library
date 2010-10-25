@@ -6,7 +6,7 @@
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import com.ab.apps.appgenerics.lang.I18NEvent
+	import com.ab.lang.I18NEvent
 	import com.ab.events.CentralEventSystem;
 	
 	public class I18N extends EventDispatcher

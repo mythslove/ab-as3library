@@ -5,9 +5,9 @@
 	*/
 	
 	import caurina.transitions.Tweener;
-	import com.ab.apps.appgenerics.core.AppLevelsManager;
-	import com.ab.apps.appgenerics.core.COREApi;
-	import com.ab.apps.appgenerics.events.ItemEvent;
+	import com.ab.core.AppLevelsManager;
+	import com.ab.core.COREApi;
+	import com.ab.events.ItemEvent;
 	import com.ab.events.CentralEventSystem;
 	import com.ab.log.Logger;
 	import com.ab.utils.Make;

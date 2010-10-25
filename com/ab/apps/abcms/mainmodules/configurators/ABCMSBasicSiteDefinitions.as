@@ -5,10 +5,10 @@
 	*/
 	
 	import caurina.transitions.properties.CurveModifiers;
-	import com.ab.apps.appgenerics.AppLevelsManagement;
+	import com.ab.core.AppLevelsManagement;
 	import com.ab.display.ABSprite;
 	import flash.events.Event;
-	import com.ab.apps.appgenerics.services.ABServerCommunication;
+	import com.ab.services.ABServerCommunication;
 	
 	public class ABCMSBasicSiteDefinitions extends ABSprite
 	{
