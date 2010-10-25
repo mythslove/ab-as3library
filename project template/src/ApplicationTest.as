@@ -1,6 +1,6 @@
 package  
 {
-	import com.ab.apps.wpflashblog.FlashBlog;
+	import wpflashblog.FlashBlog;
 	import com.ab.utils.Make;
 	import com.ab.utils.TextFieldFactory;
 	import com.ab.utils.Web;
@@ -27,7 +27,7 @@ package
 			
 			var flashblog:FlashBlog = new FlashBlog();
 			
-			FlashBlog.start();
+			flashblog.start();
 		}
 	}
 }

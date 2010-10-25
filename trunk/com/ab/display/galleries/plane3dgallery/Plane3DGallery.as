@@ -7,7 +7,7 @@
 	*/
 	
 	import caurina.transitions.Tweener;
-	import com.ab.apps.appgenerics.events.ItemEvent;
+	import com.ab.events.ItemEvent;
 	import com.ab.events.CentralEventSystem;
 	import com.ab.utils.Get;
 	import com.ab.utils.Make;

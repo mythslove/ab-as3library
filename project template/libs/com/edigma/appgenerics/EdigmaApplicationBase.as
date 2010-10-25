@@ -4,7 +4,7 @@ package com.edigma.appgenerics
 	* @author ABº
 	*/
 	
-	import com.ab.apps.appgenerics.core.COREApi;
+	import com.ab.core.COREApi;
 	import com.ab.utils.Web;
 	import flash.display.Sprite;
 	import flash.events.ContextMenuEvent;

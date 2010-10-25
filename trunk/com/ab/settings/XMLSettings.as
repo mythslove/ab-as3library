@@ -9,14 +9,13 @@
 	import flash.utils.flash_proxy;
 	import flash.utils.Proxy;
 	/// ab
-	//import com.ab.apps.appgenerics.settings.*
 	import com.ab.events.AppEvent;
 	import com.ab.events.CentralEventSystem;
 	
 	dynamic public class XMLSettings extends Proxy
 	{
 		private static var __singleton:XMLSettings
-		private var _data:XML;
+		private var _data:XML;ii
 		private var applicationSettings:Dictionary;
 		private var xmlLoader:URLLoader;
 		

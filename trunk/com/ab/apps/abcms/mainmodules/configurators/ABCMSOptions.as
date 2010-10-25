@@ -4,7 +4,7 @@
 	* @author ABº
 	*/
 	
-	import com.ab.apps.appgenerics.AppLevelsManagement;
+	import com.ab.core.AppLevelsManagement;
 	import com.ab.display.DynamicWindow;
 	import flash.events.Event;
 	

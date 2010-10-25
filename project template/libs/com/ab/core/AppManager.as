@@ -40,11 +40,10 @@
 	/// ab lib
 	//import com.ab.log.Logger;
 	import com.ab.events.CentralEventSystem;
-	import com.ab.apps.appgenerics.core.AppModesManager;
-	import com.ab.apps.appgenerics.events.AppEvent;
-	import com.ab.apps.appgenerics.events.ItemEvent;
-	import com.ab.apps.appgenerics.core.InactivityManager;
-	//import com.ab.apps.appgenerics.settings.XMLSettings;
+	import com.ab.core.AppModesManager;
+	import com.ab.events.AppEvent;
+	import com.ab.events.ItemEvent;
+	import com.ab.core.InactivityManager;
 	
 	public class AppManager extends Object
 	{

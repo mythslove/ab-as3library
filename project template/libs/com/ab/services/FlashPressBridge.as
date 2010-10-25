@@ -2,7 +2,7 @@
 /// FLASHPRESS METHOD CALLS HELPER SINGLETON
 /// /////////////////////////////////////////////////////////////////////////////
 
-package 
+package com.ab.services
 {
 	import com.ab.settings.XMLSettings;
 	import flash.display.Sprite;
@@ -62,15 +62,15 @@ package
 		private function init():void 
 		{
 			//register class aliases for strong typing
-			registerClassAlias("flashpress.vo.WpPostVO", WpPostVO);
-			registerClassAlias("flashpress.vo.WpAttachmentVO", WpAttachmentVO);
-			registerClassAlias("flashpress.vo.WpBlogInfoVO", WpBlogInfoVO);
-			registerClassAlias("flashpress.vo.WpBlogRollVO", WpBlogRollVO);
-			registerClassAlias("flashpress.vo.WpTermVO", WpTermVO);
-			registerClassAlias("flashpress.vo.WpMetaVO", WpMetaVO);
-			registerClassAlias("flashpress.vo.WpCommentVO", WpCommentVO);
-			registerClassAlias("flashpress.vo.WpPostCountVO", WpPostCountVO);
-			registerClassAlias("flashpress.vo.WpSearchVO", WpSearchVO);
+			registerClassAlias("flashpress.vo.WpPostVO", 		WpPostVO);
+			registerClassAlias("flashpress.vo.WpAttachmentVO", 	WpAttachmentVO);
+			registerClassAlias("flashpress.vo.WpBlogInfoVO", 	WpBlogInfoVO);
+			registerClassAlias("flashpress.vo.WpBlogRollVO", 	WpBlogRollVO);
+			registerClassAlias("flashpress.vo.WpTermVO", 		WpTermVO);
+			registerClassAlias("flashpress.vo.WpMetaVO", 		WpMetaVO);
+			registerClassAlias("flashpress.vo.WpCommentVO", 	WpCommentVO);
+			registerClassAlias("flashpress.vo.WpPostCountVO", 	WpPostCountVO);
+			registerClassAlias("flashpress.vo.WpSearchVO", 		WpSearchVO);
 			
 			//security - you will prob need to have a cross domain policy
 			//Security.loadPolicyFile("http://www.yourdomain.com/crossdomain.xml");

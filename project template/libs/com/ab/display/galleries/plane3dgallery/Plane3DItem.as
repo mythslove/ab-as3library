@@ -6,7 +6,7 @@
 	//buttonMode
 	//import com.ab.display.Image;
 	import caurina.transitions.Tweener;
-	import com.ab.apps.appgenerics.events.ItemEvent;
+	import com.ab.ItemEvent;
 	import com.ab.display.ABSprite;
 	import com.ab.display.geometry.PolygonQuad;
 	import com.ab.events.CentralEventSystem;

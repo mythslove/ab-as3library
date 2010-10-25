@@ -15,7 +15,7 @@
 	import flash.display.DisplayObject;
 	
 	/// ab
-	import com.ab.apps.appgenerics.events.AppEvent;
+	import com.ab.events.AppEvent;
 	import com.ab.events.CentralEventSystem;
 	import com.ab.utils.Make;
 	import com.ab.events.CustomMouseEvent;

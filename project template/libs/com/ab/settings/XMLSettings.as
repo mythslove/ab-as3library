@@ -9,7 +9,6 @@
 	import flash.utils.flash_proxy;
 	import flash.utils.Proxy;
 	/// ab
-	//import com.ab.apps.appgenerics.settings.*
 	import com.ab.events.AppEvent;
 	import com.ab.events.CentralEventSystem;
 	

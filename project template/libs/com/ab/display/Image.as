@@ -22,7 +22,7 @@
 	* 
 	*/
 	
-	import com.ab.apps.appgenerics.core.COREApi;
+	import com.ab.core.COREApi;
 	import com.ab.utils.CropBitmapData;
 	import flash.display.Bitmap;
     import flash.display.Loader;
