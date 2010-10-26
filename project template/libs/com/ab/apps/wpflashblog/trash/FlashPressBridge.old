@@ -1,0 +1,242 @@
+﻿//AS3/////////////////////////////////////////////////////////////////////////// 
+// FLASHPRESS DEMO METHOD CALLS 2010
+////////////////////////////////////////////////////////////////////////////////
+
+package {
+
+	import flash.events.Event;
+	import flash.display.MovieClip;
+	import flash.events.Event;
+	import flash.display.Stage;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
+	import flash.net.navigateToURL;
+	import flash.net.URLRequest;
+	import flash.system.Security;
+	import flash.net.registerClassAlias;
+	import flash.utils.ByteArray;
+	import flash.geom.Rectangle;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
+	import flash.net.URLLoaderDataFormat;
+
+	//noponies imports
+	import com.noponies.net.NpDbConnection;
+	import com.noponies.events.NpAmfEvent;
+	
+	//import vo classes
+	import com.noponies.flashpress.vo.WpPostVO;
+	import com.noponies.flashpress.vo.WpAttachmentVO;
+	import com.noponies.flashpress.vo.WpBlogInfoVO;
+	import com.noponies.flashpress.vo.WpBlogRollVO;
+	import com.noponies.flashpress.vo.WpTermVO;
+	import com.noponies.flashpress.vo.WpMetaVO;
+	import com.noponies.flashpress.vo.WpCommentVO;
+	import com.noponies.flashpress.vo.WpPostCountVO;
+	import com.noponies.flashpress.vo.WpSearchVO;
+
+	public class Test extends MovieClip {
+		//--------------------------------------
+		// STATIC VARS
+		//--------------------------------------
+		private static var DB_CONNECTION:NpDbConnection;
+		private static var SERVICE:String = "flashpress.";//This is for AMFPHP ONLY
+		//--------------------------------------
+		// PRIVATE VARS
+		//--------------------------------------
+		private var _loader:URLLoader;
+		//--------------------------------------
+		//  CONSTRUCTOR
+		//--------------------------------------
+
+		public function Test() {
+			//stage props
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.align = StageAlign.TOP_LEFT;
+
+			//set up flash press environment
+			setUpFlashPress();
+			//make some db calls
+			makeDbCall();
+			
+			//demoLoadingBitmap()
+		}
+		
+		//--------------------------------------
+		//  SET UP FLASHPRESS ENVIRONMENT
+		//--------------------------------------
+		//here we register class aliases, and connect to database
+		private function setUpFlashPress():void {
+			//register class aliases for strong typing
+			registerClassAlias("flashpress.vo.WpPostVO", WpPostVO);
+			registerClassAlias("flashpress.vo.WpAttachmentVO", WpAttachmentVO);
+			registerClassAlias("flashpress.vo.WpBlogInfoVO", WpBlogInfoVO);
+			registerClassAlias("flashpress.vo.WpBlogRollVO", WpBlogRollVO);
+			registerClassAlias("flashpress.vo.WpTermVO", WpTermVO);
+			registerClassAlias("flashpress.vo.WpMetaVO", WpMetaVO);
+			registerClassAlias("flashpress.vo.WpCommentVO", WpCommentVO);
+			registerClassAlias("flashpress.vo.WpPostCountVO", WpPostCountVO);
+			registerClassAlias("flashpress.vo.WpSearchVO", WpSearchVO);
+			
+			//security - you will prob need to have a cross domain policy
+			//Security.loadPolicyFile("http://www.yourdomain.com/crossdomain.xml");
+			//Security.allowDomain("*.yourdomain.com")
+
+			//connect to database
+			//zend
+			//DB_CONNECTION = new NpDbConnection("http://localhost:80/FlashPressZend/wp_gateway.php");
+			//amfphp
+			DB_CONNECTION = new NpDbConnection("http://www.antoniobrandao.com/amfwordpress/gateway.php");
+		}
+		
+		//--------------------------------------
+		// CALL FLASHPRESS METHODS
+		//--------------------------------------
+		private function makeDbCall():void {
+			trace("makeDbCall");
+			//below is a list of the various methods, with sample params filled in
+			//NOTE THAT THE BELOW DEMOS ARE SET UP FOR USE WITH ZEND - TO USE AMFPHP YOU MUST PREFIX THE PATH THE FLASHPRESS SERVICE, AS DEMONSRATED BELOW
+			//USING A SIMPLE STATIC VAR TO CONTAIN THE SERVICE PATH
+			//NpDbConnection.queryAMF(SERVICE+"WpMethodsService.callWpMethod", handleAmfResult,onFault, 'wp_get_single_post', '2', 'OBJECT');
+			//media
+			
+			//Zend calls below
+			
+			///call arbitrary wordpress methods, in the example below, it is getting a single post
+//			NpDbConnection.queryAMF(SERVICE+"WpMethodsService.callWpMethod", handleAmfResult,onFault, 'wp_get_single_post', '2', 'OBJECT');
+			//or
+			///call the internal Wp tag cloud method
+			//NpDbConnection.queryAMF("WpMethodsService.callWpMethod", handleAmfResult,onFault, 'wp_tag_cloud', 'format=array');
+			
+			///count the posts in your wordpress install
+			//NpDbConnection.queryAMF("WpMethodsService.countPosts", handleAmfResult,onFault);
+			
+			///get a post, via its ID
+			//NpDbConnection.queryAMF("WpMethodsService.getPost", handleAmfResult,onFault, 1);
+			
+			///get posts, with the number returned limited to 3
+			//NpDbConnection.queryAMF(SERVICE+"WpMethodsService.getPosts", handleAmfResult,onFault, 'numberposts=10');
+			
+			///get a post or page by its title
+			//NpDbConnection.queryAMF("WpMethodsService.getPostOrPageByTitle", handleAmfResult,onFault, 'Using Asdoc under OSX');
+			
+			///get the wordpress installs blogroll, or bookmarks
+			//NpDbConnection.queryAMF("WpMethodsService.getBookmarks", handleAmfResult,onFault, 'orderby=name');
+			
+			///get attachments from the wordpress blog
+			//NpDbConnection.queryAMF("WpMethodsService.getMedia", handleAmfResult,onFault, 'post_type=attachment&post_mime_type=video/mp4');
+			
+			///Get wordpress terms, or any custom taxonomies you may have
+			//NpDbConnection.queryAMF("WpMethodsService.getTerms", handleAmfResult,onFault, 'post_tag');
+			
+			///get categories for wordprss install
+			//NpDbConnection.queryAMF("WpMethodsService.getCategories", handleAmfResult,onFault, 'orderby=name');
+			
+			///Generate a wordpress tag cloud
+			//NpDbConnection.queryAMF("WpMethodsService.getTagCloud", handleAmfResult,onFault);
+			
+			///Get metadata associated with a post
+			//NpDbConnection.queryAMF("WpMethodsService.getPostMeta", handleAmfResult,onFault, 344);
+			//or
+			//NpDbConnection.queryAMF("WpMethodsService.getPostMeta", handleAmfResult,onFault, 344, 'demo field');
+			
+			///get the tags associated with a post(s)
+			//NpDbConnection.queryAMF("WpMethodsService.getTagsByPostId", handleAmfResult,onFault, '344,341');
+			
+			///get categories a post(s) belongs to
+			//NpDbConnection.queryAMF("WpMethodsService.getCategoriesByPostId", handleAmfResult,onFault, '341,344');
+			
+			///get comments for post by posts id
+			//NpDbConnection.queryAMF("WpMethodsService.getComments", handleAmfResult,onFault, 'status=approve&post_id=344');
+			
+			///get user by their ID
+			//NpDbConnection.queryAMF("WpMethodsService.getUserById", handleAmfResult,onFault, 2);
+			
+			///get user by their log in name
+			//NpDbConnection.queryAMF("WpMethodsService.getUserByLoginName", handleAmfResult,onFault, "flash");
+			
+			///get user metadata
+			//NpDbConnection.queryAMF("WpMethodsService.getUserMetadata", handleAmfResult,onFault, 1, 'last_name');
+			
+			///get media
+			//NpDbConnection.queryAMF(SERVICE+"WpMethodsService.getMedia", handleAmfResult,onFault, 'post_type=attachment&post_mime_type=image/jpeg');
+			
+			///get post attachments
+			NpDbConnection.queryAMF(SERVICE+"WpMethodsService.getPostAttachments", handleAmfResult,onFault, 40);
+			
+			///save a post to wp
+			//var myPostOb:Object = {post_title:'New Post Title',post_content:'Lorem Ipsum, demo post, oh yeah',post_status:'draft',post_author:1,post_category:new Array(3,15),tags_input:new Array('ActionScript 3')};
+			//NpDbConnection.queryAMF("WpMethodsService.insertPost", handleAmfResult,onFault, myPostOb);
+
+			///save a text file to wp
+			//var myAttachAr:Object = {post_title:"Some text", post_content:"Text", post_status:"publish", post_author:1, post_excerpt:'some text'};
+			//NpDbConnection.queryAMF("WpMethodsService.insertAttachment", handleAmfResult,onFault, 'http://noponies-book.local/~dale/001.txt',  myAttachAr );
+
+			///insert image attachment to wp
+			//var fileOptions:Object = {post_title:"SNOW", post_content:"An image", post_status:"publish", post_author:1, post_excerpt:'some text about this snow'};
+			//NpDbConnection.queryAMF("WpMethodsService.insertAttachment", handleAmfResult,onFault, 'http://noponies-book.local/~dale/snow.jpg', fileOptions );
+			
+			///searching demo
+			//NpDbConnection.queryAMF("WpMethodsService.search", handleAmfResult,onFault, 'search terms');
+			
+			///get the featured image of the post with an ID of 4
+			//NpDbConnection.queryAMF("WpMethodsService.getPostFeatured", handleAmfResult,onFault, 4);
+		}
+		
+		
+		//--------------------------------------
+		// AMF HANDLERS
+		//--------------------------------------
+
+		//result handler for intially getting tag cloud
+		private function handleAmfResult(result:Object):void {
+			for (var prop:* in result) {
+				trace("myObject."+prop+" = "+result[prop]);
+			}
+			trace(result, result as Array);
+		}
+
+
+		//fault handler
+		private function onFault(fault:Object):void {
+			trace("AMFPhp Fault");
+			for (var p:String in fault) {
+				trace(p, fault[p]);
+			}
+		}
+		
+		//--------------------------------------
+		//  LOAD IN BITMAP - SAVE AS BYTEARRAY
+		//--------------------------------------
+		//this is a demo for loading in a bitmap as a bytearray and then saving that byte array to the wordpress
+		//database
+
+		private function demoLoadingBitmap():void {
+			//the file you want to load
+			var request:URLRequest = new URLRequest("004-people.jpg");
+			_loader = new URLLoader();
+			_loader.dataFormat = URLLoaderDataFormat.BINARY;
+
+			try {
+				_loader.load(request);
+			} catch (error:SecurityError) {
+				trace("A SecurityError has occurred.");
+			}
+
+			_loader.addEventListener(Event.COMPLETE, loaderCompleteHandler);
+		}
+		
+		//handle loading in of image
+		private function loaderCompleteHandler(event:Event):void {
+			//if you want to use an image source created inside of Flash, you will need to jpg encode it correctly then pass to below method
+			//var pic:NewImage = new NewImage(0,0);
+			//var bmp:BitmapData = new BitmapData(pic.width,pic.height);
+			//bmp.draw(pic);
+			
+			//get the loaded images bytes
+			var bytes:ByteArray = _loader.data;
+			var fileOptions:Object = {post_title:"Demo Image", post_content:"An image", post_status:"publish", post_author:1, post_excerpt:'some text about this image'};
+			NpDbConnection.queryAMF("WpMethodsService.insertAttachmentAsByteArray", handleAmfResult, onFault, '004-people.jpg', bytes,  fileOptions );
+		}
+	}
+}
