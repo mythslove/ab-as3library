@@ -50,12 +50,12 @@
 			}
 		}
 		
-		public function start():void
-		{
+		//public function start():void
+		//{
 			/// this function should be overridden
-			
-			trace( "ApplicationItem.start" );
-		}
+			//
+			//trace( "ApplicationItem.start" );
+		//}
 		
 		public function openItemHandler(e:ItemEvent):void
 		{ 

@@ -6,7 +6,7 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
-	[SWF(width = "925", height = "430", frameRate = "30", backgroundColor = "#000000")]
+	[SWF(width = "800", height = "600", frameRate = "30", backgroundColor = "#222222")]
 	
 	public class AppCore extends CORE
 	{
