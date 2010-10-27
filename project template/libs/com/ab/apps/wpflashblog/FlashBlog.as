@@ -9,9 +9,9 @@ package wpflashblog
 	/// flash
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import wpflashblog.system.ViewMediator;
 	
 	/// flashblog
+	import wpflashblog.system.ViewMediator;
 	import wpflashblog.elements.MainFooter;
 	import wpflashblog.elements.MainWindow;
 	
@@ -40,12 +40,12 @@ package wpflashblog
 			main_footer = new MainFooter();
 			
 			/// construir o background
-			background 	= new Background(ABBlogBackground);
+			//background 	= new Background(ABBlogBackground);
 			
 			/// add them all to the main level
 			COREApi.addChildToLevel(main_window, 	COREApi.LEVEL_MAIN);
 			COREApi.addChildToLevel(main_footer, 	COREApi.LEVEL_MAIN);
-			COREApi.addChildToLevel(background, 	COREApi.LEVEL_MAIN);
+			//COREApi.addChildToLevel(background, 	COREApi.LEVEL_MAIN);
 			
 			view_mediator 				= new ViewMediator();
 			view_mediator.main_window 	= main_window;
