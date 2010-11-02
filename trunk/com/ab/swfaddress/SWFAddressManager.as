@@ -62,8 +62,6 @@ package com.ab.swfaddress
 		
 		public function SWFAddressManager() 
 		{
-			//test
-			
 			setSingleton();
 			
 			SWFAddress.addEventListener(SWFAddressEvent.CHANGE, handleSWFAddress);

@@ -109,7 +109,7 @@ package org.osflash.signals
 				throw new ArgumentError('Value object <' + valueObject
 					+ '> is not an instance of <' + valueClass + '>.');
 			}
-
+			
 			if (!listeners.length) return;
 			
 			//// Call listeners.
@@ -142,6 +142,7 @@ package org.osflash.signals
 						listener.apply(null, valueObjects);
 					}
 			}
+			
 			listenersNeedCloning = false;
 		}
 		
@@ -175,7 +176,7 @@ package org.osflash.signals
 				if (once) onceListeners[listener] = true;
 				return;
 			}
-						
+			
 			if (listeners.indexOf(listener) >= 0)
 			{
 				// If the listener was previously added, definitely don't add it again.
@@ -197,7 +198,7 @@ package org.osflash.signals
 				listeners = listeners.slice();
 				listenersNeedCloning = false;
 			}
-				
+			
 			// Faster than push().
 			listeners[listeners.length] = listener;
 			if (once) onceListeners[listener] = true;

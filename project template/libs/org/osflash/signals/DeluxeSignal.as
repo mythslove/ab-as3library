@@ -117,7 +117,7 @@ package org.osflash.signals
 				throw new ArgumentError('Value object <' + valueObject
 					+ '> is not an instance of <' + valueClass + '>.');
 			}
-
+			
 			var event:IEvent = valueObjects[0] as IEvent;
 			if (event)
 			{
@@ -126,6 +126,7 @@ package org.osflash.signals
 				{
 					valueObjects[0] = event = event.clone();
 				}
+				
 				event.target = this.target;
 				event.currentTarget = this.target;
 				event.signal = this;
@@ -150,7 +151,7 @@ package org.osflash.signals
 			listenersNeedCloning = false;
 			
 			if (!event || !event.bubbles) return;
-
+			
 			//// Bubble the event as far as possible.
 			var currentTarget:Object = this.target;
 			while ( currentTarget && currentTarget.hasOwnProperty("parent")
@@ -171,9 +172,10 @@ package org.osflash.signals
 			{
 				if (listenerBoxes[i].listener == listener) return i;
 			}
+			
 			return -1;
 		}
-				
+		
 		protected function setValueClasses(valueClasses:Array):void
 		{
 			_valueClasses = valueClasses || [];
@@ -228,7 +230,7 @@ package org.osflash.signals
 				listenerBoxes = listenerBoxes.slice();
 				listenersNeedCloning = false;
 			}
-		
+			
 			// Assume the listeners are already sorted by priority
 			// and insert in the right spot. For listeners with the same priority,
 			// we must preserve the order in which they were added.

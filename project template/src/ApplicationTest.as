@@ -5,6 +5,7 @@ package
 	import com.ab.swfaddress.SWFAddressManager;
 	import com.asual.swfaddress.SWFAddress;
 	import com.asual.swfaddress.SWFAddressEvent;
+	import org.osflash.signals.Signal;
 	import wpflashblog.FlashBlog;
 	import com.ab.utils.Make;
 	import com.ab.utils.TextFieldFactory;
@@ -20,6 +21,8 @@ package
 	
 	public class ApplicationTest extends ABApplicationBase
 	{
+		private var testsignal:Signal;
+		
 		public function ApplicationTest() 
 		{
 			trace( "ApplicationTest: constructor" );
@@ -31,7 +34,22 @@ package
 			
 			/// START
 			
-			var fb:FlashBlog = new FlashBlog();
+			//var fb:FlashBlog = new FlashBlog();
+			
+			testsignal 				= new Signal(String, int);
+			var bola1:Classtest1 	= new Classtest1();
+			
+			COREApi.addChildToLevel(bola1);
+			
+			testsignal.add(bola1.testListener);
+			testsignal.add(bola1.testListener2);
+			
+			stage.addEventListener(MouseEvent.CLICK, clickHAndler);
+		}
+		
+		private function clickHAndler(e:MouseEvent):void 
+		{
+			testsignal.dispatch("teste", Math.round(Math.random() * 7845));
 		}
 	}
 }

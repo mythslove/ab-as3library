@@ -15,7 +15,7 @@
 	dynamic public class XMLSettings extends Proxy
 	{
 		private static var __singleton:XMLSettings
-		private var _data:XML;ii
+		private var _data:XML;
 		private var applicationSettings:Dictionary;
 		private var xmlLoader:URLLoader;
 		

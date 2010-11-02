@@ -17,6 +17,19 @@ package
 			this.addEventListener(Event.ADDED_TO_STAGE, addedH);
 		}
 		
+		public function testListener(someString:String, someInt:int):void
+		{
+			trace("Classtest1 :: someInt : " + someInt);
+			trace("Classtest1 :: someString : " + someString);
+			
+		}
+		
+		public function testListener2(someString:String, someInt:int):void
+		{
+			trace("Classtest1 :: list 2: ");
+			
+		}
+		
 		private function addedH(e:Event):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addedH);

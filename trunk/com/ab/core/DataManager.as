@@ -18,7 +18,7 @@
 	*/
 	
 	import com.ab.events.AppEvent;
-	import com.edigma.services.ServerCommunication;
+	//import com.edigma.services.ServerCommunication;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
