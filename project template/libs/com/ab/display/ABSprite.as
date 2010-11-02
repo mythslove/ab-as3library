@@ -77,6 +77,8 @@
 		
 		private function onAddedToStage(e:Event):void 
 		{
+			trace("ABSprite.onAddedToStage");
+			
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
 			_stage = stage;

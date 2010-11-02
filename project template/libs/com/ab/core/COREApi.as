@@ -10,6 +10,7 @@
 	import com.ab.display.FloatWarning;
 	import com.ab.events.CentralEventSystem;
 	import com.ab.log.Logger;
+	import com.ab.swfaddress.SWFAddressManager;
 	import com.ab.xml.XMLDataGetter;
 	import flash.display.DisplayObject;
 	import flash.display.Graphics;
@@ -27,6 +28,30 @@
 		public static const LEVEL_ALERT:String  	 	= "ALERT";	
 		public static const LEVEL_SCREENSAVER:String 	= "SCREENSAVER";	
 		public static const LEVEL_LOGGER:String 		= "LOGGER";	
+		
+		/**
+		 * SET SITUATION
+		 * Sets an application situation.
+		 * "Situations" are based on SWFAddress "addresses". Should be used as the equivalent of sections.
+		 * Use COREApi.addSituation() to add "situations" before using this method.
+		 * @return	Nothing.
+		 */
+		public static function setSituation(title:String, extra_params:Object=null):void
+		{
+			SWFAddressManager.singleton.setAddress(title, extra_params);
+		}
+		
+		/**
+		 * ADD SITUATION
+		 * Defines an application situation.
+		 * "Situations" are based on SWFAddress "addresses". Should be used as the equivalent of sections.
+		 * Use COREApi.setSituation() to invoke "situations" defined with this method.
+		 * @return	Nothing.
+		 */
+		public static function addSituation(title:String, id_path:String, params:Object=null, type:String="normal"):void
+		{
+			SWFAddressManager.singleton.addAddress(title, id_path, params, type);
+		}
 		
 		/**
 		 * ADD APPLICATION MODE

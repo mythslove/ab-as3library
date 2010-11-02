@@ -1,5 +1,10 @@
 package  
 {
+	import com.ab.appobjects.ApplicationItem;
+	import com.ab.display.geometry.PolygonQuad;
+	import com.ab.swfaddress.SWFAddressManager;
+	import com.asual.swfaddress.SWFAddress;
+	import com.asual.swfaddress.SWFAddressEvent;
 	import wpflashblog.FlashBlog;
 	import com.ab.utils.Make;
 	import com.ab.utils.TextFieldFactory;
@@ -7,6 +12,7 @@ package
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
+	import metaballs.MetaballsMain;
 	
 	import com.ab.core.COREApi;
 	import com.ab.settings.XMLSettings;
@@ -23,11 +29,9 @@ package
 		{
 			trace( "ApplicationTestTest.start()" );
 			
-			/// START POINT
+			/// START
 			
-			var flashblog:FlashBlog = new FlashBlog();
-			
-			flashblog.start();
+			var fb:FlashBlog = new FlashBlog();
 		}
 	}
 }

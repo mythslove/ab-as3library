@@ -63,3 +63,65 @@ package
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+tart():void
+		{
+			trace( "ApplicationTestTest.start()" );
+			
+			/// START POINT
+			
+			var section1params:Object 		= new Object();
+			var section2params:Object 		= new Object();
+			var section3params:Object 		= new Object();
+			
+			section1params.classreference 	= Classtest1;
+			section2params.classreference 	= Classtest2;
+			section3params.classreference 	= Classtest3;
+			section1params.level 			= COREApi.LEVEL_MAIN;
+			section2params.level 			= COREApi.LEVEL_MAIN;
+			section3params.level 			= COREApi.LEVEL_BACK;
+			
+			COREApi.addSituation("Section 1", "section1", section1params);
+			COREApi.addSituation("Section 2", "section2", section2params);
+			COREApi.addSituation("Section 3", "section3", section3params);
+			
+			var btn1:PolygonQuad 			= new PolygonQuad(50, 20, 0xcccccc);
+			var btn2:PolygonQuad 			= new PolygonQuad(50, 20, 0xcccccc);
+			var btn3:PolygonQuad 			= new PolygonQuad(50, 20, 0xcccccc);
+			
+			btn1.buttonMode 				= true;
+			btn2.buttonMode 				= true;
+			btn3.buttonMode 				= true;
+			
+			btn2.x = 60;
+			btn3.x = 120;
+			
+			btn1.addEventListener(MouseEvent.CLICK, b1Handler);
+			btn2.addEventListener(MouseEvent.CLICK, b2Handler);
+			btn3.addEventListener(MouseEvent.CLICK, b3Handler);
+			
+			COREApi.addChildToLevel(btn1, COREApi.LEVEL_MAIN);
+			COREApi.addChildToLevel(btn2, COREApi.LEVEL_MAIN);
+			COREApi.addChildToLevel(btn3, COREApi.LEVEL_MAIN);
+		}
+		
+		private function b1Handler(e:MouseEvent):void { COREApi.setSituation("Section 1"); };
+		private function b2Handler(e:MouseEvent):void { COREApi.setSituation("Section 2"); };		
+		private function b3Handler(e:MouseEvent):void 
+		{ 
+			var lalala:Object 	= new Object();
+			lalala.cat 			= "12";
+			lalala.op 			= "6";
+			
+			COREApi.setSituation("Section 3", lalala); 
+		};
