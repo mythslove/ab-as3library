@@ -17,7 +17,7 @@ package com.ab.utils
 			
 		}
 		
-		public static function createTextField(text:String="", font:String="Arial", size:int=12, colour:uint=0xffffff, width:Number=100, autosize:String="left", multiline:Boolean=true, embedfonts:Boolean=false, sharpness:int=200):TextField
+		public static function createTextField(text:String="", font:String="Arial", size:int=12, colour:uint=0xffffff, width:Number=100, autosize:String="left", multiline:Boolean=true, wordwrap:Boolean=true, embedfonts:Boolean=true, sharpness:int=200):TextField
 		{
 			var _text_fmt:TextFormat 		= new TextFormat();
 			_text_fmt.font 					= font;
@@ -27,7 +27,7 @@ package com.ab.utils
 			var new_textfield:TextField 	= new TextField();
 			new_textfield.width 			= width;
 			new_textfield.autoSize 			= autosize;
-			new_textfield.wordWrap 			= true;
+			new_textfield.wordWrap 			= wordwrap;
 			new_textfield.selectable		= false;
 			new_textfield.condenseWhite		= true;
 			new_textfield.multiline			= multiline;
