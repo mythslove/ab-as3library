@@ -1,4 +1,4 @@
-package wpflashblog.elements
+package flashwp.elements
 {
 	/**
 	* @author ABº
@@ -16,7 +16,7 @@ package wpflashblog.elements
 			
 		}
 		
-		override public function start():void
+		override public function onStage():void
 		{
 			/// create posts list
 			/// - send AMF request

@@ -1,4 +1,4 @@
-package wpflashblog
+package flashwp
 {
 	/**
 	* @author ABº
@@ -10,22 +10,22 @@ package wpflashblog
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
-	/// flashblog
-	import wpflashblog.system.*;
-	import wpflashblog.elements.*;
+	/// flashwp
+	import flashwp.system.*;
+	import flashwp.elements.*;
 	
 	/// ab
 	import com.ab.appobjects.Background;
 	import com.ab.core.COREApi;
 	
-	public class FlashBlog extends Object
+	public class FlashWP extends Object
 	{
 		private var main_window:MainWindow;
 		private var main_footer:MainFooter;
 		private var background:Background;
 		private var view_mediator:ViewMediator;
 		
-		public function FlashBlog() 
+		public function FlashWP() 
 		{
 			start();
 		}

@@ -1,4 +1,4 @@
-package wpflashblog.elements
+package flashwp.elements
 {
 	/**
 	* @author ABº
@@ -33,7 +33,7 @@ package wpflashblog.elements
 			/// - about me
 		}
 		
-		override public function start():void
+		override public function onStage():void
 		{
 			trace("MainFooter.start");
 			

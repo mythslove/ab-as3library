@@ -1,4 +1,4 @@
-package wpflashblog.elements
+package flashwp.elements
 {
 	/**
 	* @author ABº

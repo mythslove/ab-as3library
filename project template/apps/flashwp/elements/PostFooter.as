@@ -1,4 +1,4 @@
-package wpflashblog.elements
+package flashwp.elements
 {
 	/**
 	* @author ABº
@@ -6,12 +6,12 @@ package wpflashblog.elements
 	
 	import flash.display.Sprite;
 	
-	public class PostHeader extends Sprite
+	public class PostFooter extends Sprite
 	{
 		/// data
 		private var _data:Object;
 		
-		public function PostHeader() 
+		public function PostFooter() 
 		{
 			
 		}

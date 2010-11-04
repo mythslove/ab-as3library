@@ -1,12 +1,12 @@
-package wpflashblog.system 
+package flashwp.system 
 {
 	/**
 	* @author ABº
 	*/
 	
-	import wpflashblog.elements.MainFooter;
-	import wpflashblog.elements.MainWindow;
-	import wpflashblog.elements.SideBar;
+	import flashwp.elements.MainFooter;
+	import flashwp.elements.MainWindow;
+	import flashwp.elements.SideBar;
 	
 	public class ViewMediator extends Object
 	{
