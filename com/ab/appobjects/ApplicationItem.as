@@ -22,6 +22,7 @@
 	{
 		private var _data:Array;
 		private var _closed:Boolean=false;
+		private var _swfaddress_path:String;
 		
 		public function ApplicationItem() 
 		{
@@ -30,15 +31,15 @@
 			CentralEventSystem.singleton.addEventListener(ItemEvent.OPEN_ITEM,  this.openItemHandler, false, 0, true);
 			CentralEventSystem.singleton.addEventListener(ItemEvent.CLOSE_ITEM, this.closeItemHandler, false, 0, true);
 			
-			this.addEventListener(Event.ADDED_TO_STAGE, addedHandler, false, 0, true);
+			//this.addEventListener(Event.ADDED_TO_STAGE, addedHandler, false, 0, true);
 		}
 		
-		public function addedHandler(e:Event):void 
-		{
-			this.removeEventListener(Event.ADDED_TO_STAGE, addedHandler);
+		//public function addedHandler(e:Event):void 
+		//{
+			//this.removeEventListener(Event.ADDED_TO_STAGE, addedHandler);
 			
-			start();
-		}
+			//start();
+		//}
 		
 		public function closeItemHandler(e:ItemEvent):void
 		{
@@ -77,11 +78,14 @@
 			destroy();
 		}
 		
-		public function get closed():Boolean 			{ return _closed; }
-		public function set closed(value:Boolean):void  { _closed = value; }
+		public function get closed():Boolean 					{ return _closed; }
+		public function set closed(value:Boolean):void  		{ _closed = value; }
 		
-		public function get data():Array 				{ return _data;  };
-		public function set data(value:Array):void  	{ _data = value; };
+		public function get data():Array 						{ return _data;  };
+		public function set data(value:Array):void  			{ _data = value; };
+		
+		public function get swfaddress_path():String 			{ return _swfaddress_path; }
+		public function set swfaddress_path(value:String):void  { _swfaddress_path = value; }
 		
 	}
 	
