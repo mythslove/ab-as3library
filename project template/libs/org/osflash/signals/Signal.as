@@ -146,6 +146,67 @@ package org.osflash.signals
 			listenersNeedCloning = false;
 		}
 		
+		/** @inheritDoc */
+		public function tweakedDispatch(...valueObjects):void
+		{
+			valueObjects = valueObjects[0];
+			
+			// Validate value objects against pre-defined value classes.
+			var valueObject:Object;
+			var valueClass:Class;
+			var numValueClasses:int = _valueClasses.length;
+			if (valueObjects.length < numValueClasses)
+			{
+				throw new ArgumentError('Incorrect number of arguments. Expected at least ' + numValueClasses + ' but received ' + valueObjects.length + '.');
+			}
+			
+			for (var i:int = 0; i < numValueClasses; i++)
+			{
+				// null is allowed to pass through.
+				if ( (valueObject = valueObjects[i]) === null
+					|| valueObject is (valueClass = _valueClasses[i]) )
+					continue;
+					
+				throw new ArgumentError('Value object <' + valueObject
+					+ '> is not an instance of <' + valueClass + '>.');
+			}
+			
+			if (!listeners.length) return;
+			
+			//// Call listeners.
+			
+			// During a dispatch, add() and remove() should clone listeners array instead of modifying it.
+			listenersNeedCloning = true;
+			var listener:Function;
+			switch (valueObjects.length)
+			{
+				case 0:
+					for each (listener in listeners)
+					{
+						if (onceListeners[listener]) remove(listener);
+						listener();
+					}
+					break;
+					
+				case 1:
+					for each (listener in listeners)
+					{
+						if (onceListeners[listener]) remove(listener);
+						listener(valueObjects[0]);
+					}
+					break;
+					
+				default:
+					for each (listener in listeners)
+					{
+						if (onceListeners[listener]) remove(listener);
+						listener.apply(null, valueObjects);
+					}
+			}
+			
+			listenersNeedCloning = false;
+		}
+		
 		protected function setValueClasses(valueClasses:Array):void
 		{
 			_valueClasses = valueClasses || [];

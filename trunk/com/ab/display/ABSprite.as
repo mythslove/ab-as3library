@@ -81,10 +81,10 @@
 			
 			_stage = stage;
 			
-			start();
+			onStage();
 		}
 		
-		public function start():void
+		public function onStage():void
 		{
 			/// override this function in order to get some action after this enters the stage
 		}

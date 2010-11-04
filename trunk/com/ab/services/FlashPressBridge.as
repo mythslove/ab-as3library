@@ -2,7 +2,7 @@
 /// FLASHPRESS METHOD CALLS HELPER SINGLETON
 /// /////////////////////////////////////////////////////////////////////////////
 
-package 
+package com.ab.services
 {
 	import com.ab.settings.XMLSettings;
 	import flash.display.Sprite;

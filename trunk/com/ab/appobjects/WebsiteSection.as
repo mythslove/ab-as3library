@@ -12,6 +12,7 @@
 	
 	public class WebsiteSection extends ApplicationItem
 	{
+		/// application item
 		private var _swfaddress_path:String;
 		private var _swfaddress_value:String;
 		
@@ -20,7 +21,6 @@
 		
 		/// sys
 		public var started:Boolean=false;
-		//private var _data:String;
 		
 		public function WebsiteSection() 
 		{
@@ -35,7 +35,7 @@
 			
 			_swfaddress_path = SWFAddress.getPath();
 			
-			start();
+			onStage();
 		}
 		
 		public function resizeHandler(e:Event):void 
@@ -65,14 +65,14 @@
 		public function get swfaddress_path():String 			{ return _swfaddress_path; }
 		public function set swfaddress_path(value:String):void  { _swfaddress_path = value; }
 		
+		public function get swfaddress_value():String 			{ return _swfaddress_value; }
+		public function set swfaddress_value(value:String):void { _swfaddress_value = value; }
+		
 		public function get cat():int 							{ return _cat;  }
 		public function set cat(value:int):void  				{ _cat = value; }
 		
 		public function get hrq():String 						{ return _hrq; }
 		public function set hrq(value:String):void  			{ _hrq = value; }
-		
-		public function get swfaddress_value():String 			{ return _swfaddress_value; }
-		public function set swfaddress_value(value:String):void { _swfaddress_value = value; }
 		
 	}
 }
