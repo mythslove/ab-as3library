@@ -8,14 +8,10 @@ package com.ab.core
 	
 	public class AppModes
 	{
+		public static const NORMAL:String 		= "normal";
 		public static const DEBUG:String 		= "debug";
 		public static const SCREENSAVER:String 	= "screensaver";
-		
-		public function AppModes() 
-		{
-			
-		}
-		
+		public static const STANDBY:String 		= "standby";
 	}
 
 }

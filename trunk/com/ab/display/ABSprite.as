@@ -41,14 +41,14 @@
 	
 	public dynamic class ABSprite extends CasaSprite
 	{
-		private var _smooth_align:Boolean 		 	= false;
+		private var _smooth_align:Boolean 	= false;
 		private var _align_type:String	 	= "";
 		private var _h_padding:int 		 	= 0;
 		private var _v_padding:int 		 	= 0;
 		private var _custom_height:Number 	= 0;
 		private var _custom_width:Number  	= 0;
 		
-		public var rp:Point; /// registration point
+		public var registration_point:Point;
 		
 		private var _align_scope:String  	= "global";
 		private var custom_parent:*;
@@ -95,31 +95,31 @@
 		
 		public function get x2():Number
 		{
-			var p:Point = this.parent.globalToLocal(this.localToGlobal(rp));
+			var p:Point = this.parent.globalToLocal(this.localToGlobal(registration_point));
 			return p.x;
 		}
 		
 		public function set x2(value:Number):void
 		{
-			var p:Point = this.parent.globalToLocal(this.localToGlobal(rp));
+			var p:Point = this.parent.globalToLocal(this.localToGlobal(registration_point));
 			this.x += value - p.x;
 		}
 		
 		public function get y2():Number
 		{
-			var p:Point = this.parent.globalToLocal(this.localToGlobal(rp));
+			var p:Point = this.parent.globalToLocal(this.localToGlobal(registration_point));
 			return p.y;
 		}
 		
 		public function set y2(value:Number):void
 		{
-			var p:Point = this.parent.globalToLocal(this.localToGlobal(rp));
+			var p:Point = this.parent.globalToLocal(this.localToGlobal(registration_point));
 			this.y += value - p.y;
 		}
 		
 		public function setRegistration(x:Number=0, y:Number=0):void
 		{
-			rp = new Point(x, y);
+			registration_point = new Point(x, y);
 		}
 		
 		public function get scaleX2():Number
@@ -154,21 +154,21 @@
 		
 		public function get mouseX2():Number
 		{
-			return Math.round(this.mouseX - rp.x);
+			return Math.round(this.mouseX - registration_point.x);
 		}
 		
 		public function get mouseY2():Number
 		{
-			return Math.round(this.mouseY - rp.y);
+			return Math.round(this.mouseY - registration_point.y);
 		}
 		
 		public function setProperty2(prop:String, n:Number):void
 		{
-			var a:Point = this.parent.globalToLocal(this.localToGlobal(rp));
+			var a:Point = this.parent.globalToLocal(this.localToGlobal(registration_point));
 			
-			this[prop] = n;
+			this[prop] 	= n;
 			
-			var b:Point = this.parent.globalToLocal(this.localToGlobal(rp));
+			var b:Point = this.parent.globalToLocal(this.localToGlobal(registration_point));
 			
 			this.x -= b.x - a.x;
 			this.y -= b.y - a.y;
@@ -211,34 +211,33 @@
 		/// //// //// //// //// ALPHA METHODS //// //// //// //// ////
 		/// //// //// //// //// ALPHA METHODS //// //// //// //// ////
 		
-		public function GoVisible(duration:Number=NaN, onCompleteFunc:Function=null, _transition:String="EaseOutSine"):void
+		public function GoVisible(duration:Number=0.5, onCompleteFunc:Function=null, _transition:String="EaseOutSine"):void
 		{
-			this.alpha = 0;
-			this.visible = true;
+			if (this.visible = false)  { this.alpha = 0; this.visible = true; };
 			
-			Tweener.addTween(this, {alpha:1, time:isNaN(duration) ? 0.5 : duration, transition:_transition, onComplete:onCompleteFunc });  //Tweener.addTween(this, {alpha:1, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:onCompleteFunc, onCompleteParams:[this]})				
+			Tweener.addTween(this, {alpha:1, time:duration, transition:_transition, onComplete:onCompleteFunc });
 		}
 		
-		public function GoInvisible(duration:Number=NaN, _transition:String="EaseOutSine"):void
+		public function GoInvisible(duration:Number=0.5, _transition:String="EaseOutSine"):void
 		{
-			Tweener.addTween(this, { alpha:0, time:isNaN(duration) ? 0.5 : duration, transition:_transition, onComplete:function():void{this.visible = false}} )
+			Tweener.addTween(this, { alpha:0, time:duration, transition:_transition, onComplete:function():void { this.visible = false }} );
 		}
 		
-		/// go to alpha zero and set invisible = true - with optional onComplete Function
-		public function GoInvisibleWithOnComplete(duration:Number=NaN, oncompletefunc:Function=null):void
+		// go to alpha zero and set invisible = true - with optional onComplete Function
+		public function GoInvisibleWithOnComplete(oncompletefunc:Function, duration:Number=0.5):void
 		{
-			Tweener.addTween(this, { alpha:0, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:function():void { this.visible = false;  oncompletefunc() }} );
+			Tweener.addTween(this, { alpha:0, time:duration, transition:"EaseOutSine", onComplete:function():void { this.visible = false;  oncompletefunc() }} );
 		}
 		
-		public function GoToAlpha(alphavalue:Number, duration:Number=NaN, onCompleteFunc:Function=null):void
+		public function GoToAlpha(alphavalue:Number, duration:Number=0.5, onCompleteFunc:Function=null):void
 		{
-			if (onCompleteFunc != null)
+			if (onCompleteFunc)
 			{
-				Tweener.addTween(this, {alpha:alphavalue, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine", onComplete:onCompleteFunc, onCompleteParams:[this]});
+				Tweener.addTween(this, {alpha:alphavalue, time:duration, transition:"EaseOutSine", onComplete:onCompleteFunc, onCompleteParams:[this]});
 			}
 			else
 			{
-				Tweener.addTween(this, {alpha:alphavalue, time:isNaN(duration) ? 0.5 : duration, transition:"EaseOutSine"});
+				Tweener.addTween(this, {alpha:alphavalue, time:duration, transition:"EaseOutSine"});
 			}
 		}
 		
@@ -268,7 +267,7 @@
 		/// //// //// //// //// SIZE METHODS
 		/// //// //// //// //// SIZE METHODS
 		
-		public function SizeToXY(_width:Number=NaN, _height:Number=NaN, _duration:Number=0.5, _alpha:Number=NaN, _transitionstyle:String="EaseOutSine"):void
+		public function gotoSize(_width:Number=NaN, _height:Number=NaN, _duration:Number=0.5, _alpha:Number=NaN, _transitionstyle:String="EaseOutSine"):void
 		{
 			Tweener.addTween(this, { 	width:isNaN(_width) ? this.width : _width,
 										height:isNaN(_height) ? this.height : _height,
@@ -281,7 +280,7 @@
 		/// //// //// //// //// SCALE METHODS
 		/// //// //// //// //// SCALE METHODS
 		
-		public function ScaleToXY(_xscale:Number=NaN, _yscale:Number=NaN, _duration:Number=0.5, _alpha:Number=NaN, _transitionstyle:String="EaseOutsine"):void
+		public function gotoScale(_xscale:Number=NaN, _yscale:Number=NaN, _duration:Number=0.5, _alpha:Number=NaN, _transitionstyle:String="EaseOutsine"):void
 		{
 			Tweener.addTween(this, { 	scaleX:isNaN(_xscale) ? this.scaleX : _xscale,
 			                            scaleY:isNaN(_xscale) ? this.scaleX : _xscale,
@@ -294,7 +293,7 @@
 		/// //// //// //// //// COLOUR METHODS
 		/// //// //// //// //// COLOUR METHODS
 		
-		public function Colorize(colour:*, _time:Number=0.5, _transition:String = "EaseOutSine" ):void
+		public function colorize(colour:*, _time:Number=0.5, _transition:String = "EaseOutSine" ):void
 		{
 			Tweener.addTween(this, { _color:colour, time:_time, transition:_transition } );
 		}

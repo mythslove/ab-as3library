@@ -1,5 +1,6 @@
 package  
 {
+	import com.ab.appobjects.DoubleSidedPlane;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
@@ -38,17 +39,21 @@ package
 			
 			/// START
 			
-			var fb:FlashWP = new FlashWP();
+			//var fb:FlashWP = new FlashWP();
 			
-			/*
-			var bola1:Classtest1 	= new Classtest1();
+			var lalala:DoubleSidedPlane = new DoubleSidedPlane(new PolygonQuad(200, 200, 0x0000ff, 5, 5), new PolygonQuad(200, 200, 0x00ff00, 5, 5));
 			
-			COREApi.addChildToLevel(bola1);
+			addChild(lalala);
 			
-			SignalsManager.singleton.addSignalAndListener("testsignal", bola1.testListener, String, int);
-			SignalsManager.singleton.addListenerToSignal("testsignal", bola1.testListener2);
 			
-			stage.addEventListener(MouseEvent.CLICK, clickHAndler);*/
+			//var bola1:Classtest1 	= new Classtest1();
+			//
+			//COREApi.addChildToLevel(bola1);
+			//
+			//SignalsManager.singleton.addSignalAndListener("testsignal", bola1.testListener, String, int);
+			//SignalsManager.singleton.addListenerToSignal("testsignal", bola1.testListener2);
+			//
+			//stage.addEventListener(MouseEvent.CLICK, clickHAndler);
 		}
 		
 		private function clickHAndler(e:MouseEvent):void 
