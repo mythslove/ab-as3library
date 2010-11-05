@@ -231,7 +231,7 @@
 		
 		public function GoToAlpha(alphavalue:Number, duration:Number=0.5, onCompleteFunc:Function=null):void
 		{
-			if (onCompleteFunc)
+			if (onCompleteFunc != null)
 			{
 				Tweener.addTween(this, {alpha:alphavalue, time:duration, transition:"EaseOutSine", onComplete:onCompleteFunc, onCompleteParams:[this]});
 			}

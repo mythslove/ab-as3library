@@ -49,7 +49,6 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <element path="lib\assets.swc" />
     <element path="bin\assets\fonts\standard753.swc" />
     <element path="bin\assets\fonts\Quicksand.swc" />
   </libraryPaths>

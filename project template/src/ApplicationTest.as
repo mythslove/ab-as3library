@@ -23,6 +23,7 @@ package
 	import com.ab.appobjects.applicationbase.ABApplicationBase;
 	
 	import flashwp.FlashWP;
+	import com.ab.apps.appgenerics.events.AppEvent
 	
 	public class ApplicationTest extends ABApplicationBase
 	{
@@ -44,6 +45,7 @@ package
 			var lalala:DoubleSidedPlane = new DoubleSidedPlane(new PolygonQuad(200, 200, 0x0000ff, 5, 5), new PolygonQuad(200, 200, 0x00ff00, 5, 5));
 			
 			addChild(lalala);
+			
 			
 			
 			//var bola1:Classtest1 	= new Classtest1();

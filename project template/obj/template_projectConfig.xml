@@ -14,7 +14,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'04-11-2010'</value>
+      <value>'05-11-2010'</value>
     </define>
     <source-path append="true">
       <path-element>C:\Documents and Settings\abrandao\Desktop\ab\project template\src</path-element>
