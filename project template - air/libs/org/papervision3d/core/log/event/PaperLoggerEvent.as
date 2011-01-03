@@ -16,6 +16,7 @@ package org.papervision3d.core.log.event
 		public function PaperLoggerEvent(paperLogVO:PaperLogVO)
 		{
 			super(TYPE_LOGEVENT);
+			
 			this.paperLogVO = paperLogVO;
 		}
 		
