@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+	
+	<!--  PROJECT SPECIFIC --> 
+	<!--  PROJECT SPECIFIC --> 
+	<!--  PROJECT SPECIFIC --> 
+	
+	<!--  GENERIC  --> 
+	<!--  GENERIC  --> 
+	<!--  GENERIC  -->
+	
+	<!--  titulo da aplicacao --> 
+	<property id="HOST" value="http://proto.dev.edg.local/letheshome/public/"/>
+	
+	<!--  titulo da aplicacao --> 
+	<property id="SCRIPT" value="ws/ws_update_stock.php?key=LHWS-0123-UPDSTO"/>
+	
+	<!--  titulo da aplicacao --> 
+	<property id="APP_TITLE" value="EDIGMA FILE UPLOADER V1.6"/>
+	
+	<!--  e-mail de apoio ao cliente --> 
+	<property id="HELP_EMAIL" value="support@edigma.com"/>
+	
+	<!--  modo DEBUG - "true" or "false" --> 
+	<property id="DEBUG_MODE" value="true"/>
+	
+	<!--  usar o RATO - "true" or "false" --> 
+	<property id="USE_MOUSE" value="false"/>
+	
+	<!--  fullscreen - "true" ou "false" --> 
+	<property id="FULL_SCREEN" value="false"/>
+	
+	<!--  caminho para os conteudos --> 
+	<property id="CONTENTS_PATH" value=""/>
+	
+	<!-- fonte de informaçao: XML ou AMF ou NONE-->
+	<property id="DATA_TYPE" value="NONE"/>
+	
+	<!-- caminho para os ficheiros XML de conteudos -->
+	<property id="XML_PATH" value=""/>
+	
+	<!-- caminho para o ficheiro XML de conteudosdos principal -->
+	<property id="MAIN_XML_FILE" value=""/>
+	
+	<!-- tempo para detectar inactividade - em milisegundos -->
+	<property id="INACTIVITY_TIME" value="5000"/>
+	
+</settings>

@@ -1,0 +1,370 @@
+
+
+		public var prefsXML:XML; // The XML data
+		public var prefsFile:File = new File(); // The preferences prefsFile
+		public var stream:FileStream; // The FileStream object used to read and write prefsFile data.
+		
+		/// file selection vars
+		private var _file:File;
+		public var _upload_file:File;
+		private var selection_path_tf:TextFieldBitmap;
+		private var lastsync_tf:TextFieldBitmap;
+		private var fileTypes:FileFilter 	= new FileFilter("XML Files", "*.xml");
+		private var _selection_x:Number 	= 5;
+		private var run_once:Boolean 		= false;
+		private var menu_icons:MenuIcons;
+
+
+		
+		public function start():void
+		{
+			/// START
+			_file = new File();
+			
+			/// handle file selection
+			_file.addEventListener(Event.SELECT, 			fileChangeHandler);
+			
+			COREApi.addEventListener(AppEvent.SAVE_DATA, 	saveDataHandler);
+			COREApi.addEventListener(AppEvent.SYSTEM_BUSY, 	systemBusyHandler);
+			
+			/// save data on exit
+			stage.nativeWindow.addEventListener(Event.CLOSING, 	windowClosingHandler);
+			
+			prefsFile = File.applicationStorageDirectory;
+			prefsFile = prefsFile.resolvePath("config.xml");
+			
+			menu_icons 						= new MenuIcons();
+			menu_icons.x 					= 365;
+			menu_icons.y 					= 5;
+			menu_icons.time.buttonMode 		= true;
+			menu_icons.browse.buttonMode 	= true;
+			menu_icons.help.buttonMode 		= true;
+			
+			menu_icons.time.addEventListener(MouseEvent.CLICK, 		timeClickHandler)
+			menu_icons.browse.addEventListener(MouseEvent.CLICK, 	browseClickHandler)
+			menu_icons.help.addEventListener(MouseEvent.CLICK, 		helpClickHandler)
+			
+			COREApi.addChildToLevel(new BaseDesign(), 		COREApi.LEVEL_BACKGROUND);
+			COREApi.addChildToLevel(menu_icons, 			COREApi.LEVEL_TOP);
+			
+			COREApi.addApplicationMode("home", 			launchHome);
+			COREApi.addApplicationMode("upload", 		launchUpload);
+			COREApi.addApplicationMode("time_select", 	launchTimeSelect);
+			
+			selection_path_tf				= new TextFieldBitmap();
+			selection_path_tf.tf.autoSize 	= TextFieldAutoSize.LEFT;
+			selection_path_tf.y 			= stage.stageHeight - selection_path_tf.height - 3;
+			selection_path_tf.x 			= _selection_x;
+			selection_path_tf.alpha 		= 0;
+			
+			lastsync_tf						= new TextFieldBitmap();
+			lastsync_tf.tf.autoSize 		= TextFieldAutoSize.LEFT;
+			lastsync_tf.y 					= stage.stageHeight - (selection_path_tf.height*2) - 3;
+			lastsync_tf.x 					= _selection_x;
+			lastsync_tf.alpha 				= 0;
+			lastsync_tf.tf.text				= "Selected";
+			
+			COREApi.addChildToLevel(lastsync_tf, 		COREApi.LEVEL_TOP);
+			COREApi.addChildToLevel(selection_path_tf, 	COREApi.LEVEL_TOP);
+			
+			readXML();
+		}
+		
+		private function systemBusyHandler(e:AppEvent):void 
+		{
+			switch (e.data) 
+			{
+				case "true":
+					
+					MovieClip(menu_icons.time).alpha 	= 0.3;
+					MovieClip(menu_icons.browse).alpha 	= 0.3;
+					MovieClip(menu_icons.help).alpha 	= 0.3;
+					
+					MovieClip(menu_icons.time).mouseEnabled 	= false;
+				    MovieClip(menu_icons.browse).mouseEnabled 	= false;
+				    MovieClip(menu_icons.help).mouseEnabled		= false;
+					
+				break;
+				case "false":
+					
+					MovieClip(menu_icons.time).alpha 	= 1;
+					MovieClip(menu_icons.browse).alpha 	= 1;
+					MovieClip(menu_icons.help).alpha 	= 1;
+					
+					MovieClip(menu_icons.time).mouseEnabled		= true;
+				    MovieClip(menu_icons.browse).mouseEnabled 	= true;
+				    MovieClip(menu_icons.help).mouseEnabled		= true;
+					
+				break;
+			}
+		}
+		
+		private function saveDataHandler(e:AppEvent):void 
+		{
+			saveData();
+		}
+		
+		private function timeClickHandler(e:MouseEvent):void 
+		{
+			COREApi.setApplicationMode("time_select");
+		}
+		
+		private function browseClickHandler(e:MouseEvent):void 
+		{
+			/// init browse
+			_file.browse([fileTypes]);
+		}
+		
+		private function helpClickHandler(e:MouseEvent):void 
+		{
+			Web.getURL("mailto:" + XMLSettings.setting.HELP_EMAIL);
+		}
+		
+		/// browsing funcs
+		/// browsing funcs
+		/// browsing funcs
+		
+		private function fileChangeHandler(e:Event):void 
+		{
+			COREApi.options.uploadFile = _file;
+			
+			setText();
+			
+			COREApi.dispatchEvent(new AppEvent(AppEvent.SAVE_DATA, ""));
+			
+			if (AppManager.singleton.mode != "home")  { COREApi.setApplicationMode("home"); }
+		}
+		
+		private function launchHome():void 
+		{
+			var newhome:Home 	= new Home();
+			newhome.mode_name 	= "home";
+			
+			COREApi.addChildToLevel(newhome, COREApi.LEVEL_MAIN);
+		}
+		
+		private function launchUpload():void 
+		{
+			if (COREApi.options.uploadFile != null && COREApi.options.uploadFile != "" && COREApi.options.uploadFile is File)
+			{
+				var newupload:Upload		= new Upload();
+				newupload.mode_name 		= "upload";
+				newupload.parent_uploader	= this;
+				
+				COREApi.addChildToLevel(newupload, COREApi.LEVEL_MAIN);
+			}
+			else
+			{
+				//var new_warning:Warning = new Warning("Warning: No file selected. Please use the folder icon to select a file.");
+				
+				//COREApi.addChildToLevel(new_warning, COREApi.LEVEL_ALERT);
+			}
+		}
+		
+		private function launchTimeSelect():void 
+		{
+			var newtimesetter:SetTime 	= new SetTime();
+			newtimesetter.mode_name 	= "time_select";
+			
+			COREApi.addChildToLevel(newtimesetter, COREApi.LEVEL_MAIN);
+		}
+		
+		public function setText():void 
+		{
+			trace("TemplateAppClass.setText");
+			
+			/// show upload file in textfield if already set
+			if (COREApi.options.uploadFile == null || COREApi.options.uploadFile == "")
+			{
+				selection_path_tf.tf.text = "No file selected";
+				selection_path_tf.alpha = 0;
+			}
+			else
+			{
+				selection_path_tf.tf.text = "Selected file: " + File(COREApi.options.uploadFile).nativePath;
+			}
+			
+			/// show last upload time in textfield if available
+			if (COREApi.options.lastSync == null || COREApi.options.lastSync == "")
+			{
+				lastsync_tf.tf.text = "Last Sync: NEVER";
+			}
+			else
+			{
+				lastsync_tf.tf.text = "Last Sync: " + COREApi.options.lastSync;
+			}
+			
+			Tweener.addTween(lastsync_tf, { alpha:1, time:0.5, transition:"EaseOutSine", delay:1 } );
+			Tweener.addTween(selection_path_tf, { alpha:1, time:0.5, transition:"EaseOutSine", delay:1 } );
+			
+			selection_path_tf.x = _selection_x;
+		}
+		
+		/// /// ///
+		/// /// ///
+		/// /// ///
+		
+		/**
+		* Called when the application is first rendered, and when the user clicks the Save button.
+		* If the preferences file *does* exist (the application has been run previously), the method 
+		* sets up a FileStream object and reads the XML data, and once the data is read it is processed. 
+		* If the file does not exist, the method calls the saveData() method which creates the file. 
+		*/
+		private function readXML():void 
+		{
+			stream = new FileStream();
+			
+			if (prefsFile.exists) 
+			{
+    			stream.open(prefsFile, FileMode.READ);
+			    processXMLData();
+			}
+			else
+			{
+			    //saveData();
+			    saveDataAndReload();
+			}
+			
+			stage.nativeWindow.visible = true;
+		}
+		
+		private function saveData():void
+		{
+			createXMLData(); 
+			writeXMLData();
+		}
+		
+		private function saveDataAndReload():void 
+		{
+			createXMLData(); 
+			writeXMLData();
+			stream.open(prefsFile, FileMode.READ);
+			processXMLData();
+		}
+		
+		/**
+		* Called after the data from the prefs file has been read. The readUTFBytes() reads
+		* the data as UTF-8 text, and the XML() function converts the text to XML. The x, y,
+		* width, and height properties of the main window are then updated based on the XML data.
+		*/
+		private function processXMLData():void
+		{
+			trace("TemplateAppClass.processXMLData");
+			
+			prefsXML = XML(stream.readUTFBytes(stream.bytesAvailable));
+			
+			COREApi.options.syncTime = prefsXML.sync.@time;
+			COREApi.options.lastSync = prefsXML.sync.@lastsync;
+			
+			trace ("TemplateAppClass ::: processXMLData() ::: prefsXML.target_file.@url = " + prefsXML.target_file.@url ); 
+			
+			try 
+			{
+				var path2file:String = prefsXML.target_file.@url;
+			}
+			catch (errObject:Error) 
+			{
+				trace(errObject.message);
+			}
+			
+			if (path2file != "")
+			{
+				var target_file:File = new File(path2file);
+				
+				if (target_file.exists)
+				{
+					trace ("TemplateAppClass ::: target_file.exists");
+					
+					COREApi.options.uploadFile = target_file;
+					
+					COREApi.setApplicationMode("home");
+				}
+				else
+				{
+					trace ("TemplateAppClass ::: target_file DOES NOT EXIST");
+					
+					orderFileSelection();
+				}
+			}
+			else
+			{
+				COREApi.options.uploadFile = null;
+				
+				orderFileSelection();
+			}
+			
+			stream.close();
+			
+			setText();
+			
+			/// start timer (the thing that uploads the file at the selected time)
+			//var newtimer:UploadTimer = new UploadTimer();
+		}
+		
+		private function orderFileSelection():void 
+		{
+			trace("TemplateAppClass.orderFileSelection");
+			
+			/// launch request "PLEASE SELECT A FILE"
+			
+			//var new_warning:Warning = new Warning("Warning: No file selected. Please use the folder icon to select a file.");
+			
+			if (AppManager.singleton.mode != "home")  { COREApi.setApplicationMode("home"); }
+			
+			//COREApi.addChildToLevel(new_warning, COREApi.LEVEL_ALERT);
+		}
+		
+		private function windowClosingHandler(event:Event):void 
+		{
+			saveData();
+		}
+		
+		/**
+		* Creates the XML object with data based on the window state
+		* and the current time.
+		*/
+		private function createXMLData():void 
+		{
+			prefsXML = <preferences/>;
+			
+			if (COREApi.options.uploadFile != null) 
+			{
+				prefsXML.target_file.@url = File(COREApi.options.uploadFile).nativePath;	
+			}
+			else { prefsXML.target_file.@url = ""; }
+			
+			if (COREApi.options.syncTime != null) 
+			{
+				prefsXML.sync.@time	= COREApi.options.syncTime;
+			}
+			else { prefsXML.sync.@time = "13:00"; }
+			
+			if (COREApi.options.lastSync != null && COREApi.options.lastSync != "") 
+			{
+				prefsXML.sync.@lastsync	= COREApi.options.lastSync;
+			}
+			else { prefsXML.sync.@lastsync = "NEVER"; }
+			
+			prefsXML.saveDate = new Date().toString();
+		}
+		
+		/**
+		* Called when the NativeWindow closing event is dispatched. The method 
+		* converts the XML data to a string, adds the XML declaration to the beginning 
+		* of the string, and replaces line ending characters with the platform-
+		* specific line ending character. Then sets up and uses the stream object to
+		* write the data.
+		*/
+		private function writeXMLData():void 
+		{
+			trace("TemplateAppClass.writeXMLData");
+			
+			var outputString:String = '<?xml version="1.0" encoding="utf-8"?>\n';
+			outputString 			+= prefsXML.toXMLString();
+			outputString 			= outputString.replace(/\n/g, File.lineEnding);
+			stream 					= new FileStream();
+			
+			stream.open(prefsFile, FileMode.WRITE);
+			stream.writeUTFBytes(outputString);
+			stream.close();
+		}
