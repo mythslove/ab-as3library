@@ -124,16 +124,23 @@
 			
 			/// load XML/AMF data
 			
-			if (XMLSettings.setting.DATA_TYPE == "XML") 
+			if (XMLSettings.setting.DATA_TYPE != "NONE")
 			{
-				DataManager.singleton.xml_path 		= XMLSettings.setting.XML_PATH;
-				DataManager.singleton.main_xml_file = XMLSettings.setting.XML_PATH + XMLSettings.setting.MAIN_XML_FILE;
+				if (XMLSettings.setting.DATA_TYPE == "XML") 
+				{
+					DataManager.singleton.xml_path 		= XMLSettings.setting.XML_PATH;
+					DataManager.singleton.main_xml_file = XMLSettings.setting.XML_PATH + XMLSettings.setting.MAIN_XML_FILE;
+				}
+			}
+			else
+			{
+				loadedBaseData(null)
 			}
 		}
 		
-		private function loadedBaseData(e:AppEvent):void
+		private function loadedBaseData(e:AppEvent=null):void
 		{
-			e.stopPropagation();
+			if (e)  { e.stopPropagation(); };
 			
 			/// this setter is called after DataManager finishes loading base data
 			COREApi.removeEventListener(AppEvent.LOADED_DATA, loadedBaseData);

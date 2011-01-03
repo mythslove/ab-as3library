@@ -96,6 +96,9 @@
 		public var APP_INSTANCE:*;
 		private var _APP_CLASS:Class;
 		
+		/// Temporary Object
+		private var _globalvars:Object = new Object();
+		
 		/// singleton
 		private static var __singleton:AppManager;
 		
@@ -387,6 +390,9 @@
 		
 		public function get core():CORE 			{ return _core;  }
 		public function set core(value:CORE):void  	{ _core = value; }
+		
+		public function get globalvars():Object 			{ return _globalvars; }
+		public function set globalvars(value:Object):void  	{ _globalvars = value; }
 		
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END

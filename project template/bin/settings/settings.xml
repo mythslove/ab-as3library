@@ -21,8 +21,8 @@
 	<!--  caminho para os conteudos --> 
 	<property id="CONTENTS_PATH" value="arq/img/"/>
 	
-	<!-- fonte de informação: XML ou AMF -->
-	<property id="DATA_TYPE" value="XML"/>
+	<!-- fonte de informação: XML ou AMF ou NONE-->
+	<property id="DATA_TYPE" value="NONE"/>
 	
 	<!-- caminho para os ficheiros XML de conteúdos -->
 	<property id="XML_PATH" value="xml/"/>
