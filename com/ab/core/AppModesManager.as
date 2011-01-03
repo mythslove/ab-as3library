@@ -35,6 +35,12 @@ package com.ab.core
 			{
 				switch (mode_name)
 				{
+					case "reset":
+						
+						COREApi.dispatchEvent(new AppEvent(AppEvent.MODE_CHANGE, "reset"));
+						
+					break;
+					
 					case AppModes.DEBUG:
 						
 						COREApi.dispatchEvent(new AppEvent(AppEvent.MODE_CHANGE, AppModes.DEBUG));

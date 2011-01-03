@@ -23,6 +23,8 @@
 		public static const CLEAN_MENU:String 			= "cleanmenu";
 		public static const RESET_APP:String 			= "resetapp";
 		public static const APP_STEP_FURTHER:String 	= "appstepfurther";
+		public static const SAVE_DATA:String 			= "savedata";
+		public static const SYSTEM_BUSY:String 			= "systembusy";
 		
 		/// interactivity events
 		//public static const MOUSE_UP:String 			= "mouseup";

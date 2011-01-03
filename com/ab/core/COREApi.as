@@ -264,6 +264,16 @@
 		{
 			return StageReference.getStage();
 		}
+		
+		/**
+		 * Global Vars object acess
+		 * This method provides direct access to the Global Vars object
+		 * @return	Options object.
+		 */
+		public static function get globalvars():Object
+		{
+			return AppManager.singleton.globalvars;
+		}
 	}
 	
 }
