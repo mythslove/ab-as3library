@@ -12,6 +12,7 @@
 		public static const INTRO_RESUMED:String 		= "introresumed";
 		public static const LOADED_SETTINGS:String 		= "loadedsettings";
 		public static const LOADED_DATA:String 			= "loadeddata";
+		public static const LOADED_FONTS:String 		= "loadedfonts";
 		public static const RELOAD_DATA:String 			= "reloaddata";
 		public static const MODE_CHANGE:String 			= "modechange";
 		public static const LANG_CHANGE:String 			= "langchange";
@@ -23,8 +24,6 @@
 		public static const CLEAN_MENU:String 			= "cleanmenu";
 		public static const RESET_APP:String 			= "resetapp";
 		public static const APP_STEP_FURTHER:String 	= "appstepfurther";
-		public static const SAVE_DATA:String 			= "savedata";
-		public static const SYSTEM_BUSY:String 			= "systembusy";
 		
 		/// interactivity events
 		//public static const MOUSE_UP:String 			= "mouseup";

@@ -68,6 +68,9 @@
 		public var _loggerLevel:Sprite;
 		public var _statsLevel:Sprite;
 		
+		/// Vector Fonts Manager
+		public var _vectorFontsManager:VectorFontsManager;
+		
 		public function CORE()
 		{
 			trace("ABº AS3 CORE System - Constructor");
@@ -105,8 +108,28 @@
 		{
 			trace ("CORE ::: step 2 ::: loadedSettings()");
 			
+			e.stopPropagation();
+			
 			/// this setter is called after XMLSettings finishes loading settings XML
 			COREApi.removeEventListener(AppEvent.LOADED_SETTINGS, loadedSettings);
+			
+			loadFontManager();
+		}
+		
+		private function loadFontManager():void 
+		{
+			COREApi.addEventListener(AppEvent.LOADED_FONTS, loadedFontsHandler);
+			
+			/// create vector fonts manager
+			_vectorFontsManager = new VectorFontsManager();
+			_vectorFontsManager.init();
+		}
+		
+		private function loadedFontsHandler(e:AppEvent):void 
+		{
+			e.stopPropagation();
+			
+			COREApi.removeEventListener(AppEvent.LOADED_FONTS, loadedFontsHandler);
 			
 			initMainVars();
 		}
@@ -124,23 +147,20 @@
 			
 			/// load XML/AMF data
 			
-			if (XMLSettings.setting.DATA_TYPE != "NONE")
+			if (XMLSettings.setting.DATA_TYPE == "XML")
 			{
-				if (XMLSettings.setting.DATA_TYPE == "XML") 
-				{
-					DataManager.singleton.xml_path 		= XMLSettings.setting.XML_PATH;
-					DataManager.singleton.main_xml_file = XMLSettings.setting.XML_PATH + XMLSettings.setting.MAIN_XML_FILE;
-				}
+				DataManager.singleton.xml_path 		= XMLSettings.setting.XML_PATH;
+				DataManager.singleton.main_xml_file = XMLSettings.setting.XML_PATH + XMLSettings.setting.MAIN_XML_FILE;
 			}
-			else
+			else if (XMLSettings.setting.DATA_TYPE == "NONE")
 			{
-				loadedBaseData(null)
+				loadedBaseData(null);
 			}
 		}
 		
 		private function loadedBaseData(e:AppEvent=null):void
 		{
-			if (e)  { e.stopPropagation(); };
+			if (e) { e.stopPropagation(); };
 			
 			/// this setter is called after DataManager finishes loading base data
 			COREApi.removeEventListener(AppEvent.LOADED_DATA, loadedBaseData);
