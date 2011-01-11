@@ -4,6 +4,7 @@ package com.ab.core
 	* @author ABº
 	*/
 	
+	import com.ab.events.AppEvent;
 	import flash.display.Graphics;
 	import flash.events.Event;
 	import flash.net.URLLoader;
@@ -32,6 +33,8 @@ package com.ab.core
 		private function onLoaded(e:Event):void 
 		{
 			_loader.removeEventListener(Event.COMPLETE, onLoaded);
+			
+			COREApi.dispatchEvent(new AppEvent(AppEvent.LOADED_FONTS, ""));
 			
 			VectorText.extractFont(_loader.data, null, true);	
 		}

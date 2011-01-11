@@ -89,15 +89,9 @@
 		/// CORE instance
 		private var _core:CORE;
 		
-		/// Vector Fonts Manager
-		private var _vectorFontsManager:VectorFontsManager;
-		
 		/// system ::: don't touch these
 		public var APP_INSTANCE:*;
 		private var _APP_CLASS:Class;
-		
-		/// Temporary Object
-		private var _globalvars:Object = new Object();
 		
 		/// singleton
 		private static var __singleton:AppManager;
@@ -112,10 +106,6 @@
 			/// create application modes manager
 			_app_modes_manager 	= new AppModesManager();
 			
-			/// create vector fonts manager
-			_vectorFontsManager = new VectorFontsManager();
-			_vectorFontsManager.init();
-			
 			ColorShortcuts.init(); 	/// init color tweening
 			FilterShortcuts.init();	/// init filters tweening
 			CurveModifiers.init();	/// init bezier tweening
@@ -126,7 +116,7 @@
 		
 		public function writeVectorText(_graphics:Graphics, _text:String, _font:String, _colour:uint=0x00ff00, _size:Number=24, _leading:Number=0, _x:Number=0, _y:Number=0, _kerning:Number=0):void
 		{
-			_vectorFontsManager.write(_graphics, _text, _font, _colour, _size, _leading, _x, _y, _kerning);
+			core._vectorFontsManager.write(_graphics, _text, _font, _colour, _size, _leading, _x, _y, _kerning);
 		}
 		
 		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APP LEVELS
@@ -235,7 +225,7 @@
 		/// create objects in specific application levels
 		public function addChildToLevel(object:DisplayObject, level:String="MAIN", propsObj:Object=null):void
 		{
-			trace ("AppManager ::: addChildToLevel ::: LEVEL = " + level);
+			//trace ("AppManager ::: addChildToLevel ::: LEVEL = " + level);
 			
 			if (object != null)
 			{
@@ -390,9 +380,6 @@
 		
 		public function get core():CORE 			{ return _core;  }
 		public function set core(value:CORE):void  	{ _core = value; }
-		
-		public function get globalvars():Object 			{ return _globalvars; }
-		public function set globalvars(value:Object):void  	{ _globalvars = value; }
 		
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END
 		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END
