@@ -93,6 +93,9 @@
 		public var APP_INSTANCE:*;
 		private var _APP_CLASS:Class;
 		
+		/// global vars
+		public var globalvars:Object;
+		
 		/// singleton
 		private static var __singleton:AppManager;
 		
@@ -102,6 +105,9 @@
 			
 			_APP_LEVEL 			= applevel;
 			_APP_CLASS 			= appClass;
+			
+			/// create global vars object 
+			globalvars = new Object();
 			
 			/// create application modes manager
 			_app_modes_manager 	= new AppModesManager();
@@ -116,7 +122,7 @@
 		
 		public function writeVectorText(_graphics:Graphics, _text:String, _font:String, _colour:uint=0x00ff00, _size:Number=24, _leading:Number=0, _x:Number=0, _y:Number=0, _kerning:Number=0):void
 		{
-			core._vectorFontsManager.write(_graphics, _text, _font, _colour, _size, _leading, _x, _y, _kerning);
+			//core._vectorFontsManager.write(_graphics, _text, _font, _colour, _size, _leading, _x, _y, _kerning);
 		}
 		
 		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APP LEVELS
