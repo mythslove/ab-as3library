@@ -69,7 +69,7 @@
 		public var _statsLevel:Sprite;
 		
 		/// Vector Fonts Manager
-		public var _vectorFontsManager:VectorFontsManager;
+		//public var _vectorFontsManager:VectorFontsManager;
 		
 		public function CORE()
 		{
@@ -113,7 +113,8 @@
 			/// this setter is called after XMLSettings finishes loading settings XML
 			COREApi.removeEventListener(AppEvent.LOADED_SETTINGS, loadedSettings);
 			
-			loadFontManager();
+			initMainVars();
+			//loadFontManager();
 		}
 		
 		private function loadFontManager():void 
@@ -121,8 +122,8 @@
 			COREApi.addEventListener(AppEvent.LOADED_FONTS, loadedFontsHandler);
 			
 			/// create vector fonts manager
-			_vectorFontsManager = new VectorFontsManager();
-			_vectorFontsManager.init();
+			//_vectorFontsManager = new VectorFontsManager();
+			//_vectorFontsManager.init();
 		}
 		
 		private function loadedFontsHandler(e:AppEvent):void 
