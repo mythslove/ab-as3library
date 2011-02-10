@@ -69,7 +69,7 @@
 		public var _statsLevel:Sprite;
 		
 		/// Vector Fonts Manager
-		//public var _vectorFontsManager:VectorFontsManager;
+		public var _vectorFontsManager:VectorFontsManager;
 		
 		public function CORE()
 		{
