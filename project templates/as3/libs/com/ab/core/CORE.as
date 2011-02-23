@@ -124,14 +124,22 @@
 			
 			/// load XML/AMF data
 			
-			if (XMLSettings.setting.DATA_TYPE == "XML") 
+			switch (XMLSettings.setting.DATA_TYPE)
 			{
-				DataManager.singleton.xml_path 		= XMLSettings.setting.XML_PATH;
-				DataManager.singleton.main_xml_file = XMLSettings.setting.XML_PATH + XMLSettings.setting.MAIN_XML_FILE;
+				case "XML":
+					DataManager.singleton.getMainXMLData(XMLSettings.setting.XML_PATH, XMLSettings.setting.MAIN_XML_FILE);
+				break;
+				case "AMF":
+					DataManager.singleton.getAMFData(XMLSettings.setting.AMF_CAT);
+				break;
+				default:
+					// dont's fetch data
+					loadedBaseData(null);
+				break;
 			}
 		}
 		
-		private function loadedBaseData(e:AppEvent):void
+		private function loadedBaseData(e:AppEvent=null):void
 		{
 			e.stopPropagation();
 			

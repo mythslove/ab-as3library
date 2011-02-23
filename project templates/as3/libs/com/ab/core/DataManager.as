@@ -58,14 +58,17 @@
 		public function get main_xml_file():String 				{ return _main_xml_file;  }
 		public function set main_xml_file(value:String):void  	
 		{ 
-			_main_xml_file = value; 
+			_main_xml_file = value;
 			
 			if (_xml_path != "")  { getMainXMLData(); };
 		}
 		
-		public function getMainXMLData():void
+		public function getMainXMLData(path:String="", file:String):void
 		{
-			COREApi.getXMLdata(_main_xml_file, onXMLDataReceived);
+			_main_xml_file 	= file;
+			_xml_path 		= path;
+			
+			COREApi.getXMLdata(path + _main_xml_file, onXMLDataReceived);
 		}
 		
 		private function onXMLDataReceived(e:XML):void 

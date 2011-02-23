@@ -27,6 +27,9 @@
 	<!-- caminho para os ficheiros XML de conteúdos -->
 	<property id="XML_PATH" value="xml/"/>
 	
+	<!-- in case of loading AMF data, provide parameter -->
+	<property id="AMF_PARAMETER" value=""/>
+	
 	<!-- caminho para o ficheiro XML de conteúdos principal -->
 	<property id="MAIN_XML_FILE" value="maindata.xml"/>
 	
