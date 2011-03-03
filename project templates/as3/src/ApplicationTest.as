@@ -23,7 +23,8 @@ package
 	import com.ab.appobjects.applicationbase.ABApplicationBase;
 	
 	import flashwp.FlashWP;
-	import com.ab.apps.appgenerics.events.AppEvent
+	//import com.ab.apps.appgenerics.events.AppEvent
+	import com.ab.events.AppEvent
 	
 	public class ApplicationTest extends ABApplicationBase
 	{
@@ -46,7 +47,7 @@ package
 			
 			addChild(lalala);
 			
-			
+			trace("jgjkg");
 			
 			//var bola1:Classtest1 	= new Classtest1();
 			//

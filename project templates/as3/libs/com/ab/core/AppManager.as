@@ -106,16 +106,16 @@
 			_APP_LEVEL 			= applevel;
 			_APP_CLASS 			= appClass;
 			
-			/// create application modes manager
+			// create application modes manager
 			_app_modes_manager 	= new AppModesManager();
 			
-			/// create vector fonts manager
+			// create vector fonts manager
 			_vectorFontsManager = new VectorFontsManager();
 			_vectorFontsManager.init();
 			
-			ColorShortcuts.init(); 	/// init color tweening
-			FilterShortcuts.init();	/// init filters tweening
-			CurveModifiers.init();	/// init bezier tweening
+			ColorShortcuts.init(); 	// init color tweening
+			FilterShortcuts.init();	// init filters tweening
+			CurveModifiers.init();	// init bezier tweening
 			
 			StageReference.getStage().addEventListener(MouseEvent.MOUSE_UP, 	mouseUpHandler);
 			StageReference.getStage().addEventListener(MouseEvent.MOUSE_DOWN,	mouseDownHandler);
@@ -158,17 +158,33 @@
 			/// create an instance of the main application class
 			APP_INSTANCE = new _APP_CLASS();
 			
-			/// create the application levels within the application instance
-			createAppLevels(APP_INSTANCE);
-			
-			/// wait until the application instance is added to stage to invoke it's start method
-			DisplayObject(APP_INSTANCE).addEventListener(Event.ADDED_TO_STAGE, applicationInstanceAddedToStageHandler);
-			
-			/// create context menu manager in application instance
-			_context_menu_manager = new ContextMenuManager(APP_INSTANCE);
-			
-			/// add the instance of the main application class to the stage
-			_APP_LEVEL.addChild(APP_INSTANCE);
+			if (APP_INSTANCE is DisplayObject) 
+			{
+				// create the application levels within the application instance
+				createAppLevels(APP_INSTANCE);
+				
+				// wait until the application instance is added to stage to invoke it's start method
+				DisplayObject(APP_INSTANCE).addEventListener(Event.ADDED_TO_STAGE, applicationInstanceAddedToStageHandler);
+				
+				// create context menu manager in application instance
+				_context_menu_manager = new ContextMenuManager(APP_INSTANCE);
+				
+				// add the instance of the main application class to the stage
+				_APP_LEVEL.addChild(APP_INSTANCE);
+			}
+			else if (APP_INSTANCE is Object) 
+			{
+				// create the application levels within the application instance
+				createAppLevels(_APP_LEVEL);
+				
+				// create context menu manager in application instance
+				_context_menu_manager = new ContextMenuManager(_APP_LEVEL);
+				
+				// add the instance of the main application class to the stage
+				//_APP_LEVEL.addChild(_APP_LEVEL);
+				
+				APP_INSTANCE["start"]();
+			}
 		}
 		
 		public function addContextMenuItem(caption:String, handler:Function, separatorBefore:Boolean = false, enabled:Boolean = true, visible:Boolean = true):void

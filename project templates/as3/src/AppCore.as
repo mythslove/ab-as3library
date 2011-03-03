@@ -5,6 +5,7 @@ package
 	import flash.display.LoaderInfo;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flashwp.FlashWP;
 	
 	[SWF(width = "800", height = "600", frameRate = "30", backgroundColor = "#222222")]
 	
@@ -17,7 +18,7 @@ package
 		public function AppCore()
 		{
 			/// define main application class
-			APPLICATION_CLASS  = ApplicationTest;
+			APPLICATION_CLASS = FlashWP;
 			
 			// access to flashvars:
 			// LoaderInfo(this.root.loaderInfo).parameters;

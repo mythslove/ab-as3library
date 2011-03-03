@@ -27,7 +27,7 @@ package flashwp
 		
 		public function FlashWP() 
 		{
-			start();
+			//start(); called by app manager
 		}
 		
 		public function start():void

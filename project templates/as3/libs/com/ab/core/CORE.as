@@ -90,12 +90,18 @@
 			
 			ScreenSettings.init();
 			
+			/// create base levels
 			_appLevel  				= new Sprite();
 			_loggerLevel			= new Sprite();
 			_statsLevel				= new Sprite();
-			_appInfo   				= new XMLSettings();
-			///_serverCommunication 	= new ServerCommunication();
 			
+			/// load core settings
+			_appInfo   				= new XMLSettings();
+			
+			// initialize server communication
+			//_serverCommunication 	= new ServerCommunication();
+			
+			// add levels to stage
 			stage.addChildAt(_appLevel,    0);
 			stage.addChildAt(_statsLevel,  1);
 			stage.addChildAt(_loggerLevel, 2);
@@ -105,7 +111,8 @@
 		{
 			trace ("CORE ::: step 2 ::: loadedSettings()");
 			
-			/// this setter is called after XMLSettings finishes loading settings XML
+			/// this function is called after XMLSettings finishes loading settings XML
+			
 			COREApi.removeEventListener(AppEvent.LOADED_SETTINGS, loadedSettings);
 			
 			initMainVars();
@@ -141,24 +148,25 @@
 		
 		private function loadedBaseData(e:AppEvent=null):void
 		{
-			e.stopPropagation();
+			trace ("CORE ::: step 4 ::: loadedBaseData, start Application class");
 			
-			/// this setter is called after DataManager finishes loading base data
+			if (e) { e.stopPropagation(); };
+			
+			// this setter is called after DataManager finishes loading base data
 			COREApi.removeEventListener(AppEvent.LOADED_DATA, loadedBaseData);
 			
-			trace ("CORE ::: step 4 ::: loaded Data, start Application class");
-			/// a "start()" method will be called from the application class when it is ADDED_TO_STAGE
+			// a "start()" method will be called from the application class when it is ADDED_TO_STAGE
 			AppManager.singleton.addApplicationClassToStage();
 			
-			/// add extra tools on debug mode
+			// add extra tools on debug mode
 			if (XMLSettings.setting.DEBUG_MODE == true) 
 			{
-				/// add stats analyser
+				// add stats analyser
 				var _stats:Stats	= new Stats();
 				_stats.x 			= 50;
 				_stats.y 			= 50;
 				
-				/// add AB logger
+				// add AB logger
 				_appLogger 			= new Logger();
 				_appLogger.x 		= 100;
 				_appLogger.y 		= 50;

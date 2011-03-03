@@ -63,7 +63,7 @@
 			if (_xml_path != "")  { getMainXMLData(); };
 		}
 		
-		public function getMainXMLData(path:String="", file:String):void
+		public function getMainXMLData(path:String="", file:String=""):void
 		{
 			_main_xml_file 	= file;
 			_xml_path 		= path;
@@ -82,7 +82,7 @@
 			COREApi.dispatchEvent(new AppEvent(AppEvent.LOADED_DATA, true));
 		}
 		
-		public function getAMFData():void
+		public function getAMFData(cat:String):void
 		{
 			/// insert AMF requests here
 			//ServerCommunication.singleton.listarRequest(onAMFImagesOnlyDataReceived, _CATIMG, 1);
