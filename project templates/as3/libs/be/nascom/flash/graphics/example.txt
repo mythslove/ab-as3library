@@ -1,0 +1,10 @@
+// background is the display object you want to apply the effect to
+// can be a Bitmap, I used a Slideshow
+_rippler = new Rippler(background, 60, 5, 5);
+
+stage.addEventListener(MouseEvent.MOUSE_MOVE, stage_mouseMoveHandler);
+
+
+private function stage_mouseMoveHandler(event:MouseEvent):void {
+	_rippler.drawRipple(stage.mouseX, stage.mouseY, 5, 0.7);
+}
