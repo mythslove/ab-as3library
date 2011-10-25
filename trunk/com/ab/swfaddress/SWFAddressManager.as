@@ -26,7 +26,7 @@ package com.ab.swfaddress
 	* var params_obj:Object = new Object();
 	* params_obj.function	= SomeFunction;
 	* 
-	* SWFAddressManager.addAddress("lalala/lalala/", "Lalala Page", params_obj, "function");
+	* SWFAddressManager.addAddress("Lalala Page", "lalala/lalala/", params_obj, "function");
 	* 
 	* 
 	* @calling situations
@@ -46,8 +46,10 @@ package com.ab.swfaddress
 	*/
 	
 	import com.ab.appobjects.ApplicationItem;
+	import com.ab.appobjects.WebsiteSection;
 	import com.ab.core.COREApi;
 	import com.ab.settings.XMLSettings;
+	import com.ab.utils.ABStringUtils;
 	import com.asual.swfaddress.SWFAddress;
 	import com.asual.swfaddress.SWFAddressEvent;
 	import flash.display.DisplayObject;
@@ -59,16 +61,39 @@ package com.ab.swfaddress
 		
 		private var addresses:Array = new Array();
 		private var _site_title:String;
+		private var current_base_address:String="";
+		private var times_count:int;
 		
 		public function SWFAddressManager() 
 		{
-			setSingleton();
+			setSingleton();	
 			
-			SWFAddress.addEventListener(SWFAddressEvent.CHANGE, handleSWFAddress);
+			SWFAddress.addEventListener(SWFAddressEvent.CHANGE, handleSWFAddressChange);
+		}
+		
+		public function activate():void
+		{
+			
 		}
 		
 		public function get site_title():String 			{ return _site_title;   }
 		public function set site_title(value:String):void  	{  _site_title = value; }
+		
+		/// GET CURRENT VALUE
+		/// GET CURRENT VALUE
+		/// GET CURRENT VALUE
+		
+		public function getCurrentValue():String
+		{
+			return SWFAddress.getValue();
+		}
+		
+		public function processCurrentAddress():void
+		{
+			COREApi.log("processCurrentAddress: " + SWFAddress.getPathNames()[0]);
+			trace("com.ab.swfaddress.SWFAddressManager.processCurrentAddress");
+			handleSWFAddress();
+		}
 		
 		/// ADD ADDRESS
 		/// ADD ADDRESS
@@ -87,6 +112,8 @@ package com.ab.swfaddress
 		
 		public function setAddress(title:String, extra_params:Object = null):void
 		{
+			trace("com.ab.swfaddress.SWFAddressManager.setAddress > title : " + title + ", extra_params : " + extra_params);
+			
 			var extraparamstring:String = "";
 			
 			if (extra_params != null) 
@@ -120,74 +147,132 @@ package com.ab.swfaddress
 			
 			for (var i:int = 0; i < addresses.length; i++) 
 			{
-				if (addresses[i].title == title)
+				trace("String(addresses[i].title).toUpperCase() : " + String(addresses[i].title).toUpperCase());
+				
+				if (String(addresses[i].title).toUpperCase() == title.toUpperCase())
 				{
+					
 					SWFAddress.setValue(addresses[i].address + "/" + extraparamstring);
 				}
 			}
 		}
 		
 		/// SWFAddress handling
-		private function handleSWFAddress(e:SWFAddressEvent):void
+		private function handleSWFAddressChange(e:SWFAddressEvent=null):void
 		{
-			e.stopPropagation();
+			if (e)  { e.stopPropagation(); };
+			
+			handleSWFAddress();
+		}
+		
+		/// SWFAddress handling
+		private function handleSWFAddress():void
+		{
+			COREApi.log("-------- " + times_count + " ----------- ");
+			COREApi.log("handleSWFAddress: SWFAddress.getPathNames()[0]: " + SWFAddress.getPathNames()[0]);
+			COREApi.log("handleSWFAddress: current_base_address: " + current_base_address);
 			
 			trace("::: SWFAddress changed. new path: "  + SWFAddress.getPath());
 			trace("::: SWFAddress changed. new value: " + SWFAddress.getValue());
 			
-			var _class:Class;
+			times_count++;
 			
-			for (var i:int = 0; i < addresses.length; i++) 
+			if (SWFAddress.getPathNames()[0] != current_base_address)
 			{
-				if ("/" + addresses[i].address + "/" == SWFAddress.getPath())
+				var _class:Class;
+				
+				var found:Boolean = false;
+				
+				for (var i:int = 0; i < addresses.length; i++) 
 				{
-					if (addresses[i].title)
-					{
-						if (addresses[i].title != "")  { SWFAddress.setTitle(site_title + " : " + addresses[i].title); }
-					}
+					COREApi.log("addresses[i].address : " + addresses[i].address);
 					
-					switch (addresses[i].type)
+					if (addresses[i].address == SWFAddress.getPathNames()[0])
 					{
-						case "function":
-							
-							for each (var x:* in addresses[i].params)  { if (x is Function) { x(); } };
-							
-						break;
+						trace("swfaddress manager: addresses found: " + addresses[i].address);
 						
-						case "normal":
+						found = true;
 						
-						default:
+						if (addresses[i].title)
+						{
+							if (addresses[i].title != "")  { SWFAddress.setTitle(site_title + " : " + addresses[i].title); }
+						}
+						
+						switch (addresses[i].type)
+						{
+							case "function":
+								
+								for each (var x:* in addresses[i].params)  { if (x is Function) { x(); } };
+								
+							break;
 							
-							for each (var w:* in addresses[i].params) 
-							{
-								if (w is Class)
-								{ 
-									var classref:* 		= w;
-									var new_instance:*	= new classref();
-									
-									if (new_instance is ApplicationItem) { ApplicationItem(new_instance).swfaddress_path = addresses[i].address; };
-									
-									COREApi.addChildToLevel(new_instance, addresses[i].params.level);
-								}
-								else 
-								{ 
-									if (w is Function) { w(); }; 
-								}
-							}
+							case "normal":
 							
-						break;
+							default:
+								
+								for each (var w:* in addresses[i].params) 
+								{
+									//trace("typeof addresses[i] : " + typeof addresses[i]);
+									
+									if (w is Class)
+									{ 
+										var classref:* 		= w;
+										var new_instance:*	= new classref();
+										
+										if (new_instance is ApplicationItem) 
+										{ 
+											ApplicationItem(new_instance).swfaddress_path = addresses[i].address;
+										}
+										else
+										{
+											if (new_instance is WebsiteSection) 
+											{
+												WebsiteSection(new_instance).swfaddress_path = addresses[i].address;
+											}
+										}
+										
+										COREApi.addChildToLevel(new_instance, addresses[i].params.level);
+									}
+									else 
+									{ 
+										if (w is Function) { w(); }; 
+									}
+								}
+								
+							break;
+						}
 					}
 				}
+				
+				COREApi.log("found : " + found);
+				
+				if (found) 
+				{
+					current_base_address = SWFAddress.getPathNames()[0];
+				}
+				else
+				{
+					trace("swfaddress manager: address NOT found: " + SWFAddress.getPathNames()[0]);
+				}
+				
+				
 			}
 		}
 		
 		/// /////////////////////////////////////////////////////////////////////// SINGLETON START
 		/// /////////////////////////////////////////////////////////////////////// SINGLETON START
 		
-		private function setSingleton():void { if (__singleton == null)  { __singleton = this } }
+		public function setSingleton():void
+		{
+			if (__singleton != null)  { return; }; //throw new Error("SWFAddressManager ::: SINGLETON REPLICATION ATTEMPTED")
+			__singleton = this;
+		}
 		
-		public static function get singleton():SWFAddressManager { if (__singleton == null) { __singleton = new SWFAddressManager() };  return __singleton; }
-		
+		public static function get singleton():SWFAddressManager 
+		{ 
+			if (__singleton == null) { throw new Error("SWFAddressManager ::: SINGLETON DOES NOT EXIST (CORE FAILED TO INITIALIZE?)") }
+			return __singleton;
+		}
 		/// /////////////////////////////////////////////////////////////////////// SINGLETON END
 		/// /////////////////////////////////////////////////////////////////////// SINGLETON END
 	}

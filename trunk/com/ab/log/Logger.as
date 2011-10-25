@@ -81,7 +81,7 @@
 		
 		public function Logger() 
 		{
-			//trace ("Logger ::: Constructor()" ); 
+			trace ("Logger ::: Constructor()" ); 
 			
 			setSingleton();
 			

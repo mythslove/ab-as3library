@@ -29,7 +29,7 @@
 	public class KeyboardManager extends Object
 	{
 		/// keyboard
-		protected var _key:Key;
+		public var _key:Key;
 		
 		private static var __singleton:KeyboardManager;
 		
@@ -48,6 +48,7 @@
 		private function keyDownHandler(e:KeyboardEvent):void 
 		{
 			//trace ("KeyboardManager ::: keyDownHandler = " + e.keyCode);
+			
 			switch (e.keyCode) 
 			{
 				case Keyboard.F6:

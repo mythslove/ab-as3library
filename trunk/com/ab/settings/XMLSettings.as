@@ -23,7 +23,7 @@
 		{
 			setSingleton();
 			
-			load("settings/banner_settings.xml");
+			load("settings/settings.xml");
 		}
 		
 		private function load(source:String):void

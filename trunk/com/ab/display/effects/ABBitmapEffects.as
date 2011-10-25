@@ -6,7 +6,6 @@
 	
 	import flash.display.DisplayObject;
 	import flash.filters.ColorMatrixFilter;
-	import fl.motion.AdjustColor
 	
 	public class ABBitmapEffects 
 	{
@@ -44,8 +43,8 @@
 		/** @usage: ABBitmapEffects.adjustColour(your_displayobject, color_matrix); */
 		public static function applyColorMatrix(o:DisplayObject, colorMatrix:Array):void
 		{
-			var cmFilter	= new ColorMatrixFilter(colorMatrix);
-			var filter		= new Array();
+			var cmFilter:ColorMatrixFilter	= new ColorMatrixFilter(colorMatrix);
+			var filter:Array				= new Array();
 			
 			filter.splice(0, 1, cmFilter);
 			
@@ -57,8 +56,8 @@
 		/** @usage: ABBitmapEffects.applySepia(your_displayobject); */
 		public static function applySepia(o:DisplayObject):void
 		{
-			var cmFilter	= new ColorMatrixFilter(sepia_matrix);
-			var filter		= new Array();
+			var cmFilter:ColorMatrixFilter	= new ColorMatrixFilter(sepia_matrix);
+			var filter:Array				= new Array();
 			
 			filter.splice(0, 1, cmFilter);
 			
@@ -68,8 +67,8 @@
 		/** @usage: ABBitmapEffects.applyGrayscale(your_displayobject); */
 		public static function applyGrayscale(o:DisplayObject):void
 		{
-			var cmFilter	= new ColorMatrixFilter(grayscale_matrix);
-			var filter		= new Array();
+			var cmFilter:ColorMatrixFilter	= new ColorMatrixFilter(grayscale_matrix);
+			var filter:Array				= new Array();
 			
 			filter.splice(0, 1, cmFilter);
 			
@@ -79,8 +78,8 @@
 		/** @usage: ABBitmapEffects.applyBrighten(your_displayobject); */
 		public static function applyBrighten(o:DisplayObject):void
 		{
-			var cmFilter	= new ColorMatrixFilter(brighten_matrix);
-			var filter		= new Array();
+			var cmFilter:ColorMatrixFilter	= new ColorMatrixFilter(brighten_matrix);
+			var filter:Array				= new Array();
 			
 			filter.splice(0, 1, cmFilter);
 			
@@ -93,9 +92,8 @@
 		/** @usage: your_displayobject.filters	= ABBitmapEffects.sepia(); */
 		public static function sepia():Array
 		{
-			
-			var cmFilter	= new ColorMatrixFilter(sepia_matrix);
-			var filter		= new Array();
+			var cmFilter:ColorMatrixFilter	= new ColorMatrixFilter(sepia_matrix);
+			var filter:Array				= new Array();
 			
 			filter.splice(0, 1, cmFilter);
 			
@@ -106,8 +104,8 @@
 		/** @usage: your_displayobject.filters	= ABBitmapEffects.grayscale(); */
 		public static function grayscale():Array
 		{
-			var cmFilter	= new ColorMatrixFilter(grayscale_matrix);
-			var filter		= new Array();
+			var cmFilter:ColorMatrixFilter	= new ColorMatrixFilter(grayscale_matrix);
+			var filter:Array				= new Array();
 			
 			filter.splice(0, 1, cmFilter);
 			
@@ -118,8 +116,8 @@
 		/** @usage: your_displayobject.filters	= ABBitmapEffects.brighten(); */
 		public static function brighten():Array
 		{
-			var cmFilter	= new ColorMatrixFilter(brighten_matrix);
-			var filter		= new Array();
+			var cmFilter:ColorMatrixFilter	= new ColorMatrixFilter(brighten_matrix);
+			var filter:Array				= new Array();
 			
 			filter.splice(0, 1, cmFilter);
 			

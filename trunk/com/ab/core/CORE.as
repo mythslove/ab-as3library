@@ -25,6 +25,7 @@
 	*/
 	
 	/// flash imports
+	import com.ab.swfaddress.SWFAddressManager;
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
@@ -62,6 +63,7 @@
 		public var appManager:AppManager;
 		public var dataManager:DataManager;
 		public var keyboardManager:KeyboardManager;
+		public var swfAddressManager:SWFAddressManager;
 		
 		/// core levels
 		public var _appLevel:Sprite;
@@ -76,12 +78,28 @@
 			trace("ABº AS3 CORE System - Constructor");
 			
 			this.addEventListener(Event.ADDED_TO_STAGE, addedToStage);
-			
-			COREApi.addEventListener(AppEvent.LOADED_DATA, loadedBaseData, false, 0 , true);
-			COREApi.addEventListener(AppEvent.LOADED_SETTINGS, loadedSettings, false, 0 , true);
 		}
 		
-		private function addedToStage(e:Event):void { "CORE added to stage"; };
+		private function addedToStage(e:Event):void 
+		{ 
+			"CORE added to stage"; 
+			
+			COREApi.addEventListener(AppEvent.LOADED_SETTINGS, loadedSettings, false, 0 , true);
+			
+			_appInfo = new XMLSettings();
+		}
+		
+		private function loadedSettings(e:AppEvent):void
+		{
+			trace ("CORE ::: step 2 ::: loadedSettings()");
+			
+			e.stopPropagation();
+			
+			/// this setter is called after XMLSettings finishes loading settings XML
+			COREApi.removeEventListener(AppEvent.LOADED_SETTINGS, loadedSettings);
+			
+			init();
+		}
 		
 		public function init():void
 		{ 
@@ -96,25 +114,16 @@
 			_appLevel  				= new Sprite();
 			_loggerLevel			= new Sprite();
 			_statsLevel				= new Sprite();
-			_appInfo   				= new XMLSettings();
 			///_serverCommunication 	= new ServerCommunication();
+			
+			_appLevel.tabChildren = false;
 			
 			stage.addChildAt(_appLevel,    0);
 			stage.addChildAt(_statsLevel,  1);
 			stage.addChildAt(_loggerLevel, 2);
-		}
-		
-		private function loadedSettings(e:AppEvent):void
-		{
-			trace ("CORE ::: step 2 ::: loadedSettings()");
-			
-			e.stopPropagation();
-			
-			/// this setter is called after XMLSettings finishes loading settings XML
-			COREApi.removeEventListener(AppEvent.LOADED_SETTINGS, loadedSettings);
 			
 			initMainVars();
-			//loadFontManager();
+			loadFontManager();
 		}
 		
 		private function loadFontManager():void 
@@ -122,8 +131,8 @@
 			COREApi.addEventListener(AppEvent.LOADED_FONTS, loadedFontsHandler);
 			
 			/// create vector fonts manager
-			//_vectorFontsManager = new VectorFontsManager();
-			//_vectorFontsManager.init();
+			_vectorFontsManager = new VectorFontsManager();
+			_vectorFontsManager.init();
 		}
 		
 		private function loadedFontsHandler(e:AppEvent):void 
@@ -132,7 +141,7 @@
 			
 			COREApi.removeEventListener(AppEvent.LOADED_FONTS, loadedFontsHandler);
 			
-			initMainVars();
+			//initMainVars();
 		}
 		
 		private function initMainVars():void
@@ -140,20 +149,25 @@
 			trace ("CORE ::: step 3 ::: initMainVars()");
 			
 			/// app manager
-			appManager 		= new AppManager(_appLevel, APPLICATION_CLASS);
+			appManager 		= new AppManager(_appLevel, APPLICATION_CLASS, XMLSettings.setting.PROJECT_TYPE);
 			appManager.core = this;
 			
 			/// keyboard manager
 			keyboardManager = new KeyboardManager();
 			
-			/// load XML/AMF data
+			/// swfaddress manager
+			swfAddressManager = new SWFAddressManager();
 			
-			if (XMLSettings.setting.DATA_TYPE == "XML")
+			DataManager.singleton.xml_path = XMLSettings.setting.XML_PATH;
+			
+			/// load XML/AMF data
+			if (XMLSettings.setting.LOAD_XML_FILES == true)
 			{
-				DataManager.singleton.xml_path 		= XMLSettings.setting.XML_PATH;
-				DataManager.singleton.main_xml_file = XMLSettings.setting.XML_PATH + XMLSettings.setting.MAIN_XML_FILE;
+				COREApi.addEventListener(AppEvent.LOADED_DATA, loadedBaseData);
+				
+				DataManager.singleton.loadXMLFiles(XMLSettings.setting.XML_FILES_TO_LOAD);
 			}
-			else if (XMLSettings.setting.DATA_TYPE == "NONE")
+			else
 			{
 				loadedBaseData(null);
 			}
@@ -166,13 +180,11 @@
 			/// this setter is called after DataManager finishes loading base data
 			COREApi.removeEventListener(AppEvent.LOADED_DATA, loadedBaseData);
 			
-			trace ("CORE ::: step 4 ::: loaded Data, start Application class");
-			/// a "start()" method will be called from the application class when it is ADDED_TO_STAGE
-			AppManager.singleton.addApplicationClassToStage();
-			
 			/// add extra tools on debug mode
 			if (XMLSettings.setting.DEBUG_MODE == true) 
 			{
+				trace("(XMLSettings.setting.DEBUG_MODE == true) : ");
+				
 				/// add stats analyser
 				var _stats:Stats	= new Stats();
 				_stats.x 			= 50;
@@ -187,11 +199,15 @@
 				_loggerLevel.addChild(_appLogger);
 			}
 			
-			if (XMLSettings.setting.FULL_SCREEN == true)  { COREApi.setFullscreen(); };
+			trace ("CORE ::: step 4 ::: loaded Data, start Application class");
+			/// a "start()" method will be called from the application class when it is ADDED_TO_STAGE
+			AppManager.singleton.addApplicationClassToStage();
+			
+			if (XMLSettings.setting.FULL_SCREEN == true)  		{ COREApi.setFullscreen(); };
 		}
 		
 		/// setting the application outside will call the ini() method
-		public function set APPLICATION_CLASS(value:Class):void { _APPLICATION_CLASS = value; init();}
+		public function set APPLICATION_CLASS(value:Class):void { _APPLICATION_CLASS = value; } //init();
 		public function get APPLICATION_CLASS():Class 			{ return _APPLICATION_CLASS;  }
 		
 	} 
