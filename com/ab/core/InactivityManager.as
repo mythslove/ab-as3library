@@ -31,7 +31,7 @@
 		
 		public function onUserActivated(e:InactivityEvent):void 
 		{
-			trace("User active after being inactive for " + e.milliseconds + " milliseconds.");
+			//trace("User active after being inactive for " + e.milliseconds + " milliseconds.");
 			
 			_user_Active_functionCall();
 			
@@ -39,7 +39,7 @@
 		}
 		public function onUserInactive(e:InactivityEvent):void 
 		{
-			trace("User inactive for " + e.milliseconds + " milliseconds.");
+			//trace("User inactive for " + e.milliseconds + " milliseconds.");
 			
 			_user_inActive_functionCall();
 			

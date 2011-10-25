@@ -39,11 +39,13 @@
 	
 	/// ab lib
 	//import com.ab.log.Logger;
+	//import com.ab.core.ZipManager;
 	import com.ab.events.CentralEventSystem;
 	import com.ab.core.AppModesManager;
 	import com.ab.events.AppEvent;
 	import com.ab.events.ItemEvent;
 	import com.ab.core.InactivityManager;
+	
 	
 	public class AppManager extends Object
 	{
@@ -51,15 +53,15 @@
 		private var _app_modes_manager:AppModesManager;
 		
 		/// APP LEVELS
-		private var _LOGGER_LEVEL:Sprite;
-		private var _SCREENSAVER_LEVEL:Sprite;
-		private var _ALERT_LEVEL:Sprite;
-		private var _APP_LEVEL:Sprite;
-		private var _TOP_LEVEL:Sprite;
-		private var _MENU_LEVEL:Sprite;
-		private var _MAIN_LEVEL:Sprite;
-		private var _BACK_LEVEL:Sprite;
-		private var _BACKGROUND_LEVEL:Sprite;
+		public var _LOGGER_LEVEL:Sprite;
+		public var _SCREENSAVER_LEVEL:Sprite;
+		public var _ALERT_LEVEL:Sprite;
+		public var _APP_LEVEL:Sprite;
+		public var _TOP_LEVEL:Sprite;
+		public var _MENU_LEVEL:Sprite;
+		public var _MAIN_LEVEL:Sprite;
+		public var _BACK_LEVEL:Sprite;
+		public var _BACKGROUND_LEVEL:Sprite;
 		
 		/// helper "state" vars
 		private var _mode:String = "";
@@ -93,21 +95,26 @@
 		public var APP_INSTANCE:*;
 		private var _APP_CLASS:Class;
 		
+		/// zip
+		//public var zip_manager:ZipManager;
+		
 		/// global vars
 		public var globalvars:Object;
 		
 		/// singleton
 		private static var __singleton:AppManager;
 		
-		public function AppManager(applevel:Sprite, appClass:Class)
+		public function AppManager(applevel:Sprite, appClass:Class, project_type:String="AS3")
 		{
 			setSingleton();
 			
 			_APP_LEVEL 			= applevel;
 			_APP_CLASS 			= appClass;
 			
+			//if (project_type.toUpperCase() == "AIR")  { zip_manager = new ZipManager(); }
+			
 			/// create global vars object 
-			globalvars = new Object();
+			globalvars 			= new Object();
 			
 			/// create application modes manager
 			_app_modes_manager 	= new AppModesManager();
@@ -120,9 +127,21 @@
 			StageReference.getStage().addEventListener(MouseEvent.MOUSE_DOWN,	mouseDownHandler);
 		}
 		
+		//public function createZip(_files:Array, _text:String):void
+		//{
+			//if (zip_manager != null) 
+			//{
+				//zip_manager.createZIP(_files, _text);
+			//}
+			//else
+			//{
+				//trace("WARNING: ZipManager is null");
+			//}
+		//}
+		
 		public function writeVectorText(_graphics:Graphics, _text:String, _font:String, _colour:uint=0x00ff00, _size:Number=24, _leading:Number=0, _x:Number=0, _y:Number=0, _kerning:Number=0):void
 		{
-			//core._vectorFontsManager.write(_graphics, _text, _font, _colour, _size, _leading, _x, _y, _kerning);
+			core._vectorFontsManager.write(_graphics, _text, _font, _colour, _size, _leading, _x, _y, _kerning);
 		}
 		
 		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// APP LEVELS
@@ -140,14 +159,14 @@
 			_SCREENSAVER_LEVEL 	= new Sprite();
 			_LOGGER_LEVEL	 	= new Sprite();
 			
-			app_instance.addChildAt(_BACKGROUND_LEVEL,	0);
-			app_instance.addChildAt(_BACK_LEVEL,  		1);
-			app_instance.addChildAt(_MAIN_LEVEL,  		2);
-			app_instance.addChildAt(_MENU_LEVEL,  		3);
-			app_instance.addChildAt(_TOP_LEVEL,   		4);
-			app_instance.addChildAt(_ALERT_LEVEL, 		5);
-			app_instance.addChildAt(_SCREENSAVER_LEVEL, 6);
-			app_instance.addChildAt(_LOGGER_LEVEL, 		7);
+			_APP_LEVEL.addChildAt(_BACKGROUND_LEVEL,	0);
+			_APP_LEVEL.addChildAt(_BACK_LEVEL,  		1);
+			_APP_LEVEL.addChildAt(_MAIN_LEVEL,  		2);
+			_APP_LEVEL.addChildAt(_MENU_LEVEL,  		3);
+			_APP_LEVEL.addChildAt(_TOP_LEVEL,   		4);
+			_APP_LEVEL.addChildAt(_ALERT_LEVEL, 		5);
+			_APP_LEVEL.addChildAt(_SCREENSAVER_LEVEL, 	6);
+			_APP_LEVEL.addChildAt(_LOGGER_LEVEL, 		7);
 		}
 		
 		public function addApplicationClassToStage():void
@@ -158,16 +177,13 @@
 			APP_INSTANCE = new _APP_CLASS();
 			
 			/// create the application levels within the application instance
-			createAppLevels(APP_INSTANCE);
-			
-			/// wait until the application instance is added to stage to invoke it's start method
-			DisplayObject(APP_INSTANCE).addEventListener(Event.ADDED_TO_STAGE, applicationInstanceAddedToStageHandler);
+			createAppLevels(_APP_LEVEL);
 			
 			/// create context menu manager in application instance
-			_context_menu_manager = new ContextMenuManager(APP_INSTANCE);
+			//_context_menu_manager = new ContextMenuManager(APP_INSTANCE);
 			
 			/// add the instance of the main application class to the stage
-			_APP_LEVEL.addChild(APP_INSTANCE);
+			APP_INSTANCE["start"]();
 		}
 		
 		public function addContextMenuItem(caption:String, handler:Function, separatorBefore:Boolean = false, enabled:Boolean = true, visible:Boolean = true):void

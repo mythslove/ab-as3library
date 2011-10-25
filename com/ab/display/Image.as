@@ -36,29 +36,33 @@
 	public class Image extends Sprite
 	{
 		/// private
-        private var url:String;
+        public var url:String;
         private var request:URLRequest;
 		public var loader:Loader;
 		
 		public var debug:Boolean=false;
 		//private var image:Bitmap;
 		private var _dispatcher:IEventDispatcher
-		private var _ON_COMPLETE_FUNCTION:Function;
+		public var _ON_COMPLETE_FUNCTION:Function;
 		private var _ON_PROGRESS_FUNCTION:Function;
+		private var started_loading:Boolean=false;
+		public var imagebitmap:Bitmap;
 		
 		/// public
 		public var resize:Boolean = false;
 		public var _width:Number  = 0;
 		public var _height:Number = 0;
 		
-		private var _constructorArgs:Array;
+		//private var _constructorArgs:Array;
 		
 		public function Image(given_url:String, onImageLoadComplete:Function=null, onImageLoadProgress:Function=null):void
         {
-			_constructorArgs = arguments;
+			//_constructorArgs 		= arguments;
 			
-			_ON_COMPLETE_FUNCTION = onImageLoadComplete;
-			_ON_PROGRESS_FUNCTION = onImageLoadProgress;
+			url 					= given_url;
+			
+			_ON_COMPLETE_FUNCTION 	= onImageLoadComplete;
+			_ON_PROGRESS_FUNCTION 	= onImageLoadProgress;
 			
             loader  = new Loader();
             request = new URLRequest(given_url);
@@ -72,7 +76,10 @@
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, addedHandler);
 			
-			load();
+			if (!started_loading) 
+			{
+				load();
+			}
 		}
 		
 		public function setResizeOnLoad(w:Number, h:Number):void
@@ -91,9 +98,11 @@
 		
 		public function load():void
 		{
+			started_loading = true;
+			
 			var context:LoaderContext = new LoaderContext();
 			context.checkPolicyFile = true;
-
+			
 			loader.load(request, context);
 		}
 		
@@ -114,8 +123,8 @@
 		{
             //trace("completeHandler: " + event);
 			
-			var image:* = loader.content as Bitmap;
-			image.smoothing = true;
+			imagebitmap 			= loader.content as Bitmap;
+			imagebitmap.smoothing 	= true;
 			
 			if (resize == true)  
 			{
@@ -123,32 +132,32 @@
 				{
 					//trace ("Image ::: -------------- RESIZE to " + _width + " x " + _height + " --------"); 
 					
-					//trace ("1 Image ::: width before  = "  + image.width);
-					//trace ("1 Image ::: height before = "  + image.height);
+					//trace ("1 Image ::: width before  = "  + imagebitmap.width);
+					//trace ("1 Image ::: height before = "  + imagebitmap.height);
 				}
 				
 				var nu_w:Number 
 				var nu_h:Number 
 				
-				if (image.width > image.height)
+				if (imagebitmap.width > imagebitmap.height)
 				{
-					nu_w = _width; nu_h = (image.height * nu_w) / image.width; trace ("Image ::: Case 1"); 
+					nu_w = _width; nu_h = (imagebitmap.height * nu_w) / imagebitmap.width; trace ("Image ::: Case 1"); 
 				}
 				else
 				{
-					if (image.width < image.height)
+					if (imagebitmap.width < imagebitmap.height)
 					{
-						nu_h = _height; nu_w = (image.width * nu_h) / image.height; trace ("Image ::: Case 2"); 
+						nu_h = _height; nu_w = (imagebitmap.width * nu_h) / imagebitmap.height; trace ("Image ::: Case 2"); 
 					}
 				}
 				
-				image.width  = nu_w;
-				image.height = nu_h;
+				imagebitmap.width  = nu_w;
+				imagebitmap.height = nu_h;
 				
 				if (debug == true) 
 				{
-					//trace ("2 Image ::: width after  = "  + image.width );
-					//trace ("2 Image ::: height after = " + image.height );
+					//trace ("2 Image ::: width after  = "  + imagebitmap.width );
+					//trace ("2 Image ::: height after = " + imagebitmap.height );
 					//trace (" ---- ");
 					
 					if (nu_h < _height) 
@@ -165,13 +174,13 @@
 				}
 				
 				
-				//image = CropBitmapData.process(image.bitmapData, _width, _height);
+				//imagebitmap = CropBitmapData.process(imagebitmap.bitmapData, _width, _height);
 				
 				//trace ("2 Image ::: newsize.width  = " + newsize.width ); 
 				//trace ("2 Image ::: newsize.height = " + newsize.height );
 			}
 			
-			addChild(image);
+			addChild(imagebitmap);
 			
 			if (_ON_COMPLETE_FUNCTION != null)  { _ON_COMPLETE_FUNCTION(this)   };
         }

@@ -32,6 +32,8 @@ package com.ab.core
 		
 		private function onLoaded(e:Event):void 
 		{
+			trace("VectorFontsManager.onLoaded");
+			
 			_loader.removeEventListener(Event.COMPLETE, onLoaded);
 			
 			COREApi.dispatchEvent(new AppEvent(AppEvent.LOADED_FONTS, ""));

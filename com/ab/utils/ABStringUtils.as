@@ -101,7 +101,7 @@
 		 */
 		public static function getParamValues(_string:String):Object
 		{
-			var o = new Object();
+			var o:Object = new Object();
 			
 			for each(var t:String in _string.substr(1).split('&'))
 			{
@@ -126,7 +126,7 @@
 		{
 			_string = StringUtil.remove(_string, "/")
 			
-			var o = new Object();
+			var o:Object = new Object();
 			
 			var found:String = ""
 			
@@ -224,6 +224,7 @@
 		 */
 		private function generateStrongPassword(length:uint = 32):String 
 		{
+			
 			if (length < 8) length = 8;
 			var pw:String = new String();
 			var charPos:uint = 0;
@@ -231,11 +232,12 @@
 			while (pw.length < length)
 			{
 				var chars:String = POSSIBLE_CHARS[charPos];
-				var char:String = chars.charAt(this.getRandomWholeNumber(0, chars.length - 1));
-				var splitPos:uint = this.getRandomWholeNumber(0, pw.length);
+				var char:String = chars.charAt(Math.round(((Math.random() * (chars.length - 1 - 0)) + 0)));
+				var splitPos:uint = Math.round(((Math.random() * (pw.length - 0)) + 0));
 				pw = (pw.substring(0, splitPos) + char + pw.substring(splitPos, pw.length));
 				charPos = (charPos == 3) ? 0 : charPos + 1;
 			}
+			
 			return pw; 
 		}
 		

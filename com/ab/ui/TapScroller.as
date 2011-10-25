@@ -16,7 +16,7 @@
  * TapScroller
  */
 
-package com.edigma.ui.tapscroller
+package com.ab.ui
 {
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
@@ -87,22 +87,22 @@ package com.edigma.ui.tapscroller
 			mask.graphics.beginFill(0, 1);
 			mask.graphics.drawRect(0,0,width, height);
 			mask.graphics.endFill();
-			//addChild(mask);
+			addChild(mask);
 			
-			//_content.mask = mask;
+			_content.mask = mask;
 			
 			// initialize scrollbar
 			_scrollBarV = new Sprite();
 			_scrollBarV.cacheAsBitmap = true;
-			_scrollBarV.x = width - 10;
+			_scrollBarV.x = width + 10;
 			addChild(_scrollBarV);
 			
 			_scrollBarH = new Sprite();
 			_scrollBarH.cacheAsBitmap = true;
-			_scrollBarH.y = height - 10;
+			_scrollBarH.y = height + 10;
 			addChild(_scrollBarH);
 			
-			_scrollBarV.visible = false;
+			_scrollBarV.visible = true;
 			_scrollBarH.visible = false;
 		}
 		
@@ -215,7 +215,7 @@ package com.edigma.ui.tapscroller
 			
 			if (useVertical) 
 			{
-				_scrollBarV.graphics.beginFill(0x888899,1);
+				_scrollBarV.graphics.beginFill(0x888888,1);
 				_scrollBarV.graphics.drawRoundRect(2,0,6, panelHeight * Math.max(0, panelHeight / _content.height), 8);
 				_scrollBarV.graphics.endFill();
 			}

@@ -1,5 +1,6 @@
 ﻿package com.ab.math
 {
+	import flash.geom.Point;
 	/**
 	* @author ABº
 	* 
@@ -16,7 +17,7 @@
 			
 		}
 		
-		public static function betweenTwoPoints(p1:*, p2:*):Number
+		public static function betweenTwoPoints(p1:Point, p2:Point):Number
 		{
 			/// d(p1, p2) = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 			

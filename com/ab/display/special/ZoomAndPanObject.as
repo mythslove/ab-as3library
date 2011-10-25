@@ -66,7 +66,7 @@
 					_systembusy 				= true;
 					
 					open_width  				= _stagereference.stageWidth  * strength;
-					trace( "open_width : " + open_width );
+					
 					open_height 				= _stagereference.stageHeight * strength;
 					
 					init_x 						= this.x;
@@ -107,7 +107,6 @@
 				
 				Tweener.addTween(this, 			{x:x_pos, y:y_pos, time:1, transition:"easeOutExpo" } );
 			}
-			
 		}
 		
 	}

@@ -1,4 +1,4 @@
-﻿package 
+﻿package com.ab.display.geometry 
 {
     /**
     * @author Slavomir Durej

@@ -5,6 +5,7 @@
 	* @author ABº
 	*/
 	
+	import com.ab.core.DataManager;
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
@@ -21,7 +22,7 @@
 		
 		public function XMLDataGetter()  { setSingleton(); };
 		
-		public function getDataXML(return_func:Function, xml_file_path:String=""):void
+		public function getDataXML(xml_file_path:String, return_func:Function):void
 		{
 			//trace ("XMLDataGetter ::: xml_file_path = " + xml_file_path ); 
 			//trace ("XMLDataGetter ::: return_func = " + return_func ); 
@@ -33,7 +34,7 @@
 				var xmlLoader:URLLoader 	= new URLLoader();
 				var header:URLRequestHeader = new URLRequestHeader("pragma", "no-cache");
 				var request:URLRequest  	= new URLRequest(xml_file_path);
-				request.data 				= new URLVariables("name=lalala");
+				request.data 				= new URLVariables("name=" + new Date());
 				request.method 				= URLRequestMethod.POST;
 				
 				xmlLoader.load(new URLRequest(xml_file_path));
