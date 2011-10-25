@@ -8,9 +8,9 @@ package com.ab.display
 	import flash.events.Event;
 	import org.casalib.display.CasaSprite;
 	
-	public class ABBaseSprite extends CasaSprite
+	public class BaseSprite extends CasaSprite
 	{
-		public function ABBaseSprite()
+		public function BaseSprite()
 		{
 			addEventListener(Event.ADDED_TO_STAGE, addedHandler);
 		}
