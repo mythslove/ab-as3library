@@ -1,4 +1,4 @@
 #summary Who is Antonio Brandao.
 #labels about
 
-Some AS coding guy hailing from Portugal.
+Antonio Brandao is a veteran ActionScript developer / Graphic Designer since 1999, specializing in development for the Adobe Flash platform, graphic design, and audio design.
