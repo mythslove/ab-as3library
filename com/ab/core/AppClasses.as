@@ -1,30 +1,35 @@
 package com.ab.core
 {
 	/**
-	* MAIN APPLICATION CLASSES (required to use AB Framework)
+	* MAIN APPLICATION CLASSES
 	* 
-	* In this class one must import the some classes and declare them as variables.
+	* This class is used to add the classes in "xml/sections.xml" to the framework system
 	* 
-	* The classes which must be imported and declared as variables are the following:
+	* these classes must be imported and declared as variables.
 	* 
-	* - the root class of your application (eg. "Main")
-	* - the classes you may have defined in the XML file "xml/sections.xml"
+	* @additionally if you wish to use another name other than "Main" for you application's root class:
+	* the public static var "main_app_class" must be the name of the root class of your application in the form of a String.
+	* it must be imported and declared as a variable like the classes defined in "xml/sections.xml"
 	* 
-	* @additionally the public static var "main_app_class" must be the name of the root class of your application in the form of a String.
+	* @finally if you know any awesome way of bypassing this requirement drop me a message
 	*/
 	
-	import ABCOMV3;
+	/// classes defined in "xml/sections.xml"
 	import sections.about.About;
 	import sections.contact.Contact;
 	import sections.skills.Skills;
 	import sections.portfolio.portfoliolist.PortfolioList;
 	import sections.portfolio.portfolioitem.PortfolioItem;
 	
+	// the value "Main" is correct as long as your main class is named "Main"
+	import Main;
+	
 	public class AppClasses 
 	{
-		public static var main_app_class:String="ABCOMV3";
+		// the value "Main" is correct as long as your main class is named "Main"
+		public static var main_app_class:String="Main";
 		
-		private var abcomv3:ABCOMV3;
+		private var main:Main;
 		private var about:About;
 		private var contact:Contact;
 		private var skills:Skills;
