@@ -4,6 +4,11 @@
 
 AB Framework is my own Framework created to suit my own development needs. 
 
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
+
 Anyone may use it but at this point there is no documentation to help. There is a project template in the "project template" folder to get it up and running quickly. Warning: The project templates is not always up to date with the code in "Trunk".
 
 = Description =
