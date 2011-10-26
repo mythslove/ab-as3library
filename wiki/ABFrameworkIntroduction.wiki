@@ -2,7 +2,7 @@
 
 == Introduction ==
 
-AB Framework is my own general-purpose framework created to suit my own development needs. 
+AB Framework is my own general-purpose framework created by me to suit my own development needs. 
 
 Anyone may use it but at this point there is no documentation to help. There is a project template in the "project template" folder to get it up and running quickly. Warning: The project templates is not always up to date with the code in "Trunk".
 
