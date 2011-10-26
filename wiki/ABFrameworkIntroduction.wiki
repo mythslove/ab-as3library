@@ -1,19 +1,22 @@
 #summary Description of AB Framework.
 
-= Introduction =
+== Introduction ==
 
 AB Framework is my own general-purpose framework created to suit my own development needs. 
 
 Anyone may use it but at this point there is no documentation to help. There is a project template in the "project template" folder to get it up and running quickly. Warning: The project templates is not always up to date with the code in "Trunk".
 
-= Description =
+
+== Description ==
 
 Basically, this framework has a core class which relies on several "managers" (like data manager / keyboard manager) to handle different functionalities. There is a handy "core API" class to invoke methods from all these managers, and a central event system which provides, among other uses, communication between the core classes and the stage instances.
 
 The "manager" responsible for the creation of stage instances holds no references to these instances, making them independent and easily disposable. Stage instances have their own IDs and may belong to groups which also have IDs. Because the central event system can send data with it's dispatched events, it is also used to send instructions to specific objects using their IDs.
 
 
-Main Features List:
+
+===Main Features List:===
+
   * a Core API to access all the features and "managers" of the framework.
   * automatic sections system based on SWFAddress coupled with a "Application Mode" manager.
   * Several application "Levels" (layers), such as background / main / menu / top / alerts, where all stage instances are created via the core API.
@@ -27,13 +30,15 @@ Main Features List:
   * Integrated Inactivity System - thanks to the Inactivity class by CasaLib.
   * Screensaver System which must be triggered. A compatible screensaver class must be provided when arming.
 
-Other Features:
+===Other Features:===
   * The handy COREUtils class - a large collection of static methods to handle common tasks such as tweening of alpha, color, coordinates, size, etc.
   * "Group Buttons" - buttons which work as groups - such as buttons of a group in which only one of them can be highlighted at once.
   * SWC assets library already linked and editable FLA.
   * Simple Keyboard manager, ready to assign keyboard actions to functions.
   * Sound Manager - In alpha state
 
-Requirements :
+
+===Requirements:===
+
   * Main application class must be called "Main" and must be in the project root.
   * The sections declared in the "xml/sections.xml" (if any) must be imported and declared as variables in the class ab.core.AppClasses (because of the automatic integration with the swfaddress / sections system).
