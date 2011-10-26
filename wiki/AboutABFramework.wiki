@@ -4,7 +4,7 @@
 
 AB Framework is my own general-purpose framework created by myself to suit my own development needs. 
 
-Anyone may use it but at this point there is no documentation to help. There is a project template in the "project template" folder to get it up and running quickly. Warning: The project templates is not always up to date with the code in "Trunk".
+Anyone may use it but at this point there is no documentation to help. There is a project template in the "project template" folder to get it up and running quickly. Warning: The project template is not always up to date with the code in "Trunk".
 
 
 == Description ==
