@@ -26,7 +26,7 @@ The "manager" responsible for the creation of stage instances holds no reference
   * Handy logging console accessible in debug mode by pressing the key F8. Can be activated/deactivated at runtime. Logging is done via the core API: COREApi.log("test").
   * Central Event System which centralizes Event registering and dispatching, accessible to all objects via core API.
   * Integrated Vector text-writer system using optionally loaded fonts in a SWC. Also used via core API. Developed by Guojian Miguel Wu.
-  * Data Manager which stores any fetched data in "smart data objects" easily accessible from anywhere via the core API vie their IDs, preventing unwanted repetition of data requests.
+  * Data Manager which stores any fetched data in "smart data objects" with IDs, easily accessible from anywhere via the core API using their IDs, preventing unwanted repetition of data requests.
   * Integrated Inactivity System - thanks to the Inactivity class by CasaLib.
   * Screensaver System which must be triggered. A compatible screensaver class must be provided when arming.
 
