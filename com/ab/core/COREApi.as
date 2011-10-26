@@ -146,6 +146,20 @@
 		}
 		
 		/**
+		 * ACCESS A SETTING VALUE
+		 * Access a setting value stored in XMLSettings class.
+		 * @param	none
+		 * @return	Seeting value.
+		 */
+		public static function setting(setting_name:String):*
+		{
+			if (setting_name) 
+			{
+				return XMLSettings.setting[setting_name];
+			}
+		}
+		
+		/**
 		 * SCREENSAVER
 		 * Sets the class to be used as screensaver in the application. The class should listen to the event AppEvent.ACTIVITY_DETECTED to close.
 		 * @param	_class
@@ -432,3 +446,42 @@
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+	//COREApi.createSection(EmpresaSection, CoreAPI.LEVEL_MAIN);
+	//COREApi.createSection(EmpresaSection, CoreAPI.LEVEL_MAIN, "path/to/section", true, {x:100, y:200, alpha:0.5} );
+	//
+	//COREApi.gotoSection(EmpresaSection);
+	//
+	//COREApi.setSWFAddress("path/to/section");
+	//COREApi.setSWFAddress("path/to/section", null, true);
+	//COREApi.setSWFAddress("path/to/section", {param1:"blah", param2:"blah2"});
+	//COREApi.setSWFAddressParameter("param1", "blah3");
+	//
+	//COREApi.getSWFAddress();
+	//COREApi.getSWFAddressParameters().param1;
+	//
+	//COREApi.addChildToLevel(CloseButton, CoreAPI.LEVEL_MAIN, { x:10, y:10, alpha:0.1, cacheAsBitmap:true } );
+	//
+	//COREApi.log();
+*/
