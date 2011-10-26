@@ -30,6 +30,7 @@ The "manager" responsible for the creation of stage instances holds no reference
 = Other Features =
 
 * The handy COREUtils class - a large collection of static methods to handle common tasks such as tweening of alpha, color, coordinates, size, etc.
+
 * "Group Buttons" - buttons which work as groups - such as buttons of a group in which only one of them can be highlighted at once.
 * SWC assets library already linked and editable FLA.
 * Simple Keyboard manager, ready to assign keyboard actions to functions.
