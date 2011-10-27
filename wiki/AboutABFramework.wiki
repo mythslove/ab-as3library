@@ -9,7 +9,7 @@ Anyone may use it but at this point there is no documentation to help. There is 
 
 == Description ==
 
-Basically, this framework has a core class which relies on several "managers" (like data manager / keyboard manager) to handle different functionalities. There is a handy "core API" class to invoke methods from all these managers, and a central event system which provides, among other uses, communication between the core classes and the stage instances.
+Basically, this framework has a core class which creates several "managers" (like data manager / keyboard manager) to handle different functionalities. Then a handy "core API" class is used to invoke methods from all these managers. A central event system provides, among other uses, communication between the core, the "managers" and the stage instances.
 
 The "manager" responsible for the creation of stage instances holds no references to these instances, making them independent and easily disposable. Stage instances have their own IDs and may belong to groups which also have IDs. Because the central event system can send data with it's dispatched events, it is also used to send instructions to specific objects using their IDs.
 
