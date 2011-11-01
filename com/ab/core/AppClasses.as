@@ -15,26 +15,18 @@ package com.ab.core
 	*/
 	
 	/// classes defined in "xml/sections.xml"
-	import sections.about.About;
-	import sections.contact.Contact;
-	import sections.skills.Skills;
-	import sections.portfolio.portfoliolist.PortfolioList;
-	import sections.portfolio.portfolioitem.PortfolioItem;
+	//example:
+	//import sections.about.About;
 	
 	// the value "Main" is correct as long as your main class is named "Main"
 	import Main;
 	
 	public class AppClasses 
 	{
-		// the value "Main" is correct as long as your main class is named "Main"
+		// the value "Main" is correct as long as your main class is named "Main", no extra linking is necessary
 		public static var main_app_class:String="Main";
 		
 		private var main:Main;
-		private var about:About;
-		private var contact:Contact;
-		private var skills:Skills;
-		private var portfoliolist:PortfolioList;
-		private var portfolioitem:PortfolioItem;
 	}
 
 }
