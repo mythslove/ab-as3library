@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<portfolio>
+	<item id="01" date="2010.06">
+		<text title="Azulaico" lead="Flash Website" description="Flash website built using the Gaia Framework. Graphics by the designer Luis Oliveira. An assignemt of Edigma.com." />
+		<project type="Flash Website" client="Azulaico Ceramics" client_url="" clientfinal="Directorio Furniture" clientfinal_url="" />
+		<list_type type="DEVELOPMENT" />
+		<hyperlink url="http://www.azulaico.com/" title="Visit website" />
+		<hyperlink url="http://www.newwebpick.com/_webpick/webpick.php?categories=all&id=26352" title="Award" />
+		<hyperlink url="http://cargocollective.com/luisoliveira" title="Luis Oliveira" />
+		<technology type="Flash" url="" />
+		<technology type="AS3" url="" />
+		<technology type="Gaia" url="http://www.gaiaflashframework.com/" />
+		<list_thumb path="portfolio/azulaico/thumb.jpg" />
+		<images height="450" />
+		<media type="IMAGE" path="portfolio/azulaico/images/1.jpg" width="700" title="" text="" id="1" />
+		<media type="IMAGE" path="portfolio/azulaico/images/2.jpg" width="700" title="" text="" id="2" />
+		<media type="IMAGE" path="portfolio/azulaico/images/3.jpg" width="700" title="" text="" id="3" />
+		<media type="IMAGE" path="portfolio/azulaico/images/4.jpg" width="700" title="" text="" id="4" />
+		<media type="IMAGE" path="portfolio/azulaico/images/5.jpg" width="700" title="" text="" id="5" />
+		<media type="IMAGE" path="portfolio/azulaico/images/6.jpg" width="700" title="" text="" id="6" />
+		<media type="IMAGE" path="portfolio/azulaico/images/7.jpg" width="700" title="" text="" id="7" />
+		<media type="IMAGE" path="portfolio/azulaico/images/8.jpg" width="700" title="" text="" id="8" />
+		<media type="IMAGE" path="portfolio/azulaico/images/9.jpg" width="700" title="" text="" id="9" />
+		<media type="IMAGE" path="portfolio/azulaico/images/10.jpg" width="700" title="" text="" id="10" />
+		<file type="" path="" />
+		<color1 value="0xf72904" />
+		<color2 value="0xb1c6ef" />
+	</item>
+	<item id="02" date="2010.06">
+		<text title="AE Fafe" lead="DIGITAL SIGNAGE" description="Design of the interface of an interactive application developed by the Multimedia Agency Tarambola." />
+		<project type="Flash Website" client="AE Fafe" client_url="" clientfinal="" clientfinal_url="" />
+		<list_type type="GRAPHICDESIGN" />
+		<hyperlink url="http://www.aefafe.pt/tmp/default.asp" title="AE Fafe" />
+		<hyperlink url="http://www.tarambola.pt/" title="Tarambola" />
+		<technology type="Adobe Fireworks" url="" />
+		<technology type="Adobe Illustrator" url="" />
+		<list_thumb path="portfolio/aefafe/thumb.jpg" />
+		<images height="450" />
+		<media type="IMAGE" path="portfolio/aefafe/images/aefafe_1.jpg" width="253" title="" text="" id="1" />
+		<media type="IMAGE" path="portfolio/aefafe/images/aefafe_2.jpg" width="253" title="" text="" id="2" />
+		<media type="IMAGE" path="portfolio/aefafe/images/aefafe_3.jpg" width="253" title="" text="" id="3" />
+		<media type="IMAGE" path="portfolio/aefafe/images/aefafe_4.jpg" width="254" title="" text="" id="4" />
+		<media type="IMAGE" path="portfolio/aefafe/images/aefafe_5.jpg" width="485" title="" text="" id="5" />
+		<media type="IMAGE" path="portfolio/aefafe/images/aefafe_6.jpg" width="430" title="" text="" id="6" />
+		<media type="IMAGE" path="portfolio/aefafe/images/aefafe_7.jpg" width="608" title="" text="" id="7" />
+		<media type="IMAGE" path="portfolio/aefafe/images/aefafe_9.jpg" width="457" title="" text="" id="8" />
+		<file type="" path="" />
+		<color1 value="0x5a4eff" />
+		<color2 value="0xafd8f4" />
+	</item>
+	<item id="03" date="2010.06">
+		<text title="Minimal Sessions" lead="FLYER" description="Flyer design for a local party. AB joining the decks." />
+		<project type="Flyer" client="Imaginando" client_url="" clientfinal="" clientfinal_url="" />
+		<list_type type="PRINTDESIGN" />
+		<list_type type="GRAPHICDESIGN" />
+		<hyperlink url="" title="" />
+		<technology type="Adobe Photoshop" url="" />
+		<technology type="Adobe Illustrator" url="" />
+		<list_thumb path="portfolio/minimalsessions/thumb.jpg" />
+		<images height="335" />
+		<media type="IMAGE" path="portfolio/minimalsessions/images/minimal_sessions_1.jpg" width="693" title="" text="" id="1" />
+		<media type="IMAGE" path="portfolio/minimalsessions/images/minimal_sessions_2.jpg" width="693" title="" text="" id="2" />
+		<file type="" path="" />
+		<color1 value="0x0d90c2" />
+		<color2 value="0xff6600" />
+	</item>
+	<item id="04" date="2010.06">
+		<text title="Directorio" lead="Web: Flash Website" description="AS3 Programming of the site for the client Directorio Furniture. Used AB Framework intergrated with SWFAddress. An assignemt of Edigma.com." />
+		<project type="Flyer" client="Directorio" client_url="http://www.directorio.com.pt/" clientfinal="" clientfinal_url="" />
+		<list_type type="DEVELOPMENT" />
+		<hyperlink url="http://www.directorio.com.pt/" title="Visit site" />
+		<technology type="Adobe Photoshop" url="" />
+		<technology type="Adobe Illustrator" url="" />
+		<list_thumb path="portfolio/directorio/thumb.jpg" />
+		<images height="450" />
+		<media type="IMAGE" path="portfolio/directorio/images/1.jpg" width="713" title="" text="" id="1" />
+		<media type="IMAGE" path="portfolio/directorio/images/2.jpg" width="713" title="" text="" id="2" />
+		<media type="IMAGE" path="portfolio/directorio/images/3.jpg" width="713" title="" text="" id="3" />
+		<media type="IMAGE" path="portfolio/directorio/images/4.jpg" width="713" title="" text="" id="4" />
+		<media type="IMAGE" path="portfolio/directorio/images/5.jpg" width="713" title="" text="" id="5" />
+		<media type="IMAGE" path="portfolio/directorio/images/6.jpg" width="713" title="" text="" id="6" />
+		<file type="" path="" />
+		<color1 value="0x1d9e1d" />
+		<color2 value="0xffffff" />
+	</item>
+	<item id="05" date="2010.06">
+		<text title="Resin Records" lead="Web: Flash Website" description="AS2 Programming of the site for the record label Resin Records from London." />
+		<project type="Flash website" client="Resin Records" client_url="http://www.resinrecords.co.uk/" clientfinal="" clientfinal_url="" />
+		<list_type type="DEVELOPMENT" />
+		<hyperlink url="http://www.resinrecords.co.uk/" title="Visit site" />
+		<technology type="Adobe Flash" url="" />
+		<technology type="Adobe Photoshop" url="" />
+		<list_thumb path="portfolio/resin/thumb.jpg" />
+		<images height="335" />
+		<media type="IMAGE" path="portfolio/resin/images/resin_records.jpg" width="685" title="" text="" id="1" />
+		<file type="" path="" />
+		<color1 value="0xf8da5e" />
+		<color2 value="0x2e68b9" />
+	</item>
+	<item id="06" date="2010.06">
+		<text title="Sieg Uber Die Sonne" lead="Flyer" description="Design of a flyer for a local party featuring the great duo Sieg Uber Die Sonne, Antonio Brandao and other artists." />
+		<project type="Flyer design" client="Imaginando" client_url="" clientfinal="" clientfinal_url="" />
+		<list_type type="PRINTDESIGN" />
+		<list_type type="GRAPHICDESIGN" />
+		<hyperlink url="" title="" />
+		<technology type="Adobe Photoshop" url="" />
+		<list_thumb path="portfolio/sieguberdiesonne/thumb.jpg" />
+		<images height="335" />
+		<media type="IMAGE" path="portfolio/sieguberdiesonne/images/sieg_uber_die_sonne.jpg" width="500" title="" text="" id="1" />
+		<file type="" path="" />
+		<color1 value="0xddce8d" />
+		<color2 value="0xab533f" />
+	</item>
+	<item id="07" date="2010.06">
+		<text title="Bright Networks" lead="ID Design" description="Design of logo variations for the brand Bright Networks." />
+		<project type="ID Design" client="Bright Networks" client_url="" clientfinal="" clientfinal_url="" />
+		<list_type type="IDENTITY" />
+		<list_type type="GRAPHICDESIGN" />
+		<hyperlink url="" title="" />
+		<technology type="Adobe Photoshop" url="" />
+		<technology type="Adobe Illustrator" url="" />
+		<list_thumb path="portfolio/brightnetworks/thumb.jpg" />
+		<images height="335" />
+		<media type="IMAGE" path="portfolio/brightnetworks/images/bright_networks_1.jpg" width="693" title="" text="" id="1" />
+		<media type="IMAGE" path="portfolio/brightnetworks/images/bright_networks_2.jpg" width="693" title="" text="" id="2" />
+		<media type="IMAGE" path="portfolio/brightnetworks/images/bright_networks_3.jpg" width="693" title="" text="" id="3" />
+		<media type="IMAGE" path="portfolio/brightnetworks/images/bright_networks_4.jpg" width="693" title="" text="" id="4" />
+		<file type="" path="" />
+		<color1 value="0xffffff" />
+		<color2 value="0xffffff" />
+	</item>
+	<item id="08" date="2010.06">
+		<text title="Brighton Fusion" lead="ID Design" description="Design of logo variations for the brand Brighton Fusion." />
+		<project type="ID Design" client="Brighton Fusion" client_url="" clientfinal="" clientfinal_url="" />
+		<list_type type="IDENTITY" />
+		<list_type type="GRAPHICDESIGN" />
+		<hyperlink url="" title="" />
+		<technology type="Adobe Photoshop" url="" />
+		<technology type="Adobe Illustrator" url="" />
+		<list_thumb path="portfolio/brightonfusion/thumb.jpg" />
+		<images height="335" />
+		<media type="IMAGE" path="portfolio/brightonfusion/images/brighton_fusion_1.jpg" width="693" title="" text="" id="1" />
+		<media type="IMAGE" path="portfolio/brightonfusion/images/brighton_fusion_2.jpg" width="693" title="" text="" id="2" />
+		<media type="IMAGE" path="portfolio/brightonfusion/images/brighton_fusion_3.jpg" width="693" title="" text="" id="3" />
+		<file type="" path="" />
+		<color1 value="0x0087b4" />
+		<color2 value="0xbfcdd0" />
+	</item>
+	<item id="09" date="2010.06">
+		<text title="Arquehoje" lead="Digital Signage Dual Monitor Flash App" description="Programming of an AS3 AIR application to work on dual monitors. The left side controls the images and videos in the right side. An assignemt of Edigma.com." />
+		<project type="AS3 AIR Desktop Application" client="Arquehoje" client_url="" clientfinal="" clientfinal_url="" />
+		<list_type type="DEVELOPMENT" />
+		<hyperlink url="" title="" />
+		<technology type="Adobe AIR" url="" />
+		<technology type="AS3" url="" />
+		<list_thumb path="portfolio/arquehoje/thumb.jpg" />
+		<images height="450" />
+		<media type="IMAGE" path="portfolio/arquehoje/images/Arquehoje_1.jpg" width="800" title="" text="" id="1" />
+		<media type="IMAGE" path="portfolio/arquehoje/images/Arquehoje_2.jpg" width="800" title="" text="" id="2" />
+		<media type="IMAGE" path="portfolio/arquehoje/images/Arquehoje_3.jpg" width="800" title="" text="" id="3" />
+		<media type="IMAGE" path="portfolio/arquehoje/images/Arquehoje_4.jpg" width="800" title="" text="" id="4" />
+		<file type="" path="" />
+		<color1 value="0xb01f0e" />
+		<color2 value="0x837c69" />
+	</item>
+	<item id="10" date="2010.06">
+		<text title="Gothic Dreams" lead="A series of hand drawings" description="These drawings take quite a while to produce. The influences are Gothic / Surrealist. Flat corners are forbidden." />
+		<project type="Hand drawings" client="None" client_url="" clientfinal="" clientfinal_url="" />
+		<list_type type="ART" />
+		<hyperlink url="" title="" />
+		<technology type="Oil stylus" url="" />
+		<list_thumb path="portfolio/gothicdreams/thumb.jpg" />
+		<images height="335" />
+		<media type="IMAGE" path="portfolio/gothicdreams/images/gothic_dreams_1.jpg" width="500" title="" text="" id="1" />
+		<media type="IMAGE" path="portfolio/gothicdreams/images/gothic_dreams_2.jpg" width="500" title="" text="" id="2" />
+		<media type="IMAGE" path="portfolio/gothicdreams/images/gothic_dreams_3.jpg" width="500" title="" text="" id="3" />
+		<media type="IMAGE" path="portfolio/gothicdreams/images/gothic_dreams_4.jpg" width="500" title="" text="" id="4" />
+		<file type="" path="" />
+		<color1 value="0xffffff" />
+		<color2 value="0xffffff" />
+	</item>
+	<item id="11" date="2010.06">
+		<text title="Interacive Physics with Motion Blur" lead="An AS3 Experiment." description="In this experiment I demonstrate how to combine AS3 physics, with interaction and a motion blur effect." />
+		<project type="Hand drawings" client="None" client_url="" clientfinal="" clientfinal_url="" />
+		<list_type type="DEVELOPMENT" />
+		<hyperlink url="http://blog.antoniobrandao.com/?p=40" title="VIEW EXPERIMENT" />
+		<technology type="Flash AS3" url="" />
+		<list_thumb path="portfolio/motionblurgame/thumb.jpg" />
+		<images height="340" />
+		<media type="IMAGE" path="portfolio/motionblurgame/images/motionblur_game.jpg" width="586" title="" text="" id="1" />
+		<file type="" path="" />
+		<color1 value="0x3366FF" />
+		<color2 value="0xFF33FF" />
+	</item>
+	<item id="12" date="2010.06">
+		<text title="Music for a promotional video by COVii" lead="Digital Signage" description="COVii promotional video featuring music by Antonio Brandao. Click the link in the 'links' box to see the video."  />
+		<project type="Music" client="COVii" client_url="http://covii.pt" clientfinal="" clientfinal_url="" />
+		<list_type type="MUSIC" />
+		<hyperlink url="http://vimeo.com/27158262" title="VIEW VIDEO" />
+		<hyperlink url="http://soundcloud.com/antoniobrandao/antonio-brandao-my-broken-vinyl-player" title="View second track" />
+		<technology type="Ableton Live" url="http://www.ableton.com/suite-8" />
+		<list_thumb path="portfolio/covii/thumb.jpg" />
+		<images height="360" />
+		<media type="IMAGE" path="portfolio/covii/images/1.jpg" width="640" title="" text="" id="1" />
+		<media type="IMAGE" path="portfolio/covii/images/2.jpg" width="640" title="" text="" id="2" />
+		<media type="IMAGE" path="portfolio/covii/images/3.jpg" width="640" title="" text="" id="3" />
+		<file type="" path="" />
+		<color1 value="0x2d9de0" />
+		<color2 value="0xFFFFFF" />
+	</item>
+	<item id="13" date="2010.06">
+		<text title="Interacive Motion Blur" lead="An AS3 Experiment." description="In this experiment I demonstrate how to produce a Motion Blur effect from scratch without affecting the background's colour." />
+		<project type="Hand drawings" client="None" client_url="" clientfinal="" clientfinal_url="" />
+		<list_type type="DEVELOPMENT" />
+		<hyperlink url="http://blog.antoniobrandao.com/?p=26" title="VIEW EXPERIMENT" />
+		<technology type="Flash AS3" url="" />
+		<list_thumb path="portfolio/motionblurtechnique/thumb.jpg" />
+		<images height="340" />
+		<media type="IMAGE" path="portfolio/motionblurtechnique/images/motionblur_technique.jpg" width="586" title="" text="" id="1" />
+		<file type="" path="" />
+		<color1 value="0x3366FF" />
+		<color2 value="0xFF33FF" />
+	</item>
+	<item id="14" date="2010.06">
+		<text title="Digital Amplifier" lead="Digital Signage" description="AS3 Air application. The user moves the screen to find information that is displayed in the appropriate museum. An asignment of Edigma.com." />
+		<project type="AS3 AIR Application" client="Burgos Museum Spain" client_url="" clientfinal="" clientfinal_url="" />
+		<list_type type="DEVELOPMENT" />
+		<hyperlink url="" title="" />
+		<technology type="Flash AS3" url="" />
+		<technology type="Adobe AIR" url="" />
+		<technology type="AS3 Phidgets" url="" />
+		<list_thumb path="portfolio/lupas/thumb.jpg" />
+		<images height="620" />
+		<media type="IMAGE" path="portfolio/lupas/images/lupas_1.jpg" width="800" title="" text="" id="1" />
+		<media type="IMAGE" path="portfolio/lupas/images/lupas_2.jpg" width="800" title="" text="" id="2" />
+		<file type="" path="" />
+		<color1 value="0xd7a717" />
+		<color2 value="0xe8be79" />
+	</item>
+	<item id="15" date="2010.06">
+		<text title="Millenium D'Ouro" lead="Design of a website's interface" description="A confortable design for a real estate business." />
+		<project type="Graphc Design" client="Millenium D'Ouro" client_url="" clientfinal="" clientfinal_url="" />
+		<list_type type="GRAPHICDESIGN" />
+		<hyperlink url="" title="" />
+		<technology type="Adobe Photoshop" url="" />
+		<list_thumb path="portfolio/millenium/thumb.jpg" />
+		<images height="335" />
+		<media type="IMAGE" path="portfolio/millenium/images/millenium_01.jpg" width="693" title="" text="" id="1" />
+		<media type="IMAGE" path="portfolio/millenium/images/millenium_02.jpg" width="693" title="" text="" id="2" />
+		<file type="" path="" />
+		<color1 value="0xc4db40" />
+		<color2 value="0xe8be79" />
+	</item>
+	<item id="16" date="2010.06">
+		<text title="Photography" lead="A collection of photos" description="All photos unprocessed, taken with a Nikon Coolpix 995." />
+		<project type="Digital Photography" client="None" client_url="" clientfinal="" clientfinal_url="" />
+		<list_type type="PHOTOGRAPHY" />
+		<hyperlink url="" title="" />
+		<technology type="Nikon Coolpix 995" url="http://en.wikipedia.org/wiki/Nikon_Coolpix_995" />
+		<list_thumb path="portfolio/photography/thumb.jpg" />
+		<images height="335" />
+		<media type="IMAGE" path="portfolio/photography/images/8.jpg" width="690" title="" text="" id="1" />
+		<media type="IMAGE" path="portfolio/photography/images/7.jpg" width="690" title="" text="" id="2" />
+		<media type="IMAGE" path="portfolio/photography/images/6.jpg" width="690" title="" text="" id="3" />
+		<media type="IMAGE" path="portfolio/photography/images/5.jpg" width="690" title="" text="" id="4" />
+		<media type="IMAGE" path="portfolio/photography/images/4.jpg" width="690" title="" text="" id="5" />
+		<media type="IMAGE" path="portfolio/photography/images/3.jpg" width="690" title="" text="" id="6" />
+		<media type="IMAGE" path="portfolio/photography/images/2.jpg" width="690" title="" text="" id="7" />
+		<media type="IMAGE" path="portfolio/photography/images/1.jpg" width="690" title="" text="" id="8" />
+		<file type="" path="" />
+		<color1 value="0xffffff" />
+		<color2 value="0x000000" />
+	</item>
+	<item id="17" date="2010.06">
+		<text title="Antonio Brandao V2" lead="My previous site" description="Launched back in 2006, an AS2 site with a few nice features." />
+		<project type="Flash AS2 Website" client="Antonio Brandao" client_url="" clientfinal="" clientfinal_url="" />
+		<list_type type="DEVELOPMENT" />
+		<hyperlink url="" title="" />
+		<technology type="Flash AS2" url="" />
+		<technology type="Adobe Illustrator" url="" />
+		<list_thumb path="portfolio/abv2/thumb.jpg" />
+		<images height="451" />
+		<media type="IMAGE" path="portfolio/abv2/images/antoniobrandaov2_0000_Layer 2.jpg" width="750" title="" text="" id="1" />
+		<media type="IMAGE" path="portfolio/abv2/images/antoniobrandaov2_0001_Layer 4.jpg" width="750" title="" text="" id="2" />
+		<media type="IMAGE" path="portfolio/abv2/images/antoniobrandaov2_0002_Layer 3.jpg" width="750" title="" text="" id="3" />
+		<media type="IMAGE" path="portfolio/abv2/images/antoniobrandaov2_0003_Layer 5.jpg" width="750" title="" text="" id="4" />
+		<media type="IMAGE" path="portfolio/abv2/images/antoniobrandaov2_0004_Layer 1.jpg" width="750" title="" text="" id="5" />
+		<file type="" path="" />
+		<color1 value="0x3366FF" />
+		<color2 value="0xFF33FF" />
+	</item>
+</portfolio>

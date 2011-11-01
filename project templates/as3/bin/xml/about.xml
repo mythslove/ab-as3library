@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<items>
+		<item name="headlineleft" text="My name is Antonio Brandao." />
+		<item name="headlineright" text="I        beautiful software :)" />
+		<item name="text1" text="I’m a Flash / Flex / AIR developer and graphic designer, who also designs audio in the spare time. Right now I'm looking for a job in England." />
+		<item name="text2" text="I’ve been doing decent work for a large variety of clients from around the globe since 1999." />
+	</items>
+</data>

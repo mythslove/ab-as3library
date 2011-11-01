@@ -1,0 +1,84 @@
+
+web
+- Azulaico
+- Directorio
+- 
+- Resin Records
+
+digital signage
+- Meditel Window
+- Esposende Ambiente
+- Barro negro
+- Lupas
+
+desktop
+- Lupas CMS
+
+software graphic design
+- AE Fafe
+- Millenium D'ouro
+- 
+
+Print
+- minimal sessions
+- 
+- 
+
+art
+- gothic dreams
+
+
+tarefas:
+
+--------------------------------------------
+ Geral
+--------------------------------------------
+
+ABV3HeadlinedListBoxItem tem que ter rollover
+
+a todo o momento o rato faz vertical scroll vertical do sprite AppLevel 
+
+fazer animação encima 
+
+- - - nao prioritarias:
+
+filtros - fazer um timer depois do rollover e passado 0.5 secs ativar os hovers
+
+Galeria - ajustar comportamento de botoes - inactivos se inuteis
+
+-------------------------------------------- 
+ Portfolio
+-------------------------------------------- 
+
+- - - nao-prioritario:
+
+clicar num filtro reordena a lista: os do tipo clicado passam para primeiro
+
+Portfolio Item Info Box - usar listagem com textfields multiline nas info list boxes
+ 
+--------------------------------------------
+ About
+--------------------------------------------
+
+
+ 
+--------------------------------------------
+ Contact
+--------------------------------------------
+
+
+
+--------------------------------------------
+ Particularidades para verificar no fim
+--------------------------------------------
+
+verificar mouse & touch interaction
+
+--------------------------------------------
+ Secções a adicionar no futuro
+--------------------------------------------
+
+- Lab (experiments)
+
+- Blog(mirror)
+

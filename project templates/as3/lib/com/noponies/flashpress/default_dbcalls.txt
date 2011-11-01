@@ -1,0 +1,97 @@
+///--------------------------------------///
+///--------------------------------------///
+///--------------------------------------///
+//--------------------------------------
+// CALL FLASHPRESS METHODS
+//--------------------------------------
+private function makeDbCall():void 
+{
+	trace("makeDbCall");
+	//below is a list of the various methods, with sample params filled in
+	//NOTE THAT THE BELOW DEMOS ARE SET UP FOR USE WITH ZEND - TO USE AMFPHP YOU MUST PREFIX THE PATH THE FLASHPRESS SERVICE, AS DEMONSRATED BELOW
+	//USING A SIMPLE STATIC VAR TO CONTAIN THE SERVICE PATH
+	//NpDbConnection.queryAMF(SERVICE+"WpMethodsService.callWpMethod", handleAmfResult,onFault, 'wp_get_single_post', '2', 'OBJECT');
+	//media
+	
+	//Zend calls below
+	
+	///call arbitrary wordpress methods, in the example below, it is getting a single post
+	//NpDbConnection.queryAMF(SERVICE+"WpMethodsService.callWpMethod", handleAmfResult,onFault, 'wp_get_single_post', '2', 'OBJECT');
+	//or
+	///call the internal Wp tag cloud method
+	//NpDbConnection.queryAMF("WpMethodsService.callWpMethod", handleAmfResult,onFault, 'wp_tag_cloud', 'format=array');
+	
+	///count the posts in your wordpress install
+	//NpDbConnection.queryAMF("WpMethodsService.countPosts", handleAmfResult,onFault);
+	
+	///get a post, via its ID
+	//NpDbConnection.queryAMF("WpMethodsService.getPost", handleAmfResult,onFault, 1);
+	
+	///get posts, with the number returned limited to 3
+	//NpDbConnection.queryAMF(SERVICE+"WpMethodsService.getPosts", handleAmfResult,onFault, 'numberposts=10');
+	
+	///get a post or page by its title
+	//NpDbConnection.queryAMF("WpMethodsService.getPostOrPageByTitle", handleAmfResult,onFault, 'Using Asdoc under OSX');
+	
+	///get the wordpress installs blogroll, or bookmarks
+	//NpDbConnection.queryAMF("WpMethodsService.getBookmarks", handleAmfResult,onFault, 'orderby=name');
+	
+	///get attachments from the wordpress blog
+	//NpDbConnection.queryAMF("WpMethodsService.getMedia", handleAmfResult,onFault, 'post_type=attachment&post_mime_type=video/mp4');
+	
+	///Get wordpress terms, or any custom taxonomies you may have
+	//NpDbConnection.queryAMF("WpMethodsService.getTerms", handleAmfResult,onFault, 'post_tag');
+	
+	///get categories for wordprss install
+	//NpDbConnection.queryAMF("WpMethodsService.getCategories", handleAmfResult,onFault, 'orderby=name');
+	
+	///Generate a wordpress tag cloud
+	//NpDbConnection.queryAMF("WpMethodsService.getTagCloud", handleAmfResult,onFault);
+	
+	///Get metadata associated with a post
+	//NpDbConnection.queryAMF("WpMethodsService.getPostMeta", handleAmfResult,onFault, 344);
+	//or
+	//NpDbConnection.queryAMF("WpMethodsService.getPostMeta", handleAmfResult,onFault, 344, 'demo field');
+	
+	///get the tags associated with a post(s)
+	//NpDbConnection.queryAMF("WpMethodsService.getTagsByPostId", handleAmfResult,onFault, '344,341');
+	
+	///get categories a post(s) belongs to
+	//NpDbConnection.queryAMF("WpMethodsService.getCategoriesByPostId", handleAmfResult,onFault, '341,344');
+	
+	///get comments for post by posts id
+	//NpDbConnection.queryAMF("WpMethodsService.getComments", handleAmfResult,onFault, 'status=approve&post_id=344');
+	
+	///get user by their ID
+	//NpDbConnection.queryAMF("WpMethodsService.getUserById", handleAmfResult,onFault, 2);
+	
+	///get user by their log in name
+	//NpDbConnection.queryAMF("WpMethodsService.getUserByLoginName", handleAmfResult,onFault, "flash");
+	
+	///get user metadata
+	//NpDbConnection.queryAMF("WpMethodsService.getUserMetadata", handleAmfResult,onFault, 1, 'last_name');
+	
+	///get media
+	//NpDbConnection.queryAMF(SERVICE+"WpMethodsService.getMedia", handleAmfResult,onFault, 'post_type=attachment&post_mime_type=image/jpeg');
+	
+	///get post attachments
+	//NpDbConnection.queryAMF(SERVICE+"WpMethodsService.getPostAttachments", handleAmfResult,onFault, 40);
+	
+	///save a post to wp
+	//var myPostOb:Object = {post_title:'New Post Title',post_content:'Lorem Ipsum, demo post, oh yeah',post_status:'draft',post_author:1,post_category:new Array(3,15),tags_input:new Array('ActionScript 3')};
+	//NpDbConnection.queryAMF("WpMethodsService.insertPost", handleAmfResult,onFault, myPostOb);
+	
+	///save a text file to wp
+	//var myAttachAr:Object = {post_title:"Some text", post_content:"Text", post_status:"publish", post_author:1, post_excerpt:'some text'};
+	//NpDbConnection.queryAMF("WpMethodsService.insertAttachment", handleAmfResult,onFault, 'http://noponies-book.local/~dale/001.txt',  myAttachAr );
+	
+	///insert image attachment to wp
+	//var fileOptions:Object = {post_title:"SNOW", post_content:"An image", post_status:"publish", post_author:1, post_excerpt:'some text about this snow'};
+	//NpDbConnection.queryAMF("WpMethodsService.insertAttachment", handleAmfResult,onFault, 'http://noponies-book.local/~dale/snow.jpg', fileOptions );
+	
+	///searching demo
+	//NpDbConnection.queryAMF("WpMethodsService.search", handleAmfResult,onFault, 'search terms');
+	
+	///get the featured image of the post with an ID of 4
+	//NpDbConnection.queryAMF("WpMethodsService.getPostFeatured", handleAmfResult,onFault, 4);
+}
