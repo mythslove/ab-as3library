@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<data>
-	<items>
-		<item name="about.xml" id="about" />
-		<item name="portfolio.xml" id="portfolio" />
-		<item name="skills.xml" id="skills" />
-	</items>
-</data>
