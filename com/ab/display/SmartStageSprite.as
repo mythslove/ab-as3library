@@ -2,14 +2,17 @@ package com.ab.display
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import org.casalib.display.CasaSprite;
 	
 	public class SmartStageSprite extends CasaSprite
 	{
 		public var closed:Boolean = false;
+		public var init_pos:Point;
 		
 		public function SmartStageSprite() 
 		{
+			addEventListener(Event.ADDED_TO_STAGE, 		addedInitPosSaverHandler);
 			addEventListener(Event.ADDED_TO_STAGE, 		addedHandler);
 			addEventListener(Event.REMOVED_FROM_STAGE, 	removedHandler);
 			stage.addEventListener(Event.RESIZE, 		resizeHandler);
@@ -18,6 +21,8 @@ package com.ab.display
 		private function addedHandler(e:Event):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addedHandler);
+			
+			init_pos = new Point(this.x, this.y);
 			
 			onStage();
 		}
