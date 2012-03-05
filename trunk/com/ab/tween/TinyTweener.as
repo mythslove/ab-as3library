@@ -10,6 +10,8 @@ package com.ab.tween
 	* 
 	* Time and transition equation are optional parameters.
 	* 
+	* TODO: Implement delay
+	* 
 	* If provided, the name of the transition type - e.g. "easeOutSine" must be provided correctly. Please check available equations in the TinyTween class.
 	*/
 	
@@ -18,14 +20,50 @@ package com.ab.tween
 	public class TinyTweener 
 	{
 		private static var _runningTweens:Vector.<TinyTween> = new Vector.<TinyTween>;
+		private static var _overrideTweens:Boolean = true;
 		
 		public static function addTween(_displayObject:DisplayObject, _props:Object, _time:Number=0.5, _curve:String = "easeOut"):void
 		{
-			removeDisplayObjectTween(_displayObject);
+			if (_overrideTweens)
+			{
+				if (tweenIsRunningOnObject(_displayObject)) 
+				{
+					for (var i:int = 0; i < _runningTweens.length; i++) 
+					{
+						if (TinyTween(_runningTweens[i]).displayObject == _displayObject)
+						{
+							for (var prop:* in _props)
+							{
+								if (TinyTween(_runningTweens[i]).props[prop] != null)
+								{
+									delete TinyTween(_runningTweens[i]).props[prop];
+								}
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				removeDisplayObjectTween(_displayObject);
+			}
 			
 			var newtween:TinyTween = new TinyTween(_displayObject, _props, _time, _curve);
 			
 			_runningTweens.push(newtween);
+		}
+		
+		static private function tweenIsRunningOnObject(_displayObject:DisplayObject):Boolean 
+		{
+			for (var i:int = 0; i < _runningTweens.length; i++) 
+			{
+				if (TinyTween(_runningTweens[i]).displayObject == _displayObject)
+				{
+					return true;
+				}
+			}
+			
+			return false;
 		}
 		
 		public static function stopTween(_displayObject:DisplayObject):void
@@ -66,6 +104,23 @@ package com.ab.tween
 					CONFIG::debug { trace("TinyTweener ::: CLEANING ONE TWEEN"); };
 				}
 			}
+		}
+		
+		///
+		///
+		///
+		
+		static private function getTweenFromDisplayObject(_displayObject:DisplayObject):TinyTween
+		{
+			for (var i:int = 0; i < _runningTweens.length; i++) 
+			{
+				if (TinyTween(_runningTweens[i]).displayObject == _displayObject)
+				{
+					return TinyTween(_runningTweens[i]);
+				}
+			}
+			
+			return null;
 		}
 		
 	}
