@@ -17,37 +17,53 @@ package com.ab.tween
 	
 	public class TinyTweener 
 	{
-		private static var instance:TinyTweener 				= new TinyTweener();
-		private static var _runningTweens:Vector.<TinyTween> 	= new Vector.<TinyTween>;
+		private static var _runningTweens:Vector.<TinyTween> = new Vector.<TinyTween>;
 		
-		public static function addTween(displayObject:DisplayObject, props:Object, time:Number=0.5, curve:String = "easeOut"):void
+		public static function addTween(_displayObject:DisplayObject, _props:Object, _time:Number=0.5, _curve:String = "easeOut"):void
 		{
-			for (var i:int = 0; i < _runningTweens.length; i++) 
-			{
-				if (TinyTween(_runningTweens[i])["displayObject"] == displayObject) 
-				{
-					TinyTween(_runningTweens[i]).interruptAndDestroy();
-					
-					_runningTweens.splice(i, 1);
-					
-					CONFIG::debug { trace("TinyTweenr ::: REMOVING ONE TWEEN"); };
-				}
-			}
+			removeDisplayObjectTween(_displayObject);
 			
-			var newtween:TinyTween = new TinyTween(displayObject, props, time, curve);
+			var newtween:TinyTween = new TinyTween(_displayObject, _props, _time, _curve);
 			
 			_runningTweens.push(newtween);
 		}
 		
-		public static function cleanTween(tween:TinyTween):void
+		public static function stopTween(_displayObject:DisplayObject):void
+		{
+			if (removeDisplayObjectTween(_displayObject))
+			{
+				CONFIG::debug { trace("TinyTweener ::: STOPPING ONE TWEEN"); };
+			}
+		}
+		
+		static private function removeDisplayObjectTween(_displayObject:DisplayObject):Boolean
 		{
 			for (var i:int = 0; i < _runningTweens.length; i++) 
 			{
-				if (TinyTween(_runningTweens[i]) == tween) 
+				if (TinyTween(_runningTweens[i]).displayObject == _displayObject)
 				{
+					TinyTween(_runningTweens[i]).destroy();
+					
 					_runningTweens.splice(i, 1);
 					
-					CONFIG::debug { trace("TinyTweenr ::: CLEANING ONE TWEEN"); };
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
+		public static function cleanTween(tween:TinyTween):void
+		{
+			for (var i:int = 0; i < _runningTweens.length; i++)
+			{
+				if (TinyTween(_runningTweens[i]) == tween) 
+				{
+					_runningTweens[i] = null;
+					
+					_runningTweens.splice(i, 1);
+					
+					CONFIG::debug { trace("TinyTweener ::: CLEANING ONE TWEEN"); };
 				}
 			}
 		}

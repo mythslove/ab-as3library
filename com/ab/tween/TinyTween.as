@@ -54,11 +54,6 @@ package com.ab.tween
 			this.addEventListener(Event.ENTER_FRAME, performMotion);
 		}
 		
-		public function interruptAndDestroy():void
-		{
-			onMotionEnd();
-		}
-		
 		private function performMotion(e:Event):void 
 		{
 			if (_framesLeftToFinish != 0)
@@ -78,11 +73,11 @@ package com.ab.tween
 			{
 				/// when tween ends
 				
-				onMotionEnd();
+				destroy();
 			}
 		}
         
-        private function onMotionEnd():void
+        public function destroy():void
         {
 			// clean up
 			this.removeEventListener(Event.ENTER_FRAME, performMotion);
