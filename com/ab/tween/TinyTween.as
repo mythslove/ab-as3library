@@ -21,32 +21,34 @@ package com.ab.tween
 	public class TinyTween extends Sprite 
 	{
 		public var displayObject		: DisplayObject;
+		public var props				: Object;
+		public var nome					: String;
 		
 		private var _totalTweenFrames	: int;
-		private var _props				: Object;
 		private var _initPropValues		: Object;
 		private var _time				: Number;
 		private var _curve				: String;
 		private var _framesLeftToFinish	: int;
+		private var _name:String;
 		
 		public function TinyTween(displayObject:DisplayObject, _props:Object, _time:Number = 0.5, _curve:String = "easeOutSine")
 		{
+			this.displayObject		= displayObject;
+			this.props 				= _props;
 			this._curve 			= _curve;
 			this._time 				= _time;
-			this._props 			= _props;
-			this.displayObject		= displayObject;
 			this._initPropValues	= new Object();
 			
 			_totalTweenFrames 		= Math.round(displayObject.stage.frameRate * _time);
 			_framesLeftToFinish		= _totalTweenFrames;
 			
-			for (var prop:* in _props) 
+			for (var prop:* in props) 
 			{
 				/// store initial values for later usage
 				
 				_initPropValues[prop] = displayObject[prop];
 				
-				CONFIG::debug { trace( "tinytween: " + prop + " from " + displayObject[prop] + " to " + _props[prop]); };
+				CONFIG::debug { trace( "tinytween: " + prop + " from " + displayObject[prop] + " to " + props[prop]); };
 			}
 			
 			/// start animation
@@ -62,9 +64,9 @@ package com.ab.tween
 				
 				_framesLeftToFinish--;
 				
-				for (var prop:* in _props) 
+				for (var prop:* in props) 
 				{
-					var diff:Number = _props[prop] - _initPropValues[prop];
+					var diff:Number = props[prop] - _initPropValues[prop];
 					
 					displayObject[prop.toString()] = this[_curve](_totalTweenFrames - _framesLeftToFinish, _initPropValues[prop], diff, _totalTweenFrames);
 				}
@@ -83,9 +85,9 @@ package com.ab.tween
 			this.removeEventListener(Event.ENTER_FRAME, performMotion);
 			
 			this.displayObject 		= null;
+			this.props 				= null;
 			this._curve 			= undefined;
 			this._time 				= NaN;
-			this._props 			= null;
 			this._initPropValues	= null;
 			
 			TinyTweener.cleanTween(this);
