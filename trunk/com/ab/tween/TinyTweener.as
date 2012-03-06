@@ -10,8 +10,6 @@ package com.ab.tween
 	* 
 	* Time and transition equation are optional parameters.
 	* 
-	* TODO: Implement delay
-	* 
 	* If provided, the name of the transition type - e.g. "easeOutSine" must be provided correctly. Please check available equations in the TinyTween class.
 	*/
 	
@@ -22,22 +20,19 @@ package com.ab.tween
 		private static var _runningTweens:Vector.<TinyTween> = new Vector.<TinyTween>;
 		private static var _overrideTweens:Boolean = true;
 		
-		public static function addTween(_displayObject:DisplayObject, _props:Object, _time:Number=0.5, _curve:String = "easeOut"):void
+		public static function addTween(_displayObject:DisplayObject, _props:Object, _time:Number=0.5, _curve:String = "easeOut", _delay:Number=0):void
 		{
 			if (_overrideTweens)
 			{
-				if (tweenIsRunningOnObject(_displayObject)) 
+				for (var i:int = 0; i < _runningTweens.length; i++) 
 				{
-					for (var i:int = 0; i < _runningTweens.length; i++) 
+					if (TinyTween(_runningTweens[i]).displayObject == _displayObject)
 					{
-						if (TinyTween(_runningTweens[i]).displayObject == _displayObject)
+						for (var prop:* in _props)
 						{
-							for (var prop:* in _props)
+							if (TinyTween(_runningTweens[i]).props[prop] != null)
 							{
-								if (TinyTween(_runningTweens[i]).props[prop] != null)
-								{
-									delete TinyTween(_runningTweens[i]).props[prop];
-								}
+								delete TinyTween(_runningTweens[i]).props[prop];
 							}
 						}
 					}
@@ -48,22 +43,9 @@ package com.ab.tween
 				removeDisplayObjectTween(_displayObject);
 			}
 			
-			var newtween:TinyTween = new TinyTween(_displayObject, _props, _time, _curve);
+			var newtween:TinyTween = new TinyTween(_displayObject, _props, _time, _curve, _delay);
 			
 			_runningTweens.push(newtween);
-		}
-		
-		static private function tweenIsRunningOnObject(_displayObject:DisplayObject):Boolean 
-		{
-			for (var i:int = 0; i < _runningTweens.length; i++) 
-			{
-				if (TinyTween(_runningTweens[i]).displayObject == _displayObject)
-				{
-					return true;
-				}
-			}
-			
-			return false;
 		}
 		
 		public static function stopTween(_displayObject:DisplayObject):void
