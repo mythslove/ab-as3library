@@ -28,18 +28,22 @@ package com.ab.tween
 		private var _initPropValues		: Object;
 		private var _time				: Number;
 		private var _curve				: String;
+		private var _delay				: Number;
 		private var _framesLeftToFinish	: int;
-		private var _name:String;
+		private var _tweenStartFrame	: Number;
+		private var _delayTweenFrames	: Number;
 		
-		public function TinyTween(displayObject:DisplayObject, _props:Object, _time:Number = 0.5, _curve:String = "easeOutSine")
+		public function TinyTween(displayObject:DisplayObject, _props:Object, _time:Number = 0.5, _curve:String = "easeOutSine", _delay:Number=0)
 		{
 			this.displayObject		= displayObject;
 			this.props 				= _props;
+			this._delay 			= _delay;
 			this._curve 			= _curve;
 			this._time 				= _time;
 			this._initPropValues	= new Object();
 			
 			_totalTweenFrames 		= Math.round(displayObject.stage.frameRate * _time);
+			_delayTweenFrames		= Math.round(displayObject.stage.frameRate * _delay);
 			_framesLeftToFinish		= _totalTweenFrames;
 			
 			for (var prop:* in props) 
@@ -60,12 +64,23 @@ package com.ab.tween
 		{
 			if (_framesLeftToFinish != 0)
 			{
-				/// go through each property provided to tween
+				if (_delay != 0) 
+				{
+					_delayTweenFrames--;
+					
+					if (_delayTweenFrames >= 0)
+					{
+						return;
+					}
+				}
 				
 				_framesLeftToFinish--;
 				
+				/// go through each property provided to tween
+				
 				for (var prop:* in props) 
 				{
+					trace("PERFORM");
 					var diff:Number = props[prop] - _initPropValues[prop];
 					
 					displayObject[prop.toString()] = this[_curve](_totalTweenFrames - _framesLeftToFinish, _initPropValues[prop], diff, _totalTweenFrames);
