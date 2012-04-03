@@ -42,8 +42,6 @@
 	
 	/// other libs
 	import caurina.transitions.Tweener;
-	import org.casalib.ui.Key;
-	 
 	
 	public class Logger extends Sprite
 	{
