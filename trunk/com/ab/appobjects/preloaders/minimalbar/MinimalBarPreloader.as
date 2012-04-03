@@ -135,7 +135,7 @@ package com.ab.appobjects.preloaders.minimalbar
 			COREUtils.setAlpha(bar_holder, 0, time);
 		}
 		
-		public function shrinkBar(time:Number=0.5, transition:String="EaseOutExpo"):void
+		public function shrinkBar(time:Number=0.5, transition:String="easeOutExpo"):void
 		{
 			//trace("MinimalBarPreloader.shrinkBar > time : " + time + ", transition : " + transition);
 			

@@ -18,25 +18,24 @@
 		import flash.display.StageDisplayState;
 		import flash.display.StageQuality;
 		import flash.display.StageScaleMode;
-		import org.casalib.util.StageReference;
 		
 		public static function init():void
 		{
-			StageReference.getStage().displayState 				= StageDisplayState.NORMAL;
-			StageReference.getStage().quality 					= StageQuality.BEST;
-			StageReference.getStage().scaleMode 				= StageScaleMode.NO_SCALE;
-			StageReference.getStage().align 					= StageAlign.TOP_LEFT;
-			StageReference.getStage().showDefaultContextMenu 	= false;
+			AppManager.stage.displayState 			= StageDisplayState.NORMAL;
+			AppManager.stage.quality 				= StageQuality.BEST;
+			AppManager.stage.scaleMode 				= StageScaleMode.NO_SCALE;
+			AppManager.stage.align 					= StageAlign.TOP_LEFT;
+			AppManager.stage.showDefaultContextMenu = false;
 		}
 		
 		public static function setFullScreen():void
 		{
-			StageReference.getStage().displayState 				= StageDisplayState.FULL_SCREEN;
+			AppManager.stage.displayState 			= StageDisplayState.FULL_SCREEN;
 		}
 		
 		public static function setNormalScreen():void
 		{
-			StageReference.getStage().displayState 				= StageDisplayState.NORMAL;
+			AppManager.stage.displayState 			= StageDisplayState.NORMAL;
 		}
 		
 	}

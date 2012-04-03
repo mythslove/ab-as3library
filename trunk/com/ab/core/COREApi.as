@@ -9,17 +9,14 @@
 	import com.ab.core.AppManager;
 	import com.ab.display.FloatWarning;
 	import com.ab.events.CentralEventSystem;
-	import com.ab.log.Logger;
 	import com.ab.settings.XMLSettings;
 	import com.ab.swfaddress.SWFAddressManager;
 	import com.ab.xml.XMLDataGetter;
+	
 	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.Stage;
 	import flash.display.StageDisplayState;
-	import flash.events.Event;
-	import org.casalib.util.StageReference;
-	import org.casalib.util.StringUtil;
 	
 	public class COREApi
 	{
@@ -40,7 +37,7 @@
 		 */
 		public static function addApplicationMode(mode_name:String, function_call:Function):void
 		{
-			AppManager.singleton.addApplicationMode(mode_name, function_call);
+			AppManager.addApplicationMode(mode_name, function_call);
 		}
 		
 		/**
@@ -51,7 +48,7 @@
 		 */
 		public static function setApplicationMode(mode_name:String):void
 		{
-			AppManager.singleton.mode = mode_name;
+			AppManager.mode = mode_name;
 		}
 		
 		/**
@@ -61,7 +58,7 @@
 		 */
 		public static function activateSWFAddress():void
 		{
-			SWFAddressManager.singleton.activate();
+			SWFAddressManager.activate();
 		}
 		
 		/**
@@ -72,7 +69,7 @@
 		public static function addSWFAddress(_title:String, _address:String, _params:Object=null, _type:String="normal"):void
 		{
 			//trace("com.ab.core.COREApi.addSWFAddress > _title : " + _title + ", _address : " + _address + ", _params : " + _params + ", _type : " + _type);
-			SWFAddressManager.singleton.addAddress(_title, _address, _params, _type);
+			SWFAddressManager.addAddress(_title, _address, _params, _type);
 		}
 		
 		/**
@@ -82,7 +79,7 @@
 		 */
 		public static function getSWFAddressParameterValue(parameter:String):String
 		{
-			var current_value:String	= StringUtil.remove(SWFAddressManager.singleton.getCurrentValue(), "/")
+			var current_value:String	= SWFAddressManager.getCurrentValue().split("/").join('');
 			var o:Object 				= new Object();
 			var value:String 			= "";
 			
@@ -104,7 +101,7 @@
 		 */
 		public static function setSWFAddress(title:String, extra_params:Object = null):void
 		{
-			SWFAddressManager.singleton.setAddress(title, extra_params);
+			SWFAddressManager.setAddress(title, extra_params);
 		}
 		
 		/**
@@ -121,7 +118,7 @@
 			{
 				if (child is DisplayObject) 
 				{
-					AppManager.singleton.addChildToLevel(child, level, propsObj);
+					AppManager.addChildToLevel(child, level, propsObj);
 				}
 				else { trace("< ERROR > COREApi ::: addChildToLevel() ::: PROVIDED OBJECT IS NOT A DISPLAYOBJECT");  }
 			}
@@ -140,7 +137,7 @@
 			{
 				if (XMLSettings.setting.DEBUG_MODE == true) 
 				{
-					Logger.singleton.log(s); 
+					//Logger.singleton.log(s); 
 				}
 			}
 		}
@@ -170,7 +167,7 @@
 		{
 			if (_class != null) 
 			{ 
-				AppManager.singleton.setScreenSaver(_class, _time); 
+				AppManager.setScreenSaver(_class, _time); 
 			}			
 			else  {  trace("< ERROR > COREApi ::: setScreenSaver() ::: Provided class NULL or not specified");  }
 		}
@@ -181,7 +178,7 @@
 		 */
 		public static function set language(_lang:String):void
 		{
-			AppManager.singleton.LANG = _lang; 
+			AppManager.LANG = _lang; 
 		}
 		
 		/**
@@ -190,18 +187,18 @@
 		 */
 		public static function get language():String
 		{
-			return AppManager.singleton.LANG;
+			return AppManager.LANG;
 		}
 		
 		/**
 		 * Sets the screen saver on.
 		 */
-		public static function setScreenSaverOn():void	{ AppManager.singleton.screen_saver_on = true;   };
+		public static function setScreenSaverOn():void	{ AppManager.screen_saver_on = true;   };
 		
 		/**
 		 * Sets the screen saver off.
 		 */
-		public static function setScreenSaverOff():void { AppManager.singleton.screen_saver_on = false;  };
+		public static function setScreenSaverOff():void { AppManager.screen_saver_on = false;  };
 		
 		/**
 		 * ADD EVENT LISTENER
@@ -261,10 +258,10 @@
 			switch (XMLSettings.setting.PROJECT_TYPE) 
 			{
 				case "AIR":
-					StageReference.getStage().displayState = "fullScreenInteractive";
+					AppManager.stage.displayState = "fullScreenInteractive";
 				break;
 				case "AS3":
-					StageReference.getStage().displayState = "fullScreen";
+					AppManager.stage.displayState = "fullScreen";
 				break;
 			}
 		}
@@ -276,7 +273,7 @@
 		 */
 		public static function setNormalScreen():void
 		{
-			StageReference.getStage().displayState = StageDisplayState.NORMAL;
+			AppManager.stage.displayState = StageDisplayState.NORMAL;
 		}
 		
 		/**
@@ -302,7 +299,7 @@
 		 */
 		public static function setPleasewaitMessageClass(_class:Class):void
 		{
-			AppManager.singleton.setPleasewaitMessageClass(_class);
+			AppManager.setPleasewaitMessageClass(_class);
 		}
 		
 		/**
@@ -312,7 +309,7 @@
 		 */
 		public static function invokePleaseWaitMessage():void
 		{
-			AppManager.singleton.invokePleaseWaitMessage();
+			AppManager.invokePleaseWaitMessage();
 		}
 		
 		/**
@@ -322,7 +319,7 @@
 		 */
 		public static function closePleaseWaitMessage():void
 		{
-			AppManager.singleton.closePleaseWaitMessage();
+			AppManager.closePleaseWaitMessage();
 		}
 		
 		/**
@@ -373,7 +370,7 @@
 		 */
 		public static function addContextMenuItem(caption:String, handler:Function, separatorBefore:Boolean = false, enabled:Boolean = true, visible:Boolean = true):void
 		{
-			AppManager.singleton.addContextMenuItem(caption, handler, separatorBefore, enabled, visible);
+			AppManager.addContextMenuItem(caption, handler, separatorBefore, enabled, visible);
 		}
 		
 		/**
@@ -383,7 +380,7 @@
 		 */
 		public static function writeVectorText(_graphics:Graphics, _text:String, _font:String, _colour:uint=0x00ff00, _size:Number=24, _leading:Number=0, _x:Number=0, _y:Number=0, _kerning:Number=0):void
 		{
-			AppManager.singleton.writeVectorText(_graphics, _text, _font, _colour, _size, _leading, _x, _y, _kerning);
+			AppManager.writeVectorText(_graphics, _text, _font, _colour, _size, _leading, _x, _y, _kerning);
 		}
 		
 		/**
@@ -410,7 +407,7 @@
 		 //*/
 		//public static function createZipFile(_files:Array, _text:String="Please include '.ZIP' in the end of the filename"):void
 		//{
-			//AppManager.singleton.createZip(_files, _text);
+			//AppManager.createZip(_files, _text);
 		//}
 		
 		/**
@@ -420,7 +417,8 @@
 		 */
 		public static function get core():CORE
 		{
-			return AppManager.singleton.core;
+			throw new Error("CORE ACCESS ATTEMP AT COREApi");
+			//return AppManager.core;
 		}
 		
 		/**
@@ -430,7 +428,7 @@
 		 */
 		public static function get stage():Stage
 		{
-			return StageReference.getStage();
+			return AppManager.stage;
 		}
 		
 		/**
@@ -440,7 +438,7 @@
 		 */
 		public static function get globalvars():Object
 		{
-			return AppManager.singleton.globalvars;
+			return AppManager.globalvars;
 		}
 		
 	}

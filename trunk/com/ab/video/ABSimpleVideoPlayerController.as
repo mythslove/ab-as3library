@@ -22,7 +22,7 @@
 	import flash.geom.Point;
 	import flash.media.SoundTransform;
 	import flash.net.NetStream;
-	import org.casalib.util.StageReference;
+	 
 	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -69,7 +69,7 @@
 			//volume_icon_mc.addEventListener(MouseEvent.CLICK, soundToggleHandler);
 			//fullscreen_mc.addEventListener(MouseEvent.CLICK,  fullScreenToggleHandler);
 			
-			//StageReference.getStage().addEventListener(MouseEvent.MOUSE_UP,   	scrubberUnpressHandler, false, 0, true);
+			//AppManager.stage.addEventListener(MouseEvent.MOUSE_UP,   	scrubberUnpressHandler, false, 0, true);
 			
 			//playpause_button.addEventListener(MouseEvent.CLICK,  playPauseClickHandler,  false, 0, true);
 			
@@ -123,8 +123,8 @@
 			//playbtn.addEventListener(MouseEvent.ROLL_OUT,  buttonRollOutHandler);
 			//playbtn.addEventListener(MouseEvent.ROLL_OVER, buttonRollOverHandler);
 			
-			//var new_x:Number = (StageReference.getStage().stageWidth / 2) - (playbtn.width/2);
-			//var new_y:Number = ((StageReference.getStage().stageHeight - this.height) / 2) - (playbtn.height / 2);
+			//var new_x:Number = (AppManager.stage.stageWidth / 2) - (playbtn.width/2);
+			//var new_y:Number = ((AppManager.stage.stageHeight - this.height) / 2) - (playbtn.height / 2);
 			
 			//playbtn.addEventListener(MouseEvent.CLICK, bigPlayBtnClickHandler, false, 0, true);
 			
@@ -214,7 +214,7 @@
 		private function adjustVolume_enterFrame(e:Event):void 
 		{
 			//trace
-			//var seekpoint:Number = StageReference.getStage().mouseX - volume_mc.x;
+			//var seekpoint:Number = AppManager.stage.mouseX - volume_mc.x;
 			/*
 			if (seekpoint > 0 && seekpoint <= _volume_bar_width) 
 			{

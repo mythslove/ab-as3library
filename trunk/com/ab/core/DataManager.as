@@ -22,14 +22,6 @@
 	import com.ab.xml.XMLDataGetter;
 	import flash.utils.Dictionary;
 	//import com.edigma.services.ServerCommunication;
-	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.events.EventDispatcher;
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
-	import gs.dataTransfer.XMLManager;
-	import com.ab.events.CentralEventSystem;
-	import org.casalib.util.StageReference;
 	
 	public class DataManager extends Object
 	{
@@ -113,6 +105,7 @@
 		
 		private function severalXMLFilesLoadStart(o:XML):void 
 		{
+			trace("DataManager : severalXMLFilesLoadStart");
 			init_xml_files_object 			= o;
 			multiple_xml_files_load_current = 0;
 			multiple_xml_files_load_total 	= init_xml_files_object.items.item.length();

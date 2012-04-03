@@ -20,6 +20,11 @@ package com.ab.core
 	
 	// the value "Main" is correct as long as your main class is named "Main"
 	import Main;
+	import sections.about.About;
+	import sections.contact.Contact;
+	import sections.skills.Skills;
+	import sections.portfolio.portfoliolist.PortfolioList;
+	import sections.portfolio.portfolioitem.PortfolioItem;
 	
 	public class AppClasses 
 	{
@@ -27,6 +32,11 @@ package com.ab.core
 		public static var main_app_class:String="Main";
 		
 		private var main:Main;
+		private var about:About;
+		private var contact:Contact;
+		private var skills:Skills;
+		private var portfoliolist:PortfolioList;
+		private var portfolioitem:PortfolioItem;
 	}
 
 }

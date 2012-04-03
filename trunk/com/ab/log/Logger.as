@@ -28,6 +28,7 @@
 	*/
 	
 	/// flash
+	import com.ab.core.AppManager;
 	import com.ab.display.geometry.PolygonQuad;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
@@ -42,7 +43,7 @@
 	/// other libs
 	import caurina.transitions.Tweener;
 	import org.casalib.ui.Key;
-	import org.casalib.util.StageReference;
+	 
 	
 	public class Logger extends Sprite
 	{
@@ -69,9 +70,6 @@
 		private var _content:Sprite;
 		private var _bg:Sprite;
 		
-		/// keyboard
-		protected var _key:Key;
-		
 		///system
 		private var _init_y:Number		= 50;
 		private var _last_x:Number		= 50;
@@ -84,10 +82,6 @@
 			trace ("Logger ::: Constructor()" ); 
 			
 			setSingleton();
-			
-			this._key = Key.getInstance();
-			
-			this._key.addEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
 			
 			this.x		 = init_x;
 			this.y		 = init_y;
@@ -131,7 +125,9 @@
 		{
 			trace ("Logger() ::: added to stage");
 			
-			this.removeEventListener(Event.ADDED_TO_STAGE, addedHandler)
+			this.removeEventListener(Event.ADDED_TO_STAGE, addedHandler);
+			
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
 			
 			buildVisuals();
 			
@@ -142,14 +138,14 @@
 		
 		private function setInteractions():void
 		{
-			StageReference.getStage().addEventListener(MouseEvent.MOUSE_UP, 	mouseUpHandler);
-			StageReference.getStage().addEventListener(MouseEvent.MOUSE_DOWN,	mouseDownHandler);
+			AppManager.stage.addEventListener(MouseEvent.MOUSE_UP, 		mouseUpHandler);
+			AppManager.stage.addEventListener(MouseEvent.MOUSE_DOWN,	mouseDownHandler);
 		}
 		
 		private function mouseDownHandler(e:MouseEvent):void
 		{
 			//trace ("Logger ::: mouseDownHandler:"); 
-			if (this._bg.hitTestPoint(StageReference.getStage().mouseX, StageReference.getStage().mouseY, true)) 
+			if (this._bg.hitTestPoint(AppManager.stage.mouseX, AppManager.stage.mouseY, true)) 
 			{
 				_last_x = this.x;
 				_last_y = this.y;
@@ -157,7 +153,7 @@
 				_startdrag_x = this.mouseX;
 				_startdrag_y = this.mouseY;
 				
-				StageReference.getStage().addEventListener(MouseEvent.MOUSE_MOVE, temporaryMouseMoveHandler, false, 0, true);
+				AppManager.stage.addEventListener(MouseEvent.MOUSE_MOVE, temporaryMouseMoveHandler, false, 0, true);
 				
 				_dragging = true;
 			}
@@ -169,9 +165,9 @@
 			{
 				//trace ("Logger ::: mouseUpHandler: remove mouse move event listener if dragging"); 
 				
-				StageReference.getStage().removeEventListener(MouseEvent.MOUSE_MOVE, temporaryMouseMoveHandler);
+				AppManager.stage.removeEventListener(MouseEvent.MOUSE_MOVE, temporaryMouseMoveHandler);
 				
-				if (this.x < -this._bg.width + 20 || this.x > StageReference.getStage().stageWidth - 20 || this.y < -(this._bg.height)+40 || this.y > StageReference.getStage().stageHeight-20)
+				if (this.x < -this._bg.width + 20 || this.x > AppManager.stage.stageWidth - 20 || this.y < -(this._bg.height)+40 || this.y > AppManager.stage.stageHeight-20)
 				{
 					Tweener.addTween(this, { x:_last_x, y:_last_y, time:0.5 } );
 				}
@@ -180,8 +176,8 @@
 		
 		private function temporaryMouseMoveHandler(e:MouseEvent):void 
 		{
-			var new_x:Number = StageReference.getStage().mouseX - _startdrag_x;
-			var new_y:Number = StageReference.getStage().mouseY - _startdrag_y;
+			var new_x:Number = AppManager.stage.mouseX - _startdrag_x;
+			var new_y:Number = AppManager.stage.mouseY - _startdrag_y;
 			
 			Tweener.addTween(this, { x:new_x, y:new_y, time:0.5 } );
 		}
@@ -350,8 +346,8 @@
 		
 		private function removedHandler(e:Event):void 
 		{
-			StageReference.getStage().removeEventListener(MouseEvent.MOUSE_UP, 		mouseUpHandler);
-			StageReference.getStage().removeEventListener(MouseEvent.MOUSE_DOWN,	mouseDownHandler);
+			AppManager.stage.removeEventListener(MouseEvent.MOUSE_UP, 		mouseUpHandler);
+			AppManager.stage.removeEventListener(MouseEvent.MOUSE_DOWN,	mouseDownHandler);
 		}
 		
 		public function get start_visible():Boolean 			{ return _start_visible;  };

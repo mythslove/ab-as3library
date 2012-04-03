@@ -5,6 +5,7 @@
 	*/
 	
 	//import com.edigma.log.Logger;
+	import com.ab.core.AppManager;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -13,7 +14,7 @@
 	import org.casalib.display.CasaSprite;
 	//import com.ab.utils.DebugTF
 	import caurina.transitions.Tweener;
-	import org.casalib.util.StageReference;
+	 
 	import flash.display.Stage;
 	
 	public class YScroller extends CasaSprite
@@ -167,8 +168,8 @@
 		{
 			_handle.addEventListener(MouseEvent.MOUSE_DOWN, clickHandle); 
 			
-			StageReference.getStage().addEventListener(MouseEvent.MOUSE_UP,    releaseHandle);
-			StageReference.getStage().addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheelHandler);
+			AppManager.stage.addEventListener(MouseEvent.MOUSE_UP,    releaseHandle);
+			AppManager.stage.addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheelHandler);
 			
 			_handle.buttonMode = true;
 		}
@@ -188,7 +189,7 @@
 			/*
 			if (_hit_root != null)
 			{
-				if (_hit_root.hitTestPoint(StageReference.getStage().mouseX, StageReference.getStage().mouseY, true));
+				if (_hit_root.hitTestPoint(AppManager.stage.mouseX, AppManager.stage.mouseY, true));
 				{
 					performMouseWheel(event.delta);
 				}
@@ -240,8 +241,8 @@
 			
 			this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
 			
-			StageReference.getStage().removeEventListener(MouseEvent.MOUSE_UP,    releaseHandle);
-			StageReference.getStage().removeEventListener(MouseEvent.MOUSE_WHEEL, mouseWheelHandler);
+			AppManager.stage.removeEventListener(MouseEvent.MOUSE_UP,    releaseHandle);
+			AppManager.stage.removeEventListener(MouseEvent.MOUSE_WHEEL, mouseWheelHandler);
 		}
 		
 		public function reActivate():void
@@ -251,8 +252,8 @@
 			
 			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 			
-			StageReference.getStage().addEventListener(MouseEvent.MOUSE_UP, 	releaseHandle);
-			StageReference.getStage().addEventListener(MouseEvent.MOUSE_WHEEL, 	mouseWheelHandler);
+			AppManager.stage.addEventListener(MouseEvent.MOUSE_UP, 	releaseHandle);
+			AppManager.stage.addEventListener(MouseEvent.MOUSE_WHEEL, 	mouseWheelHandler);
 		}
 		
 		private function clickHandle(e:MouseEvent):void

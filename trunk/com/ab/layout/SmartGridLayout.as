@@ -132,7 +132,7 @@ package com.ab.layout
 					if (item_count <= items_per_page) 
 					{
 						//trace("SENDING ONE");
-						COREUtils.moveObjectXY(children[i], getXAtIndex(i), getYAtIndex(i), 0.5, "EaseOutExpo", item_count*0.1);
+						COREUtils.moveObjectXY(children[i], getXAtIndex(i), getYAtIndex(i), 0.5, "easeOutExpo", item_count*0.1);
 					}
 					
 					item_count++;

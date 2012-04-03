@@ -45,7 +45,7 @@
 			
 			if (instance)
 			{
-				throw new Error("Error: CentralEventSystem can only be accessed through CentralEventSystem.getInstance() ");
+				throw new Error("Error: CentralEventSystem can only be accessed through CentralEventSystem.singleton ");
 			}
 			
 			trace("::: CentralEventSystem Constructor :::")

@@ -17,7 +17,7 @@
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import org.casalib.display.CasaSprite;
-	import org.casalib.util.StageReference;
+	 
 	
 	import flash.events.NetStatusEvent;
 	import flash.media.Video;
@@ -166,7 +166,7 @@
 		/*
 		private function resizeHandler(e:Event):void 
 		{
-			if (StageReference.getStage().displayState == StageDisplayState.FULL_SCREEN) 
+			if (AppManager.stage.displayState == StageDisplayState.FULL_SCREEN) 
 			{
 				videocontroller.visible = false;
 			}
@@ -175,8 +175,8 @@
 				videocontroller.visible = true;
 			}
 			
-			//this._videoLoad.video.width  = StageReference.getStage().stageWidth;
-			//this._videoLoad.video.height = StageReference.getStage().stageHeight - videocontroller.height;
+			//this._videoLoad.video.width  = AppManager.stage.stageWidth;
+			//this._videoLoad.video.height = AppManager.stage.stageHeight - videocontroller.height;
 		}*/
 		
 		public function get url():String 					{ return _url;  };

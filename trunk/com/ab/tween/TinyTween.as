@@ -32,18 +32,20 @@ package com.ab.tween
 		private var _framesLeftToFinish	: int;
 		private var _tweenStartFrame	: Number;
 		private var _delayTweenFrames	: Number;
+		private var _completeCallback	: Function;
 		
-		public function TinyTween(displayObject:DisplayObject, _props:Object, _time:Number = 0.5, _curve:String = "easeOutSine", _delay:Number=0)
+		public function TinyTween(displayObject:DisplayObject, _props:Object, _time:Number = 0.5, _curve:String = "easeOutSine", _delay:Number=0, _completeCallback:Function=null)
 		{
 			this.displayObject		= displayObject;
 			this.props 				= _props;
 			this._delay 			= _delay;
 			this._curve 			= _curve;
 			this._time 				= _time;
+			this._completeCallback 	= _completeCallback;
 			this._initPropValues	= new Object();
 			
-			_totalTweenFrames 		= Math.round(displayObject.stage.frameRate * _time);
-			_delayTweenFrames		= Math.round(displayObject.stage.frameRate * _delay);
+			_totalTweenFrames 		= Math.round(TinyTweener.fps * _time);
+			_delayTweenFrames		= Math.round(TinyTweener.fps * _delay);
 			_framesLeftToFinish		= _totalTweenFrames;
 			
 			for (var prop:* in props) 
@@ -80,7 +82,7 @@ package com.ab.tween
 				
 				for (var prop:* in props) 
 				{
-					trace("PERFORM");
+					//trace("TinyTween ::: PERFORM");
 					var diff:Number = props[prop] - _initPropValues[prop];
 					
 					displayObject[prop.toString()] = this[_curve](_totalTweenFrames - _framesLeftToFinish, _initPropValues[prop], diff, _totalTweenFrames);
@@ -90,12 +92,18 @@ package com.ab.tween
 			{
 				/// when tween ends
 				
+				if (_completeCallback != null) 
+				{
+					_completeCallback();
+				}
+				
 				destroy();
 			}
 		}
         
         public function destroy():void
         {
+			//trace("TinyTween ::: destroy()");
 			// clean up
 			this.removeEventListener(Event.ENTER_FRAME, performMotion);
 			
@@ -136,6 +144,7 @@ package com.ab.tween
 			if ((t/=d/2) < 1) return c/2 * Math.pow(2, 10 * (t - 1)) + b;
 			return c/2 * (-Math.pow(2, -10 * --t) + 2) + b;
 		}
+		
 		
 	}
 

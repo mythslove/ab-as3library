@@ -9,6 +9,7 @@
 	public class AppEvent extends Event
 	{
 		public static const START:String 				= "start";
+		public static const APPLICATION_READY:String 	= "applicationready";
 		public static const INTRO_RESUMED:String 		= "introresumed";
 		public static const LOADED_SETTINGS:String 		= "loadedsettings";
 		public static const LOADED_DATA:String 			= "loadeddata";
