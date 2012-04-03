@@ -15,7 +15,7 @@
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import com.ab.utils.Move;
-	import org.casalib.util.StageReference;
+	 
 	
 	public class MCXScroller extends EdigmaSprite
 	{
@@ -72,7 +72,7 @@
 			GoVisible()
 			
 			this.addEventListener(MouseEvent.MOUSE_DOWN, clickHandle, false, 0, true);
-			StageReference.getStage().addEventListener(MouseEvent.MOUSE_UP, releaseHandle, false, 0, true);
+			AppManager.stage.addEventListener(MouseEvent.MOUSE_UP, releaseHandle, false, 0, true);
 			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler, false, 0, true);
 		}
 		
@@ -81,7 +81,7 @@
 			//trace("MCXScroller ::: deActivate ")
 			this.buttonMode = false;
 			this.removeEventListener(MouseEvent.MOUSE_DOWN, clickHandle); 
-			StageReference.getStage().removeEventListener(MouseEvent.MOUSE_UP, releaseHandle);
+			AppManager.stage.removeEventListener(MouseEvent.MOUSE_UP, releaseHandle);
 			this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler); 
 		}
 		
@@ -89,7 +89,7 @@
 		{
 			this.buttonMode = true;
 			this.addEventListener(MouseEvent.MOUSE_DOWN, clickHandle, false, 0, true); 
-			StageReference.getStage().addEventListener(MouseEvent.MOUSE_UP, releaseHandle, false, 0, true);
+			AppManager.stage.addEventListener(MouseEvent.MOUSE_UP, releaseHandle, false, 0, true);
 			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler, false, 0, true);
 		}
 		

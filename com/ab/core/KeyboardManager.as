@@ -7,52 +7,80 @@
 	* 
 	* Keyboard manager instantiation
 	* 
-	* Dependencies: StageReference by CASALIB: ( http://casalib.org/ )
-	* 
 	* usage:
-	* var keyboardManager = new KeyboardManager();
+	* KeyboardManager.init();
 	* 
 	* then you can start using the keys you define inside it
 	*/
 	
 	/// flash
-	import flash.display.Sprite;
+	import flash.display.Stage;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
-	
-	/// libs
-	import org.casalib.ui.Key
+	import flash.utils.Dictionary;
 	
 	/// ab lib
 	import com.ab.core.COREApi;
 	
 	public class KeyboardManager extends Object
 	{
-		/// keyboard
-		public var _key:Key;
+		private static var _keysDown:Dictionary;
+		private static var _keysTyped:Array;
 		
-		private static var __singleton:KeyboardManager;
-		
-		public function KeyboardManager()
+		public static function init(_stage:Stage)
 		{
-			setSingleton();
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
+			stage.addEventListener(KeyboardEvent.KEY_UP, _onKeyUp);
 			
-			this._key = Key.getInstance();
-			this._key.addEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
+			_keysDown     = new Dictionary();
+			_keysTyped    = new Array();
+		}
+		
+		/**
+			Determines if is key is down.
+			
+			@param keyCode: The key code value assigned to a specific key or a Keyboard class constant associated with the key.
+			@return Returns <code>true</code> if key is currently pressed; otherwise <code>false</code>.
+		*/
+		public static function isDown(keyCode:uint):Boolean 
+		{
+			return _keysDown[keyCode];
+		}
+		
+		/**
+			@sends KeyboardEvent#KEY_DOWN - Dispatched when the user presses a key.
+		*/
+		private static function _onKeyDown(e:KeyboardEvent):void 
+		{
+			_keysDown[e.keyCode] = true;
+			
+			dispatchEvent(e.clone());
+			
+			keyDownHandler(e.clone());
+		}
+		
+		/**
+			@sends KeyboardEvent#KEY_UP - Dispatched when the user releases a key.
+		*/
+		private static function _onKeyUp(e:KeyboardEvent):void 
+		{
+			delete _keysDown[e.keyCode];
+			
+			dispatchEvent(e.clone());
 		}
 		
 		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// BASE KEY FUNCTIONS
 		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// BASE KEY FUNCTIONS
 		/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// BASE KEY FUNCTIONS
 		
-		private function keyDownHandler(e:KeyboardEvent):void 
+		private static function keyDownHandler(e:KeyboardEvent):void 
 		{
 			//trace ("KeyboardManager ::: keyDownHandler = " + e.keyCode);
 			
 			switch (e.keyCode) 
 			{
 				case Keyboard.F6:
-					AppManager.singleton.startScreenSaver();
+					AppManager.startScreenSaver();
 				break;
 				
 				case Keyboard.F8:
@@ -119,24 +147,6 @@
 			}
 		}
 		
-		/// //////////////////////////////////////////////////////////////////////////// SINGLETON START
-		/// //////////////////////////////////////////////////////////////////////////// SINGLETON START
-		/// //////////////////////////////////////////////////////////////////////////// SINGLETON START
-		
-		private function setSingleton():void
-		{
-			if (__singleton != null)  { return; }; //throw new Error("KeyboardManager ::: SINGLETON REPLICATION ATTEMPTED")
-			__singleton = this;
-		}
-		public static function get singleton():KeyboardManager
-		{
-			if (__singleton == null) { throw new Error("KeyboardManager ::: SINGLETON DOES NOT EXIST (CORE FAILED TO INITIALIZE?)") }
-			return __singleton;
-		}
-		
-		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END
-		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END
-		/// //////////////////////////////////////////////////////////////////////////// SINGLETON END
 	}
 	
 }

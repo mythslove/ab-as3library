@@ -77,8 +77,8 @@
 			frame_mc.setAlign("center", true)
 			
 			bg_mc.graphics.beginFill(_bg_colour)
-			//bg_mc.graphics.drawRoundRect(0, 0, StageReference.getStage().stageWidth, StageReference.getStage().stageHeight, 0, 0);
-			bg_mc.graphics.drawRect(0, 0, StageReference.getStage().stageWidth, StageReference.getStage().stageHeight);
+			//bg_mc.graphics.drawRoundRect(0, 0, AppManager.stage.stageWidth, AppManager.stage.stageHeight, 0, 0);
+			bg_mc.graphics.drawRect(0, 0, AppManager.stage.stageWidth, AppManager.stage.stageHeight);
 			bg_mc.graphics.endFill();
 			
 			this_image = new Image(url, imgLoadCompleteHandler, imgLoadProgressHandler)

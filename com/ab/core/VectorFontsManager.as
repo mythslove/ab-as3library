@@ -5,11 +5,13 @@ package com.ab.core
 	*/
 	
 	import com.ab.events.AppEvent;
+	
 	import flash.display.Graphics;
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
+	
 	import wumedia.vector.VectorText;
 	
 	public class VectorFontsManager extends Object

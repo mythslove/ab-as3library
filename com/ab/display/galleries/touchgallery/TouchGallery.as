@@ -12,7 +12,7 @@
 	import gs.dataTransfer.XMLManager;
 	import org.casalib.display.CasaMovieClip;
 	import org.casalib.display.CasaSprite;
-	import org.casalib.util.StageReference;
+	 
 	import com.ab.display.galleries.touchgallery.TouchGalleryItem
 	
 	public class TouchGallery extends CasaMovieClip

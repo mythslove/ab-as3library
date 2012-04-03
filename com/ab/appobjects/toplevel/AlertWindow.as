@@ -4,6 +4,7 @@
 	* @author ABº
 	*/
 	
+	import com.ab.core.AppManager;
 	import com.ab.display.ABSprite;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -11,7 +12,7 @@
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
-	import org.casalib.util.StageReference;
+	 
 	
 	public class AlertWindow extends ABSprite
 	{
@@ -36,7 +37,7 @@
 			textbox.addChild(textfield);
 			
 			/// tf
-			textfield.width 	= StageReference.getStage().width / 4;
+			textfield.width 	= AppManager.stage.width / 4;
 			
 			if (_text_style != null) 
 			{
@@ -59,7 +60,7 @@
 			textbox.graphics.endFill();
 			
 			bg_mc.graphics.beginFill(_bg_colour);
-			bg_mc.graphics.drawRect(0, 0, StageReference.getStage().stageWidth, StageReference.getStage().stageHeight);
+			bg_mc.graphics.drawRect(0, 0, AppManager.stage.stageWidth, AppManager.stage.stageHeight);
 			bg_mc.graphics.endFill();
 			
 			ABSprite(bg_mc).setAlign("stretch");

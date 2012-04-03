@@ -6,7 +6,7 @@
 	
 	import com.ab.display.ABSprite;
 	
-	import org.casalib.util.StageReference;
+	 
 	
 	import flash.geom.Point;
 	import flash.events.MouseEvent;
@@ -52,12 +52,12 @@
 			assetholder_mc.setAlign("center", true);
 			
 			this.addEventListener(MouseEvent.CLICK, clickHandler, false, 0, true);
-			//StageReference.getStage().addEventListener(Event.RESIZE, resizeHandler, false, 0, true);
+			//AppManager.stage.addEventListener(Event.RESIZE, resizeHandler, false, 0, true);
 			
 			bg_mc.alpha = 0.8;
 			bg_mc.setAlign("stretch");
 			bg_mc.graphics.beginFill(_bg_colour);
-			bg_mc.graphics.drawRoundRect(0, 0, StageReference.getStage().stageWidth, StageReference.getStage().stageHeight, 0, 0);
+			bg_mc.graphics.drawRoundRect(0, 0, AppManager.stage.stageWidth, AppManager.stage.stageHeight, 0, 0);
 			bg_mc.graphics.endFill();
 			
 			GoVisible();

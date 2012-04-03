@@ -52,7 +52,7 @@
 	import hype.extended.layout.GridLayout;
 	import net.guttershark.managers.LayoutManager;
 	import org.casalib.display.CasaSprite;
-	import org.casalib.util.StageReference;
+	 
 	
 	public class Plane3DGallery extends CasaSprite
 	{
@@ -103,7 +103,7 @@
 			this.addEventListener(Event.ADDED_TO_STAGE, 	addedHandler, false, 0, true);
 			this.addEventListener(Event.REMOVED_FROM_STAGE, removedHandler, false, 0, true);
 			
-			StageReference.getStage().addEventListener(Event.RESIZE, resizeHandler, false, 0, true);
+			AppManager.stage.addEventListener(Event.RESIZE, resizeHandler, false, 0, true);
 			
 			CentralEventSystem.singleton.addEventListener(ItemEvent.SELECT, selectItemEventListener, false, 0, true);
 		}
@@ -119,7 +119,7 @@
 					this.removeEventListener(Event.ENTER_FRAME, 	enterFrameHandler);
 				}
 				
-				StageReference.getStage().removeEventListener(Event.RESIZE, resizeHandler);
+				AppManager.stage.removeEventListener(Event.RESIZE, resizeHandler);
 				
 				CentralEventSystem.singleton.removeEventListener(ItemEvent.SELECT, selectItemEventListener);
 				
@@ -344,8 +344,8 @@
 		
 		private function enterFrameHandler(e:Event):void 
 		{
-			var valueX:Number = (StageReference.getStage().mouseY - (StageReference.getStage().stageHeight/2)) / 5;
-			var valueY:Number = (StageReference.getStage().mouseX - (StageReference.getStage().stageWidth/2)) / 5;
+			var valueX:Number = (AppManager.stage.mouseY - (AppManager.stage.stageHeight/2)) / 5;
+			var valueY:Number = (AppManager.stage.mouseX - (AppManager.stage.stageWidth/2)) / 5;
 			
 			valueX = valueX * ( -1);
 			
@@ -420,7 +420,7 @@
 				_item_select_listener_active = false;
 			}
 			
-			StageReference.getStage().removeEventListener(Event.RESIZE, resizeHandler);
+			AppManager.stage.removeEventListener(Event.RESIZE, resizeHandler);
 			
 			if (this.hasEventListener(Event.ENTER_FRAME)) 
 			{

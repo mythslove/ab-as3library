@@ -17,7 +17,7 @@
 	* 
 	* @example
 	* import com.ab.display.special.MotionBlurSprite;
-	* import org.casalib.util.StageReference;
+	*  
 	* 
 	* StageReference.setStage(stage);
 	* 
@@ -37,7 +37,7 @@
 	import flash.display.BitmapData;
 	import flash.filters.BlurFilter;
 	import flash.geom.Point;
-	import org.casalib.util.StageReference;
+	 
 	
 	public class MotionBlurSprite extends EdigmaSprite
 	{
@@ -65,7 +65,7 @@
 		
 		private function setVars():void
 		{
-			_BITMAPDATA 	   = new BitmapData(StageReference.getStage().stageWidth, StageReference.getStage().stageHeight, true, 0x000000);
+			_BITMAPDATA 	   = new BitmapData(AppManager.stage.stageWidth, AppManager.stage.stageHeight, true, 0x000000);
 			_BITMAP            = new Bitmap(_BITMAPDATA);
 			
 			_BLUR_FILTER       = new BlurFilter(4, 4, 8);

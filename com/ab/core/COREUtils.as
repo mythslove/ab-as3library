@@ -7,10 +7,10 @@
 	*/
 	
 	import caurina.transitions.Tweener;
+	import com.ab.tween.TinyTweener;
 	import flash.display.DisplayObject;
 	import flash.display.Stage;
 	import flash.geom.ColorTransform;
-	import org.casalib.util.StageReference;
 	
 	public class COREUtils
 	{
@@ -19,7 +19,7 @@
 		 * Centers a display object in the center of the stage
 		 * @return	Nothing.
 		 */
-		public static function centerObjectInStage(object:DisplayObject, smooth:Boolean=false, _time:Number=0.5, _transition:String="EaseOutSine", _delay:Number=0):void
+		public static function centerObjectInStage(object:DisplayObject, smooth:Boolean=false, _time:Number=0.5, _transition:String="easeOutSine", _delay:Number=0):void
 		{
 			if (object) 
 			{
@@ -28,7 +28,9 @@
 				
 				if (smooth) 
 				{
-					Tweener.addTween(object, { x:new_x_pos, y:new_y_pos, time:_time, transition:_transition, delay:_delay } );
+					//Tweener.addTween(object, { x:new_x_pos, y:new_y_pos, time:_time, transition:_transition, delay:_delay } );
+					
+					TinyTweener.addTween(object, { x:new_x_pos, y:new_y_pos }, _time, _transition, _delay );
 				}
 				else
 				{
@@ -43,14 +45,16 @@
 		 * Centers a display object in the center of another display object.
 		 * @return	Nothing.
 		 */
-		public static function centerObjectInOtherObject(object_a:DisplayObject, object_b:DisplayObject, smooth:Boolean=false, _time:Number=0.5, _transition:String="EaseOutSine", _delay:Number=0):void
+		public static function centerObjectInOtherObject(object_a:DisplayObject, object_b:DisplayObject, smooth:Boolean=false, _time:Number=0.5, _transition:String="easeOutSine", _delay:Number=0):void
 		{
 			var new_x_pos:Number = Math.round((object_b.width  / 2) - (object_a.width  / 2));
 			var new_y_pos:Number = Math.round((object_b.height / 2) - (object_a.height / 2));
 			
 			if (smooth) 
 			{
-				Tweener.addTween(object_a, { x:new_x_pos, y:new_y_pos, time:_time, transition:_transition, delay:_delay } );
+				//Tweener.addTween(object_a, { x:new_x_pos, y:new_y_pos, time:_time, transition:_transition, delay:_delay } );
+				
+				TinyTweener.addTween(object_a, { x:new_x_pos, y:new_y_pos }, _time, _transition, _delay );
 			}
 			else
 			{
@@ -63,13 +67,15 @@
 		 * Center object in stage X
 		 * @return	Nothing.
 		 */
-		public static function centerObjectInStageX(object:DisplayObject, smooth:Boolean=false, _time:Number=0.5, _transition:String="EaseOutSine", _delay:Number=0):void
+		public static function centerObjectInStageX(object:DisplayObject, smooth:Boolean=false, _time:Number=0.5, _transition:String="easeOutSine", _delay:Number=0):void
 		{
 			var new_x_pos:Number = Math.round((stage.stageWidth / 2) - (object.width / 2));
 			
 			if (smooth) 
 			{
-				Tweener.addTween(object, { x:new_x_pos, time:_time, transition:_transition, delay:_delay } );
+				//Tweener.addTween(object, { x:new_x_pos, time:_time, transition:_transition, delay:_delay } );
+				
+				TinyTweener.addTween(object, { x:new_x_pos }, _time, _transition, _delay );
 			}
 			else { object.x = new_x_pos; }
 		}
@@ -78,13 +84,15 @@
 		 * Center object in stage Y
 		 * @return	Nothing.
 		 */
-		public static function centerObjectInStageY(object:DisplayObject, smooth:Boolean=false, _time:Number=0.5, _transition:String="EaseOutSine", _delay:Number=0):void
+		public static function centerObjectInStageY(object:DisplayObject, smooth:Boolean=false, _time:Number=0.5, _transition:String="easeOutSine", _delay:Number=0):void
 		{
 			var new_y_pos:Number = Math.round((stage.stageHeight / 2) - (object.height / 2));
 			
 			if (smooth) 
 			{
-				Tweener.addTween(object, { y:new_y_pos, time:_time, transition:_transition, delay:_delay } );
+				//Tweener.addTween(object, { y:new_y_pos, time:_time, transition:_transition, delay:_delay } );
+				
+				TinyTweener.addTween(object, { y:new_y_pos }, _time, _transition, _delay );
 			}
 			else { object.y = new_y_pos; }
 		}
@@ -93,29 +101,35 @@
 		 * Sets the alpha value of an object
 		 * @return	Nothing.
 		 */
-		public static function setAlpha(object:DisplayObject, alpha_value:Number, _time:Number=0.5, _transition:String="EaseOutSine", _delay:Number=0, onCompleteFunc:Function=null):void
+		public static function setAlpha(object:DisplayObject, alpha_value:Number, _time:Number=0.5, _transition:String="easeOutSine", _delay:Number=0, onCompleteFunc:Function=null):void
 		{
-			Tweener.addTween(object, { alpha:alpha_value, time:_time, transition:_transition, delay:_delay, onComplete:onCompleteFunc } );
+			//Tweener.addTween(object, { alpha:alpha_value, time:_time, transition:_transition, delay:_delay, onComplete:onCompleteFunc } );
+			
+			TinyTweener.addTween(object, { alpha:alpha_value }, _time, _transition, _delay, onCompleteFunc );
 		}
 		
 		/**
 		 * Makes an object visible
 		 * @return	Nothing.
 		 */
-		public static function makeVisible(object:DisplayObject, _time:Number=0.5, _transition:String="EaseOutSine", _delay:Number=0, onCompleteFunc:Function=null):void
+		public static function makeVisible(object:DisplayObject, _time:Number=0.5, _transition:String="easeOutSine", _delay:Number=0, onCompleteFunc:Function=null):void
 		{
 			object.visible = true;
 			
-			Tweener.addTween(object, { alpha:1, time:_time, transition:_transition, delay:_delay, onComplete:onCompleteFunc } );
+			//Tweener.addTween(object, { alpha:1, time:_time, transition:_transition, delay:_delay, onComplete:onCompleteFunc } );
+			
+			TinyTweener.addTween(object, { alpha:1}, _time, _transition, _delay, onCompleteFunc );
 		}
 		
 		/**
 		 * Makes an object invisible
 		 * @return	Nothing.
 		 */
-		public static function makeInvisible(object:DisplayObject, _time:Number=0.5, _transition:String="EaseOutSine", _delay:Number=0):void
+		public static function makeInvisible(object:DisplayObject, _time:Number=0.5, _transition:String="easeOutSine", _delay:Number=0):void
 		{
-			Tweener.addTween(object, { alpha:0, time:_time, transition:_transition, delay:_delay, onComplete:function():void { object.visible = false } } );
+			//Tweener.addTween(object, { alpha:0, time:_time, transition:_transition, delay:_delay, onComplete:function():void { object.visible = false } } );
+			
+			TinyTweener.addTween(object, { alpha:0 }, _time, _transition, _delay, function():void { object.visible = false } );
 		}
 		
 		/**
@@ -124,9 +138,10 @@
 		 * The colour parameter may come as uint or String
 		 * @return	nothing.
 		 */
-		public static function colorizeObject(object:*, colour:*, _time:Number=0.5, _transition:String = "EaseOutSine" ):void
+		public static function colorizeObject(object:*, colour:*, _time:Number=0.5, _transition:String = "easeOutSine" ):void
 		{
 			trace("colour : " + colour);
+			
 			if (_time != 0)
 			{
 				Tweener.addTween(object, { _color:colour, time:_time, transition:_transition } );
@@ -151,13 +166,15 @@
 		 * Moves an Object in X and Y coordinates
 		 * @return	Nothing.
 		 */
-		public static function moveObject(object:DisplayObject, new_x:Number, new_y:Number, _time:Number=0.5, _transition:String="EaseOutSine", _delay:Number=0, onCompleteFunc:Function=null):void
+		public static function moveObject(object:DisplayObject, new_x:Number, new_y:Number, _time:Number=0.5, _transition:String="easeOutSine", _delay:Number=0, onCompleteFunc:Function=null):void
 		{
 			object.visible = true;
 			
 			if (_time != 0) 
 			{
-				Tweener.addTween(object, { x:new_x, y:new_y, time:_time, transition:_transition, delay:_delay, onComplete:onCompleteFunc } );
+				//Tweener.addTween(object, { x:new_x, y:new_y, time:_time, transition:_transition, delay:_delay, onComplete:onCompleteFunc } );
+				
+				TinyTweener.addTween(object, { x:new_x, y:new_y }, _time, _transition, _delay, onCompleteFunc );
 			}
 			else
 			{
@@ -175,13 +192,15 @@
 		 * Moves an Object in X coordinates
 		 * @return	Nothing.
 		 */
-		public static function moveObjectX(object:DisplayObject, new_x:Number, _time:Number=0.5, _transition:String="EaseOutSine", _delay:Number=0, onCompleteFunc:Function=null):void
+		public static function moveObjectX(object:DisplayObject, new_x:Number, _time:Number=0.5, _transition:String="easeOutSine", _delay:Number=0, onCompleteFunc:Function=null):void
 		{
 			object.visible = true;
 			
 			if (_time != 0) 
 			{
-				Tweener.addTween(object, { x:new_x, time:_time, transition:_transition, delay:_delay, onComplete:onCompleteFunc } );
+				//Tweener.addTween(object, { x:new_x, time:_time, transition:_transition, delay:_delay, onComplete:onCompleteFunc } );
+				
+				TinyTweener.addTween(object, { x:new_x }, _time, _transition, _delay, onCompleteFunc );
 			}
 			else
 			{
@@ -198,13 +217,15 @@
 		 * Moves an Object in Y coordinates
 		 * @return	Nothing.
 		 */
-		public static function moveObjectY(object:DisplayObject, new_y:Number, _time:Number=0.5, _transition:String="EaseOutSine", _delay:Number=0, onCompleteFunc:Function=null):void
+		public static function moveObjectY(object:DisplayObject, new_y:Number, _time:Number=0.5, _transition:String="easeOutSine", _delay:Number=0, onCompleteFunc:Function=null):void
 		{
 			object.visible = true;
 			
 			if (_time != 0) 
 			{
-				Tweener.addTween(object, { y:new_y, time:_time, transition:_transition, delay:_delay, onComplete:onCompleteFunc } );
+				//Tweener.addTween(object, { y:new_y, time:_time, transition:_transition, delay:_delay, onComplete:onCompleteFunc } );
+				
+				TinyTweener.addTween(object, { y:new_y }, _time, _transition, _delay, onCompleteFunc );
 			}
 			else
 			{
@@ -221,44 +242,52 @@
 		 * Moves an Object in X and Y coordinates
 		 * @return	Nothing.
 		 */
-		public static function moveObjectXY(object:DisplayObject, new_x:Number, new_y:Number, _time:Number=0.5, _transition:String="EaseOutSine", _delay:Number=0, onCompleteFunc:Function=null):void
+		public static function moveObjectXY(object:DisplayObject, new_x:Number, new_y:Number, _time:Number=0.5, _transition:String="easeOutSine", _delay:Number=0, onCompleteFunc:Function=null):void
 		{
 			object.visible = true;
 			
-			Tweener.addTween(object, { x:new_x, y:new_y, time:_time, transition:_transition, delay:_delay, onComplete:onCompleteFunc } );
+			//Tweener.addTween(object, { x:new_x, y:new_y, time:_time, transition:_transition, delay:_delay, onComplete:onCompleteFunc } );
+			
+			TinyTweener.addTween(object, { x:new_x, y:new_y }, _time, _transition, _delay, onCompleteFunc );
 		}
 		
 		/**
 		 * Resizes the Width of an object
 		 * @return	Nothing.
 		 */
-		public static function resizeObjectWidth(object:DisplayObject, new_width:Number, _time:Number=0.5, _transition:String="EaseOutSine", _delay:Number=0, onCompleteFunc:Function=null):void
+		public static function resizeObjectWidth(object:DisplayObject, new_width:Number, _time:Number=0.5, _transition:String="easeOutSine", _delay:Number=0, onCompleteFunc:Function=null):void
 		{
 			object.visible = true;
 			
-			Tweener.addTween(object, { width:new_width, time:_time, transition:_transition, delay:_delay, onComplete:onCompleteFunc } );
+			//Tweener.addTween(object, { width:new_width, time:_time, transition:_transition, delay:_delay, onComplete:onCompleteFunc } );
+			
+			TinyTweener.addTween(object, { width:new_width }, _time, _transition, _delay, onCompleteFunc );
 		}
 		
 		/**
 		 * Resizes the Height of an object
 		 * @return	Nothing.
 		 */
-		public static function resizeObjectHeight(object:DisplayObject, new_height:Number, _time:Number=0.5, _transition:String="EaseOutSine", _delay:Number=0, onCompleteFunc:Function=null):void
+		public static function resizeObjectHeight(object:DisplayObject, new_height:Number, _time:Number=0.5, _transition:String="easeOutSine", _delay:Number=0, onCompleteFunc:Function=null):void
 		{
 			object.visible = true;
 			
-			Tweener.addTween(object, { height:new_height, time:_time, transition:_transition, delay:_delay, onComplete:onCompleteFunc } );
+			//Tweener.addTween(object, { height:new_height, time:_time, transition:_transition, delay:_delay, onComplete:onCompleteFunc } );
+			
+			TinyTweener.addTween(object, { height:new_height }, _time, _transition, _delay, onCompleteFunc );
 		}
 		
 		/**
 		 * Resizes the Width and Height of an object
 		 * @return	Nothing.
 		 */
-		public static function resizeObjectWidthAndHeight(object:DisplayObject, new_width:Number, new_height:Number, _time:Number=0.5, _transition:String="EaseOutSine", _delay:Number=0, onCompleteFunc:Function=null):void
+		public static function resizeObjectWidthAndHeight(object:DisplayObject, new_width:Number, new_height:Number, _time:Number=0.5, _transition:String="easeOutSine", _delay:Number=0, onCompleteFunc:Function=null):void
 		{
 			object.visible = true;
 			
-			Tweener.addTween(object, { width:new_width, height:new_height, time:_time, transition:_transition, delay:_delay, onComplete:onCompleteFunc } );
+			//Tweener.addTween(object, { width:new_width, height:new_height, time:_time, transition:_transition, delay:_delay, onComplete:onCompleteFunc } );
+			
+			TinyTweener.addTween(object, { width:new_width, height:new_height }, _time, _transition, _delay, onCompleteFunc );
 		}
 		
 		/**
@@ -268,7 +297,7 @@
 		 */
 		public static function get stage():Stage
 		{
-			return StageReference.getStage();
+			return AppManager.stage;
 		}
 	}
 	

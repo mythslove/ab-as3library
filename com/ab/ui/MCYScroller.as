@@ -75,9 +75,9 @@
 			this.buttonMode = true;
 			
 			this.addEventListener(MouseEvent.MOUSE_DOWN, clickHandle); 
-			StageReference.getStage().addEventListener(MouseEvent.MOUSE_UP, releaseHandle);
+			AppManager.stage.addEventListener(MouseEvent.MOUSE_UP, releaseHandle);
 			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
-			StageReference.getStage().addEventListener(MouseEvent.MOUSE_WHEEL,mouseWheelHandler);
+			AppManager.stage.addEventListener(MouseEvent.MOUSE_WHEEL,mouseWheelHandler);
 		}
 		
 		public function mouseWheelHandler(event:MouseEvent):void 
@@ -86,7 +86,7 @@
 			
 			if (_HIT_ROOT != null) 
 			{
-				if (_HIT_ROOT.hitTestPoint(StageReference.getStage().mouseX, StageReference.getStage().mouseY, true)) 
+				if (_HIT_ROOT.hitTestPoint(AppManager.stage.mouseX, AppManager.stage.mouseY, true)) 
 				{
 					performMouseWheel(event.delta)
 				}

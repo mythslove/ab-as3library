@@ -5,20 +5,16 @@
 	* ABº
 	*/
 	
+	import caurina.transitions.properties.FilterShortcuts;
+	import caurina.transitions.Tweener;
 	import com.ab.display.utils.Alignment;
 	import flash.display.BitmapData;
-	import flash.display.MovieClip;
 	import flash.display.Stage;
+	import flash.events.Event;
 	import flash.geom.Matrix;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import org.casalib.display.CasaSprite;
-	import org.casalib.display.CasaMovieClip;
-	import caurina.transitions.Tweener;
-	import org.casalib.util.ObjectUtil;
-	import flash.events.Event;
-	import org.casalib.util.StageReference;
-	import flash.geom.Point;
-	import caurina.transitions.properties.FilterShortcuts;
 	
 	/* Métodos Funcionais:
 	 * 
@@ -37,7 +33,6 @@
 	 * ScaleToXY
 	 * 
 	 */
-	
 	
 	public dynamic class ABSprite extends CasaSprite
 	{

@@ -6,16 +6,13 @@
 	* INCOMPLETE
 	*/
 	
-	import caurina.transitions.Tweener;
 	import com.ab.display.ABSprite;
-	import com.ab.utils.Get;
-	import com.ab.utils.Kill;
-	import flash.display.Sprite;
-	import flash.events.Event;
+	import com.ab.display.DynamicWindowComponent;
 	import com.ab.display.GradientBox;
 	import com.ab.display.PatternFill;
-	import com.ab.display.DynamicWindowComponent;
-	import org.casalib.util.StageReference;
+	import com.ab.utils.Get;
+	import flash.display.Sprite;
+	import flash.events.Event;
 	
 	public class DynamicWindowComponent extends ABSprite
 	{

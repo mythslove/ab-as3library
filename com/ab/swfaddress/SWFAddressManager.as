@@ -45,50 +45,38 @@ package com.ab.swfaddress
 	* 
 	*/
 	
+	import com.ab.core.COREApi;
 	import com.ab.appobjects.ApplicationItem;
 	import com.ab.appobjects.WebsiteSection;
-	import com.ab.core.COREApi;
-	import com.ab.settings.XMLSettings;
-	import com.ab.utils.ABStringUtils;
+	
 	import com.asual.swfaddress.SWFAddress;
 	import com.asual.swfaddress.SWFAddressEvent;
-	import flash.display.DisplayObject;
-	import org.casalib.display.CasaSprite;
 	
 	public class SWFAddressManager extends Object
 	{
-		private static var __singleton:SWFAddressManager 
+		private static var addresses:Array = new Array();
+		private static var _site_title:String;
+		private static var current_base_address:String="";
+		private static var times_count:int;
 		
-		private var addresses:Array = new Array();
-		private var _site_title:String;
-		private var current_base_address:String="";
-		private var times_count:int;
-		
-		public function SWFAddressManager() 
+		public static function activate():void
 		{
-			setSingleton();	
-			
 			SWFAddress.addEventListener(SWFAddressEvent.CHANGE, handleSWFAddressChange);
 		}
 		
-		public function activate():void
-		{
-			
-		}
-		
-		public function get site_title():String 			{ return _site_title;   }
-		public function set site_title(value:String):void  	{  _site_title = value; }
+		public static function get site_title():String 			{ return _site_title;   }
+		public static function set site_title(value:String):void  	{  _site_title = value; }
 		
 		/// GET CURRENT VALUE
 		/// GET CURRENT VALUE
 		/// GET CURRENT VALUE
 		
-		public function getCurrentValue():String
+		public static function getCurrentValue():String
 		{
 			return SWFAddress.getValue();
 		}
 		
-		public function processCurrentAddress():void
+		public static function processCurrentAddress():void
 		{
 			COREApi.log("processCurrentAddress: " + SWFAddress.getPathNames()[0]);
 			trace("com.ab.swfaddress.SWFAddressManager.processCurrentAddress");
@@ -99,7 +87,7 @@ package com.ab.swfaddress
 		/// ADD ADDRESS
 		/// ADD ADDRESS
 		
-		public function addAddress(_title:String, _address:String, _params:Object=null, _type:String="normal"):void
+		public static function addAddress(_title:String, _address:String, _params:Object=null, _type:String="normal"):void
 		{
 			var newitem:SWFAddressManagerItem = new SWFAddressManagerItem(_address, _params, _title, _type);
 			
@@ -110,7 +98,7 @@ package com.ab.swfaddress
 		/// SET ADDRESS
 		/// SET ADDRESS
 		
-		public function setAddress(title:String, extra_params:Object = null):void
+		public static function setAddress(title:String, extra_params:Object = null):void
 		{
 			trace("com.ab.swfaddress.SWFAddressManager.setAddress > title : " + title + ", extra_params : " + extra_params);
 			
@@ -158,7 +146,7 @@ package com.ab.swfaddress
 		}
 		
 		/// SWFAddress handling
-		private function handleSWFAddressChange(e:SWFAddressEvent=null):void
+		private static function handleSWFAddressChange(e:SWFAddressEvent=null):void
 		{
 			if (e)  { e.stopPropagation(); };
 			
@@ -166,7 +154,7 @@ package com.ab.swfaddress
 		}
 		
 		/// SWFAddress handling
-		private function handleSWFAddress():void
+		private static function handleSWFAddress():void
 		{
 			COREApi.log("-------- " + times_count + " ----------- ");
 			COREApi.log("handleSWFAddress: SWFAddress.getPathNames()[0]: " + SWFAddress.getPathNames()[0]);
@@ -258,22 +246,5 @@ package com.ab.swfaddress
 				
 			}
 		}
-		
-		/// /////////////////////////////////////////////////////////////////////// SINGLETON START
-		/// /////////////////////////////////////////////////////////////////////// SINGLETON START
-		
-		public function setSingleton():void
-		{
-			if (__singleton != null)  { return; }; //throw new Error("SWFAddressManager ::: SINGLETON REPLICATION ATTEMPTED")
-			__singleton = this;
-		}
-		
-		public static function get singleton():SWFAddressManager 
-		{ 
-			if (__singleton == null) { throw new Error("SWFAddressManager ::: SINGLETON DOES NOT EXIST (CORE FAILED TO INITIALIZE?)") }
-			return __singleton;
-		}
-		/// /////////////////////////////////////////////////////////////////////// SINGLETON END
-		/// /////////////////////////////////////////////////////////////////////// SINGLETON END
 	}
 }

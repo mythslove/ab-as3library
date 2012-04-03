@@ -6,6 +6,7 @@
 	
 	import caurina.transitions.properties.FilterShortcuts;
 	import caurina.transitions.Tweener;
+	import com.ab.core.AppManager;
 	import com.ab.display.geometry.PolygonQuad;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -13,7 +14,7 @@
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	import org.casalib.display.CasaSprite;
-	import org.casalib.util.StageReference;
+	 
 	
 	public class FloatWarning extends CasaSprite
 	{
@@ -85,7 +86,7 @@
 			bg.addChild(bg_graph);
 			
 			this.alpha 	= 0;
-			this.x 		= StageReference.getStage().stageWidth / 2 - this.width / 2;
+			this.x 		= AppManager.stage.stageWidth / 2 - this.width / 2;
 			
 			switch (origin)
 			{

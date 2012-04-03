@@ -5,7 +5,6 @@
 	*/
 	
 	import flash.display.Sprite;
-	import com.ab.events.CentralEventSystem;
 	
 	public class AppLevelsManager extends Sprite
 	{
@@ -40,8 +39,6 @@
 			
 			_levels 		= new Array();
 			_levels 		= [BG_LEVEL, APP_LEVEL, TOP_LEVEL];
-			
-			///CentralEventSystem.getSingleton().addEventListener(
 		}
 		
 		private function addLevelsToStage():void

@@ -14,7 +14,7 @@
 	import flash.geom.Rectangle;
 	import flash.utils.getTimer;
 	import org.casalib.display.CasaMovieClip;
-	import org.casalib.util.StageReference;
+	 
 	import com.ab.display.galleries.touchgallery.TouchGallery;
 	import flash.display.MovieClip;
 	import flash.display.DisplayObject
@@ -80,7 +80,7 @@
 			
 			addListeners()
 			
-			//_stage_var = StageReference.getStage();
+			//_stage_var = AppManager.stage;
 		}
 		
 		public function get OPENED():Boolean 				{ return _OPENED; }
@@ -175,7 +175,7 @@
 			this.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler, false, 0, true)
 			this.addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler, false, 0, true)
 			
-			StageReference.getStage().addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler, false, 0, true);
+			AppManager.stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler, false, 0, true);
 			
 			this.addEventListener(MouseEvent.ROLL_OUT, mouseRollOutHandler, false, 0, true)
 			this.addEventListener(Event.ENTER_FRAME, enterframeHandler, false, 0, true)
@@ -193,7 +193,7 @@
 			this.removeEventListener(MouseEvent.DOUBLE_CLICK, doubleClickHandler);
 			this.removeEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
 			
-			StageReference.getStage().removeEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
+			AppManager.stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
 			
 			this.removeEventListener(MouseEvent.ROLL_OUT, mouseRollOutHandler);
 			this.removeEventListener(Event.ENTER_FRAME, enterframeHandler);
@@ -311,14 +311,14 @@
 					{
 						if (modo == 1)
 						{
-							//if (HitTest.MouseHitObject(this, StageReference.getStage()) == true)
-							if (StageReference.getStage().mouseX < 820)
+							//if (HitTest.MouseHitObject(this, AppManager.stage) == true)
+							if (AppManager.stage.mouseX < 820)
 							{
 								if (modo_time == 1)
 								{
 									modo_time = 0;
-									mxx = StageReference.getStage().mouseX;
-									my  = StageReference.getStage().mouseY;
+									mxx = AppManager.stage.mouseX;
+									my  = AppManager.stage.mouseY;
 									mx0 = mxx;
 									my0 = my;
 									dmx = mxx-mx0;
@@ -326,8 +326,8 @@
 								} 
 								else 
 								{
-									mxx = (StageReference.getStage().mouseX + mxx) / 2;
-									my  = (StageReference.getStage().mouseY + my)  / 2;
+									mxx = (AppManager.stage.mouseX + mxx) / 2;
+									my  = (AppManager.stage.mouseY + my)  / 2;
 									dmx = mxx-mx0;
 									dmy = my-my0;
 									mx0 = mxx;

@@ -14,7 +14,7 @@
 	import com.asual.swfaddress.SWFAddressEvent;
 	import flash.events.Event;
 	import flash.utils.setTimeout;
-	import org.casalib.util.StageReference;
+	 
 	
 	public class WebsiteSection extends SmartStageSprite
 	{
