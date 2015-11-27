@@ -1,0 +1,1 @@
+Antonio Brandao is a veteran Actionscript developer and Graphic Designer since 1999, specializing in development for the Adobe Flash platform, graphic design, and audio design.
